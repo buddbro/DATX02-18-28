@@ -2,6 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default class Workout extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: ''
+    };
+  }
+
   static navigationOptions = props => ({
     title: props.navigation.state.params.title
   });
