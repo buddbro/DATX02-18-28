@@ -1,11 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default class App extends React.Component {
+export default class Workout extends React.Component {
+  static navigationOptions = props => ({
+    title: props.navigation.state.params.title
+  });
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hello World :)</Text>
+        <Text>New Workout</Text>
       </View>
     );
   }
