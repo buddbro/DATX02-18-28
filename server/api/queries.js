@@ -14,7 +14,7 @@ const connection = {
 }
 const db = pgp(connection);
 
-const getAll(req, res, next) => {
+const getAll = (req, res, next) => {
 	db.any('SELECT * FROM todo')
 		.then(function(data) {
 			res.status(200)
@@ -25,7 +25,7 @@ const getAll(req, res, next) => {
 		});
 }
 
-const registerUser(req, res, next) => {
+const registerUser = (req, res, next) => {
 	db.any('INSERT INTO users VALUES($1, $2)', [req.body.email, req.body.password])
 		.then(function(data) {
 			res.status(200)
@@ -36,4 +36,4 @@ const registerUser(req, res, next) => {
 		});
 }
 
-module.exports = { getAll };
+module.exports = { getAll, registerUser };
