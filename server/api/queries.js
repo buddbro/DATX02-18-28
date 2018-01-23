@@ -25,4 +25,15 @@ const getAll(req, res, next) => {
 		});
 }
 
+const registerUser(req, res, next) => {
+	db.any('INSERT INTO users VALUES($1, $2)', [req.body.email, req.body.password])
+		.then(function(data) {
+			res.status(200)
+			.json(data)
+		})
+		.catch(function(err) {
+			return next(err);
+		});
+}
+
 module.exports = { getAll };
