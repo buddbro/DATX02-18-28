@@ -4,8 +4,12 @@ import Main from './components/Main';
 import Workout from './components/Workout';
 
 const Navigation = StackNavigator({
-  Main: { screen: Main },
-  Workout: { screen: Workout }
+    Main: { screen: Main },
+    Workout: { screen: Workout }
+}, {
+    navigationOptions: {
+        header: null,
+    },
 });
 
 export default class App extends React.Component {
