@@ -41,7 +41,8 @@ export default class Main extends React.Component {
     axios
       .get('http://37.139.0.80/api/getall')
       .then(({ data }) => {
-        data.forEach(d => (d.key = d.id));
+        // console.log(data);
+        data.forEach(d => (d.key = d.email));
         this.setState({ data });
       })
       .catch(error => {
@@ -55,14 +56,14 @@ export default class Main extends React.Component {
             this.props.navigation.navigate('Workout', { title: 'Upper body' })}
           title="New Workout"
         />
-        {/* <Text>List of items fetched from backend:</Text>
-        FlatList
+        <Text>List of items fetched from backend:</Text>
+        <FlatList
           data={this.state.data}
           renderItem={({ item }) =>
             <Text>
-              {item.text}
+              {item.email}
             </Text>}
-        /> */}
+        />
         <Text style={{ margin: 10 }}>Register / Login:</Text>
         <TextInput
           style={styles.textInput}
