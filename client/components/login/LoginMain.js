@@ -11,6 +11,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
+import {
+  StackNavigator,
+} from 'react-navigation';
 
 export default class LoginMain extends React.Component {
   constructor(props) {
@@ -74,9 +77,11 @@ export default class LoginMain extends React.Component {
                     style={styles.createAccountButton}>
                     <Text style={styles.buttonText}>Create Account</Text>
                 </TouchableOpacity>
-                <Text style={{color: '#858080'}}>
-                Already have an account? Log in
-                </Text>
+                <TouchableOpacity>
+                    <Text style={{color: '#858080'}}>
+                    Already have an account? Log in
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
