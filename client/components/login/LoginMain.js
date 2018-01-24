@@ -7,7 +7,8 @@ import {
   List,
   FlatList,
   ListItem,
-  TextInput
+  TextInput,
+  TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
 
@@ -51,21 +52,32 @@ export default class LoginMain extends React.Component {
         <Text>List of items fetched from backend:</Text>*/
     return (
         <View style={styles.container}>
-          <Text style={{ margin: 10 }}>Register / Login:</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Email"
-            onChangeText={email => this.setState({ email: email.toLowerCase() })}
-            value={this.state.email}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Password"
-            onChangeText={password =>
-              this.setState({ password: password.toLowerCase() })}
-            value={this.state.password}
-          />
-          <Button onPress={() => this.registerUser()} title="Register" />
+            <View style={styles.head}>
+                <Text style={styles.headline}>Welcome!</Text>
+            </View>
+            <View style={styles.body}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Email"
+                    onChangeText={email => this.setState({ email: email.toLowerCase() })}
+                    value={this.state.email}
+                />
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Password"
+                    onChangeText={password =>
+                        this.setState({ password: password.toLowerCase() })}
+                    value={this.state.password}
+                />
+                <TouchableOpacity
+                    onPress={() => this.registerUser()}
+                    style={styles.createAccountButton}>
+                    <Text style={styles.buttonText}>Create Account</Text>
+                </TouchableOpacity>
+                <Text style={{color: '#858080'}}>
+                Already have an account? Log in
+                </Text>
+            </View>
         </View>
     );
   }
@@ -76,9 +88,23 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+     // justifyContent: 'center',
       paddingTop: 50,
+    },
+    head: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    body: {
+        flex: 2,
+        alignItems: 'center',
+    },
+    headline: {
+        margin: 25,
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#18957D',
     },
     textInput: {
       height: 40,
@@ -86,6 +112,23 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: '#ddd',
       borderRadius: 5,
-      padding: 3
-    }
+      padding: 3,
+      margin: 5,
+  },
+  createAccountButton: {
+      margin: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 50,
+      width: 250,
+      borderRadius: 5,
+      padding: 3,
+      backgroundColor: '#7AD9C6',
+  },
+  buttonText: {
+      color: '#fff',
+      fontSize: 17,
+      fontWeight: 'bold',
+  }
 });
