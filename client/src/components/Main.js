@@ -9,8 +9,8 @@ import {
   ListItem,
   TextInput
 } from 'react-native';
-import axios from 'axios';
 import LoginMain from './login/LoginMain.js';
+import Workout from './Workout';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class Main extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <LoginMain />
+        <Workout />
       </View>
     );
   }
