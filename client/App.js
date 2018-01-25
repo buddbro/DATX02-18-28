@@ -1,16 +1,19 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import Main from './components/Main';
-import Workout from './components/Workout';
+import Main from './src/components/Main';
+import Workout from './src/components/Workout';
 
-const Navigation = StackNavigator({
+const Navigation = StackNavigator(
+  {
     Main: { screen: Main },
     Workout: { screen: Workout }
-}, {
+  },
+  {
     navigationOptions: {
-        header: null,
-    },
-});
+      header: null
+    }
+  }
+);
 
 export default class App extends React.Component {
   render() {
