@@ -80,6 +80,7 @@ export default class CreateAccount extends React.Component {
           >
             <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
+
           <TouchableOpacity onPress={() => navigate('Login')}>
             <Text style={{ color: '#858080' }}>
               Already have an account? Log in

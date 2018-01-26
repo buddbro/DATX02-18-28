@@ -17,6 +17,7 @@ import {
 
 import CreateAccount from './create/CreateAccount';
 import LoginUser from './existing/LoginUser';
+import Workout from '../Dashboard/Workout';
 
 export default class LoginMain extends React.Component {
     constructor(props) {
@@ -33,6 +34,7 @@ export default class LoginMain extends React.Component {
 const LoginNavigation = TabNavigator({
     Create: { screen: CreateAccount },
     Login: { screen: LoginUser },
+    WOPage: { screen: Workout },
 }, {
     navigationOptions: {
         tabBarVisible: false,
