@@ -1,0 +1,89 @@
+import React from 'react';
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native';
+import WorkoutLog from './WorkoutLog';
+
+export default class Workout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.items = [];
+  };
+
+
+  render() {
+    this.items = [<WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />, <WorkoutLog />];
+    return(
+      <View style={styles.container}>
+
+        <View style={styles.welcome}>
+          <Text style={styles.textStyle}>Welcome back user!</Text>
+        </View>
+
+        <TouchableOpacity
+            style={styles.addWorkout}>
+            <Text style={styles.plusSign}>+</Text>
+        </TouchableOpacity>
+
+        <ScrollView>
+        {
+          this.items.map(( item, key ) =>
+          (
+            <View key = { key } style = { styles.item }>
+                { item }
+                <View style = { styles.separator }/>
+            </View>
+          ))
+        }
+        </ScrollView>
+      </View>
+    );
+  }
+}
+
+//Design
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  welcome: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    height: 150,
+    paddingTop: 20,
+    paddingLeft: 5
+  },
+  textStyle: {
+    fontSize: 20
+  },
+  addWorkout: {
+    margin: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 100,
+    width: window.innerWidth,
+    borderRadius: 5,
+    paddingBottom: 5,
+    backgroundColor: '#7AD9C6'
+  },
+  plusSign: {
+    color: '#fff',
+    fontSize: 100,
+    fontWeight: 'bold'
+  },
+  item: {
+
+  },
+  text: {
+
+  },
+  separator: {
+
+  }
+});
