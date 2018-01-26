@@ -55,7 +55,7 @@ export default class CreateAccount extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.head}>
-          <Text style={styles.headline}>Welcome!</Text>
+          <Text style={styles.headline}>Welcome</Text>
         </View>
         <View style={styles.body}>
           <TextInput
