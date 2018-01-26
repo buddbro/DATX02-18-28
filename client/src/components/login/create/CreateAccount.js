@@ -11,6 +11,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
+import NavigationActions from 'react-navigation';
 
 export default class CreateAccount extends React.Component {
   constructor(props) {
@@ -80,7 +81,14 @@ export default class CreateAccount extends React.Component {
           >
             <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Login')}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'LoginUser'
+                })
+              )}
+          >
             <Text style={{ color: '#858080' }}>
               Already have an account? Log in
             </Text>

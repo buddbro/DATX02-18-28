@@ -5,7 +5,7 @@ import {
   NavigationActions
 } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, bindActionCreators } from 'redux';
 import reducers from './src/reducers';
 
 import AppNavigator from './src/containers/AppNavigator';

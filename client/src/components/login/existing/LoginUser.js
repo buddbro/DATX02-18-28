@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native';
+import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
 
 import md5 from 'md5';
 import axios from 'axios';
 
-export default class LoginUser extends React.Component {
+class LoginUser extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,6 +21,7 @@ export default class LoginUser extends React.Component {
   }
 
   login() {
+    const { navigate } = this.props.navigation;
     axios
       .post('http://37.139.0.80/api/users/login', {
         email: this.state.email,
@@ -31,7 +34,11 @@ export default class LoginUser extends React.Component {
               this.setState({
                 token: data.token
               });
-              navigate('Create');
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'CreateAccount'
+                })
+              );
             });
           });
         } catch (error) {
@@ -45,11 +52,31 @@ export default class LoginUser extends React.Component {
       });
   }
 
+  // store.dispatch(
+  //   NavigationActions.navigate({ routeName: 'CreateAccount' })
+  // )
+
+  componentDidMount() {
+    let { dispatch } = this.props.navigation;
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+    console.log(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'CreateAccount'
+      })
+    );
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => navigate('Create')}>
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'CreateAccount'
+              })
+            )}
+        >
           <Text style={{ paddingLeft: 10 }}>Back</Text>
         </TouchableOpacity>
 
@@ -88,6 +115,10 @@ export default class LoginUser extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(LoginUser);
 
 const styles = StyleSheet.create({
   container: {

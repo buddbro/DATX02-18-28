@@ -11,41 +11,56 @@ import {
   TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
-import {
-  TabNavigator,
-} from 'react-navigation';
+import { TabNavigator, addNavigationHelpers } from 'react-navigation';
 
 import CreateAccount from './create/CreateAccount';
 import LoginUser from './existing/LoginUser';
+import { Provider, connect } from 'react-redux';
+import { createStore, combineReducers, bindActionCreators } from 'redux';
+import LoginNavigator from '../../containers/LoginNavigator';
 
-export default class LoginMain extends React.Component {
-    constructor(props) {
-      super(props);
-    };
+class LoginMainTemp extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //
+  //   const { dispatch } = props;
+  //
+  //   this.boundActionCreators = bindActionCreators(
+  //     NavigationActionCreators,
+  //     dispatch
+  //   );
+  // }
 
-    render() {
-        return (
-            <LoginNavigation />
-        );
-    }
+  render() {
+    return (
+      <LoginNavigator
+        navigation={addNavigationHelpers({
+          dispatch: this.props.dispatch,
+          state: this.props.loginNav
+        })}
+      />
+    );
+  }
 }
 
-const LoginNavigation = TabNavigator({
-    Create: { screen: CreateAccount },
-    Login: { screen: LoginUser },
-}, {
-    navigationOptions: {
-        tabBarVisible: false,
-    },
-},
-);
+const mapStateToProps = state => ({
+  loginNav: state.loginNav
+});
+
+const LoginWithNavigationState = connect(mapStateToProps)(LoginMainTemp);
+
+export default class LoginMain extends React.Component {
+  render() {
+    return <LoginWithNavigationState />;
+  }
+}
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: 'column',
-      backgroundColor: '#fff',
-     // justifyContent: 'center',
-      paddingTop: 50,
-    },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    // justifyContent: 'center',
+    paddingTop: 50
+  }
 });
