@@ -4,12 +4,15 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native';
+import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
 import WorkoutListItem from './WorkoutListItem';
 import axios from 'axios';
 
-export default class WorkoutList extends React.Component {
+class WorkoutList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,12 +42,22 @@ export default class WorkoutList extends React.Component {
         </View>
 
         <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            )}
+          onPress={() => {
+            try {
+              AsyncStorage.setItem(
+                '@LocalStore:token',
+                'data.token'
+              ).then(t => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginMain'
+                  })
+                );
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
         >
           <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Logout</Text>
         </TouchableOpacity>
@@ -65,6 +78,10 @@ export default class WorkoutList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(WorkoutList);
 
 //Design
 const styles = StyleSheet.create({

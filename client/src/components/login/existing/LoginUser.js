@@ -29,7 +29,6 @@ class LoginUser extends React.Component {
   }
 
   login() {
-    const { navigate } = this.props.navigation;
     axios
       .post('http://37.139.0.80/api/users/login', {
         email: this.state.email,
@@ -44,7 +43,7 @@ class LoginUser extends React.Component {
               });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
+                  routeName: 'WorkoutList'
                 })
               );
             });
@@ -77,17 +76,6 @@ class LoginUser extends React.Component {
     );
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            )}
-        >
-          <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Dashboard</Text>
-        </TouchableOpacity> */}
-
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome back igen!</Text>
         </View>
