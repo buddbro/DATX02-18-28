@@ -4,14 +4,15 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native';
-import WorkoutLog from './WorkoutLog';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
+import WorkoutListItem from './WorkoutListItem';
+import axios from 'axios';
 
-
-class Workout extends React.Component {
+class WorkoutList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,8 +22,6 @@ class Workout extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Elin testar',this.props.navigation);
-
     axios
       .get('http://37.139.0.80/api/workouts')
       .then(({ data }) => {
@@ -43,20 +42,34 @@ class Workout extends React.Component {
         </View>
 
         <TouchableOpacity
-          OnPress={() =>
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            )}
-          style={styles.addWorkout}>
+          onPress={() => {
+            try {
+              AsyncStorage.setItem(
+                '@LocalStore:token',
+                'data.token'
+              ).then(t => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginUser'
+                  })
+                );
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Logout</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.addWorkout}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
 
         <ScrollView>
           {this.state.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
-              <WorkoutLog title={workout.title} navigation={this.props.navigation} />
+              <WorkoutListItem title={workout.title} />
               <View style={styles.separator} />
             </View>
           )}
@@ -65,13 +78,10 @@ class Workout extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps)(Workout);
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(Workout);
+export default connect(mapStateToProps)(WorkoutList);
 
 //Design
 const styles = StyleSheet.create({

@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-const WorkoutLog = props => {
+const WorkoutListItem = props => {
   return (
     <TouchableOpacity style={styles.addWorkout}>
       <Text style={styles.plusSign}>
@@ -35,4 +35,4 @@ const styles = {
     fontWeight: 'bold'
   }
 };
-export default WorkoutLog;
+export default WorkoutListItem;

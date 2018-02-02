@@ -1,7 +1,7 @@
 import AppNavigator from '../containers/AppNavigator';
 
 const initialState = AppNavigator.router.getStateForAction(
-  AppNavigator.router.getActionForPathAndParams('LoginMain')
+  AppNavigator.router.getActionForPathAndParams('CreateAccount')
 );
 
 export default (state = initialState, action) => {
