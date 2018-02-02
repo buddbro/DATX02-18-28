@@ -49,7 +49,7 @@ class WorkoutList extends React.Component {
               AsyncStorage.setItem('@LocalStore:token', '').then(t => {
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginMain'
+                    routeName: 'LoginUser'
                   })
                 );
               });

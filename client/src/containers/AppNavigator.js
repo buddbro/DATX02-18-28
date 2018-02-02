@@ -1,35 +1,50 @@
-import { StackNavigator } from 'react-navigation';
-import Main from '../components/Main';
-import LoginMain from '../components/login/LoginMain';
-// import Workout from '../components/Dashboard/Workout';
+import { TabNavigator } from 'react-navigation';
+//import LoginMain from '../components/login/LoginMain';
+import Workout from '../components/Dashboard/Workout.js';
 import ViewWorkout from '../components/Dashboard/Workouts/ViewWorkout';
 
+import LoginUser from '../components/login/existing/LoginUser';
+import CreateAccount from '../components/login/create/CreateAccount';
+
+//
+// import { StackNavigator } from 'react-navigation';
+// import Main from '../components/Main';
+// import LoginMain from '../components/login/LoginMain';
+// // import Workout from '../components/Dashboard/Workout';
+// import ViewWorkout from '../components/Dashboard/Workouts/ViewWorkout';
+
 import WorkoutList from '../components/TempDashboard/WorkoutList';
-import Workout from '../components/TempDashboard/Workout';
+// import Workout as TempWorkout from '../components/TempDashboard/Workout';
 
 const AppRouteConfigs = {
-  Main: {
-    screen: Main,
+  LoginUser: {
+    screen: LoginUser,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
-  LoginMain: {
-    screen: LoginMain,
+  CreateAccount: {
+    screen: CreateAccount,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
   Workout: {
     screen: Workout,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
-  WorkoutList: {
-    screen: WorkoutList,
+  // TempWorkout: {
+  //   screen: TempWorkout,
+  //   navigationOptions: {
+  //     tabBarVisible: false
+  //   }
+  // },
+  ViewWorkout: {
+    screen: ViewWorkout,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
   ViewWorkout: {
@@ -40,4 +55,4 @@ const AppRouteConfigs = {
   }
 };
 
-export default (AppNavigator = StackNavigator(AppRouteConfigs));
+export default (AppNavigator = TabNavigator(AppRouteConfigs));

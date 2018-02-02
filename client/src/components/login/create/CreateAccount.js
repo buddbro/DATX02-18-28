@@ -14,8 +14,9 @@ import {
 import axios from 'axios';
 import NavigationActions from 'react-navigation';
 import sha256 from 'sha256';
+import { connect } from 'react-redux';
 
-export default class CreateAccount extends React.Component {
+class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
 
@@ -67,8 +68,6 @@ export default class CreateAccount extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
-
     axios
       .get('http://37.139.0.80/api/getall')
       .then(({ data }) => {
@@ -136,6 +135,10 @@ export default class CreateAccount extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(CreateAccount);
 
 const styles = StyleSheet.create({
   container: {
