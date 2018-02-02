@@ -80,6 +80,17 @@ class LoginUser extends React.Component {
           <Text style={{ paddingLeft: 10 }}>Back</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'Workout'
+              })
+            )}
+        >
+          <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Dashboard</Text>
+        </TouchableOpacity>
+
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome back igen!</Text>
         </View>
