@@ -9,8 +9,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
-import WorkoutListItem from './WorkoutListItem';
 import axios from 'axios';
+import WorkoutListItem from './WorkoutListItem';
+
+import { chooseWorkout } from '../../actions';
 
 class WorkoutList extends React.Component {
   constructor(props) {
@@ -44,10 +46,7 @@ class WorkoutList extends React.Component {
         <TouchableOpacity
           onPress={() => {
             try {
-              AsyncStorage.setItem(
-                '@LocalStore:token',
-                'data.token'
-              ).then(t => {
+              AsyncStorage.setItem('@LocalStore:token', '').then(t => {
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'LoginMain'
@@ -62,14 +61,28 @@ class WorkoutList extends React.Component {
           <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Logout</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.addWorkout}>
+        <TouchableOpacity
+          style={styles.addWorkout}
+          onPress={() => {
+            console.log(this.props.chooseWorkout);
+            this.props.chooseWorkout();
+            // this.props.navigation.dispatch(
+            //   NavigationActions.NavigationActions.navigate({
+            //     routeName: 'Workout'
+            //   })
+            // );
+          }}
+        >
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
 
         <ScrollView>
           {this.state.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
-              <WorkoutListItem title={workout.title} />
+              <WorkoutListItem
+                navigation={this.props.navigation}
+                workout={workout}
+              />
               <View style={styles.separator} />
             </View>
           )}
@@ -81,7 +94,7 @@ class WorkoutList extends React.Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(WorkoutList);
+export default connect(mapStateToProps, { chooseWorkout })(WorkoutList);
 
 //Design
 const styles = StyleSheet.create({

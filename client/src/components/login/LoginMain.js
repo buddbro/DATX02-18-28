@@ -34,7 +34,7 @@ class LoginMainTemp extends React.Component {
   componentDidMount() {
     // this.props.navigation.dispatch(
     //   NavigationActions.NavigationActions.navigate({
-    //     routeName: 'WorkoutList'
+    //     routeName: 'Workout'
     //   })
     // );
   }

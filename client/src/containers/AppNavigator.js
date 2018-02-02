@@ -1,8 +1,11 @@
 import { StackNavigator } from 'react-navigation';
 import Main from '../components/Main';
 import LoginMain from '../components/login/LoginMain';
-import Workout from '../components/Dashboard/Workout.js';
-import WorkoutList from '../components/TempDashboard/WorkoutList.js';
+// import Workout from '../components/Dashboard/Workout';
+import ViewWorkout from '../components/Dashboard/Workouts/ViewWorkout';
+
+import WorkoutList from '../components/TempDashboard/WorkoutList';
+import Workout from '../components/TempDashboard/Workout';
 
 const AppRouteConfigs = {
   Main: {
@@ -25,6 +28,12 @@ const AppRouteConfigs = {
   },
   WorkoutList: {
     screen: WorkoutList,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ViewWorkout: {
+    screen: ViewWorkout,
     navigationOptions: {
       header: null
     }

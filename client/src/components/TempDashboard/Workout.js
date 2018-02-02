@@ -1,12 +1,89 @@
-import react from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity
+} from 'react-native';
+import axios from 'axios';
 
 class Workout extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { id: '', title: '' };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    // if (this.props.id) {
+    //   this.setState({ id: this.props.id });
+    // } else {
+    //   axios
+    //     .post('http://37.139.0.80/api/workouts')
+    //     .then(({ data }) => {
+    //       this.setState({ id: data[0].id });
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // }
+  }
+
   render() {
-    <View>
-      <Text>Workout</Text>
-    </View>;
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Title"
+          onChangeText={title => this.setState({ title })}
+          value={this.state.title}
+        />
+
+        <TouchableOpacity
+          onPress={() => {
+            axios
+              .post(`http://37.139.0.80/api/workouts/${this.state.id}`, {
+                title: this.state.title
+              })
+              .then(({ data }) => {
+                console.log(data);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          }}
+        >
+          <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Save</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 50
+  },
+  textInput: {
+    height: 60,
+    fontSize: 20,
+    width: 200,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 3,
+    margin: 5
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 17,
+    fontWeight: 'bold'
+  }
+});
 
 export default Workout;
