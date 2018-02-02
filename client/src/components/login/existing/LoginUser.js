@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
-import md5 from 'md5';
+import sha256 from 'sha256';
 import axios from 'axios';
 
 class LoginUser extends React.Component {
@@ -25,7 +25,7 @@ class LoginUser extends React.Component {
     axios
       .post('http://37.139.0.80/api/users/login', {
         email: this.state.email,
-        password: md5(this.state.password)
+        password: sha256(this.state.password)
       })
       .then(({ data }) => {
         try {
@@ -36,7 +36,7 @@ class LoginUser extends React.Component {
               });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'CreateAccount'
+                  routeName: 'Workout'
                 })
               );
             });
