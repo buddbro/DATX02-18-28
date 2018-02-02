@@ -50,7 +50,7 @@ class WorkoutList extends React.Component {
               ).then(t => {
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginMain'
+                    routeName: 'LoginUser'
                   })
                 );
               });

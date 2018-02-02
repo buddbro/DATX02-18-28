@@ -4,5 +4,5 @@ import loginNav from './loginNavigationReducer';
 
 export default combineReducers({
   nav,
-  loginNav
+  //loginNav
 });

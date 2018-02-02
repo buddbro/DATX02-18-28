@@ -1,18 +1,19 @@
 import { StackNavigator } from 'react-navigation';
-import Main from '../components/Main';
 import LoginMain from '../components/login/LoginMain';
 import Workout from '../components/Dashboard/Workout.js';
 import WorkoutList from '../components/TempDashboard/WorkoutList.js';
+import LoginUser from '../components/login/existing/LoginUser';
+import CreateAccount from '../components/login/create/CreateAccount';
 
 const AppRouteConfigs = {
-  Main: {
-    screen: Main,
+  LoginUser: {
+    screen: LoginUser,
     navigationOptions: {
       header: null
     }
   },
-  LoginMain: {
-    screen: LoginMain,
+  CreateAccount: {
+    screen: CreateAccount,
     navigationOptions: {
       header: null
     }
