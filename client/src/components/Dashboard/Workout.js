@@ -9,6 +9,7 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
 
 
 class Workout extends React.Component {
@@ -46,7 +47,7 @@ class Workout extends React.Component {
           OnPress={() =>
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
+                routeName: 'NewWorkout'
               })
             )}
           style={styles.addWorkout}>
