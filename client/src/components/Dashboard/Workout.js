@@ -8,8 +8,10 @@ import {
 } from 'react-native';
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class Workout extends React.Component {
+
+class Workout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +40,14 @@ export default class Workout extends React.Component {
           <Text style={styles.textStyle}>Welcome back user!</Text>
         </View>
 
-        <TouchableOpacity style={styles.addWorkout}>
+        <TouchableOpacity
+          OnPress={() =>
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'Workout'
+              })
+            )}
+          style={styles.addWorkout}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
 
@@ -54,6 +63,10 @@ export default class Workout extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(Workout);
 
 //Design
 const styles = StyleSheet.create({

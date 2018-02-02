@@ -32,6 +32,7 @@ class LoginMainTemp extends React.Component {
   // }
 
   render() {
+    console.log('loginNav: ', this.props.loginNav);
     return (
       <LoginNavigator
         navigation={addNavigationHelpers({
