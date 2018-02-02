@@ -20,6 +20,14 @@ class LoginUser extends React.Component {
     this.state = { email: '', password: '', token: '' };
   }
 
+  componentDidMount() {
+    this.props.navigation.dispatch(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'WorkoutList'
+      })
+    );
+  }
+
   login() {
     const { navigate } = this.props.navigation;
     axios
@@ -69,18 +77,7 @@ class LoginUser extends React.Component {
     );
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'CreateAccount'
-              })
-            )}
-        >
-          <Text style={{ paddingLeft: 10 }}>Back</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() =>
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
@@ -89,7 +86,7 @@ class LoginUser extends React.Component {
             )}
         >
           <Text style={{ marginLeft: 'auto', marginRight: 10 }}>Dashboard</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome back igen!</Text>
@@ -118,9 +115,19 @@ class LoginUser extends React.Component {
           >
             <Text style={styles.buttonText}>LOG IN</Text>
           </TouchableOpacity>
-          <Text>
-            {this.state.token}
-          </Text>
+
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'CreateAccount'
+                })
+              )}
+          >
+            <Text style={{ color: '#858080' }}>
+              Don't have an account yet? Create one!
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
