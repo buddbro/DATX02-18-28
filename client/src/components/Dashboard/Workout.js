@@ -65,9 +65,6 @@ class Workout extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps)(Workout);
 
 const mapStateToProps = state => ({});
 

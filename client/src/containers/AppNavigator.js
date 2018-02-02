@@ -34,7 +34,7 @@ const AppRouteConfigs = {
   ViewWorkout: {
     screen: ViewWorkout,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   }
 };
