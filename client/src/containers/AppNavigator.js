@@ -1,5 +1,5 @@
-import { StackNavigator } from 'react-navigation';
-import LoginMain from '../components/login/LoginMain';
+import { TabNavigator } from 'react-navigation';
+//import LoginMain from '../components/login/LoginMain';
 import Workout from '../components/Dashboard/Workout.js';
 import WorkoutList from '../components/TempDashboard/WorkoutList.js';
 import LoginUser from '../components/login/existing/LoginUser';
@@ -9,27 +9,27 @@ const AppRouteConfigs = {
   LoginUser: {
     screen: LoginUser,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
   CreateAccount: {
     screen: CreateAccount,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
   Workout: {
     screen: Workout,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   },
   WorkoutList: {
     screen: WorkoutList,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
     }
   }
 };
 
-export default (AppNavigator = StackNavigator(AppRouteConfigs));
+export default (AppNavigator = TabNavigator(AppRouteConfigs));

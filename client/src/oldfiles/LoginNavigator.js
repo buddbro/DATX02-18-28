@@ -1,4 +1,4 @@
-import { TabNavigator } from 'react-navigation';
+/*import { TabNavigator } from 'react-navigation';
 import CreateAccount from '../components/login/create/CreateAccount';
 import LoginUser from '../components/login/existing/LoginUser';
 import Workout from '../components/Dashboard/Workout';
