@@ -9,9 +9,10 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
 
 
-class Workout extends React.Component {
+class NewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,10 +21,11 @@ class Workout extends React.Component {
     };
   }
 
+
   render() {
     return (
       <View>
-        <Text>hej</Text>
+        <Text> hej </Text>
       </View>
     );
   }
