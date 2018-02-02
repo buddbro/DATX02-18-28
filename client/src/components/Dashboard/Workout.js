@@ -21,6 +21,8 @@ class Workout extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Elin testar',this.props.navigation);
+
     axios
       .get('http://37.139.0.80/api/workouts')
       .then(({ data }) => {
@@ -54,7 +56,7 @@ class Workout extends React.Component {
         <ScrollView>
           {this.state.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
-              <WorkoutLog title={workout.title} />
+              <WorkoutLog title={workout.title} navigation={this.props.navigation} />
               <View style={styles.separator} />
             </View>
           )}

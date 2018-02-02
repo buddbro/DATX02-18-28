@@ -1,7 +1,8 @@
 import { TabNavigator } from 'react-navigation';
 //import LoginMain from '../components/login/LoginMain';
 import Workout from '../components/Dashboard/Workout.js';
-import WorkoutList from '../components/TempDashboard/WorkoutList';
+import ViewWorkout from '../components/Dashboard/Workouts/ViewWorkout';
+
 import LoginUser from '../components/login/existing/LoginUser';
 import CreateAccount from '../components/login/create/CreateAccount';
 
@@ -24,8 +25,8 @@ const AppRouteConfigs = {
       tabBarVisible: false
     }
   },
-  WorkoutList: {
-    screen: WorkoutList,
+  ViewWorkout: {
+    screen: ViewWorkout,
     navigationOptions: {
       tabBarVisible: false
     }
