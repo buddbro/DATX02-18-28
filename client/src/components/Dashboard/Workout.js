@@ -8,8 +8,10 @@ import {
 } from 'react-native';
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class Workout extends React.Component {
+
+class Workout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,6 +21,8 @@ export default class Workout extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Elin testar',this.props.navigation);
+
     axios
       .get('http://37.139.0.80/api/workouts')
       .then(({ data }) => {
@@ -45,7 +49,7 @@ export default class Workout extends React.Component {
         <ScrollView>
           {this.state.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
-              <WorkoutLog title={workout.title} />
+              <WorkoutLog title={workout.title} navigation={this.props.navigation} />
               <View style={styles.separator} />
             </View>
           )}
@@ -54,6 +58,9 @@ export default class Workout extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(Workout);
 
 //Design
 const styles = StyleSheet.create({

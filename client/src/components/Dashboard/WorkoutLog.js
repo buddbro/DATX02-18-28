@@ -6,18 +6,38 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import NavigationActions from 'react-navigation';
+import { connect } from 'react-redux';
 
-const WorkoutLog = props => {
+
+class WorkoutLog extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+
   return (
-    <TouchableOpacity style={styles.addWorkout}>
-      <Text style={styles.plusSign}>
-        {props.title}
-      </Text>
+    <TouchableOpacity
+    onPress={() =>
+      this.props.navigation.dispatch(
+        NavigationActions.NavigationActions.navigate({
+          routeName: 'ViewWorkout'
+        })
+      )}
+      style={styles.addWorkout}>
+        <Text style={styles.plusSign}>
+          {this.props.title}
+        </Text>
     </TouchableOpacity>
   );
-};
+}
+}
+const mapStateToProps = state => ({});
 
-const styles = {
+export default connect(mapStateToProps)(WorkoutLog);
+
+const styles = StyleSheet.create ({
   addWorkout: {
     margin: 15,
     flexDirection: 'row',
@@ -34,5 +54,4 @@ const styles = {
     fontSize: 30,
     fontWeight: 'bold'
   }
-};
-export default WorkoutLog;
+});
