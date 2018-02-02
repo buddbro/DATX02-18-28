@@ -8,26 +8,48 @@ import {
   FlatList,
   ListItem,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import axios from 'axios';
+import NavigationActions from 'react-navigation';
+import sha256 from 'sha256';
 
 export default class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [], email: '', password: '' };
+    this.state = { data: [], name: '', email: '', password: '' };
   }
 
   registerUser() {
     axios
       .post('http://37.139.0.80/api/users/register', {
         email: this.state.email,
-        password: this.state.password
+        password: sha256(this.state.password),
+        name: this.state.name
       })
       .then(({ data }) => {
         console.log(data);
-        this.setState({ email: '', password: '' });
+
+        try {
+          AsyncStorage.setItem('@LocalStore:token', data.token).then(t => {
+            AsyncStorage.getItem('@LocalStore:token').then(value => {
+              this.setState({
+                token: data.token
+              });
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'Workout'
+                })
+              );
+            });
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
+        this.setState({ name: '', email: '', password: '' });
       })
       .catch(error => {
         console.log(error);
@@ -55,16 +77,23 @@ export default class CreateAccount extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.head}>
-          <Text style={styles.headline}>Welcome!</Text>
+          <Text style={styles.headline}>Welcome</Text>
         </View>
         <View style={styles.body}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Name"
+            onChangeText={name => this.setState({ name })}
+            value={this.state.name}
+            secureTextEntry={false}
+          />
           <TextInput
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })}
             value={this.state.email}
-            secureTextEntry={true}
+            secureTextEntry={false}
           />
           <TextInput
             style={styles.textInput}
@@ -80,7 +109,14 @@ export default class CreateAccount extends React.Component {
           >
             <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('Login')}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'LoginUser'
+                })
+              )}
+          >
             <Text style={{ color: '#858080' }}>
               Already have an account? Log in
             </Text>

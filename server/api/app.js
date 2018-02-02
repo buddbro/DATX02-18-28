@@ -12,7 +12,9 @@ app.get('/', (req, res) =>
 const db = require('./queries');
 
 app.get('/api/getall', db.getAll);
-app.post('/api/users/register', db.registerUser);
+app.post('/api/users/registeruser', db.registerUser);
+app.post('/api/users/getuserbyemail', db.getUserByEmail);
+app.post('/api/users/login', db.login);
 
 const router = express.Router();
 module.exports = router;
