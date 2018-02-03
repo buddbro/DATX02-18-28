@@ -9,7 +9,8 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
-
+import { chooseWorkout } from '../../actions';
+import NavigationActions from 'react-navigation';
 
 class Workout extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Workout extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Elin testar',this.props.navigation);
+    console.log('Elin testar', this.props.navigation);
 
     axios
       .get('http://37.139.0.80/api/workouts')
@@ -43,20 +44,25 @@ class Workout extends React.Component {
         </View>
 
         <TouchableOpacity
-          OnPress={() =>
+          onPress={() => {
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
+                routeName: 'NewWorkout'
               })
-            )}
-          style={styles.addWorkout}>
+            );
+          }}
+          style={styles.addWorkout}
+        >
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
 
         <ScrollView>
           {this.state.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
-              <WorkoutLog title={workout.title} navigation={this.props.navigation} />
+              <WorkoutLog
+                workout={workout}
+                navigation={this.props.navigation}
+              />
               <View style={styles.separator} />
             </View>
           )}
@@ -66,9 +72,19 @@ class Workout extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => {
+  return {
+    workoutId: state.workoutId
+  };
+};
 
-export default connect(mapStateToProps)(Workout);
+const mapDispatchToProps = dispatch => {
+  return {
+    chooseWorkout: () => dispatch(chooseWorkout())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workout);
 
 //Design
 const styles = StyleSheet.create({

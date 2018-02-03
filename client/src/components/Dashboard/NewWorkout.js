@@ -11,8 +11,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
-
-class NewWorkout extends React.Component {
+export default class NewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,7 +19,6 @@ class NewWorkout extends React.Component {
       workouts: []
     };
   }
-
 
   render() {
     return (
@@ -31,6 +29,6 @@ class NewWorkout extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+//const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(NewWorkout);
+//export default connect(mapStateToProps)(NewWorkout);

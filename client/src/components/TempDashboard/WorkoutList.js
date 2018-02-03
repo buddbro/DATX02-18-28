@@ -14,7 +14,7 @@ import WorkoutListItem from './WorkoutListItem';
 
 import { chooseWorkout } from '../../actions';
 
-class WorkoutList extends React.Component {
+export default class WorkoutList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -92,9 +92,9 @@ class WorkoutList extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+//const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, { chooseWorkout })(WorkoutList);
+//export default connect(mapStateToProps, { chooseWorkout })(WorkoutList);
 
 //Design
 const styles = StyleSheet.create({

@@ -12,7 +12,7 @@ import CreateAccount from '../components/login/create/CreateAccount';
 // import LoginMain from '../components/login/LoginMain';
 // // import Workout from '../components/Dashboard/Workout';
 // import ViewWorkout from '../components/Dashboard/Workouts/ViewWorkout';
-
+import NewWorkout from '../components/Dashboard/NewWorkout';
 import WorkoutList from '../components/TempDashboard/WorkoutList';
 // import Workout as TempWorkout from '../components/TempDashboard/Workout';
 
@@ -50,7 +50,13 @@ const AppRouteConfigs = {
   ViewWorkout: {
     screen: ViewWorkout,
     navigationOptions: {
-      header: null
+      tabBarVisible: false
+    }
+  },
+  NewWorkout: {
+    screen: NewWorkout,
+    navigationOptions: {
+      tabBarVisible: false
     }
   }
 };

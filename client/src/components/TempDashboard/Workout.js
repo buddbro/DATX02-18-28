@@ -8,27 +8,11 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-class Workout extends React.Component {
+export default class Workout extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { id: '', title: '' };
-  }
-
-  componentDidMount() {
-    console.log(this.props);
-    // if (this.props.id) {
-    //   this.setState({ id: this.props.id });
-    // } else {
-    //   axios
-    //     .post('http://37.139.0.80/api/workouts')
-    //     .then(({ data }) => {
-    //       this.setState({ id: data[0].id });
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // }
   }
 
   render() {
@@ -85,5 +69,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
-
-export default Workout;

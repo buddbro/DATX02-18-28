@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import nav from './navigationReducer';
-import workoutReducer from './workoutReducer';
+import workout from './workoutReducer';
 
 export default combineReducers({
   nav,
-  workoutReducer
+  workout
 });

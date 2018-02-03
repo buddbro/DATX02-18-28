@@ -13,24 +13,23 @@ export default class ExcerciseList extends React.PureComponent {
 
   constructor(props) {
     super(props);
-
-    this.props.excerciseItems = {['Benchpress', 'Squat', 'Deadlift']}
   }
 
   renderItem() {
-    return(
-      <Excercise />
-    )
+    return <Excercise />;
   }
 
   render() {
-    return(
+    return (
       <View style={styles.container}>
-      <FlatList
-        data={this.props.excerciseItems}
-        renderItem={({item}) => <Text>{item.key}</Text>}
-        style={styles.list}
-      />
+        <FlatList
+          data={this.props.excerciseItems}
+          renderItem={({ item }) =>
+            <Text>
+              {item.key}
+            </Text>}
+          style={styles.list}
+        />
       </View>
     );
   }
@@ -41,9 +40,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   list: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });

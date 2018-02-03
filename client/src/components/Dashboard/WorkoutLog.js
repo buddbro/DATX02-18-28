@@ -7,37 +7,38 @@ import {
   StyleSheet
 } from 'react-native';
 import NavigationActions from 'react-navigation';
+import { chooseWorkout } from '../../actions';
 import { connect } from 'react-redux';
 
-
 class WorkoutLog extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
-  render(){
-
-  return (
-    <TouchableOpacity
-    onPress={() =>
-      this.props.navigation.dispatch(
-        NavigationActions.NavigationActions.navigate({
-          routeName: 'ViewWorkout'
-        })
-      )}
-      style={styles.addWorkout}>
+  render() {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.props.chooseWorkout(this.props.workout.id);
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'ViewWorkout'
+            })
+          );
+        }}
+        style={styles.addWorkout}
+      >
         <Text style={styles.plusSign}>
-          {this.props.title}
+          {this.props.workout.title}
         </Text>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  }
 }
-}
-const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(WorkoutLog);
+export default connect(null, { chooseWorkout })(WorkoutLog);
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   addWorkout: {
     margin: 15,
     flexDirection: 'row',

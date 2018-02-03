@@ -7,10 +7,10 @@ import {
   StyleSheet
 } from 'react-native';
 import NavigationActions from 'react-navigation';
-
+import { connect } from 'react-redux';
 
 // Denna ska hämta information om loggat träningspass
-export default class ViewWorkout extends React.Component {
+class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -25,15 +25,20 @@ export default class ViewWorkout extends React.Component {
                 routeName: 'Workout'
               })
             )}
-        ><Text style={{ paddingLeft: 10 }}>Back</Text>
+        >
+          <Text style={{ paddingLeft: 10 }}>Back</Text>
         </TouchableOpacity>
 
         <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>Logged at Date</Text>
+          <Text style={{ paddingLeft: 10 }}>
+            Logged at {this.props.date}
+          </Text>
         </View>
 
         <View style={styles.workoutName}>
-          <Text style={styles.nameTextStyle}>Booty Building</Text>
+          <Text style={styles.nameTextStyle}>
+            {this.props.title}
+          </Text>
         </View>
 
         <View style={styles.category}>
@@ -55,12 +60,22 @@ export default class ViewWorkout extends React.Component {
         <View style={styles.category}>
           <Text style={{ paddingLeft: 10 }}>Notes</Text>
         </View>
-
-
       </View>
     );
   }
 }
+
+const mapStateToProps = ({ workout }) => {
+  const { id, title, date } = workout;
+  return {
+    id,
+    title,
+    date
+  };
+};
+
+export default connect(mapStateToProps)(ViewWorkout);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,7 +95,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#6669CB'
   },
-  category: {
-
-  }
+  category: {}
 });
