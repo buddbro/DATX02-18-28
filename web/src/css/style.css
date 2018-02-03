@@ -1,0 +1,13 @@
+.content-body {
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+}
+
+.body {
+  align-items: center;
+  justify-content: center;
+}
+.headline {
+  text-align: center;
+}

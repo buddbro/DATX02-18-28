@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import Feedback from "./components/FeedbackForm";
+import "./css/style.css";
 
 
 const styles = {
@@ -30,7 +31,7 @@ class App extends React.Component {
             <MenuBar />
           </div>
           <div className="body">
-            <Route path="/" component={Home} />
+            <Route exact path="/" component={Home} />
             <Route path="/Feedback" component={Feedback} />
           </div>
         </div>
