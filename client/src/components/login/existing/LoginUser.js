@@ -8,6 +8,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
+import { login } from '../../../actions';
 import NavigationActions from 'react-navigation';
 
 import sha256 from 'sha256';
@@ -41,9 +42,10 @@ class LoginUser extends React.Component {
               this.setState({
                 token: data.token
               });
+              this.props.login(data);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'WorkoutList'
+                  routeName: 'Workout'
                 })
               );
             });
@@ -59,21 +61,12 @@ class LoginUser extends React.Component {
       });
   }
 
-  // store.dispatch(
-  //   NavigationActions.navigate({ routeName: 'CreateAccount' })
-  // )
-
   componentDidMount() {
     let { dispatch } = this.props.navigation;
   }
 
   render() {
     const { navigate } = this.props.navigation;
-    console.log(
-      NavigationActions.NavigationActions.navigate({
-        routeName: 'CreateAccount'
-      })
-    );
     return (
       <View style={styles.container}>
         <View style={styles.head}>
@@ -124,7 +117,7 @@ class LoginUser extends React.Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps)(LoginUser);
+export default connect(mapStateToProps, { login })(LoginUser);
 
 const styles = StyleSheet.create({
   container: {

@@ -20,6 +20,25 @@ import { createStore, combineReducers, bindActionCreators } from 'redux';
 import LoginNavigator from '../../containers/LoginNavigator';
 
 class LoginMainTemp extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //
+  //   const { dispatch } = props;
+  //
+  //   this.boundActionCreators = bindActionCreators(
+  //     NavigationActionCreators,
+  //     dispatch
+  //   );
+  // }
+
+  componentDidMount() {
+    // this.props.navigation.dispatch(
+    //   NavigationActions.NavigationActions.navigate({
+    //     routeName: 'Workout'
+    //   })
+    // );
+  }
+
   render() {
     return (
       <LoginNavigator

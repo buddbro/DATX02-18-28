@@ -23,6 +23,18 @@ class CreateAccount extends React.Component {
     this.state = { data: [], name: '', email: '', password: '' };
   }
 
+  componentDidMount() {
+    AsyncStorage.getItem('@LocalStore:token').then(value => {
+      if (value) {
+        this.props.navigation.dispatch(
+          NavigationActions.NavigationActions.navigate({
+            routeName: 'WorkoutList'
+          })
+        );
+      }
+    });
+  }
+
   registerUser() {
     axios
       .post('http://37.139.0.80/api/users/register', {
@@ -31,8 +43,6 @@ class CreateAccount extends React.Component {
         name: this.state.name
       })
       .then(({ data }) => {
-        console.log(data);
-
         try {
           AsyncStorage.setItem('@LocalStore:token', data.token).then(t => {
             AsyncStorage.getItem('@LocalStore:token').then(value => {

@@ -6,12 +6,25 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import NavigationActions from 'react-navigation';
 
 const WorkoutListItem = props => {
   return (
-    <TouchableOpacity style={styles.addWorkout}>
-      <Text style={styles.plusSign}>
-        {props.title}
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.dispatch(
+          NavigationActions.NavigationActions.navigate({
+            routeName: 'Workout'
+          })
+        );
+      }}
+      style={styles.addWorkout}
+    >
+      <Text style={styles.title}>
+        {props.workout.title}
+      </Text>
+      <Text style={styles.date}>
+        {props.workout.date}
       </Text>
     </TouchableOpacity>
   );
@@ -20,7 +33,7 @@ const WorkoutListItem = props => {
 const styles = {
   addWorkout: {
     margin: 15,
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     height: 100,
@@ -29,10 +42,17 @@ const styles = {
     paddingBottom: 5,
     backgroundColor: '#7AD9C6'
   },
-  plusSign: {
+  title: {
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold'
+  },
+  date: {
+    color: '#fff',
+    fontSize: 14
   }
 };
+
+const mapStateToProps = state => ({});
+
 export default WorkoutListItem;

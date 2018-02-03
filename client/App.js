@@ -5,7 +5,13 @@ import {
   NavigationActions
 } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
-import { createStore, combineReducers, bindActionCreators } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  combineReducers,
+  bindActionCreators
+} from 'redux';
+import thunk from 'redux-thunk';
 import reducers from './src/reducers';
 
 import AppNavigator from './src/containers/AppNavigator';
@@ -23,13 +29,11 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  nav: state.nav
-});
+const mapStateToProps = ({ nav }) => ({ nav });
 
 const AppWithNavigationState = connect(mapStateToProps)(App);
 
-const store = createStore(reducers);
+const store = createStore(reducers, applyMiddleware(thunk));
 
 export default class Root extends React.Component {
   render() {
