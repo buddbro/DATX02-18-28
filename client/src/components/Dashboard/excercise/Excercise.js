@@ -15,6 +15,7 @@ export default class Excercise extends React.PureComponent {
   render() {
     return(
       <View style={styles.container}>
+        <Text>Hej</Text>
       </View>
     );
   }
