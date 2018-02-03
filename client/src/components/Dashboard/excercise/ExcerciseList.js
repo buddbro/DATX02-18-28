@@ -13,6 +13,10 @@ export default class ExcerciseList extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
+    //bytas ut med data från backend
+    this.props.bigparts = {['Benchpress', 'Squat', 'Deadlift']}
+    this.props.smallparts = {['Bicep curl', 'Tricep extension', 'Crunches']}
   }
 
   renderItem() {
@@ -22,13 +26,20 @@ export default class ExcerciseList extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.props.excerciseItems}
-          renderItem={({ item }) =>
-            <Text>
-              {item.key}
-            </Text>}
+      <FlatList
+        data={this.props.excerciseItems}
+        renderItem={({item}) => <Text>{item.key}</Text>}
+        style={styles.list}
+      />
+        <SectionList
           style={styles.list}
+          renderItem={({item}) => <ListItem title={item} />}
+          renderSectionHeader={({section}) => <Header title={section.title} />}
+          sections={[ // homogeneous rendering between sections
+            {data: [...], title: ...},
+            {data: [...], title: ...},
+            {data: [...], title: ...},
+          ]}
         />
       </View>
     );
