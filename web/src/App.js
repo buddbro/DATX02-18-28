@@ -8,8 +8,9 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-import Home from "./App";
+import Home from "./components/Home";
 import Feedback from "./components/FeedbackForm";
+
 
 const styles = {
   header: {
@@ -20,25 +21,22 @@ const styles = {
   }
 };
 
-
-function App(props) {
-  const { classes } = props;
-
-  return (
-    <HashRouter>
-      <div className={classes.header}>
-        <MenuBar />
-      </div>
-      <div className={classes.body}>
-        <Route path="/" component={Home} />
-        <Route path="/Feedback" component={Feedback} />
-      </div>
-    </HashRouter>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <HashRouter>
+        <div>
+          <div className="header">
+            <MenuBar />
+          </div>
+          <div className="body">
+            <Route path="/" component={Home} />
+            <Route path="/Feedback" component={Feedback} />
+          </div>
+        </div>
+      </HashRouter>
+    );
+  }
 }
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(App);
+export default App;

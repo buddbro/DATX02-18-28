@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import {
   NavLink
 } from "react-router-dom";
-import App from "../App";
+import Home from "./Home";
 import Feedback from "./FeedbackForm";
 
 
@@ -31,7 +31,7 @@ function MenuBar(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography type="title" color="inherit" className={classes.menuItems}>
-            <NavLink to="/App">Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </Typography>
           <Typography type="title" color="inherit" className={classes.menuItems}>
             <NavLink to="/Feedback">Send feedback</NavLink>
