@@ -20,7 +20,7 @@ class FeedbackForm extends React.Component {
     event.preventDefault();
 
     axios
-      .post('http://www.getpushapp.com/api/feedback', {
+      .post('https://www.getpushapp.com/api/feedback', {
         name: this.state.name,
         feedback: this.state.feedback
       })

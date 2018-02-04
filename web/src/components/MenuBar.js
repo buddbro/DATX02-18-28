@@ -5,36 +5,41 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
-import {
-  NavLink
-} from "react-router-dom";
-import Home from "./Home";
-import Feedback from "./FeedbackForm";
-
+import { NavLink } from 'react-router-dom';
+import Home from './Home';
+import Feedback from './FeedbackForm';
 
 const styles = {
   header: {
-    width: '100%',
+    width: '100%'
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
   menuItems: {
-    marginLeft: 50,
+    marginLeft: 50
   }
 };
 
 function MenuBar(props) {
   const { classes } = props;
-  return(
+  return (
     <div className={classes.header}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
-          <Typography type="title" color="inherit" className={classes.menuItems}>
-            <NavLink to="/">Home</NavLink>
+          <Typography
+            type="title"
+            color="inherit"
+            className={classes.menuItems}
+          >
+            <a href="#home">Home</a>
           </Typography>
-          <Typography type="title" color="inherit" className={classes.menuItems}>
-            <NavLink to="/Feedback">Send feedback</NavLink>
+          <Typography
+            type="title"
+            color="inherit"
+            className={classes.menuItems}
+          >
+            <a href="#feedback">Send feedback</a>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -43,7 +48,7 @@ function MenuBar(props) {
 }
 
 MenuBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MenuBar);
