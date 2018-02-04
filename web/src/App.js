@@ -7,6 +7,8 @@ import ScrollableAnchor, { configureAnchors } from 'react-scrollable-anchor';
 import { Route, NavLink, HashRouter } from 'react-router-dom';
 import Home from './components/Home';
 import Feedback from './components/FeedbackForm';
+import "./css/style.css";
+
 
 const styles = {
   header: {
@@ -24,7 +26,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <ScrollableAnchor id={'home'}>
           <div className="header">
             <MenuBar />
@@ -32,11 +34,9 @@ class App extends React.Component {
         </ScrollableAnchor>
         <div className="body" style={{ marginTop: 100 }}>
           <Home />
-          <div style={{ height: 1000 }} />
           <ScrollableAnchor id={'feedback'}>
             <Feedback />
           </ScrollableAnchor>
-          <div style={{ height: 1000 }} />
         </div>
       </div>
     );

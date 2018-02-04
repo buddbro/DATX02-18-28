@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import '../css/style.css';
+
 
 class FeedbackForm extends React.Component {
   constructor(props) {
@@ -36,7 +38,7 @@ class FeedbackForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="content-body">
         <h3>Feedback Form</h3>
         <form
           onSubmit={this.submitForm.bind(this)}
