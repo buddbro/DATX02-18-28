@@ -9,38 +9,34 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { chooseWorkout } from '../../actions';
+import { logout } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 class Workout extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      workouts: []
-    };
-  }
-
   componentDidMount() {
     console.log('Elin testar', this.props.navigation);
-
-    axios
-      .get('http://37.139.0.80/api/workouts')
-      .then(({ data }) => {
-        this.setState({
-          workouts: data
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.welcome}>
-          <Text style={styles.textStyle}>Welcome back user!</Text>
+          <Text style={styles.textStyle}>
+            Welcome back {this.props.name}
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              this.props.logout(this.props.userId);
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'LoginUser'
+                })
+              );
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>Logout</Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity
@@ -57,7 +53,7 @@ class Workout extends React.Component {
         </TouchableOpacity>
 
         <ScrollView>
-          {this.state.workouts.map((workout, index) =>
+          {this.props.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
                 workout={workout}
@@ -72,19 +68,15 @@ class Workout extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ workout, user }) => {
   return {
-    workoutId: state.workoutId
+    userId: user.id,
+    name: user.name,
+    workouts: workout.workouts
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    chooseWorkout: () => dispatch(chooseWorkout())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Workout);
+export default connect(mapStateToProps, { logout })(Workout);
 
 //Design
 const styles = StyleSheet.create({
@@ -93,8 +85,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   welcome: {
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'flex-start',
+    flexDirection: 'row',
     height: 150,
     paddingTop: 20,
     paddingLeft: 5

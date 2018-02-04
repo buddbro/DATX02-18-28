@@ -23,31 +23,34 @@ class CreateAccount extends React.Component {
     this.state = { data: [], name: '', email: '', password: '' };
   }
 
-  componentDidMount() {
-    AsyncStorage.getItem('@LocalStore:token').then(value => {
-      if (value) {
-        this.props.navigation.dispatch(
-          NavigationActions.NavigationActions.navigate({
-            routeName: 'WorkoutList'
-          })
-        );
-      }
-    });
-  }
+  // componentDidMount() {
+  //   AsyncStorage.getItem('@LocalStore:token').then(value => {
+  //     if (value) {
+  //       this.props.navigation.dispatch(
+  //         NavigationActions.NavigationActions.navigate({
+  //           routeName: 'Workout'
+  //         })
+  //       );
+  //     }
+  //   });
+  // }
 
   registerUser() {
     axios
-      .post('http://37.139.0.80/api/users/register', {
+      .post('https://getpushapp.com/api/users/register', {
         email: this.state.email,
         password: sha256(this.state.password),
         name: this.state.name
       })
       .then(({ data }) => {
         try {
-          AsyncStorage.setItem('@LocalStore:token', data.token).then(t => {
-            AsyncStorage.getItem('@LocalStore:token').then(value => {
+          AsyncStorage.setItem(
+            'token',
+            data.token + this.state.email
+          ).then(t => {
+            AsyncStorage.getItem('token').then(value => {
               this.setState({
-                token: data.token
+                token: data.token.substring(0, 64)
               });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -68,21 +71,6 @@ class CreateAccount extends React.Component {
   }
 
   render() {
-    axios
-      .get('http://37.139.0.80/api/getall')
-      .then(({ data }) => {
-        data.forEach(d => (d.key = d.email));
-        this.setState({ data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    /*<Button
-          onPress={() =>
-            this.props.navigation.navigate('Workout', { title: 'Upper body' })}
-          title="New Workout"
-        />
-        <Text>List of items fetched from backend:</Text>*/
     return (
       <View style={styles.container}>
         <View style={styles.head}>
@@ -136,7 +124,9 @@ class CreateAccount extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = ({ user }) => {
+  return { token: user.token };
+};
 
 export default connect(mapStateToProps)(CreateAccount);
 

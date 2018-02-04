@@ -1,4 +1,5 @@
 import React from 'react';
+import { AsyncStorage } from 'react-native';
 import {
   StackNavigator,
   addNavigationHelpers,
@@ -12,28 +13,42 @@ import {
   bindActionCreators
 } from 'redux';
 import thunk from 'redux-thunk';
+import { loginWithToken } from './src/actions';
 import reducers from './src/reducers';
 
 import AppNavigator from './src/containers/AppNavigator';
 
+const store = createStore(reducers, applyMiddleware(thunk));
+
 class App extends React.Component {
+  componentDidMount() {
+    store.dispatch(loginWithToken());
+  }
+
   render() {
-    return (
-      <AppNavigator
-        navigation={addNavigationHelpers({
-          dispatch: this.props.dispatch,
-          state: this.props.nav
-        })}
-      />
-    );
+    return this.props.user.token
+      ? <AppNavigator
+          navigation={addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.loggedInNavigation
+          })}
+        />
+      : <AppNavigator
+          navigation={addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.nav
+          })}
+        />;
   }
 }
 
-const mapStateToProps = ({ nav }) => ({ nav });
+const mapStateToProps = ({ nav, user, loggedInNavigation }) => ({
+  user,
+  nav,
+  loggedInNavigation
+});
 
 const AppWithNavigationState = connect(mapStateToProps)(App);
-
-const store = createStore(reducers, applyMiddleware(thunk));
 
 export default class Root extends React.Component {
   render() {

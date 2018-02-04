@@ -21,12 +21,11 @@ export default class CreateAccount extends React.Component {
 
   registerUser() {
     axios
-      .post('http://37.139.0.80/api/users/register', {
+      .post('https://getpushapp.com/api/users/register', {
         email: this.state.email,
         password: this.state.password
       })
       .then(({ data }) => {
-        console.log(data);
         this.setState({ email: '', password: '' });
       })
       .catch(error => {

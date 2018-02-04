@@ -8,61 +8,54 @@ import {
   AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
-import { login } from '../../../actions';
+import { loginWithPassword } from '../../../actions';
+import { fetchWorkouts } from '../../../actions';
 import NavigationActions from 'react-navigation';
-
-import sha256 from 'sha256';
-import axios from 'axios';
 
 class LoginUser extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { email: '', password: '', token: '' };
+    this.state = { email: '', password: '' };
   }
 
-  componentDidMount() {
-    this.props.navigation.dispatch(
-      NavigationActions.NavigationActions.navigate({
-        routeName: 'WorkoutList'
-      })
-    );
-  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.token && (nextProps.email || this.state.email)) {
+      try {
+        AsyncStorage.setItem(
+          'token',
+          nextProps.token + (nextProps.email || this.state.email)
+        ).then(() => {
+          AsyncStorage.getItem('token').then(() => {
+            this.setState({ email: '', password: '' });
+            this.props.fetchWorkouts(nextProps.id, nextProps.token);
 
-  login() {
-    axios
-      .post('http://37.139.0.80/api/users/login', {
-        email: this.state.email,
-        password: sha256(this.state.password)
-      })
-      .then(({ data }) => {
-        try {
-          AsyncStorage.setItem('@LocalStore:token', data.token).then(t => {
-            AsyncStorage.getItem('@LocalStore:token').then(value => {
-              this.setState({
-                token: data.token
-              });
-              this.props.login(data);
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
-                })
-              );
-            });
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'Workout'
+              })
+            );
           });
-        } catch (error) {
-          console.log(error);
-        }
-
-        this.setState({ email: '', password: '' });
-      })
-      .catch(error => {
+        });
+      } catch (error) {
         console.log(error);
-      });
+      }
+    }
   }
 
   componentDidMount() {
     let { dispatch } = this.props.navigation;
+  }
+
+  renderError() {
+    if (!this.props.error) {
+      return;
+    }
+    return (
+      <Text style={{ fontSize: 18, color: '#992314', textAlign: 'center' }}>
+        {this.props.error}
+      </Text>
+    );
   }
 
   render() {
@@ -90,8 +83,14 @@ class LoginUser extends React.Component {
             secureTextEntry={true}
           />
 
+          {this.renderError()}
+
           <TouchableOpacity
-            onPress={this.login.bind(this)}
+            onPress={() =>
+              this.props.loginWithPassword(
+                this.state.email,
+                this.state.password
+              )}
             style={styles.loginButton}
           >
             <Text style={styles.buttonText}>LOG IN</Text>
@@ -115,9 +114,14 @@ class LoginUser extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = ({ user }) => {
+  const { id, email, token, error } = user;
+  return { id, email, token, error };
+};
 
-export default connect(mapStateToProps, { login })(LoginUser);
+export default connect(mapStateToProps, { loginWithPassword, fetchWorkouts })(
+  LoginUser
+);
 
 const styles = StyleSheet.create({
   container: {
