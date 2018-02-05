@@ -9,7 +9,7 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { logout } from '../../actions';
+import { addWorkout, logout } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 class Workout extends React.Component {
@@ -41,9 +41,10 @@ class Workout extends React.Component {
 
         <TouchableOpacity
           onPress={() => {
+            this.props.addWorkout(this.props.userId, this.props.token);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'NewWorkout'
+                routeName: 'ViewWorkout'
               })
             );
           }}
@@ -71,12 +72,13 @@ class Workout extends React.Component {
 const mapStateToProps = ({ workout, user }) => {
   return {
     userId: user.id,
+    token: user.token,
     name: user.name,
     workouts: workout.workouts
   };
 };
 
-export default connect(mapStateToProps, { logout })(Workout);
+export default connect(mapStateToProps, { addWorkout, logout })(Workout);
 
 //Design
 const styles = StyleSheet.create({

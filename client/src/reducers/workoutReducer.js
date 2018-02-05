@@ -1,7 +1,8 @@
 import {
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
-  CLEAR_WORKOUT
+  CLEAR_WORKOUT,
+  ADD_WORKOUT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,13 +19,33 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       let exercises = action.payload.reduce((acc, next) => {
         return [...acc, { id: next.exercise_id, title: next.exercise_title }];
       }, []);
+
       const { workout_id, workout_title, date } = action.payload[0];
+
       return {
         ...state,
         id: workout_id,
         title: workout_title,
         date,
-        exercises
+        exercises: exercises[0].id ? exercises : []
+      };
+    case ADD_WORKOUT:
+      console.log(action.payload);
+      const oldWorkouts = state.workouts;
+      return {
+        ...state,
+        id: action.payload.id,
+        title: action.payload.title,
+        date: action.payload.date,
+        exercises: [],
+        workouts: [
+          ...oldWorkouts,
+          {
+            id: action.payload.id,
+            title: action.payload.title,
+            payload: action.payload.payload
+          }
+        ]
       };
     case CLEAR_WORKOUT:
       return {

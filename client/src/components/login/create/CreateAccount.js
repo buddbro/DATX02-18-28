@@ -36,7 +36,7 @@ class CreateAccount extends React.Component {
           AsyncStorage.setItem(
             'token',
             data.token + this.state.email
-          ).then(t => {
+          ).then(() => {
             AsyncStorage.getItem('token').then(value => {
               this.props.loginWithToken();
               this.props.navigation.dispatch(

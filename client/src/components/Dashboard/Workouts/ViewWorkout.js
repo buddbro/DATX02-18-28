@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Text,
+  TextInput,
   View,
   ScrollView,
   TouchableOpacity,
@@ -12,9 +13,17 @@ import { clearWorkout } from '../../../actions';
 
 // Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  //
+  //   this.state = { title: '' };
+  // }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     title: nextProps.title
+  //   });
+  // }
 
   render() {
     return (
@@ -38,6 +47,23 @@ class ViewWorkout extends React.Component {
           </Text>
         </View>
 
+        {/* <View style={styles.workoutName}>
+          <TextInput
+            style={{
+              height: 40,
+              width: 200,
+              fontSize: 24,
+              borderColor: '#eee',
+              borderWidth: 1,
+              borderRadius: 5,
+              padding: 3,
+              textAlign: 'center'
+            }}
+            onChangeText={title => this.setState({ title })}
+            value={this.state.title}
+          />
+        </View> */}
+
         <View style={styles.workoutName}>
           <Text style={styles.nameTextStyle}>
             {this.props.title}
@@ -51,11 +77,7 @@ class ViewWorkout extends React.Component {
         <View style={styles.category}>
           <Text style={{ paddingLeft: 10 }}>
             Exercises:{' '}
-            {this.props.exercises.map(exercise =>
-              <Text key={exercise.id}>
-                {exercise.title}
-              </Text>
-            )}
+            {this.props.exercises.map(exercise => exercise.title + ' ')}
           </Text>
         </View>
 

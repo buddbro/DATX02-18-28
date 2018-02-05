@@ -1,14 +1,17 @@
-import { ADD_WORKOUT } from './types';
-import { CHOOSE_WORKOUT } from './types';
-import { FETCH_WORKOUTS } from './types';
-import { CLEAR_WORKOUT } from './types';
+import {
+  ADD_WORKOUT,
+  CHOOSE_WORKOUT,
+  FETCH_WORKOUTS,
+  CLEAR_WORKOUT
+} from './types';
+
+import { AsyncStorage } from 'react-native';
 
 import axios from 'axios';
 
 export function chooseWorkout(id) {
   return dispatch => {
     axios.get(`https://getpushapp.com/api/workouts/${id}`).then(({ data }) => {
-      console.log(data);
       dispatch({
         type: CHOOSE_WORKOUT,
         payload: data
@@ -34,6 +37,16 @@ export function fetchWorkouts(id, token) {
   };
 }
 
-export function addWorkout() {
-  return { type: ADD_WORKOUT };
+export function addWorkout(id, token) {
+  return dispatch => {
+    axios
+      .post(`https://getpushapp.com/api/workouts/new`, { id, token })
+      .then(({ data }) => {
+        console.log(data[0]);
+        dispatch({
+          type: ADD_WORKOUT,
+          payload: data[0]
+        });
+      });
+  };
 }
