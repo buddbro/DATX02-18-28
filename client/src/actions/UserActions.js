@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from './types';
+import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOADING_FALSE } from './types';
 
 import { AsyncStorage } from 'react-native';
 
@@ -54,11 +54,19 @@ export function loginWithToken() {
                   email
                 }
               });
+            } else {
+              dispatch({
+                type: LOADING_FALSE
+              });
             }
           })
           .catch(error => {
             console.log(error);
           });
+      } else {
+        dispatch({
+          type: LOADING_FALSE
+        });
       }
     });
   };

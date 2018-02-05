@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
+import { clearWorkout } from '../../../actions';
 
 // Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
@@ -19,12 +20,14 @@ class ViewWorkout extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            this.props.clearWorkout();
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
                 routeName: 'Workout'
               })
-            )}
+            );
+          }}
         >
           <Text style={{ paddingLeft: 10 }}>Back</Text>
         </TouchableOpacity>
@@ -46,7 +49,14 @@ class ViewWorkout extends React.Component {
         </View>
 
         <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>ExercisesLista!</Text>
+          <Text style={{ paddingLeft: 10 }}>
+            Exercises:{' '}
+            {this.props.exercises.map(exercise =>
+              <Text key={exercise.id}>
+                {exercise.title}
+              </Text>
+            )}
+          </Text>
         </View>
 
         <View style={styles.category}>
@@ -66,15 +76,16 @@ class ViewWorkout extends React.Component {
 }
 
 const mapStateToProps = ({ workout }) => {
-  const { id, title, date } = workout;
+  const { id, title, date, exercises } = workout;
   return {
     id,
     title,
-    date
+    date,
+    exercises
   };
 };
 
-export default connect(mapStateToProps)(ViewWorkout);
+export default connect(mapStateToProps, { clearWorkout })(ViewWorkout);
 
 const styles = StyleSheet.create({
   container: {

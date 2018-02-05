@@ -15,6 +15,7 @@ import axios from 'axios';
 import NavigationActions from 'react-navigation';
 import sha256 from 'sha256';
 import { connect } from 'react-redux';
+import { loginWithToken } from '../../../actions';
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -22,18 +23,6 @@ class CreateAccount extends React.Component {
 
     this.state = { data: [], name: '', email: '', password: '' };
   }
-
-  // componentDidMount() {
-  //   AsyncStorage.getItem('@LocalStore:token').then(value => {
-  //     if (value) {
-  //       this.props.navigation.dispatch(
-  //         NavigationActions.NavigationActions.navigate({
-  //           routeName: 'Workout'
-  //         })
-  //       );
-  //     }
-  //   });
-  // }
 
   registerUser() {
     axios
@@ -49,9 +38,7 @@ class CreateAccount extends React.Component {
             data.token + this.state.email
           ).then(t => {
             AsyncStorage.getItem('token').then(value => {
-              this.setState({
-                token: data.token.substring(0, 64)
-              });
+              this.props.loginWithToken();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Workout'
@@ -128,7 +115,7 @@ const mapStateToProps = ({ user }) => {
   return { token: user.token };
 };
 
-export default connect(mapStateToProps)(CreateAccount);
+export default connect(mapStateToProps, { loginWithToken })(CreateAccount);
 
 const styles = StyleSheet.create({
   container: {

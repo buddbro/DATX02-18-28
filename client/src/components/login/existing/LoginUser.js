@@ -60,10 +60,15 @@ class LoginUser extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+
+    if (this.props.loading) {
+      return <View />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.head}>
-          <Text style={styles.headline}>Welcome back igen!</Text>
+          <Text style={styles.headline}>PushApp</Text>
         </View>
 
         <View style={styles.body}>
@@ -115,8 +120,8 @@ class LoginUser extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  const { id, email, token, error } = user;
-  return { id, email, token, error };
+  const { loading, id, email, token, error } = user;
+  return { loading, id, email, token, error };
 };
 
 export default connect(mapStateToProps, { loginWithPassword, fetchWorkouts })(
