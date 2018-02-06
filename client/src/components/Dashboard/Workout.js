@@ -24,7 +24,11 @@ class Workout extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={{ top: 230, paddingTop: 20 }}>
+        <ProfileHeader
+          user={this.props.user}
+          navigation={this.props.navigation}
+        />
+        <ScrollView style={{ paddingTop: 20, backgroundColor: '#fff' }}>
           <TouchableOpacity
             onPress={() => {
               this.props.addWorkout(this.props.user.id, this.props.user.token);
@@ -48,10 +52,6 @@ class Workout extends React.Component {
             </View>
           )}
         </ScrollView>
-        <ProfileHeader
-          user={this.props.user}
-          navigation={this.props.navigation}
-        />
       </View>
     );
   }
@@ -70,7 +70,7 @@ export default connect(mapStateToProps, { addWorkout, logout })(Workout);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#b9baf1',
     marginTop: -50
   },
   addWorkout: {

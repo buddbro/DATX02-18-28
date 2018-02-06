@@ -4,14 +4,17 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Animated,
+  PanResponder,
   Dimensions,
+  LayoutAnimation,
+  UIManager,
   StyleSheet,
   Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { logout } from '../../actions';
 import { Svg } from 'expo';
-const { Ellipse } = Svg;
 
 import avatar from '../../../assets/avatar_default.svg';
 import profile_bottom from '../../../assets/profile_bottom.svg';
@@ -19,75 +22,118 @@ import profile_bottom from '../../../assets/profile_bottom.svg';
 const { height, width } = Dimensions.get('window');
 
 class ProfileHeader extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const position = new Animated.ValueXY();
+    const panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gesture) => {
+        if (gesture.dy < 180) {
+          position.setValue({ x: gesture.dx, y: gesture.dy });
+        }
+      },
+      onPanResponderRelease: (event, gesture) => {
+        if (gesture.dy > 100) {
+          this.forceSwipe();
+        } else {
+          this.resetPosition();
+        }
+      }
+    });
+
+    this.state = { panResponder, position };
+  }
+
+  componentWillUpdate() {
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
+  }
+
+  forceSwipe() {
+    Animated.timing(this.state.position, {
+      toValue: { x: 0, y: 180 },
+      duration: 250
+    }).start();
+  }
+
+  resetPosition() {
+    Animated.spring(this.state.position, {
+      toValue: { x: 0, y: 0 }
+    }).start();
+  }
+
+  getProfileStyle() {
+    return {
+      top: this.state.position.getLayout().top
+    };
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <TouchableOpacity
-            style={{
-              alignSelf: 'flex-end',
-              marginRight: 10
-            }}
-            onPress={() => {
-              this.props.logout(this.props.user.id);
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
-                })
-              );
-            }}
-          >
-            <Text
+      <Animated.View
+        style={[this.getProfileStyle(), { zIndex: 10 }]}
+        {...this.state.panResponder.panHandlers}
+      >
+        <View style={styles.container}>
+          <View>
+            <TouchableOpacity
               style={{
-                fontSize: 20,
-                color: '#fff'
+                alignSelf: 'flex-end',
+                marginRight: 10
+              }}
+              onPress={() => {
+                this.props.logout(this.props.user.id);
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginUser'
+                  })
+                );
               }}
             >
-              Logout
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: '#fff'
+                }}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* <Image
+              source={require('../../../assets/avatar_default.png')}
+              style={{ width: 45, height: 45, alignSelf: 'center' }}
+            /> */}
+            <Text style={styles.userWelcome}>
+              Welcome back {this.props.user.name}!
             </Text>
-          </TouchableOpacity>
+          </View>
+          <Text style={styles.tagline}>Ready to rock!?</Text>
+          <Svg height="100" width={width}>
+            <Svg.Ellipse
+              cx={width / 2}
+              cy="5"
+              rx={width / 1.5}
+              ry="30"
+              stroke="#b9baf1"
+              strokeWidth="0"
+              fill="#b9baf1"
+            />
+          </Svg>
         </View>
-
-        <View style={{ display: 'flex', flexDirection: 'column' }}>
-          <Image
-            source={require('../../../assets/avatar_default.png')}
-            style={{ width: 45, height: 45, alignSelf: 'center' }}
-          />
-          {/* <Image
-            source={avatar}
-            style={{ width: 45, height: 45, alignSelf: 'center' }}
-          /> */}
-          <Text style={styles.userWelcome}>
-            Welcome back {this.props.user.name}!
-          </Text>
-        </View>
-        <Text style={styles.tagline}>Ready to rock!?</Text>
-        <Svg height="100" width={width}>
-          <Ellipse
-            cx={width / 2}
-            cy="5"
-            rx={width / 1.5}
-            ry="30"
-            stroke="#b9baf1"
-            strokeWidth="0"
-            fill="#b9baf1"
-          />
-        </Svg>
-      </View>
+      </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // display: 'flex',
     backgroundColor: '#b9baf1',
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
-    // flexDirection: 'column',
-    top: 170 - height,
-    height: 230,
-    paddingTop: 85
+    height: 190,
+    paddingTop: 72
   },
   userWelcome: {
     marginTop: 20,
