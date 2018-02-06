@@ -102,12 +102,13 @@ class LoginUser extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'CreateAccount'
                 })
-              )}
+              );
+            }}
           >
             <Text style={{ color: '#858080' }}>
               Don't have an account yet? Create one!

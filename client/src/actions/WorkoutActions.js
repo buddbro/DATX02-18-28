@@ -42,7 +42,6 @@ export function addWorkout(id, token) {
     axios
       .post(`https://getpushapp.com/api/workouts/new`, { id, token })
       .then(({ data }) => {
-        console.log(data[0]);
         dispatch({
           type: ADD_WORKOUT,
           payload: data[0]

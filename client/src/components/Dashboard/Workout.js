@@ -4,13 +4,17 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
   StyleSheet
 } from 'react-native';
 import WorkoutLog from './WorkoutLog';
+import ProfileHeader from './ProfileHeader';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { addWorkout, logout } from '../../actions';
 import NavigationActions from 'react-navigation';
+
+const { height, width } = Dimensions.get('window');
 
 class Workout extends React.Component {
   componentDidMount() {
@@ -20,40 +24,20 @@ class Workout extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.welcome}>
-          <Text style={styles.textStyle}>
-            Welcome back {this.props.name}
-          </Text>
-
+        <ScrollView style={{ top: 230, paddingTop: 20 }}>
           <TouchableOpacity
             onPress={() => {
-              this.props.logout(this.props.userId);
+              this.props.addWorkout(this.props.user.id, this.props.user.token);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
+                  routeName: 'ViewWorkout'
                 })
               );
             }}
+            style={styles.addWorkout}
           >
-            <Text style={{ fontSize: 20 }}>Logout</Text>
+            <Text style={styles.plusSign}>+</Text>
           </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            this.props.addWorkout(this.props.userId, this.props.token);
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'ViewWorkout'
-              })
-            );
-          }}
-          style={styles.addWorkout}
-        >
-          <Text style={styles.plusSign}>+</Text>
-        </TouchableOpacity>
-
-        <ScrollView>
           {this.props.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
@@ -64,6 +48,10 @@ class Workout extends React.Component {
             </View>
           )}
         </ScrollView>
+        <ProfileHeader
+          user={this.props.user}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }
@@ -71,9 +59,7 @@ class Workout extends React.Component {
 
 const mapStateToProps = ({ workout, user }) => {
   return {
-    userId: user.id,
-    token: user.token,
-    name: user.name,
+    user,
     workouts: workout.workouts
   };
 };
@@ -84,28 +70,20 @@ export default connect(mapStateToProps, { addWorkout, logout })(Workout);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-  },
-  welcome: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    height: 150,
-    paddingTop: 20,
-    paddingLeft: 5
-  },
-  textStyle: {
-    fontSize: 20
+    backgroundColor: '#fff',
+    marginTop: -50
   },
   addWorkout: {
-    margin: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 20,
+    marginTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
-    width: window.innerWidth,
+    height: 80,
     borderRadius: 5,
-    paddingBottom: 5,
+    paddingBottom: 15,
     backgroundColor: '#7AD9C6'
   },
   plusSign: {
@@ -113,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 100,
     fontWeight: 'bold'
   },
-  item: {},
+  item: { marginBottom: 20 },
   text: {},
   separator: {}
 });

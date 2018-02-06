@@ -26,11 +26,18 @@ class WorkoutLog extends React.Component {
             })
           );
         }}
-        style={styles.addWorkout}
+        style={styles.workoutItem}
       >
-        <Text style={styles.plusSign}>
-          {this.props.workout.title}
-        </Text>
+        <View>
+          <Text style={styles.title}>
+            {this.props.workout.title}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.date}>
+            {this.props.workout.date.substring(11, 16)}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
   }
@@ -39,20 +46,22 @@ class WorkoutLog extends React.Component {
 export default connect(null, { chooseWorkout })(WorkoutLog);
 
 const styles = StyleSheet.create({
-  addWorkout: {
-    margin: 15,
-    flexDirection: 'row',
+  workoutItem: {
+    marginLeft: 15,
+    marginRight: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
-    width: window.innerWidth,
+    height: 80,
     borderRadius: 5,
-    paddingBottom: 5,
     backgroundColor: '#7AD9C6'
   },
-  plusSign: {
+  title: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold'
+  },
+  date: {
+    color: '#fff',
+    fontSize: 18
   }
 });

@@ -30,7 +30,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
-      console.log(action.payload);
       const oldWorkouts = state.workouts;
       return {
         ...state,
@@ -39,12 +38,12 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         date: action.payload.date,
         exercises: [],
         workouts: [
-          ...oldWorkouts,
           {
             id: action.payload.id,
             title: action.payload.title,
-            payload: action.payload.payload
-          }
+            date: action.payload.date
+          },
+          ...oldWorkouts
         ]
       };
     case CLEAR_WORKOUT:
