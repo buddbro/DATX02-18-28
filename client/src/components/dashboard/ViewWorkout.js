@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout, saveWorkout, fetchExerciseList } from '../../actions';
+import { clearWorkout, saveWorkout } from '../../actions';
 
 const { height, width } = Dimensions.get('window');
 
@@ -28,45 +28,6 @@ class ViewWorkout extends React.Component {
     this.setState({
       title: nextProps.title
     });
-  }
-
-  componentDidMount() {
-    this.props.fetchExerciseList();
-  }
-
-  renderSectionList() {
-    const sections = Object.keys(
-      (exerciseList = this.props.exerciseList.reduce((acc, next) => {
-        const { id, name } = next;
-        if (acc[next.exercise_type]) {
-          acc[next.exercise_type] = [...acc[next.exercise_type], { id, name }];
-        } else {
-          acc[next.exercise_type] = [{ id, name }];
-        }
-
-        return acc;
-      }, {}))
-    ).reduce((acc, next) => {
-      const exerciseTypes = exerciseList[next].map(key => key.name);
-      return [...acc, { data: exerciseTypes, title: next }];
-    }, []);
-
-    return (
-      <SectionList
-        renderItem={({ item }) =>
-          <View>
-            <Text>
-              {item}
-            </Text>
-          </View>}
-        renderSectionHeader={({ section }) =>
-          <Text>
-            {section.title}
-          </Text>}
-        sections={sections}
-        keyExtractor={(item, index) => index}
-      />
-    );
   }
 
   render() {
@@ -85,22 +46,7 @@ class ViewWorkout extends React.Component {
           >
             <Text style={{ fontSize: 24 }}>Back</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              this.props.clearWorkout();
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
-                })
-              );
-            }}
-          >
-            <Text style={{ fontSize: 24 }}>Finish</Text>
-          </TouchableOpacity>
         </View>
-
-        {this.renderSectionList()}
 
         <View style={styles.workoutName}>
           <TextInput
@@ -126,6 +72,21 @@ class ViewWorkout extends React.Component {
             value={this.state.title}
           />
         </View>
+
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'ExerciseList'
+              })
+            );
+          }}
+          style={styles.addExerciseItem}
+        >
+          <View>
+            <Text style={styles.addExerciseTitle}>Add exercise</Text>
+          </View>
+        </TouchableOpacity>
 
         <View style={styles.workoutName}>
           <Text style={styles.nameTextStyle}>
@@ -160,14 +121,13 @@ class ViewWorkout extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user, exercises }) => {
+const mapStateToProps = ({ workout, user }) => {
   const { id, title, date } = workout;
   return {
     id,
     title,
     date,
     exercises: workout.exercises,
-    exerciseList: exercises.exerciseList,
     user: {
       id: user.id,
       token: user.token
@@ -177,8 +137,7 @@ const mapStateToProps = ({ workout, user, exercises }) => {
 
 export default connect(mapStateToProps, {
   clearWorkout,
-  saveWorkout,
-  fetchExerciseList
+  saveWorkout
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
@@ -206,5 +165,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#6669CB'
   },
-  category: {}
+  category: {},
+  addExerciseTitle: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  addExerciseItem: {
+    marginLeft: 15,
+    marginRight: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    borderRadius: 5,
+    backgroundColor: '#7AD9C6'
+  }
 });

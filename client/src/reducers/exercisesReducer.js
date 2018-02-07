@@ -1,7 +1,7 @@
 import { FETCH_EXERCISE_LIST } from '../actions/types';
 
 const INITIAL_STATE = {
-  exerciseList: []
+  list: []
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
@@ -9,7 +9,7 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case FETCH_EXERCISE_LIST:
       return {
         ...state,
-        exerciseList: action.payload
+        list: action.payload
       };
     default:
       return state;
