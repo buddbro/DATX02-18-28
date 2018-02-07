@@ -13,7 +13,7 @@ import {
   bindActionCreators
 } from 'redux';
 import thunk from 'redux-thunk';
-import { loginWithToken } from './src/actions';
+import { loginWithToken, fetchExerciseList } from './src/actions';
 import reducers from './src/reducers';
 
 import AppNavigator from './src/containers/AppNavigator';
@@ -23,6 +23,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 class App extends React.Component {
   componentDidMount() {
     store.dispatch(loginWithToken());
+    store.dispatch(fetchExerciseList());
   }
 
   render() {

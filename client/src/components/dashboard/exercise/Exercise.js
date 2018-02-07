@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-export default class Excercise extends React.PureComponent {
+export default class Exercise extends React.PureComponent {
   constructor(props) {
     super(props);
   }

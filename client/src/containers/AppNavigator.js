@@ -6,6 +6,8 @@ import NewWorkout from '../components/dashboard/NewWorkout';
 import LoginUser from '../components/login/existing/LoginUser';
 import CreateAccount from '../components/login/create/CreateAccount';
 
+import ExerciseList from '../components/dashboard/exercise/ExerciseList';
+
 const AppRouteConfigs = {
   LoginUser: {
     screen: LoginUser,
@@ -33,6 +35,12 @@ const AppRouteConfigs = {
   },
   NewWorkout: {
     screen: NewWorkout,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  ExerciseList: {
+    screen: ExerciseList,
     navigationOptions: {
       tabBarVisible: false
     }
