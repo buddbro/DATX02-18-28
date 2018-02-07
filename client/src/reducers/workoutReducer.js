@@ -2,6 +2,7 @@ import {
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
   CLEAR_WORKOUT,
+  EDIT_WORKOUT,
   ADD_WORKOUT
 } from '../actions/types';
 
@@ -30,7 +31,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
-      const oldWorkouts = state.workouts;
       return {
         ...state,
         id: action.payload.id,
@@ -43,7 +43,7 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
             title: action.payload.title,
             date: action.payload.date
           },
-          ...oldWorkouts
+          ...state.workouts
         ]
       };
     case CLEAR_WORKOUT:
@@ -53,6 +53,12 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         title: '',
         date: '',
         exercises: []
+      };
+    case EDIT_WORKOUT:
+      console.log(action.payload.title);
+      return {
+        ...state,
+        title: action.payload.title
       };
     case FETCH_WORKOUTS:
       const workouts = action.payload;

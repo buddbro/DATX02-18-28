@@ -2,7 +2,7 @@ import {
   ADD_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
-  SAVE_WORKOUT,
+  EDIT_WORKOUT,
   CLEAR_WORKOUT
 } from './types';
 
@@ -38,20 +38,18 @@ export function fetchWorkouts(id, token) {
   };
 }
 
-export function saveWorkout(userId, token, workoutId, title) {
-  console.log(userId, token, workoutId, title);
+export function editWorkout(userId, token, workoutId, title) {
   return dispatch => {
     axios
-      .post(`https://getpushapp.com/api/workouts`, {
+      .patch(`https://getpushapp.com/api/workouts/${workoutId}`, {
         userId,
         token,
-        workoutId,
         title
       })
       .then(({ data }) => {
         dispatch({
-          type: SAVE_WORKOUT,
-          payload: data
+          type: EDIT_WORKOUT,
+          payload: { title }
         });
       });
   };

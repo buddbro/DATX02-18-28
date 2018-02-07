@@ -15,6 +15,32 @@ class WorkoutLog extends React.Component {
     super(props);
   }
 
+  renderDate() {
+    const { date } = this.props.workout;
+    const month = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][Number(date.substring(5, 7) - 1)];
+
+    return (
+      month +
+      ' ' +
+      Number(date.substring(8, 10)) +
+      ' - ' +
+      date.substring(11, 16)
+    );
+  }
+
   render() {
     return (
       <TouchableOpacity
@@ -35,7 +61,7 @@ class WorkoutLog extends React.Component {
         </View>
         <View>
           <Text style={styles.date}>
-            {this.props.workout.date.substring(11, 16)}
+            {this.renderDate()}
           </Text>
         </View>
       </TouchableOpacity>

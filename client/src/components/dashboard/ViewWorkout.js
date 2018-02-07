@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout, saveWorkout } from '../../actions';
+import { clearWorkout, editWorkout } from '../../actions';
 
 const { height, width } = Dimensions.get('window');
 
@@ -44,78 +44,82 @@ class ViewWorkout extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 24 }}>Back</Text>
+            <Text style={{ fontSize: 20 }}>Back</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styles.workoutName}>
-          <TextInput
-            style={{
-              height: 40,
-              width,
-              fontSize: 24,
-              borderColor: '#eee',
-              borderWidth: 1,
-              borderRadius: 5,
-              padding: 3,
-              textAlign: 'center'
-            }}
-            onChangeText={title => this.setState({ title })}
-            onSubmitEditing={() =>
-              this.props.saveWorkout(
-                this.props.user.id,
-                this.props.user.token,
-                this.props.id,
-                this.state.title
-              )}
-            returnKeyLabel="Save"
-            value={this.state.title}
-          />
-        </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'ExerciseList'
-              })
-            );
-          }}
-          style={styles.addExerciseItem}
-        >
-          <View>
-            <Text style={styles.addExerciseTitle}>Add exercise</Text>
+        <ScrollView>
+          <View style={styles.workoutName}>
+            <TextInput
+              style={{
+                height: 40,
+                width,
+                fontSize: 24,
+                borderColor: '#eee',
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 3,
+                textAlign: 'center',
+                margin: 40
+              }}
+              onChangeText={title => this.setState({ title })}
+              onEndEditing={() =>
+                this.props.editWorkout(
+                  this.props.user.id,
+                  this.props.user.token,
+                  this.props.id,
+                  this.state.title
+                )}
+              returnKeyLabel="Save"
+              clearButtonMode="while-editing"
+              spellCheck={false}
+              value={this.state.title}
+            />
           </View>
-        </TouchableOpacity>
 
-        <View style={styles.workoutName}>
-          <Text style={styles.nameTextStyle}>
-            {this.props.title}
-          </Text>
-        </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'ExerciseList'
+                })
+              );
+            }}
+            style={styles.addExerciseItem}
+          >
+            <View>
+              <Text style={styles.addExerciseTitle}>Add exercise</Text>
+            </View>
+          </TouchableOpacity>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>Kategori</Text>
-        </View>
+          <View style={styles.workoutName}>
+            <Text style={styles.nameTextStyle}>
+              {this.props.title}
+            </Text>
+          </View>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>
-            Exercises:{' '}
-            {this.props.exercises.map(exercise => exercise.title + ' ')}
-          </Text>
-        </View>
+          <View style={styles.category}>
+            <Text style={{ paddingLeft: 10 }}>Kategori</Text>
+          </View>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>Time</Text>
-        </View>
+          <View style={styles.category}>
+            <Text style={{ paddingLeft: 10 }}>
+              Exercises:{' '}
+              {this.props.exercises.map(exercise => exercise.title + ' ')}
+            </Text>
+          </View>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>Difficulty</Text>
-        </View>
+          <View style={styles.category}>
+            <Text style={{ paddingLeft: 10 }}>Time</Text>
+          </View>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>Notes</Text>
-        </View>
+          <View style={styles.category}>
+            <Text style={{ paddingLeft: 10 }}>Difficulty</Text>
+          </View>
+
+          <View style={styles.category}>
+            <Text style={{ paddingLeft: 10 }}>Notes</Text>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -137,7 +141,7 @@ const mapStateToProps = ({ workout, user }) => {
 
 export default connect(mapStateToProps, {
   clearWorkout,
-  saveWorkout
+  editWorkout
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
