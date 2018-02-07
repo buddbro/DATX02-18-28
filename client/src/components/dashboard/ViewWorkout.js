@@ -5,53 +5,65 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout } from '../../../actions';
+import { clearWorkout, saveWorkout } from '../../actions';
+
+const { height, width } = Dimensions.get('window');
 
 // Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = { title: '' };
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     title: nextProps.title
-  //   });
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = { title: '' };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      title: nextProps.title
+    });
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.clearWorkout();
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            );
-          }}
-        >
-          <Text style={{ paddingLeft: 10 }}>Back</Text>
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.clearWorkout();
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'Workout'
+                })
+              );
+            }}
+          >
+            <Text style={{ fontSize: 24 }}>Back</Text>
+          </TouchableOpacity>
 
-        <View style={styles.category}>
-          <Text style={{ paddingLeft: 10 }}>
-            Logged at {this.props.date}
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.clearWorkout();
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'Workout'
+                })
+              );
+            }}
+          >
+            <Text style={{ fontSize: 24 }}>Finish</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* <View style={styles.workoutName}>
+        <View style={styles.workoutName}>
           <TextInput
             style={{
               height: 40,
-              width: 200,
+              width,
               fontSize: 24,
               borderColor: '#eee',
               borderWidth: 1,
@@ -60,9 +72,17 @@ class ViewWorkout extends React.Component {
               textAlign: 'center'
             }}
             onChangeText={title => this.setState({ title })}
+            onSubmitEditing={() =>
+              this.props.saveWorkout(
+                this.props.user.id,
+                this.props.user.token,
+                this.props.id,
+                this.state.title
+              )}
+            returnKeyLabel="Save"
             value={this.state.title}
           />
-        </View> */}
+        </View>
 
         <View style={styles.workoutName}>
           <Text style={styles.nameTextStyle}>
@@ -97,17 +117,23 @@ class ViewWorkout extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout }) => {
+const mapStateToProps = ({ workout, user }) => {
   const { id, title, date, exercises } = workout;
   return {
     id,
     title,
     date,
-    exercises
+    exercises,
+    user: {
+      id: user.id,
+      token: user.token
+    }
   };
 };
 
-export default connect(mapStateToProps, { clearWorkout })(ViewWorkout);
+export default connect(mapStateToProps, { clearWorkout, saveWorkout })(
+  ViewWorkout
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -116,6 +142,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // justifyContent: 'center',
     paddingTop: 35
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 10,
+    justifyContent: 'space-between'
   },
   workoutName: {
     flex: 1,

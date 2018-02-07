@@ -2,6 +2,7 @@ import {
   ADD_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
+  SAVE_WORKOUT,
   CLEAR_WORKOUT
 } from './types';
 
@@ -31,6 +32,25 @@ export function fetchWorkouts(id, token) {
       .then(({ data }) => {
         dispatch({
           type: FETCH_WORKOUTS,
+          payload: data
+        });
+      });
+  };
+}
+
+export function saveWorkout(userId, token, workoutId, title) {
+  console.log(userId, token, workoutId, title);
+  return dispatch => {
+    axios
+      .post(`https://getpushapp.com/api/workouts`, {
+        userId,
+        token,
+        workoutId,
+        title
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: SAVE_WORKOUT,
           payload: data
         });
       });
