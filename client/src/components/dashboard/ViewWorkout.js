@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout, saveWorkout } from '../../actions';
+import { clearWorkout, saveWorkout, fetchExerciseList } from '../../actions';
 
 const { height, width } = Dimensions.get('window');
 
@@ -26,6 +26,10 @@ class ViewWorkout extends React.Component {
     this.setState({
       title: nextProps.title
     });
+  }
+
+  componentDidMount() {
+    this.props.fetchExerciseList();
   }
 
   render() {
@@ -131,9 +135,11 @@ const mapStateToProps = ({ workout, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { clearWorkout, saveWorkout })(
-  ViewWorkout
-);
+export default connect(mapStateToProps, {
+  clearWorkout,
+  saveWorkout,
+  fetchExerciseList
+})(ViewWorkout);
 
 const styles = StyleSheet.create({
   container: {
