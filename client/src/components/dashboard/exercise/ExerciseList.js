@@ -10,7 +10,10 @@ import {
   ListItem,
 } from 'react-native';
 import Exercise from './Exercise';
+import ExerciseListItem from './ExerciseListItem';
+import ExerciseListHeader from './ExerciseListHeader';
 import { connect } from 'react-redux';
+import NavigationActions from 'react-navigation';
 
 class ExerciseList extends React.PureComponent {
   //keyExtractor = (item, index) => item.id;
@@ -42,18 +45,11 @@ class ExerciseList extends React.PureComponent {
 
     return (
       <SectionList
-        renderItem={({ item }) =>
-          <View>
-            <Text>
-              {item}
-            </Text>
-          </View>}
-        renderSectionHeader={({ section }) =>
-          <Text>
-            {section.title}
-          </Text>}
+        renderItem={({item}) => <ExerciseListItem name={item} id={5} navigation={this.props.navigation} />}
+        renderSectionHeader={({ section }) => <ExerciseListHeader title={section.title} />}
         sections={sections}
         keyExtractor={(item, index) => index}
+        style={styles.list}
       />
     );
   }
@@ -61,6 +57,17 @@ class ExerciseList extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'ViewWorkout'
+              })
+            );
+          }}
+        >
+          <Text>Back</Text>
+        </TouchableOpacity>
         {this.renderSectionList()}
       </View>
     );
@@ -78,11 +85,11 @@ export default connect(mapStateToProps)(ExerciseList);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingTop: 50,
   },
   list: {
-    flex: 1
+    marginTop: 10,
+    flex: 1,
   }
 });

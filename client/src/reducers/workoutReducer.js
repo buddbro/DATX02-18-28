@@ -2,7 +2,8 @@ import {
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
   CLEAR_WORKOUT,
-  ADD_WORKOUT
+  ADD_WORKOUT,
+  ADD_EXERCISE_TO_WORKOUT,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -15,6 +16,11 @@ const INITIAL_STATE = {
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case ADD_EXERCISE_TO_WORKOUT:
+      return {
+        ...state,
+        exercises: [...state.exercises, action.payload]
+      }
     case CHOOSE_WORKOUT:
       let exercises = action.payload.reduce((acc, next) => {
         return [...acc, { id: next.exercise_id, title: next.exercise_title }];
