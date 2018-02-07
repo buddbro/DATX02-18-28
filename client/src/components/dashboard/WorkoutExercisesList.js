@@ -8,8 +8,8 @@ class WorkoutExercisesList extends React.Component {
         <Text>Workout Exercises List</Text>
         {this.props.exercises.map(exercise => {
           return (
-            <Text>
-              {exercise}
+            <Text key={exercise.id}>
+              {exercise.title}
             </Text>
           );
         })}
