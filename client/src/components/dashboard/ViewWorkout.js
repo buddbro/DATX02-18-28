@@ -30,45 +30,6 @@ class ViewWorkout extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.props.fetchExerciseList();
-  }
-
-  renderSectionList() {
-    const sections = Object.keys(
-      (exerciseList = this.props.exerciseList.reduce((acc, next) => {
-        const { id, name } = next;
-        if (acc[next.exercise_type]) {
-          acc[next.exercise_type] = [...acc[next.exercise_type], { id, name }];
-        } else {
-          acc[next.exercise_type] = [{ id, name }];
-        }
-
-        return acc;
-      }, {}))
-    ).reduce((acc, next) => {
-      const exerciseTypes = exerciseList[next].map(key => key.name);
-      return [...acc, { data: exerciseTypes, title: next }];
-    }, []);
-
-    return (
-      <SectionList
-        renderItem={({ item }) =>
-          <View>
-            <Text>
-              {item}
-            </Text>
-          </View>}
-        renderSectionHeader={({ section }) =>
-          <Text>
-            {section.title}
-          </Text>}
-        sections={sections}
-        keyExtractor={(item, index) => index}
-      />
-    );
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -99,8 +60,6 @@ class ViewWorkout extends React.Component {
             <Text style={{ fontSize: 24 }}>Finish</Text>
           </TouchableOpacity>
         </View>
-
-        {this.renderSectionList()}
 
         <View style={styles.workoutName}>
           <TextInput
