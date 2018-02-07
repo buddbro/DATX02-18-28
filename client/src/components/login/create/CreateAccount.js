@@ -21,10 +21,21 @@ class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [], name: '', email: '', password: '' };
+    this.state = { data: [], name: '', email: '', password: '', error: '' };
   }
 
   registerUser() {
+    if (this.state.password.length < 6) {
+      this.setState({
+        error: 'Password has to be at least 6 characters'
+      });
+      return;
+    } else if (this.state.name.length < 2) {
+      this.setState({
+        error: 'Name is required'
+      });
+      return;
+    }
     axios
       .post('https://getpushapp.com/api/users/register', {
         email: this.state.email,
@@ -32,6 +43,10 @@ class CreateAccount extends React.Component {
         name: this.state.name
       })
       .then(({ data }) => {
+        if (!data.success) {
+          this.setState({ error: data.error });
+          return;
+        }
         try {
           AsyncStorage.setItem(
             'token',
@@ -55,6 +70,17 @@ class CreateAccount extends React.Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  renderError() {
+    if (!this.state.error) {
+      return;
+    }
+    return (
+      <Text style={{ fontSize: 18, color: '#992314', textAlign: 'center' }}>
+        {this.state.error}
+      </Text>
+    );
   }
 
   render() {
@@ -87,6 +113,9 @@ class CreateAccount extends React.Component {
             value={this.state.password}
             secureTextEntry={true}
           />
+
+          {this.renderError()}
+
           <TouchableOpacity
             onPress={() => this.registerUser()}
             style={styles.createAccountButton}

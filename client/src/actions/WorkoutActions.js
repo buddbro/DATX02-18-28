@@ -82,7 +82,7 @@ export function addExerciseToWorkout(userId, token, workoutId, exerciseId) {
       .then(({ data }) => {
         dispatch({
           type: ADD_EXERCISE_TO_WORKOUT,
-          payload: data.id
+          payload: { id: data[0].id, title: data[0].title }
         });
       });
   };

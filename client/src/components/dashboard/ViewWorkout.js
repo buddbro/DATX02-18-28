@@ -13,6 +13,7 @@ import {
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
 import { clearWorkout, editWorkout } from '../../actions';
+import WorkoutExercisesList from './WorkoutExercisesList';
 
 const { height, width } = Dimensions.get('window');
 
@@ -31,6 +32,7 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
+    console.log('Execises', this.props.exercises);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -91,22 +93,17 @@ class ViewWorkout extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.workoutName}>
+          {/* <View style={styles.workoutName}>
             <Text style={styles.nameTextStyle}>
               {this.props.title}
             </Text>
-          </View>
+          </View> */}
 
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Kategori</Text>
           </View>
 
-          <View style={styles.category}>
-            <Text style={{ paddingLeft: 10 }}>
-              Exercises:{' '}
-              {this.props.exercises.map(exercise => exercise.title + ' ')}
-            </Text>
-          </View>
+          <WorkoutExercisesList exercises={this.props.exercises} />
 
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Time</Text>
