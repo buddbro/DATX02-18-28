@@ -7,7 +7,7 @@ import {
   StyleSheet,
   SectionList,
   Header,
-  ListItem,
+  ListItem
 } from 'react-native';
 import ExerciseListItem from './ExerciseListItem';
 import ExerciseListHeader from './ExerciseListHeader';
@@ -38,14 +38,23 @@ class ExerciseList extends React.PureComponent {
         return acc;
       }, {}))
     ).reduce((acc, next) => {
-      const exerciseTypes = exerciseList[next].map(key => key.name);
+      // const exerciseTypes = exerciseList[next].map(key => key.name);
+      const exerciseTypes = exerciseList[next];
       return [...acc, { data: exerciseTypes, title: next }];
     }, []);
 
+    console.log(sections);
+
     return (
       <SectionList
-        renderItem={({item}) => <ExerciseListItem name={item} id={5} navigation={this.props.navigation} />}
-        renderSectionHeader={({ section }) => <ExerciseListHeader title={section.title} />}
+        renderItem={({ item }) =>
+          <ExerciseListItem
+            name={item.name}
+            exerciseId={item.id}
+            navigation={this.props.navigation}
+          />}
+        renderSectionHeader={({ section }) =>
+          <ExerciseListHeader title={section.title} />}
         sections={sections}
         keyExtractor={(item, index) => index}
         style={styles.list}
@@ -73,7 +82,7 @@ class ExerciseList extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({exercises}) => {
+const mapStateToProps = ({ exercises }) => {
   return {
     exercises: exercises.list
   };
@@ -85,10 +94,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 50,
+    paddingTop: 50
   },
   list: {
     marginTop: 10,
-    flex: 1,
+    flex: 1
   }
 });

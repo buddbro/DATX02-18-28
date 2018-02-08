@@ -20,7 +20,10 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case ADD_EXERCISE_TO_WORKOUT:
       return {
         ...state,
-        exercises: [...state.exercises, action.payload]
+        exercises: [
+          ...state.exercises,
+          { id: action.payload.id, title: action.payload.title }
+        ]
       };
     case CHOOSE_WORKOUT:
       let exercises = action.payload.reduce((acc, next) => {
@@ -61,7 +64,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: []
       };
     case EDIT_WORKOUT:
-      console.log(action.payload.title);
       return {
         ...state,
         title: action.payload.title
