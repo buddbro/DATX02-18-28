@@ -81,7 +81,10 @@ class ViewWorkout extends React.Component {
           </View>
 
           <View style={styles.category}>
-            <Text style={{ paddingLeft: 10 }}>Kategori</Text>
+            <Text style={{
+              paddingLeft: 10,
+              fontSize: 20,
+            }}>Kategori</Text>
           </View>
 
           <ScrollView
@@ -101,6 +104,9 @@ class ViewWorkout extends React.Component {
                 <Text style={styles.addExerciseTitle}>Add exercise</Text>
               </View>
             </TouchableOpacity>
+
+
+
 
             {/* <View style={styles.workoutName}>
               <Text style={styles.nameTextStyle}>
