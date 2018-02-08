@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   SectionList,
+  Animated,
   ListItem
 } from 'react-native';
 import NavigationActions from 'react-navigation';
@@ -78,32 +79,34 @@ class ViewWorkout extends React.Component {
             />
           </View>
 
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'ExerciseList'
-                })
-              );
-            }}
-            style={styles.addExerciseItem}
-          >
-            <View>
-              <Text style={styles.addExerciseTitle}>Add exercise</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* <View style={styles.workoutName}>
-            <Text style={styles.nameTextStyle}>
-              {this.props.title}
-            </Text>
-          </View> */}
-
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Kategori</Text>
           </View>
 
-          <WorkoutExercisesList exercises={this.props.exercises} />
+          <ScrollView style={styles.exerciseListStyle}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'ExerciseList'
+                  })
+                );
+              }}
+              style={styles.addExerciseItem}
+            >
+              <View>
+                <Text style={styles.addExerciseTitle}>Add exercise</Text>
+              </View>
+            </TouchableOpacity>
+
+            {/* <View style={styles.workoutName}>
+              <Text style={styles.nameTextStyle}>
+                {this.props.title}
+              </Text>
+            </View> */}
+
+            <WorkoutExercisesList exercises={this.props.exercises} />
+          </ScrollView>
 
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Time</Text>
@@ -180,5 +183,8 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 5,
     backgroundColor: '#7AD9C6'
+  },
+  exerciseListStyle: {
+
   }
 });

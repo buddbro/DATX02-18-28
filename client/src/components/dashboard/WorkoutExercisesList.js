@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
+// Scrollar åt sidan? 
 class WorkoutExercisesList extends React.Component {
   render() {
     return (
