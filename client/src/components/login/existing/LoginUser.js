@@ -78,6 +78,7 @@ class LoginUser extends React.Component {
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })}
             // value={this.state.email}
+            keyboardType="email-address"
           />
           <TextInput
             style={styles.textInput}
