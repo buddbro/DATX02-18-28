@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 80,
     borderRadius: 5,
-    backgroundColor: '#7AD9C6'
+    backgroundColor: '#7AD9C7'
   },
   exerciseListStyle: {
 
