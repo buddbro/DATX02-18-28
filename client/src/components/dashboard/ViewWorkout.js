@@ -14,6 +14,8 @@ import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
 import { clearWorkout, editWorkout } from '../../actions';
 
+import ExerciseCard from './exercise/ExerciseCard';
+
 const { height, width } = Dimensions.get('window');
 
 // Denna ska hämta information om loggat träningspass
@@ -119,6 +121,7 @@ class ViewWorkout extends React.Component {
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Notes</Text>
           </View>
+          <ExerciseCard style={{flex: 2}}/>
         </ScrollView>
       </View>
     );

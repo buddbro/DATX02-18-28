@@ -9,7 +9,6 @@ import {
   Header,
   ListItem,
 } from 'react-native';
-import Exercise from './Exercise';
 import ExerciseListItem from './ExerciseListItem';
 import ExerciseListHeader from './ExerciseListHeader';
 import { connect } from 'react-redux';
