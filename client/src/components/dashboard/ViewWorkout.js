@@ -81,15 +81,17 @@ class ViewWorkout extends React.Component {
           </View>
 
           <View style={styles.category}>
-            <Text style={{
-              paddingLeft: 10,
-              fontSize: 20,
-            }}>Kategori</Text>
+            <Text
+              style={{
+                paddingLeft: 10,
+                fontSize: 20
+              }}
+            >
+              Kategori
+            </Text>
           </View>
 
-          <ScrollView
-            horizontal
-            style={styles.exerciseListStyle}>
+          <ScrollView horizontal style={styles.exerciseListStyle}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.dispatch(
@@ -104,9 +106,6 @@ class ViewWorkout extends React.Component {
                 <Text style={styles.addExerciseTitle}>Add exercise</Text>
               </View>
             </TouchableOpacity>
-
-
-
 
             {/* <View style={styles.workoutName}>
               <Text style={styles.nameTextStyle}>
@@ -132,7 +131,7 @@ class ViewWorkout extends React.Component {
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Notes</Text>
           </View>
-          <ExerciseCard style={{flex: 2}}/>
+          <ExerciseCard style={{ flex: 2 }} />
         </ScrollView>
       </View>
     );
@@ -198,7 +197,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#7AD9C6'
   },
-  exerciseListStyle: {
-
-  }
+  exerciseListStyle: {}
 });
