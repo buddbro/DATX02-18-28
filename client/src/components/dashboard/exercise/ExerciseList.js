@@ -43,8 +43,6 @@ class ExerciseList extends React.PureComponent {
       return [...acc, { data: exerciseTypes, title: next }];
     }, []);
 
-    console.log(sections);
-
     return (
       <SectionList
         renderItem={({ item }) =>
