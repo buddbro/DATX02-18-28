@@ -27,8 +27,8 @@ export default class ExerciseCard extends React.Component {
         </TouchableOpacity>
         <FlatList
           style={{flex: 1}}
-          data={[{key: 'a'}]}
-          renderItem={({item}) => <ExerciseSet />}
+          data={this.props.sets}
+          renderItem={({item}) => <ExerciseSet id={item.id} reps={item.reps} weight={item.weight}/>}
         />
       </View>
     );
@@ -41,7 +41,7 @@ export default class ExerciseCard extends React.Component {
           style={styles.accordionHeader}
           onPress={() => this.setState({accordionToggled: !this.state.accordionToggled})}
           >
-          <Text>Exercise title</Text>
+          <Text>{this.props.title}</Text>
         </TouchableOpacity>
 
           {this.state.accordionToggled ? this.toggleAccordion() : null}

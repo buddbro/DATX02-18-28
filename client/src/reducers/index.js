@@ -10,5 +10,5 @@ export default combineReducers({
   loggedInNavigation,
   workout,
   exercises,
-  user
+  user,
 });

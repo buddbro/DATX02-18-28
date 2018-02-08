@@ -5,25 +5,48 @@ import {
   Text,
   TextInput,
 } from 'react-native';
+import {connect} from 'react-redux';
+import { addSetToExercise } from '../../../actions';
 
-export default class ExerciseSet extends React.Component {
+class ExerciseSet extends React.Component {
+  addSetToExercise() {
+    this.props.addSetToExercise(1, 2, 3, 4, 5);
+  }
+
   render() {
     return(
       <View style={styles.container}>
         <TextInput
           placeholder="Reps"
           style={styles.reps}
+          value={this.props.reps}
         />
-        <Text style={styles.multiple}> x </Text>
+        <Text
+          style={styles.multiple}
+          >
+          x
+        </Text>
         <TextInput
           placeholder="Weight"
           style={styles.weight}
+          value={this.props.weight}
         />
-      <Text style={styles.multiple}>kg</Text>
+      <Text
+        style={styles.multiple}
+        >
+        kg
+      </Text>
+      <TouchableOpacity
+        onPress={this.addSetToExercise()}
+      >
+        <Text>+</Text>
+      </TouchableOpacity>
       </View>
     );
   }
 }
+
+export default connect(null, {addSetToExercise})(ExerciseSet);
 
 const styles = StyleSheet.create({
   container: {

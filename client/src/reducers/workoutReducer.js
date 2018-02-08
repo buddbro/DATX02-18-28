@@ -4,7 +4,8 @@ import {
   CLEAR_WORKOUT,
   EDIT_WORKOUT,
   ADD_WORKOUT,
-  ADD_EXERCISE_TO_WORKOUT
+  ADD_EXERCISE_TO_WORKOUT,
+  ADD_SET_TO_EXERCISE,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,7 +17,16 @@ const INITIAL_STATE = {
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
+
   switch (action.type) {
+    case ADD_SET_TO_EXERCISE:
+      return {
+        ...state,
+        sets: [
+          ...exercises.sets,
+          { id: action.payload.id, reps: action.payload.reps, weight: actions.payload.weight}
+        ]
+      };
     case ADD_EXERCISE_TO_WORKOUT:
       return {
         ...state,
