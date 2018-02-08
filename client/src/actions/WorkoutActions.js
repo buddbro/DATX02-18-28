@@ -5,7 +5,10 @@ import {
   EDIT_WORKOUT,
   SAVE_WORKOUT,
   CLEAR_WORKOUT,
-  ADD_EXERCISE_TO_WORKOUT
+  ADD_EXERCISE_TO_WORKOUT,
+  ADD_SET_TO_EXERCISE,
+  GET_SETS_FOR_EXERCISE,
+  VIEW_SET
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -85,5 +88,43 @@ export function addExerciseToWorkout(userId, token, workoutId, exerciseId) {
           payload: { id: data[0].id, title: data[0].title }
         });
       });
+  };
+}
+
+export function addSetToExercise(userId, token, exerciseId, reps, weight) {
+  return dispatch => {
+    axios
+      .post(`https://getpushapp.com/api/workouts/exercise/${exerciseId}`, {
+        userId,
+        token,
+        reps,
+        weight
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: ADD_SET_TO_EXERCISE,
+          payload: { id: data[0].id, reps, weight }
+        });
+      });
+  };
+}
+
+export function getSetsForExercise(id) {
+  return dispatch => {
+    axios
+      .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_SETS_FOR_EXERCISE,
+          payload: data
+        });
+      });
+  };
+}
+
+export function viewSet(id) {
+  return {
+    type: VIEW_SET,
+    payload: id
   };
 }

@@ -9,7 +9,8 @@ import {
   Dimensions,
   SectionList,
   Animated,
-  ListItem
+  ListItem,
+  FlatList
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
@@ -34,7 +35,6 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    console.log('Execises', this.props.exercises);
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -81,45 +81,53 @@ class ViewWorkout extends React.Component {
           </View>
 
           <View style={styles.category}>
-            <Text style={{
-              paddingLeft: 10,
-              fontSize: 20,
-            }}>Kategori</Text>
+            <Text
+              style={{
+                paddingLeft: 10,
+                fontSize: 20
+              }}
+            >
+              Kategori
+            </Text>
           </View>
 
-          <ScrollView
-            horizontal
-            style={styles.exerciseListStyle}>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'ExerciseList'
-                  })
-                );
-              }}
-              style={styles.addExerciseItem}
-            >
-              <View>
-                <Text style={styles.addExerciseTitle}>Add exercise</Text>
-              </View>
-            </TouchableOpacity>
-
-
-
-
+          <FlatList
+            style={styles.exerciseListStyle}
+            data={this.props.exercises}
+            keyExtractor={(item, index) => `exercise${item.id}`}
+            renderItem={({ item }) => {
+              // console.log(item);
+              return <ExerciseCard id={item.id} title={item.title} />;
+            }}
+          >
             {/* <View style={styles.workoutName}>
               <Text style={styles.nameTextStyle}>
                 {this.props.title}
               </Text>
-            </View> */}
+            </View>
+
+            */}
 
             {/*WorkoutExerciselistan är ju nu en lista i en lista,
               så man kan liksom inte scrolla förbi den.
               Byta ut WorkoutExercisesList till ExerciseCard-komponenter? */}
 
-            <WorkoutExercisesList exercises={this.props.exercises} />
-          </ScrollView>
+            {/*<WorkoutExercisesList exercises={this.props.exercises} />*/}
+          </FlatList>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'ExerciseList'
+                })
+              );
+            }}
+            style={styles.addExerciseItem}
+          >
+            <View>
+              <Text style={styles.addExerciseTitle}>Add exercise</Text>
+            </View>
+          </TouchableOpacity>
 
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Time</Text>
@@ -132,7 +140,7 @@ class ViewWorkout extends React.Component {
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Notes</Text>
           </View>
-          <ExerciseCard style={{flex: 2}}/>
+          <ExerciseCard style={{ flex: 2 }} />
         </ScrollView>
       </View>
     );
@@ -198,7 +206,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#7AD9C7'
   },
-  exerciseListStyle: {
-
-  }
+  exerciseListStyle: {}
 });

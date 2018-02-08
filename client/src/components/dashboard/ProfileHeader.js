@@ -106,7 +106,7 @@ class ProfileHeader extends React.Component {
           <View style={{ display: 'flex', flexDirection: 'column' }}>
             {/* <Image
               source={require('../../../assets/avatar_default.png')}
-              style={{ width: 45, height: 45, alignSelf: 'center' }}
+              style={ { width: 45, height: 45, alignSelf: 'center' }}
             /> */}
             <Text style={styles.userWelcome}>
               Welcome back {this.props.user.name}!
