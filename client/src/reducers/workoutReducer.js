@@ -35,6 +35,7 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       };
       return state;
     case ADD_SET_TO_EXERCISE:
+      console.log(action);
       return {
         ...state,
         sets: [
@@ -42,7 +43,7 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           {
             id: action.payload.id,
             reps: action.payload.reps,
-            weight: actions.payload.weight
+            weight: action.payload.weight
           }
         ]
       };

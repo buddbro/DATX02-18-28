@@ -75,8 +75,9 @@ class LoginUser extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder="Email"
-            onChangeText={email =>
-              this.setState({ email: email.toLowerCase() })}
+            onChangeText={email => {
+              this.setState({ email: email.toLowerCase() });
+            }}
             value={this.state.email}
           />
           <TextInput
