@@ -140,7 +140,10 @@ class ViewWorkout extends React.Component {
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Notes</Text>
           </View>
-          <ExerciseCard style={{ flex: 2 }} />
+          
+          <ExerciseCard style={{
+            flex: 2,
+          }} />
         </ScrollView>
       </View>
     );
