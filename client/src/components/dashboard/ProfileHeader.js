@@ -16,6 +16,8 @@ import NavigationActions from 'react-navigation';
 import { logout } from '../../actions';
 import { Svg } from 'expo';
 
+import log_off from '../../../assets/icons/action/drawable-hdpi/ic_exit_to_app_white_48dp.png';
+import drag_down from '../../../assets/icons/navigation/drawable-hdpi/ic_arrow_drop_down_white_36dp.png';
 import avatar from '../../../assets/avatar_default.svg';
 import profile_bottom from '../../../assets/profile_bottom.svg';
 
@@ -24,6 +26,7 @@ const { height, width } = Dimensions.get('window');
 class ProfileHeader extends React.Component {
   constructor(props) {
     super(props);
+
 
     const position = new Animated.ValueXY();
     const panResponder = PanResponder.create({
@@ -93,26 +96,22 @@ class ProfileHeader extends React.Component {
                 );
               }}
             >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: '#fff'
-                }}
-              >
-                Logout
-              </Text>
+            { <Image
+              source={require('../../../assets/icons/action/drawable-hdpi/ic_exit_to_app_white_48dp.png')}
+              style={{ width: 40, height: 40, alignSelf: 'center' }}
+            /> }
             </TouchableOpacity>
           </View>
           <View style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* <Image
+            { <Image
               source={require('../../../assets/avatar_default.png')}
-              style={ { width: 45, height: 45, alignSelf: 'center' }}
-            /> */}
+              style={{ width: 45, height: 45, alignSelf: 'center' }}
+            /> }
             <Text style={styles.userWelcome}>
               Welcome back {this.props.user.name}!
             </Text>
           </View>
-          <Text style={styles.tagline}>Ready to rock!?</Text>
+          <Text style={styles.tagline}>Ready to rock?</Text>
           <Svg height="100" width={width}>
             <Svg.Ellipse
               cx={width / 2}
@@ -123,6 +122,10 @@ class ProfileHeader extends React.Component {
               strokeWidth="0"
               fill="#b9baf1"
             />
+            { <Image
+              source={require('../../../assets/icons/navigation/drawable-hdpi/ic_arrow_drop_down_white_36dp.png')}
+              style={{ width: 40, height: 40, alignSelf: 'center' }}
+            /> }
           </Svg>
         </View>
       </Animated.View>
@@ -133,17 +136,18 @@ class ProfileHeader extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#b9baf1',
-    height: 190,
-    paddingTop: 72
+    height: 240,
+    paddingTop: 80
   },
   userWelcome: {
-    marginTop: 20,
+    paddingTop: 0,
+    marginTop: 5,
     fontSize: 24,
     color: '#fff',
     textAlign: 'center'
   },
   tagline: {
-    marginTop: 10,
+    marginTop: 5,
     fontSize: 14,
     color: '#fff',
     textAlign: 'center'

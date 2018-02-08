@@ -34,6 +34,10 @@ class ExerciseSet extends React.Component {
       this.state.reps,
       this.state.weight
     );
+    this.setState({
+      reps: '',
+      weight: ''
+    });
   }
 
   render() {
