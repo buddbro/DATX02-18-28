@@ -15,7 +15,6 @@ import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
 import { clearWorkout, editWorkout } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
-
 import ExerciseCard from './exercise/ExerciseCard';
 
 const { height, width } = Dimensions.get('window');
@@ -85,7 +84,9 @@ class ViewWorkout extends React.Component {
             <Text style={{ paddingLeft: 10 }}>Kategori</Text>
           </View>
 
-          <ScrollView style={styles.exerciseListStyle}>
+          <ScrollView
+            horizontal
+            style={styles.exerciseListStyle}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.dispatch(
@@ -106,6 +107,10 @@ class ViewWorkout extends React.Component {
                 {this.props.title}
               </Text>
             </View> */}
+
+            {/*WorkoutExerciselistan är ju nu en lista i en lista,
+              så man kan liksom inte scrolla förbi den.
+              Byta ut WorkoutExercisesList till ExerciseCard-komponenter? */}
 
             <WorkoutExercisesList exercises={this.props.exercises} />
           </ScrollView>
@@ -179,8 +184,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   addExerciseItem: {
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 11,
+    marginRight: 11,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
