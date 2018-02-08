@@ -4,7 +4,10 @@ import {
   CLEAR_WORKOUT,
   EDIT_WORKOUT,
   ADD_WORKOUT,
-  ADD_EXERCISE_TO_WORKOUT
+  ADD_EXERCISE_TO_WORKOUT,
+  ADD_SET_TO_EXERCISE,
+  GET_SETS_FOR_EXERCISE,
+  VIEW_SET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,11 +15,37 @@ const INITIAL_STATE = {
   title: '',
   date: '',
   workouts: [],
-  exercises: []
+  exercises: [],
+  sets: [],
+  visibleSet: -1
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case VIEW_SET:
+      return {
+        ...state,
+        visibleSet: action.payload
+      };
+      return state;
+    case GET_SETS_FOR_EXERCISE:
+      return {
+        ...state,
+        sets: action.payload
+      };
+      return state;
+    case ADD_SET_TO_EXERCISE:
+      return {
+        ...state,
+        sets: [
+          ...state.sets,
+          {
+            id: action.payload.id,
+            reps: action.payload.reps,
+            weight: actions.payload.weight
+          }
+        ]
+      };
     case ADD_EXERCISE_TO_WORKOUT:
       return {
         ...state,
