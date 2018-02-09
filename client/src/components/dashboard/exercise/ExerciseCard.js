@@ -22,11 +22,9 @@ class ExerciseCard extends React.Component {
   toggleAccordion() {
     return (
       <View style={styles.accordionBody}>
-        <TouchableOpacity>
-          <Text>Add set</Text>
-        </TouchableOpacity>
+
         <FlatList
-          style={{ flex: 1 }}
+          style={styles.setListStyle}
           data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
           keyExtractor={(item, index) => `${item.id}${this.props.id}`}
           renderItem={({ item }) => {
@@ -41,6 +39,12 @@ class ExerciseCard extends React.Component {
             );
           }}
         />
+        <TouchableOpacity style={styles.addSetButton}>
+          <Text style={{
+            fontSize: 20,
+            color: '#fff',
+          }}>Add set</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -55,7 +59,7 @@ class ExerciseCard extends React.Component {
             this.props.viewSet(this.props.id);
           }}
         >
-          <Text>
+          <Text style={styles.accordionHeaderTextStyle}>
             {this.props.title}
           </Text>
         </TouchableOpacity>
@@ -82,18 +86,46 @@ export default connect(mapStateToProps, { getSetsForExercise, viewSet })(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginLeft: 30,
+    marginRight: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    backgroundColor: '#8B8DDF',
+    borderRadius: 8,
   },
   accordionHeader: {
-    flex: 1
+    flex: 1,
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  accordionHeaderTextStyle: {
+    color: '#fff',
+    fontSize: 20,
   },
   accordionBody: {
     flex: 1,
     marginLeft: 30,
     marginRight: 30,
     flexDirection: 'column',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    backgroundColor: '#B9BBF1',
+    borderRadius: 8,
+  },
+  setListStyle: {
+
+  },
+  addSetButton: {
+    backgroundColor: '#484BB4',
+    marginLeft: 30,
+    marginRight: 30,
+    marginBottom: 20,
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    borderRadius: 5,
+    paddingBottom: 10,
   }
 });
