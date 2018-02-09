@@ -96,7 +96,7 @@ class ProfileHeader extends React.Component {
             }}
           >
             <Image
-              source={require('../../../assets/icons/ic_exit_to_app_white_48dp.png')}
+              source={require('../../../assets/ic_exit_to_app_white_48dp.png')}
               style={{ width: 40, height: 40, alignSelf: 'center' }}
             />
           </TouchableOpacity>
