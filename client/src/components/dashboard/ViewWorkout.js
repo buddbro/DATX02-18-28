@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout, editWorkout } from '../../actions';
+import { clearWorkout, editWorkout, fetchWorkouts } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from './exercise/ExerciseCard';
 
@@ -66,13 +66,18 @@ class ViewWorkout extends React.Component {
                 margin: 40
               }}
               onChangeText={title => this.setState({ title })}
-              onEndEditing={() =>
+              onEndEditing={() => {
                 this.props.editWorkout(
                   this.props.user.id,
                   this.props.user.token,
                   this.props.id,
                   this.state.title
-                )}
+                );
+                this.props.fetchWorkouts(
+                  this.props.user.id,
+                  this.props.user.token
+                );
+              }}
               returnKeyLabel="Save"
               clearButtonMode="while-editing"
               spellCheck={false}
@@ -80,7 +85,7 @@ class ViewWorkout extends React.Component {
             />
           </View>
 
-          <View style={styles.category}>
+          {/* <View style={styles.category}>
             <Text
               style={{
                 paddingLeft: 10,
@@ -89,7 +94,7 @@ class ViewWorkout extends React.Component {
             >
               Kategori
             </Text>
-          </View>
+          </View> */}
 
           <FlatList
             style={styles.exerciseListStyle}
@@ -129,7 +134,7 @@ class ViewWorkout extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <View style={styles.category}>
+          {/* <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Time</Text>
           </View>
 
@@ -140,10 +145,12 @@ class ViewWorkout extends React.Component {
           <View style={styles.category}>
             <Text style={{ paddingLeft: 10 }}>Notes</Text>
           </View>
-          
-          <ExerciseCard style={{
-            flex: 2,
-          }} />
+
+          <ExerciseCard
+            style={{
+              flex: 2
+            }}
+          /> */}
         </ScrollView>
       </View>
     );
@@ -166,7 +173,8 @@ const mapStateToProps = ({ workout, user }) => {
 
 export default connect(mapStateToProps, {
   clearWorkout,
-  editWorkout
+  editWorkout,
+  fetchWorkouts
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
