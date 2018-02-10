@@ -52,7 +52,7 @@ class ViewWorkout extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <View style={styles.workoutName}>
+          <View>
             <TextInput
               style={{
                 height: 40,
@@ -62,8 +62,7 @@ class ViewWorkout extends React.Component {
                 borderWidth: 1,
                 borderRadius: 5,
                 padding: 3,
-                textAlign: 'center',
-                margin: 40
+                textAlign: 'center'
               }}
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
@@ -85,40 +84,14 @@ class ViewWorkout extends React.Component {
             />
           </View>
 
-          {/* <View style={styles.category}>
-            <Text
-              style={{
-                paddingLeft: 10,
-                fontSize: 20
-              }}
-            >
-              Kategori
-            </Text>
-          </View> */}
-
           <FlatList
             style={styles.exerciseListStyle}
             data={this.props.exercises}
             keyExtractor={(item, index) => `exercise${item.id}`}
             renderItem={({ item }) => {
-              // console.log(item);
               return <ExerciseCard id={item.id} title={item.title} />;
             }}
-          >
-            {/* <View style={styles.workoutName}>
-              <Text style={styles.nameTextStyle}>
-                {this.props.title}
-              </Text>
-            </View>
-
-            */}
-
-            {/*WorkoutExerciselistan är ju nu en lista i en lista,
-              så man kan liksom inte scrolla förbi den.
-              Byta ut WorkoutExercisesList till ExerciseCard-komponenter? */}
-
-            {/*<WorkoutExercisesList exercises={this.props.exercises} />*/}
-          </FlatList>
+          />
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.dispatch(
@@ -133,24 +106,6 @@ class ViewWorkout extends React.Component {
               <Text style={styles.addExerciseTitle}>Add exercise</Text>
             </View>
           </TouchableOpacity>
-
-          {/* <View style={styles.category}>
-            <Text style={{ paddingLeft: 10 }}>Time</Text>
-          </View>
-
-          <View style={styles.category}>
-            <Text style={{ paddingLeft: 10 }}>Difficulty</Text>
-          </View>
-
-          <View style={styles.category}>
-            <Text style={{ paddingLeft: 10 }}>Notes</Text>
-          </View>
-
-          <ExerciseCard
-            style={{
-              flex: 2
-            }}
-          /> */}
         </ScrollView>
       </View>
     );
@@ -182,19 +137,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    // justifyContent: 'center',
-    paddingTop: 35
+    paddingTop: 40
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
     margin: 10,
     justifyContent: 'space-between'
-  },
-  workoutName: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   nameTextStyle: {
     margin: 25,
@@ -209,8 +158,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   addExerciseItem: {
-    marginLeft: 11,
-    marginRight: 11,
+    marginLeft: 10,
+    marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,

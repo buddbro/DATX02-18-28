@@ -8,7 +8,11 @@ import {
   FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getSetsForExercise, viewSet } from '../../../actions';
+import {
+  getSetsForExercise,
+  viewSet,
+  addSetToExercise
+} from '../../../actions';
 
 import ExerciseSet from './ExerciseSet';
 
@@ -16,13 +20,39 @@ class ExerciseCard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { accordionToggled: false };
+    this.state = { accordionToggled: false, reps: '', weight: '' };
+  }
+
+  setReps(reps) {
+    this.setState({ reps });
+  }
+
+  setWeight(weight) {
+    this.setState({ weight });
+  }
+
+  addSetToExercise() {
+    if (!this.state.reps || !this.state.weight) {
+      return;
+    }
+
+    this.props.addSetToExercise(
+      this.props.userId,
+      this.props.token,
+      this.props.id,
+      this.state.reps,
+      this.state.weight
+    );
+
+    this.setState({
+      reps: '',
+      weight: ''
+    });
   }
 
   toggleAccordion() {
     return (
       <View style={styles.accordionBody}>
-
         <FlatList
           style={styles.setListStyle}
           data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
@@ -32,18 +62,29 @@ class ExerciseCard extends React.Component {
             return (
               <ExerciseSet
                 id={item.id}
-                reps={String(item.reps)}
-                weight={String(item.weight)}
+                reps={item.id === -1 ? this.state.reps : String(item.reps)}
+                weight={
+                  item.id === -1 ? this.state.weight : String(item.weight)
+                }
                 exerciseId={this.props.id}
+                setReps={this.setReps.bind(this)}
+                setWeight={this.setWeight.bind(this)}
               />
             );
           }}
         />
-        <TouchableOpacity style={styles.addSetButton}>
-          <Text style={{
-            fontSize: 20,
-            color: '#fff',
-          }}>Add set</Text>
+        <TouchableOpacity
+          onPress={() => this.addSetToExercise()}
+          style={styles.addSetButton}
+        >
+          <Text
+            style={{
+              fontSize: 20,
+              color: '#fff'
+            }}
+          >
+            Add set
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -72,60 +113,61 @@ class ExerciseCard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout }) => {
+const mapStateToProps = ({ user, workout }) => {
   return {
+    userId: user.id,
+    token: user.token,
     sets: workout.sets,
     visibleSet: workout.visibleSet
   };
 };
 
-export default connect(mapStateToProps, { getSetsForExercise, viewSet })(
-  ExerciseCard
-);
+export default connect(mapStateToProps, {
+  getSetsForExercise,
+  viewSet,
+  addSetToExercise
+})(ExerciseCard);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
+    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: '#8B8DDF',
-    borderRadius: 8,
+    borderRadius: 8
   },
   accordionHeader: {
     flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
+    paddingLeft: 80,
+    paddingRight: 80
   },
   accordionHeaderTextStyle: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 24,
+    padding: 30
   },
   accordionBody: {
     flex: 1,
     marginLeft: 30,
     marginRight: 30,
+    marginBottom: 30,
     flexDirection: 'column',
     alignSelf: 'stretch',
     backgroundColor: '#B9BBF1',
-    borderRadius: 8,
+    borderRadius: 8
   },
-  setListStyle: {
-
-  },
+  setListStyle: {},
   addSetButton: {
     backgroundColor: '#484BB4',
-    marginLeft: 30,
-    marginRight: 30,
-    marginBottom: 20,
-    marginTop: 30,
+    margin: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 40,
     borderRadius: 5,
-    paddingBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10
   }
 });

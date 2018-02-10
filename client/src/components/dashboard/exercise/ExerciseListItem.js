@@ -42,12 +42,12 @@ export default connect(mapStateToProps, { addExerciseToWorkout })(
 const styles = StyleSheet.create({
   container: {
     borderColor: '#E0E0E0',
-    borderWidth: 0.2,
-    height: 70,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 30,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1
   },
   nameText: {
-    paddingLeft: 30,
-    fontSize: 20
+    fontSize: 24
   }
 });

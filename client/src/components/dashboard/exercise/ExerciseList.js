@@ -72,7 +72,7 @@ class ExerciseList extends React.PureComponent {
             );
           }}
         >
-          <Text style={{ fontSize: 20 }}>Back</Text>
+          <Text style={{ fontSize: 20, marginLeft: 10 }}>Back</Text>
         </TouchableOpacity>
         {this.renderSectionList()}
       </View>

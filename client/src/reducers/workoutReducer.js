@@ -25,7 +25,7 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case VIEW_SET:
       return {
         ...state,
-        visibleSet: action.payload
+        visibleSet: action.payload === state.visibleSet ? -1 : action.payload
       };
       return state;
     case GET_SETS_FOR_EXERCISE:
