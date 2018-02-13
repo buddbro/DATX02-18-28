@@ -1,5 +1,6 @@
 import {
   ADD_WORKOUT,
+  DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
   EDIT_WORKOUT,
@@ -8,7 +9,8 @@ import {
   ADD_EXERCISE_TO_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
-  VIEW_SET
+  VIEW_SET,
+  VIEW_EXERCISE
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -73,6 +75,22 @@ export function addWorkout(id, token) {
   };
 }
 
+export function deleteWorkout(id, token, workout) {
+  return dispatch => {
+    axios
+      .post(`https://getpushapp.com/api/workouts/delete/${workout}`, {
+        id,
+        token
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: DELETE_WORKOUT,
+          payload: workout
+        });
+      });
+  };
+}
+
 export function addExerciseToWorkout(userId, token, workoutId, exerciseId) {
   return dispatch => {
     axios
@@ -126,5 +144,12 @@ export function viewSet(id) {
   return {
     type: VIEW_SET,
     payload: id
+  };
+}
+
+export function viewExercise(exercise) {
+  return {
+    type: VIEW_EXERCISE,
+    payload: exercise
   };
 }

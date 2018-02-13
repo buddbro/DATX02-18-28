@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Text,
   TextInput,
   View,
@@ -14,7 +15,13 @@ import {
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
-import { clearWorkout, editWorkout, fetchWorkouts } from '../../actions';
+import {
+  clearWorkout,
+  editWorkout,
+  fetchWorkouts,
+  viewExercise,
+  deleteWorkout
+} from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from './exercise/ExerciseCard';
 
@@ -34,6 +41,36 @@ class ViewWorkout extends React.Component {
     });
   }
 
+  deleteWorkout() {
+    Alert.alert(
+      'Are you sure?',
+      "This can't be undone",
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            this.props.deleteWorkout(
+              this.props.user.id,
+              this.props.user.token,
+              this.props.id
+            );
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'Workout'
+              })
+            );
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -48,17 +85,37 @@ class ViewWorkout extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 20 }}>Back</Text>
+            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.deleteWorkout();
+            }}
+          >
+            <Text style={{ fontSize: 20, color: '#d33' }}>Delete</Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <View>
+          <View
+            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
+          >
+            <Text
+              style={{
+                marginLeft: 15,
+                marginTop: 6,
+                marginBottom: 15,
+                color: '#444',
+                fontSize: 18
+              }}
+            >
+              Workout {this.props.date.substring(0, 10)}
+            </Text>
             <TextInput
               style={{
                 height: 40,
-                width,
                 fontSize: 24,
                 borderColor: '#eee',
+                backgroundColor: '#fff',
                 borderWidth: 1,
                 borderRadius: 5,
                 padding: 3,
@@ -84,14 +141,37 @@ class ViewWorkout extends React.Component {
             />
           </View>
 
-          <FlatList
-            style={styles.exerciseListStyle}
-            data={this.props.exercises}
-            keyExtractor={(item, index) => `exercise${item.id}`}
-            renderItem={({ item }) => {
-              return <ExerciseCard id={item.id} title={item.title} />;
-            }}
-          />
+          <View
+            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
+          >
+            <Text
+              style={{
+                marginLeft: 15,
+                marginTop: 6,
+                marginBottom: 15,
+                color: '#444',
+                fontSize: 18
+              }}
+            >
+              Exercises
+            </Text>
+            <FlatList
+              style={styles.exerciseListStyle}
+              data={this.props.exercises}
+              keyExtractor={(item, index) => `exercise${item.id}`}
+              renderItem={({ item }) => {
+                return (
+                  <ExerciseCard
+                    id={item.id}
+                    title={item.title}
+                    navigation={this.props.navigation}
+                  />
+                );
+              }}
+            />
+          </View>
+        </ScrollView>
+        <View style={{ bottom: 0 }}>
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.dispatch(
@@ -106,7 +186,7 @@ class ViewWorkout extends React.Component {
               <Text style={styles.addExerciseTitle}>Add exercise</Text>
             </View>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -129,20 +209,23 @@ const mapStateToProps = ({ workout, user }) => {
 export default connect(mapStateToProps, {
   clearWorkout,
   editWorkout,
-  fetchWorkouts
+  fetchWorkouts,
+  viewExercise,
+  deleteWorkout
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: '#51c1ab',
     paddingTop: 40
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
-    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
     justifyContent: 'space-between'
   },
   nameTextStyle: {
@@ -158,13 +241,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   addExerciseItem: {
-    marginLeft: 10,
-    marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    borderRadius: 5,
-    backgroundColor: '#7AD9C7'
+    backgroundColor: '#8b8ddf'
   },
   exerciseListStyle: {}
 });

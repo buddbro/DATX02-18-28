@@ -26,8 +26,14 @@ class ExerciseSet extends React.Component {
   }
 
   render() {
+    const backgroundColor = this.props.index % 2 === 0 ? '#d3d4f7' : '#c6c6f4';
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor }]}>
+        <View style={{ width: '20%' }}>
+          <Text style={{ textAlign: 'center' }}>
+            SET {this.props.index + 1}
+          </Text>
+        </View>
         <TextInput
           placeholder="Reps"
           onChangeText={reps => this.props.setReps(String(reps))}
@@ -36,7 +42,6 @@ class ExerciseSet extends React.Component {
           editable={this.props.id === -1}
           keyboardType="numeric"
         />
-        <Text style={styles.multiple}>x</Text>
         <TextInput
           placeholder="Weight"
           onChangeText={weight => this.props.setWeight(String(weight))}
@@ -45,7 +50,6 @@ class ExerciseSet extends React.Component {
           editable={this.props.id === -1}
           keyboardType="numeric"
         />
-        <Text style={styles.multiple}>kg</Text>
       </View>
     );
   }
@@ -73,7 +77,8 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     textAlign: 'center',
     fontSize: 18,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    width: '40%'
   },
   multiple: {
     flex: 1,

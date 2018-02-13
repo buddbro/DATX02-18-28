@@ -4,9 +4,11 @@ import {
   CLEAR_WORKOUT,
   EDIT_WORKOUT,
   ADD_WORKOUT,
+  DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
+  VIEW_EXERCISE,
   VIEW_SET
 } from '../actions/types';
 
@@ -17,11 +19,18 @@ const INITIAL_STATE = {
   workouts: [],
   exercises: [],
   sets: [],
+  visibleExercise: '',
   visibleSet: -1
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case VIEW_EXERCISE:
+      return {
+        ...state,
+        visibleExercise: action.payload
+      };
+      return state;
     case VIEW_SET:
       return {
         ...state,
@@ -84,6 +93,13 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           },
           ...state.workouts
         ]
+      };
+    case DELETE_WORKOUT:
+      return {
+        ...INITIAL_STATE,
+        workouts: state.workouts.filter(
+          workout => workout.id !== action.payload
+        )
       };
     case CLEAR_WORKOUT:
       return {

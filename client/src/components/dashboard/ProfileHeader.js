@@ -117,9 +117,9 @@ class ProfileHeader extends React.Component {
             cy="5"
             rx={width / 1.5}
             ry="30"
-            stroke="#b9baf1"
+            stroke="#7ad9c6"
             strokeWidth="0"
-            fill="#b9baf1"
+            fill="#7ad9c6"
           />
           {/* <Image
             source={require('../../../assets/icons/ic_arrow_drop_down_white_36dp.png')}
@@ -134,7 +134,7 @@ class ProfileHeader extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#b9baf1',
+    backgroundColor: '#7ad9c6',
     height: 200,
     paddingTop: 80
   },

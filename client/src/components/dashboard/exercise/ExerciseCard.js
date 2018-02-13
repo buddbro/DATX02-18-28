@@ -11,8 +11,10 @@ import { connect } from 'react-redux';
 import {
   getSetsForExercise,
   viewSet,
+  viewExercise,
   addSetToExercise
 } from '../../../actions';
+import NavigationActions from 'react-navigation';
 
 import ExerciseSet from './ExerciseSet';
 
@@ -92,23 +94,25 @@ class ExerciseCard extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.accordionHeader}
-          onPress={() => {
-            this.props.getSetsForExercise(this.props.id);
-            this.props.viewSet(this.props.id);
-          }}
-        >
+      <TouchableOpacity
+        style={styles.accordionHeader}
+        onPress={() => {
+          this.props.viewExercise(this.props.title);
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'ViewExercise'
+            })
+          );
+          this.props.getSetsForExercise(this.props.id);
+          this.props.viewSet(this.props.id);
+        }}
+      >
+        <View>
           <Text style={styles.accordionHeaderTextStyle}>
             {this.props.title}
           </Text>
-        </TouchableOpacity>
-
-        {this.props.id === this.props.visibleSet
-          ? this.toggleAccordion()
-          : null}
-      </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -125,34 +129,34 @@ const mapStateToProps = ({ user, workout }) => {
 export default connect(mapStateToProps, {
   getSetsForExercise,
   viewSet,
+  viewExercise,
   addSetToExercise
 })(ExerciseCard);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
-    justifyContent: 'center',
+    marginBottom: 3,
+    justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'stretch',
-    backgroundColor: '#8B8DDF',
-    borderRadius: 8
+    backgroundColor: '#aeeee1'
   },
   accordionHeader: {
-    flex: 1,
-    paddingLeft: 80,
-    paddingRight: 80
+    display: 'flex',
+    flex: 1
   },
   accordionHeaderTextStyle: {
-    color: '#fff',
-    fontSize: 24,
-    padding: 30
+    fontSize: 18,
+    color: '#333',
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginBottom: 3,
+    textAlign: 'center',
+    backgroundColor: '#aeeee1'
   },
   accordionBody: {
     flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
-    marginBottom: 30,
     flexDirection: 'column',
     alignSelf: 'stretch',
     backgroundColor: '#B9BBF1',
