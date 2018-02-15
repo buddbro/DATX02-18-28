@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 import {
   getSetsForExercise,
   viewSet,
-  addSetToExercise
+  addSetToExercise,
+  getExerciseDescription,
 } from '../../../actions';
 import NavigationActions from 'react-navigation';
 
@@ -69,12 +70,13 @@ class ViewExercise extends React.Component {
         </View>
         <ScrollView>
           <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
+            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3, flexDirection: 'row', justifyContent: 'space-between'}}
           >
             <Text
               style={{
                 marginTop: 15,
                 marginBottom: 15,
+                marginLeft: 15,
                 color: '#444',
                 fontSize: 24,
                 fontWeight: 'bold',
@@ -83,6 +85,28 @@ class ViewExercise extends React.Component {
             >
               {this.props.visibleExercise}
             </Text>
+            <TouchableOpacity
+              style={{
+                 marginRight: 10,
+               }}
+              onPress={() => {
+                this.props.getExerciseDescription(1);
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'ExerciseHelp'
+                  })
+                );
+              }}>
+              <Text
+                style={{
+                  marginTop: 15,
+                  marginBottom: 15,
+                  color: '#444',
+                  fontSize: 24,
+                  fontWeight: 'bold',
+                  textAlign: 'center'
+                }}>?</Text>
+            </TouchableOpacity>
           </View>
 
           <View
@@ -207,7 +231,8 @@ const mapStateToProps = ({ user, workout, exercises }) => {
 export default connect(mapStateToProps, {
   getSetsForExercise,
   viewSet,
-  addSetToExercise
+  addSetToExercise,
+  getExerciseDescription
 })(ViewExercise);
 
 const styles = StyleSheet.create({
