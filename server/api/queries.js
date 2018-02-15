@@ -1,10 +1,8 @@
 const sha256 = require('sha256');
 const promise = require('bluebird');
+import { MAILGUN } from './config.js';
 
-const mailgun = require('mailgun-js')({
-  apiKey: 'key-6df7c683ba6f9df431bafc0df1eeddf7',
-  domain: 'mg.getpushapp.com'
-});
+const mailgun = require('mailgun-js')(MAILGUN);
 
 const sendMail = (email, name) => {
   const data = {
