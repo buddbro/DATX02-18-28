@@ -1,6 +1,6 @@
 const sha256 = require('sha256');
 const promise = require('bluebird');
-import { MAILGUN } from './config.js';
+const MAILGUN = require('./config.js');
 
 const mailgun = require('mailgun-js')(MAILGUN);
 
