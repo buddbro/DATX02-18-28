@@ -5,9 +5,12 @@ import ViewExercise from '../components/dashboard/exercise/ViewExercise';
 //import NewWorkout from '../components/dashboard/NewWorkout';
 
 import LoginUser from '../components/login/existing/LoginUser';
+import ForgotPassword from '../components/login/existing/ForgotPassword';
 import CreateAccount from '../components/login/create/CreateAccount';
 
 import ExerciseList from '../components/dashboard/exercise/ExerciseList';
+import ExerciseHelp from '../components/dashboard/exercise/ExerciseHelp';
+
 
 const AppRouteConfigs = {
   LoginUser: {
@@ -42,6 +45,18 @@ const AppRouteConfigs = {
   },
   ExerciseList: {
     screen: ExerciseList,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  ExerciseHelp: {
+    screen: ExerciseHelp,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  ForgotPassword: {
+    screen: ForgotPassword,
     navigationOptions: {
       tabBarVisible: false
     }

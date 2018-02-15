@@ -1,9 +1,27 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOADING_FALSE } from './types';
+import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOADING_FALSE, SEND_FORGOT_PASSWORD } from './types';
 
 import { AsyncStorage } from 'react-native';
 
 import sha256 from 'sha256';
 import axios from 'axios';
+
+export function retrievePassword(email) {
+  return dispatch => {
+    axios
+      .post('https://getpushapp.com/api/users/resetpassword', {
+        email
+      })
+      .then(({data}) => {
+        console.log(data);
+        dispatch({
+          type: SEND_FORGOT_PASSWORD, payload: data.success
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+}
 
 export function loginWithPassword(email, password) {
   return dispatch => {
