@@ -12,7 +12,7 @@ import {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
-  getExerciseDescription,
+  getExerciseDescription
 } from '../../../actions';
 import NavigationActions from 'react-navigation';
 
@@ -70,7 +70,13 @@ class ViewExercise extends React.Component {
         </View>
         <ScrollView>
           <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3, flexDirection: 'row', justifyContent: 'space-between'}}
+            style={{
+              backgroundColor: '#b9baf1',
+              margin: 10,
+              borderRadius: 3,
+              flexDirection: 'row',
+              justifyContent: 'space-between'
+            }}
           >
             <Text
               style={{
@@ -87,16 +93,17 @@ class ViewExercise extends React.Component {
             </Text>
             <TouchableOpacity
               style={{
-                 marginRight: 10,
-               }}
+                marginRight: 10
+              }}
               onPress={() => {
-                this.props.getExerciseDescription(1);
+                this.props.getExerciseDescription(this.props.visibleExerciseId);
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'ExerciseHelp'
                   })
                 );
-              }}>
+              }}
+            >
               <Text
                 style={{
                   marginTop: 15,
@@ -105,7 +112,10 @@ class ViewExercise extends React.Component {
                   fontSize: 24,
                   fontWeight: 'bold',
                   textAlign: 'center'
-                }}>?</Text>
+                }}
+              >
+                ?
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -218,13 +228,15 @@ class ViewExercise extends React.Component {
 }
 
 const mapStateToProps = ({ user, workout, exercises }) => {
+  console.log(workout);
   return {
     exercises,
     id: user.id,
     token: user.token,
     sets: workout.sets,
     visibleSet: workout.visibleSet,
-    visibleExercise: workout.visibleExercise
+    visibleExercise: workout.visibleExercise,
+    visibleExerciseId: workout.visibleExerciseId
   };
 };
 

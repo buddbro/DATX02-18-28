@@ -52,52 +52,18 @@ class ExerciseCard extends React.Component {
     });
   }
 
-  toggleAccordion() {
-    return (
-      <View style={styles.accordionBody}>
-        <FlatList
-          style={styles.setListStyle}
-          data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-          keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-          renderItem={({ item }) => {
-            const key = `${this.props.id}${item.id}`;
-            return (
-              <ExerciseSet
-                id={item.id}
-                reps={item.id === -1 ? this.state.reps : String(item.reps)}
-                weight={
-                  item.id === -1 ? this.state.weight : String(item.weight)
-                }
-                exerciseId={this.props.id}
-                setReps={this.setReps.bind(this)}
-                setWeight={this.setWeight.bind(this)}
-              />
-            );
-          }}
-        />
-        <TouchableOpacity
-          onPress={() => this.addSetToExercise()}
-          style={styles.addSetButton}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              color: '#fff'
-            }}
-          >
-            Add set
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   render() {
     return (
       <TouchableOpacity
         style={styles.accordionHeader}
         onPress={() => {
-          this.props.viewExercise(this.props.title);
+          console.log('this.props.exerciseType', this.props.exerciseTypeId);
+
+          this.props.viewExercise(
+            this.props.title,
+            this.props.id,
+            this.props.exerciseTypeId
+          );
           this.props.navigation.dispatch(
             NavigationActions.NavigationActions.navigate({
               routeName: 'ViewExercise'

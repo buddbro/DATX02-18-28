@@ -20,6 +20,7 @@ import axios from 'axios';
 export function chooseWorkout(id) {
   return dispatch => {
     axios.get(`https://getpushapp.com/api/workouts/${id}`).then(({ data }) => {
+      console.log(data);
       dispatch({
         type: CHOOSE_WORKOUT,
         payload: data
@@ -147,9 +148,9 @@ export function viewSet(id) {
   };
 }
 
-export function viewExercise(exercise) {
+export function viewExercise(name, id, typeId) {
   return {
     type: VIEW_EXERCISE,
-    payload: exercise
+    payload: { name, id, typeId }
   };
 }

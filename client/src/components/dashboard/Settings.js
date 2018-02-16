@@ -15,8 +15,6 @@ import { increase, decrease } from '../../actions';
 
 class Settings extends React.Component {
   render() {
-    console.log(this.props.exercises);
-
     return (
       <View style={{ marginTop: 100, marginLeft: 50 }}>
         <Text>hej</Text>

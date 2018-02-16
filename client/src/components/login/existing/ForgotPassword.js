@@ -4,30 +4,32 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 import NavigationActions from 'react-navigation';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { retrievePassword } from '../../../actions';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: ''}
+    this.state = { email: '' };
   }
 
   renderResponse() {
-    return(
-      <Text>{this.props.resetStatus}</Text>
+    return (
+      <Text>
+        {this.props.resetStatus}
+      </Text>
     );
   }
 
   render() {
-    return(
+    return (
       <View style={styles.container}>
         <View style={styles.head}>
           <TouchableOpacity
-            style={{alignSelf: 'flex-start', marginLeft: 15,}}
+            style={{ alignSelf: 'flex-start', marginLeft: 15 }}
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -39,7 +41,10 @@ class ForgotPassword extends React.Component {
             <Text style={{ fontSize: 20, color: '#000' }}>Back</Text>
           </TouchableOpacity>
           <Text style={styles.headline}>Reset your password</Text>
-          <Text style={styles.breadtext}>An email will be sent to your email with a link to choose a new password.</Text>
+          <Text style={styles.breadtext}>
+            An email will be sent to your email with a link to choose a new
+            password.
+          </Text>
         </View>
 
         <View style={styles.body}>
@@ -54,26 +59,23 @@ class ForgotPassword extends React.Component {
 
           {this.renderResponse()}
 
-
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
               this.props.retrievePassword(this.state.email);
-              }
-            }
+            }}
           >
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
+        </View>
       </View>
-    </View>
     );
   }
 }
 
-const mapStateToProps = ({user}) => {
-  console.log(user);
-  return {resetStatus: user.resetStatus}
-}
+const mapStateToProps = ({ user }) => {
+  return { resetStatus: user.resetStatus };
+};
 
 export default connect(mapStateToProps, { retrievePassword })(ForgotPassword);
 
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   breadtext: {
     textAlign: 'center',
-    margin: 15,
+    margin: 15
   },
   head: {
     flex: 1,

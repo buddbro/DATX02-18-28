@@ -1,4 +1,10 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOADING_FALSE, SEND_FORGOT_PASSWORD } from './types';
+import {
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT,
+  LOADING_FALSE,
+  SEND_FORGOT_PASSWORD
+} from './types';
 
 import { AsyncStorage } from 'react-native';
 
@@ -11,10 +17,10 @@ export function retrievePassword(email) {
       .post('https://getpushapp.com/api/users/resetpassword', {
         email
       })
-      .then(({data}) => {
-        console.log(data);
+      .then(({ data }) => {
         dispatch({
-          type: SEND_FORGOT_PASSWORD, payload: data.success
+          type: SEND_FORGOT_PASSWORD,
+          payload: data.success
         });
       })
       .catch(error => {
