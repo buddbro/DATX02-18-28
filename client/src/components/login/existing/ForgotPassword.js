@@ -17,11 +17,18 @@ class ForgotPassword extends React.Component {
   }
 
   renderResponse() {
+<<<<<<< HEAD
+    return (
+      <Text>
+        {this.props.resetStatus}
+      </Text>
+=======
     if(!this.props.sent) {
       return null;
     }
     return(
       this.props.resetStatus ? <Text style={styles.accept}>A link for resetting your password was sent, please check your email.</Text> : <Text style={styles.denied}>Email not registered.</Text>
+>>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
     );
   }
 
