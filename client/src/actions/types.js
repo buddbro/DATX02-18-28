@@ -2,6 +2,7 @@ export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_ERROR = 'login_error';
 export const LOGOUT = 'logout';
 export const LOADING_FALSE = 'loading_false';
+export const SEND_FORGOT_PASSWORD = 'send_forgot_password';
 
 export const ADD_WORKOUT = 'add_workout';
 export const DELETE_WORKOUT = 'delete_workout';
@@ -18,3 +19,5 @@ export const ADD_SET_TO_EXERCISE = 'add_set_to_exercise';
 export const GET_SETS_FOR_EXERCISE = 'get_sets_for_exercise';
 export const VIEW_EXERCISE = 'view_exercise';
 export const VIEW_SET = 'view_set';
+
+export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
