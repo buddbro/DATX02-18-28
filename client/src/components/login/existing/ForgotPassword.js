@@ -64,12 +64,6 @@ class ForgotPassword extends React.Component {
             // value={this.state.email}
             keyboardType="email-address"
           />
-
-<<<<<<< HEAD
-          {this.renderResponse()}
-
-=======
->>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
@@ -78,27 +72,17 @@ class ForgotPassword extends React.Component {
           >
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
-<<<<<<< HEAD
-        </View>
-=======
-
           {this.renderResponse()}
->>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
+        </View>
       </View>
     );
   }
 }
 
-<<<<<<< HEAD
-const mapStateToProps = ({ user }) => {
-  return { resetStatus: user.resetStatus };
-};
-=======
 const mapStateToProps = ({user}) => {
   console.log(user);
   return {resetStatus: user.resetStatus, sent: user.sent}
 }
->>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
 
 export default connect(mapStateToProps, { retrievePassword })(ForgotPassword);
 
