@@ -12,7 +12,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         list: action.payload
       };
     case INCREASE:
-      console.log('Received increase in exerciseReducer');
       return {
         list: [...state.list, action.payload.amount]
       };

@@ -17,10 +17,6 @@ import NavigationActions from 'react-navigation';
 const { height, width } = Dimensions.get('window');
 // Dashboard screen
 class Workout extends React.Component {
-  componentDidMount() {
-    console.log('Elin testar', this.props.navigation);
-  }
-
   // Ta bort om appen ska funka som vanligt
   // componentWillReceiveProps(nextProps) {
   //   this.props.navigation.dispatch(

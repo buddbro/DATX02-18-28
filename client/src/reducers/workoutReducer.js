@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   workouts: [],
   exercises: [],
   sets: [],
+  visibleExerciseId: -1,
   visibleExercise: '',
   visibleSet: -1
 };
@@ -28,7 +29,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case VIEW_EXERCISE:
       return {
         ...state,
-        visibleExercise: action.payload
+        visibleExercise: action.payload.name,
+        visibleExerciseId: action.payload.typeId
       };
       return state;
     case VIEW_SET:
@@ -44,7 +46,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       };
       return state;
     case ADD_SET_TO_EXERCISE:
-      console.log(action);
       return {
         ...state,
         sets: [
@@ -66,7 +67,14 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       };
     case CHOOSE_WORKOUT:
       let exercises = action.payload.reduce((acc, next) => {
-        return [...acc, { id: next.exercise_id, title: next.exercise_title }];
+        return [
+          ...acc,
+          {
+            id: next.exercise_id,
+            title: next.exercise_title,
+            exercise_type_id: next.exercise_type_id
+          }
+        ];
       }, []);
 
       const { workout_id, workout_title, date } = action.payload[0];

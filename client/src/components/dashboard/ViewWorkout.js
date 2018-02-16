@@ -164,6 +164,7 @@ class ViewWorkout extends React.Component {
                   <ExerciseCard
                     id={item.id}
                     title={item.title}
+                    exerciseTypeId={item.exercise_type_id}
                     navigation={this.props.navigation}
                   />
                 );

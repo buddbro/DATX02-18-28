@@ -29,7 +29,6 @@ class ProfileHeader extends React.Component {
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gesture) => {
-        console.log(gesture);
         if (gesture.dy < 180) {
           position.setValue({ x: gesture.dx, y: gesture.dy });
         }
