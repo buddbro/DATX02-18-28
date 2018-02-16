@@ -29,7 +29,7 @@ class ProfileHeader extends React.Component {
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (event, gesture) => {
-         console.log(gesture);
+        console.log(gesture);
         if (gesture.dy < 180) {
           position.setValue({ x: gesture.dx, y: gesture.dy });
         }
@@ -73,59 +73,83 @@ class ProfileHeader extends React.Component {
 
   render() {
     return (
-       <Animated.View
-         style={[this.getProfileStyle(), { zIndex: 10 }]}
-         {...this.state.panResponder.panHandlers}
-       >
-      <View style={styles.container}>
-        <View>
-          <TouchableOpacity
+      <Animated.View
+        style={[this.getProfileStyle(), { zIndex: 10 }]}
+        {...this.state.panResponder.panHandlers}
+      >
+        <View style={styles.container}>
+          <View
             style={{
-              alignSelf: 'flex-end',
-              marginRight: 10
-            }}
-            onPress={() => {
-              this.props.logout(this.props.user.id);
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
-                })
-              );
+              backgroundColor: '#7ad9c6'
             }}
           >
-            <Image
-              source={require('../../../assets/exit.png')}
-              style={{ width: 35, height: 35, alignSelf: 'center' }}
+            <TouchableOpacity
+              style={{
+                alignSelf: 'flex-end',
+                marginRight: 10
+              }}
+              onPress={() => {
+                this.props.logout(this.props.user.id);
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginUser'
+                  })
+                );
+              }}
+            >
+              <Image
+                source={require('../../../assets/exit.png')}
+                style={{ width: 35, height: 35, marginTop: 20 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              backgroundColor: '#7ad9c6'
+            }}
+          >
+            {
+              <Image
+                source={require('../../../assets/avatar_default.png')}
+                style={{ width: 45, height: 45, alignSelf: 'center' }}
+              />
+            }
+            <Text style={styles.userWelcome}>
+              Welcome back {this.props.user.name}!
+            </Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: '#7ad9c6'
+            }}
+          >
+            <Text style={styles.tagline}>Ready to rock?</Text>
+          </View>
+          <Svg height="100" width={width}>
+            <Svg.Ellipse
+              cx={width / 2}
+              cy="5"
+              rx={width / 1.5}
+              ry="30"
+              stroke="#7ad9c6"
+              strokeWidth="0"
+              fill="#7ad9c6"
             />
-          </TouchableOpacity>
+
+            <Image
+              source={require('../../../assets/down-arrow.png')}
+              style={{
+                marginTop: 5,
+                width: 22,
+                height: 22,
+                alignSelf: 'center'
+              }}
+            />
+          </Svg>
         </View>
-        <View style={{ display: 'flex', flexDirection: 'column' }}>
-          { <Image
-              source={require('../../../assets/avatar_default.png')}
-              style={{ width: 45, height: 45, alignSelf: 'center' }}
-            /> }
-          <Text style={styles.userWelcome}>
-            Welcome back {this.props.user.name}!
-          </Text>
-        </View>
-        <Text style={styles.tagline}>Ready to rock?</Text>
-        <Svg height="100" width={width}>
-          <Svg.Ellipse
-            cx={width / 2}
-            cy="5"
-            rx={width / 1.5}
-            ry="30"
-            stroke="#7ad9c6"
-            strokeWidth="0"
-            fill="#7ad9c6"
-          />
-          { <Image
-            source={require('../../../assets/down-arrow.png')}
-            style={{ marginTop: 5, width: 22, height: 22, alignSelf: 'center' }}
-          /> }
-        </Svg>
-      </View>
-       </Animated.View>
+      </Animated.View>
     );
   }
 }
@@ -134,7 +158,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7ad9c6',
     height: 222,
-    paddingTop: 85
+    paddingTop: 220,
+    top: -140
   },
   userWelcome: {
     paddingTop: 0,
