@@ -9,6 +9,8 @@ import CreateAccount from '../components/login/create/CreateAccount';
 
 import ExerciseList from '../components/dashboard/exercise/ExerciseList';
 
+import Settings from '../components/dashboard/Settings';
+
 const AppRouteConfigs = {
   LoginUser: {
     screen: LoginUser,
@@ -42,6 +44,12 @@ const AppRouteConfigs = {
   },
   ExerciseList: {
     screen: ExerciseList,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  Settings: {
+    screen: Settings,
     navigationOptions: {
       tabBarVisible: false
     }
