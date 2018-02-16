@@ -17,10 +17,11 @@ class ForgotPassword extends React.Component {
   }
 
   renderResponse() {
-    return (
-      <Text>
-        {this.props.resetStatus}
-      </Text>
+    if(!this.props.sent) {
+      return null;
+    }
+    return(
+      this.props.resetStatus ? <Text style={styles.accept}>A link for resetting your password was sent, please check your email.</Text> : <Text style={styles.denied}>Email not registered.</Text>
     );
   }
 
@@ -57,8 +58,11 @@ class ForgotPassword extends React.Component {
             keyboardType="email-address"
           />
 
+<<<<<<< HEAD
           {this.renderResponse()}
 
+=======
+>>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
@@ -67,19 +71,41 @@ class ForgotPassword extends React.Component {
           >
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
+<<<<<<< HEAD
         </View>
+=======
+
+          {this.renderResponse()}
+>>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
       </View>
     );
   }
 }
 
+<<<<<<< HEAD
 const mapStateToProps = ({ user }) => {
   return { resetStatus: user.resetStatus };
 };
+=======
+const mapStateToProps = ({user}) => {
+  console.log(user);
+  return {resetStatus: user.resetStatus, sent: user.sent}
+}
+>>>>>>> 3ece5801bf35eeff685baaa28ac31dccd49bedd3
 
 export default connect(mapStateToProps, { retrievePassword })(ForgotPassword);
 
 const styles = StyleSheet.create({
+  accept: {
+    color: 'green',
+    textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  denied: {
+    color: 'red',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',

@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   name: '',
   token: '',
   error: '',
-  resetStatus: ''
+  resetStatus: '',
+  sent: false,
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
@@ -21,9 +22,7 @@ export default function userReducer(state = INITIAL_STATE, action) {
     case SEND_FORGOT_PASSWORD:
       return {
         ...state,
-        resetStatus: action.payload
-          ? 'A link for resetting your password was sent, please check your email.'
-          : 'Email not registered.'
+        resetStatus: action.payload, sent: true
       };
     case LOADING_FALSE:
       return { ...state, loading: false };
