@@ -17,8 +17,11 @@ class ForgotPassword extends React.Component {
   }
 
   renderResponse() {
+    if(!this.props.sent) {
+      return null;
+    }
     return(
-      <Text>{this.props.resetStatus}</Text>
+      this.props.resetStatus ? <Text style={styles.accept}>A link for resetting your password was sent, please check your email.</Text> : <Text style={styles.denied}>Email not registered.</Text>
     );
   }
 
@@ -52,9 +55,6 @@ class ForgotPassword extends React.Component {
             keyboardType="email-address"
           />
 
-          {this.renderResponse()}
-
-
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
@@ -64,6 +64,8 @@ class ForgotPassword extends React.Component {
           >
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
+
+          {this.renderResponse()}
       </View>
     </View>
     );
@@ -72,12 +74,22 @@ class ForgotPassword extends React.Component {
 
 const mapStateToProps = ({user}) => {
   console.log(user);
-  return {resetStatus: user.resetStatus}
+  return {resetStatus: user.resetStatus, sent: user.sent}
 }
 
 export default connect(mapStateToProps, { retrievePassword })(ForgotPassword);
 
 const styles = StyleSheet.create({
+  accept: {
+    color: 'green',
+    textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  denied: {
+    color: 'red',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',

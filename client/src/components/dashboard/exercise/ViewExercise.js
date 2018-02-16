@@ -90,7 +90,7 @@ class ViewExercise extends React.Component {
                  marginRight: 10,
                }}
               onPress={() => {
-                this.props.getExerciseDescription(1);
+                this.props.getExerciseDescription(this.props.visibleExerciseId);
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'ExerciseHelp'
