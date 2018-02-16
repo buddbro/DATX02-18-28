@@ -80,12 +80,31 @@ class ProfileHeader extends React.Component {
         <View style={styles.container}>
           <View
             style={{
-              backgroundColor: '#7ad9c6'
+              backgroundColor: '#7ad9c6',
+              flexDirection: 'row',
+              justifyContent: 'space-between'
             }}
           >
             <TouchableOpacity
               style={{
-                alignSelf: 'flex-end',
+                marginLeft: 10
+              }}
+              onPress={() => {
+                this.props.logout(this.props.user.id);
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'Settings'
+                  })
+                );
+              }}
+            >
+              <Image
+                source={require('../../../assets/settings.png')}
+                style={{ width: 35, height: 35, marginTop: 20 }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
                 marginRight: 10
               }}
               onPress={() => {

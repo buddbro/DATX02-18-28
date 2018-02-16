@@ -21,6 +21,15 @@ class Workout extends React.Component {
     console.log('Elin testar', this.props.navigation);
   }
 
+  // Ta bort om appen ska funka som vanligt
+  componentWillReceiveProps(nextProps) {
+    this.props.navigation.dispatch(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'Settings'
+      })
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>

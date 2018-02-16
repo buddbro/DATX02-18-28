@@ -11,7 +11,6 @@ import CreateAccount from '../components/login/create/CreateAccount';
 import ExerciseList from '../components/dashboard/exercise/ExerciseList';
 import ExerciseHelp from '../components/dashboard/exercise/ExerciseHelp';
 
-
 import Settings from '../components/dashboard/Settings';
 
 const AppRouteConfigs = {
@@ -51,10 +50,12 @@ const AppRouteConfigs = {
       tabBarVisible: false
     }
   },
-<<<<<<< HEAD
   Settings: {
     screen: Settings,
-=======
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
   ExerciseHelp: {
     screen: ExerciseHelp,
     navigationOptions: {
@@ -63,7 +64,6 @@ const AppRouteConfigs = {
   },
   ForgotPassword: {
     screen: ForgotPassword,
->>>>>>> 221ebd3657b8ed2eb70fd64bd50624e638d22eb7
     navigationOptions: {
       tabBarVisible: false
     }

@@ -8,37 +8,35 @@ import {
   FlatList,
   ListItem,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
-import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
+import { increase, decrease } from '../../actions';
 
 class Settings extends React.Component {
-  constructor(props) {
-    super(props);
+  render() {
+    console.log(this.props.exercises);
 
-    this.state = { title: '' };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      title: nextProps.title
-    });
-  }
-
-  render(){
-    return(
-      <View>
+    return (
+      <View style={{ marginTop: 100, marginLeft: 50 }}>
         <Text>hej</Text>
+        <Text>
+          {this.props.counter}
+        </Text>
+        <Button onPress={() => this.props.increase(5)} title="Increase" />
+        <Button onPress={() => this.props.decrease()} title="Decrease" />
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ }) => {
+const mapStateToProps = ({ settings, exercises }) => {
   return {
-
+    counter: settings.counter,
+    exercises: exercises.list
   };
 };
 
-export default connect (mapStateToProps)(Settings);
+const mapDispatchToProps = { increase, decrease };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

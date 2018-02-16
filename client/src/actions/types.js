@@ -21,3 +21,6 @@ export const VIEW_EXERCISE = 'view_exercise';
 export const VIEW_SET = 'view_set';
 
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
+
+export const INCREASE = 'increase';
+export const DECREASE = 'decrease';

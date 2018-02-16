@@ -1,4 +1,4 @@
-import { FETCH_EXERCISE_LIST } from '../actions/types';
+import { FETCH_EXERCISE_LIST, INCREASE } from '../actions/types';
 
 const INITIAL_STATE = {
   list: []
@@ -10,6 +10,11 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         list: action.payload
+      };
+    case INCREASE:
+      console.log('Received increase in exerciseReducer');
+      return {
+        list: [...state.list, action.payload.amount]
       };
     default:
       return state;
