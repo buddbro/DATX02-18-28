@@ -12,11 +12,56 @@ import {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
-  getExerciseDescription
+  getExerciseDescription,
+  clearExercise
 } from '../../../actions';
 import NavigationActions from 'react-navigation';
+import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
+
+class BarChartExample extends React.PureComponent {
+  render() {
+    const data = [
+      50,
+      10,
+      40,
+      95,
+      -4,
+      -24,
+      85,
+      91,
+      35,
+      53,
+      -53,
+      24,
+      50,
+      -20,
+      -80
+    ];
+    const barData = [
+      {
+        values: data,
+        positive: {
+          fill: fillColor
+          // other react-native-svg supported props
+        },
+        negative: {
+          fill: fillColorNegative
+          // other react-native-svg supported props
+        }
+      }
+    ];
+
+    return (
+      <BarChart
+        style={{ height: 200 }}
+        data={barData}
+        contentInset={{ top: 30, bottom: 30 }}
+      />
+    );
+  }
+}
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -41,7 +86,7 @@ class ViewExercise extends React.Component {
     this.props.addSetToExercise(
       this.props.userId,
       this.props.token,
-      this.props.id,
+      this.props.visibleSet,
       this.state.reps,
       this.state.weight
     );
@@ -53,11 +98,30 @@ class ViewExercise extends React.Component {
   }
 
   render() {
+    if (this.props.loading) {
+      return <View style={styles.container} />;
+    }
+
+    const statisticsData = [
+      {
+        values: this.props.sets.reduce((acc, next) => {
+          return [...acc, next.reps * next.weight];
+        }, []),
+        positive: {
+          fill: '#6669cb'
+        },
+        negative: {
+          fill: '#6669cb'
+        }
+      }
+    ];
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
+              this.props.clearExercise();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
@@ -220,6 +284,11 @@ class ViewExercise extends React.Component {
             >
               Statistics
             </Text>
+            <BarChart
+              style={{ height: 200 }}
+              data={statisticsData}
+              contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
+            />
           </View>
         </ScrollView>
       </View>
@@ -236,7 +305,8 @@ const mapStateToProps = ({ user, workout, exercises }) => {
     sets: workout.sets,
     visibleSet: workout.visibleSet,
     visibleExercise: workout.visibleExercise,
-    visibleExerciseId: workout.visibleExerciseId
+    visibleExerciseId: workout.visibleExerciseId,
+    loading: workout.exerciseLoading
   };
 };
 
@@ -244,7 +314,8 @@ export default connect(mapStateToProps, {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
-  getExerciseDescription
+  getExerciseDescription,
+  clearExercise
 })(ViewExercise);
 
 const styles = StyleSheet.create({

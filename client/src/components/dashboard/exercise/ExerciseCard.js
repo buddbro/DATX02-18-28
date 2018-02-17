@@ -57,8 +57,6 @@ class ExerciseCard extends React.Component {
       <TouchableOpacity
         style={styles.accordionHeader}
         onPress={() => {
-          console.log('this.props.exerciseType', this.props.exerciseTypeId);
-
           this.props.viewExercise(
             this.props.title,
             this.props.id,
