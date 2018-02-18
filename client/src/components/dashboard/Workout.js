@@ -22,13 +22,13 @@ class Workout extends React.Component {
   }
 
   // Ta bort om appen ska funka som vanligt
-  componentWillReceiveProps(nextProps) {
+  /*componentWillReceiveProps(nextProps) {
     this.props.navigation.dispatch(
       NavigationActions.NavigationActions.navigate({
         routeName: 'Settings'
       })
     );
-  }
+  }*/
 
   render() {
     return (
