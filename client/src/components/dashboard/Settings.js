@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
   View,
@@ -20,27 +21,46 @@ class Settings extends React.Component {
     //console.log(this.props.exercises);
 
     return (
-      <View style={{ marginTop: 100, marginLeft: 50 }}>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            );
-          }}
-          style={styles.addWorkout}
+      <View style={styles.container}>
+        <View
+          style={styles.headerContainer}
         >
-        <Text style={styles.standardText}>back</Text>
-        </TouchableOpacity>
-        <Text style={styles.standardText}>Name: </Text>
-        <Text>{this.props.name}</Text>
-        <Text style={this.props.standardText}>Email: </Text>
-        <Text>{this.props.email}</Text>
-        <Button onPress={() => this.props.increase(5)} title="Edit information" />
-        <Text>{this.props.counter}</Text>
-        <Button onPress={() => this.props.increase(5)} title="Increase" />
-        <Button onPress={() => this.props.decrease()} title="Decrease" />
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'Workout'
+                })
+              );
+            }}
+          >
+            <Image
+              source={require('../../../assets/back_arrow.png')}
+              style={{ width: 35, height: 35,}}
+            />
+          </TouchableOpacity>
+          <Text style={styles.heading}>Settings</Text>
+          <TouchableOpacity
+            style={{
+              marginLeft: 10
+            }}
+            onPress={() => this.props.increase(5)}
+          >
+            <Image
+              source={require('../../../assets/edit.png')}
+              style={{ width: 30, height: 30,}}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.standardText}>Name: </Text>
+          <Text style={styles.standardText}>{this.props.name}</Text>
+          <Text style={styles.standardText}>Email: </Text>
+          <Text style={styles.standardText}>{this.props.email}</Text>
+          <Text style={styles.standardText}>{this.props.counter}</Text>
+          <Button onPress={() => this.props.increase(5)} title="Increase" />
+          <Button onPress={() => this.props.decrease()} title="Decrease" />
+        </View>
       </View>
     );
   }
@@ -63,25 +83,32 @@ export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 //Design
 const styles = StyleSheet.create({
-  addWorkout: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 20,
-    marginTop: 30,
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#8b8ddf',
+    paddingTop: 40
+  },
+  headerContainer: {
+    backgroundColor: '#8b8ddf',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    borderRadius: 5,
-    paddingBottom: 15,
-    backgroundColor: '#b9baf1'
+    justifyContent: 'space-between',
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15
+  },
+  textContainer: {
+    backgroundColor: '#8b8ddf',
+    marginTop: 15,
+    marginLeft: 15
+  },
+  heading: {
+    color: '#ffffff',
+    fontSize: 35
   },
   standardText: {
-    //color: '#fff',
-    fontSize: 10,
+    color: '#ffffff',
+    fontSize: 15,
     fontWeight: 'bold'
   },
-  item: { marginBottom: 20 },
-  text: {},
-  separator: {}
 });
