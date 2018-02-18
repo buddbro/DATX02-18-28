@@ -2,6 +2,7 @@ import {
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
   CLEAR_WORKOUT,
+  CLEAR_EXERCISE,
   EDIT_WORKOUT,
   ADD_WORKOUT,
   DELETE_WORKOUT,
@@ -19,8 +20,10 @@ const INITIAL_STATE = {
   workouts: [],
   exercises: [],
   sets: [],
+  visibleExerciseId: -1,
   visibleExercise: '',
-  visibleSet: -1
+  visibleSet: -1,
+  exerciseLoading: true
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
@@ -28,7 +31,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case VIEW_EXERCISE:
       return {
         ...state,
-        visibleExercise: action.payload
+        visibleExercise: action.payload.name,
+        visibleExerciseId: action.payload.typeId
       };
       return state;
     case VIEW_SET:
@@ -40,11 +44,11 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case GET_SETS_FOR_EXERCISE:
       return {
         ...state,
-        sets: action.payload
+        sets: action.payload,
+        exerciseLoading: false
       };
       return state;
     case ADD_SET_TO_EXERCISE:
-      console.log(action);
       return {
         ...state,
         sets: [
@@ -66,7 +70,14 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       };
     case CHOOSE_WORKOUT:
       let exercises = action.payload.reduce((acc, next) => {
-        return [...acc, { id: next.exercise_id, title: next.exercise_title }];
+        return [
+          ...acc,
+          {
+            id: next.exercise_id,
+            title: next.exercise_title,
+            exercise_type_id: next.exercise_type_id
+          }
+        ];
       }, []);
 
       const { workout_id, workout_title, date } = action.payload[0];
@@ -107,7 +118,13 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         id: -1,
         title: '',
         date: '',
-        exercises: []
+        exercises: [],
+        exerciseLoading: true
+      };
+    case CLEAR_EXERCISE:
+      return {
+        ...state,
+        exerciseLoading: true
       };
     case EDIT_WORKOUT:
       return {

@@ -1,13 +1,12 @@
 import { GET_EXERCISE_DESCRIPTION } from '../actions/types';
 
 const INITIAL_STATE = {
-  exerciseHelp: { title: 'ehej'}
+  exerciseHelp: { title: 'ehej' }
 };
 
 export default function appReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_EXERCISE_DESCRIPTION:
-    console.log(action.payload)
       return {
         ...state,
         exerciseHelp: action.payload

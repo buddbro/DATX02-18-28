@@ -6,6 +6,7 @@ import {
   EDIT_WORKOUT,
   SAVE_WORKOUT,
   CLEAR_WORKOUT,
+  CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
@@ -30,6 +31,10 @@ export function chooseWorkout(id) {
 
 export function clearWorkout() {
   return { type: CLEAR_WORKOUT };
+}
+
+export function clearExercise() {
+  return { type: CLEAR_EXERCISE };
 }
 
 export function fetchWorkouts(id, token) {
@@ -132,6 +137,8 @@ export function getSetsForExercise(id) {
     axios
       .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`)
       .then(({ data }) => {
+        console.log('getSetsForExercise', id);
+        console.log(data);
         dispatch({
           type: GET_SETS_FOR_EXERCISE,
           payload: data
@@ -147,9 +154,9 @@ export function viewSet(id) {
   };
 }
 
-export function viewExercise(exercise) {
+export function viewExercise(name, id, typeId) {
   return {
     type: VIEW_EXERCISE,
-    payload: exercise
+    payload: { name, id, typeId }
   };
 }

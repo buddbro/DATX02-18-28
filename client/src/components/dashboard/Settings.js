@@ -16,6 +16,7 @@ import NavigationActions from 'react-navigation';
 
 class Settings extends React.Component {
   render() {
+
     //console.log(this.props.exercises);
 
     return (

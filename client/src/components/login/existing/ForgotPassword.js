@@ -4,30 +4,35 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 import NavigationActions from 'react-navigation';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { retrievePassword } from '../../../actions';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: ''}
+    this.state = { email: '' };
   }
 
   renderResponse() {
-    return(
-      <Text>{this.props.resetStatus}</Text>
-    );
+    if (!this.props.sent) {
+      return null;
+    }
+    return this.props.resetStatus
+      ? <Text style={styles.accept}>
+          A link for resetting your password was sent, please check your email.
+        </Text>
+      : <Text style={styles.denied}>Email not registered.</Text>;
   }
 
   render() {
-    return(
+    return (
       <View style={styles.container}>
         <View style={styles.head}>
           <TouchableOpacity
-            style={{alignSelf: 'flex-start', marginLeft: 15,}}
+            style={{ alignSelf: 'flex-start', marginLeft: 15 }}
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -39,7 +44,10 @@ class ForgotPassword extends React.Component {
             <Text style={{ fontSize: 20, color: '#000' }}>Back</Text>
           </TouchableOpacity>
           <Text style={styles.headline}>Reset your password</Text>
-          <Text style={styles.breadtext}>An email will be sent to your email with a link to choose a new password.</Text>
+          <Text style={styles.breadtext}>
+            An email will be sent to your email with a link to choose a new
+            password.
+          </Text>
         </View>
 
         <View style={styles.body}>
@@ -51,33 +59,39 @@ class ForgotPassword extends React.Component {
             // value={this.state.email}
             keyboardType="email-address"
           />
-
-          {this.renderResponse()}
-
-
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
               this.props.retrievePassword(this.state.email);
-              }
-            }
+            }}
           >
             <Text style={styles.buttonText}>Send</Text>
           </TouchableOpacity>
+          {this.renderResponse()}
+        </View>
       </View>
-    </View>
     );
   }
 }
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({ user }) => {
   console.log(user);
-  return {resetStatus: user.resetStatus}
-}
+  return { resetStatus: user.resetStatus, sent: user.sent };
+};
 
 export default connect(mapStateToProps, { retrievePassword })(ForgotPassword);
 
 const styles = StyleSheet.create({
+  accept: {
+    color: 'green',
+    textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 10
+  },
+  denied: {
+    color: 'red',
+    textAlign: 'center'
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -87,7 +101,7 @@ const styles = StyleSheet.create({
   },
   breadtext: {
     textAlign: 'center',
-    margin: 15,
+    margin: 15
   },
   head: {
     flex: 1,
