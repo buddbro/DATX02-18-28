@@ -39,7 +39,7 @@ class ExerciseSet extends React.Component {
           onChangeText={reps => this.props.setReps(String(reps))}
           style={styles.textbox}
           value={this.props.reps}
-          editable={this.props.id === -1}
+          // editable={this.props.id === -1}
           keyboardType="numeric"
         />
         <TextInput
@@ -47,7 +47,7 @@ class ExerciseSet extends React.Component {
           onChangeText={weight => this.props.setWeight(String(weight))}
           style={styles.textbox}
           value={this.props.weight}
-          editable={this.props.id === -1}
+          // editable={this.props.id === -1}
           keyboardType="numeric"
         />
       </View>

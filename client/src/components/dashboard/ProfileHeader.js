@@ -27,7 +27,7 @@ class ProfileHeader extends React.Component {
 
     const position = new Animated.ValueXY();
     const panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => false,
       onPanResponderMove: (event, gesture) => {
         if (gesture.dy < 180) {
           position.setValue({ x: gesture.dx, y: gesture.dy });
@@ -156,7 +156,7 @@ class ProfileHeader extends React.Component {
               fill="#7ad9c6"
             />
 
-            <Image
+            {/* <Image
               source={require('../../../assets/down-arrow.png')}
               style={{
                 marginTop: 5,
@@ -164,7 +164,7 @@ class ProfileHeader extends React.Component {
                 height: 22,
                 alignSelf: 'center'
               }}
-            />
+            /> */}
           </Svg>
         </View>
       </Animated.View>

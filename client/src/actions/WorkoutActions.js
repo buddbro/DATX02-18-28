@@ -21,10 +21,17 @@ import axios from 'axios';
 export function chooseWorkout(id) {
   return dispatch => {
     axios.get(`https://getpushapp.com/api/workouts/${id}`).then(({ data }) => {
+      const exercises = data;
+      const sets = {};
+      // axios
+      //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
+      //   .then(({ data }) => {
+      //     const sets = data;
       dispatch({
         type: CHOOSE_WORKOUT,
-        payload: data
+        payload: { exercises, sets }
       });
+      // });
     });
   };
 }
@@ -137,8 +144,6 @@ export function getSetsForExercise(id) {
     axios
       .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`)
       .then(({ data }) => {
-        console.log('getSetsForExercise', id);
-        console.log(data);
         dispatch({
           type: GET_SETS_FOR_EXERCISE,
           payload: data

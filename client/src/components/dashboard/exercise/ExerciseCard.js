@@ -71,10 +71,13 @@ class ExerciseCard extends React.Component {
           this.props.viewSet(this.props.id);
         }}
       >
-        <View>
+        <View style={styles.accordionBody}>
           <Text style={styles.accordionHeaderTextStyle}>
             {this.props.title}
           </Text>
+          {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+            <Text style={{ marginLeft: 5, marginRight: 5 }}>123</Text>
+          </View> */}
         </View>
       </TouchableOpacity>
     );
@@ -115,7 +118,6 @@ const styles = StyleSheet.create({
     color: '#333',
     paddingTop: 10,
     paddingBottom: 10,
-    marginBottom: 3,
     textAlign: 'center',
     backgroundColor: '#aeeee1'
   },
@@ -123,8 +125,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignSelf: 'stretch',
-    backgroundColor: '#B9BBF1',
-    borderRadius: 8
+    backgroundColor: '#aeeee1',
+    paddingBottom: 5,
+    marginBottom: 5
   },
   setListStyle: {},
   addSetButton: {
