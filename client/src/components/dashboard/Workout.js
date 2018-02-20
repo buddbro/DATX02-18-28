@@ -18,13 +18,13 @@ const { height, width } = Dimensions.get('window');
 // Dashboard screen
 class Workout extends React.Component {
   // Ta bort om appen ska funka som vanligt
-  // componentWillReceiveProps(nextProps) {
-  //   this.props.navigation.dispatch(
-  //     NavigationActions.NavigationActions.navigate({
-  //       routeName: 'Settings'
-  //     })
-  //   );
-  // }
+  /*componentWillReceiveProps(nextProps) {
+    this.props.navigation.dispatch(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'Settings'
+      })
+    );
+  }*/
 
   render() {
     return (

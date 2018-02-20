@@ -2,7 +2,8 @@ import { INCREASE, DECREASE } from '../actions/types';
 
 const INITIAL_STATE = {
   title: 'Rubrik',
-  counter: 0
+  counter: 0,
+  stuff: 42
 };
 
 export default function settingsReducer(state = INITIAL_STATE, action) {
