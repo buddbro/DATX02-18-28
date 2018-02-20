@@ -65,11 +65,11 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         ...state,
         exercises: [
           ...state.exercises,
-          { id: action.payload.id, title: action.payload.title }
+          { id: action.payload.id, title: action.payload.title, sets: [] }
         ]
       };
     case CHOOSE_WORKOUT:
-      let exercises = action.payload.reduce((acc, next) => {
+      let exercises = action.payload.exercises.reduce((acc, next) => {
         return [
           ...acc,
           {
@@ -79,8 +79,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-
-      const { workout_id, workout_title, date } = action.payload[0];
+      console.log(exercises);
+      const { workout_id, workout_title, date } = action.payload.exercises[0];
 
       return {
         ...state,

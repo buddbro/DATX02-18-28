@@ -102,13 +102,14 @@ class ViewWorkout extends React.Component {
             <Text
               style={{
                 marginLeft: 15,
-                marginTop: 6,
+                marginTop: 8,
                 marginBottom: 15,
                 color: '#444',
-                fontSize: 18
+                fontSize: 18,
+                alignSelf: 'center'
               }}
             >
-              Workout {this.props.date.substring(0, 10)}
+              {this.props.date.substring(0, 16)}
             </Text>
             <TextInput
               style={{
