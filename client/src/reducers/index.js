@@ -4,6 +4,8 @@ import loggedInNavigation from './loggedInNavigationReducer';
 import workout from './workoutReducer';
 import exercises from './exercisesReducer';
 import user from './userReducer';
+import app from './appReducer';
+import settings from './settingsReducer';
 
 export default combineReducers({
   nav,
@@ -11,4 +13,6 @@ export default combineReducers({
   workout,
   exercises,
   user,
+  app,
+  settings
 });

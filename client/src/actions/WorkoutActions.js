@@ -1,14 +1,17 @@
 import {
   ADD_WORKOUT,
+  DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
   EDIT_WORKOUT,
   SAVE_WORKOUT,
   CLEAR_WORKOUT,
+  CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
-  VIEW_SET
+  VIEW_SET,
+  VIEW_EXERCISE
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -28,6 +31,10 @@ export function chooseWorkout(id) {
 
 export function clearWorkout() {
   return { type: CLEAR_WORKOUT };
+}
+
+export function clearExercise() {
+  return { type: CLEAR_EXERCISE };
 }
 
 export function fetchWorkouts(id, token) {
@@ -68,6 +75,22 @@ export function addWorkout(id, token) {
         dispatch({
           type: ADD_WORKOUT,
           payload: data[0]
+        });
+      });
+  };
+}
+
+export function deleteWorkout(id, token, workout) {
+  return dispatch => {
+    axios
+      .post(`https://getpushapp.com/api/workouts/delete/${workout}`, {
+        id,
+        token
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: DELETE_WORKOUT,
+          payload: workout
         });
       });
   };
@@ -114,6 +137,8 @@ export function getSetsForExercise(id) {
     axios
       .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`)
       .then(({ data }) => {
+        console.log('getSetsForExercise', id);
+        console.log(data);
         dispatch({
           type: GET_SETS_FOR_EXERCISE,
           payload: data
@@ -126,5 +151,12 @@ export function viewSet(id) {
   return {
     type: VIEW_SET,
     payload: id
+  };
+}
+
+export function viewExercise(name, id, typeId) {
+  return {
+    type: VIEW_EXERCISE,
+    payload: { name, id, typeId }
   };
 }

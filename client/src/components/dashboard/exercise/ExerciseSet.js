@@ -7,7 +7,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addSetToExercise } from '../../../actions';
 
 class ExerciseSet extends React.Component {
   constructor(props) {
@@ -26,44 +25,31 @@ class ExerciseSet extends React.Component {
     });
   }
 
-  addSetToExercise() {
-    this.props.addSetToExercise(
-      this.props.userId,
-      this.props.token,
-      this.props.exerciseId,
-      this.state.reps,
-      this.state.weight
-    );
-    this.setState({
-      reps: '',
-      weight: ''
-    });
-  }
-
   render() {
+    const backgroundColor = this.props.index % 2 === 0 ? '#d3d4f7' : '#c6c6f4';
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor }]}>
+        <View style={{ width: '20%' }}>
+          <Text style={{ textAlign: 'center' }}>
+            SET {this.props.index + 1}
+          </Text>
+        </View>
         <TextInput
           placeholder="Reps"
-          onChangeText={reps => this.setState({ reps })}
-          style={styles.reps}
-          value={this.state.reps}
+          onChangeText={reps => this.props.setReps(String(reps))}
+          style={styles.textbox}
+          value={this.props.reps}
+          editable={this.props.id === -1}
           keyboardType="numeric"
         />
-        <Text style={styles.multiple}>x</Text>
         <TextInput
           placeholder="Weight"
-          onChangeText={weight => this.setState({ weight })}
-          style={styles.weight}
-          value={this.state.weight}
+          onChangeText={weight => this.props.setWeight(String(weight))}
+          style={styles.textbox}
+          value={this.props.weight}
+          editable={this.props.id === -1}
           keyboardType="numeric"
         />
-        <Text style={styles.multiple}>kg</Text>
-        {this.props.id === -1
-          ? <TouchableOpacity onPress={() => this.addSetToExercise()}>
-              <Text>+</Text>
-            </TouchableOpacity>
-          : null}
       </View>
     );
   }
@@ -76,7 +62,7 @@ const mapStateToProps = ({ user }) => {
   };
 };
 
-export default connect(mapStateToProps, { addSetToExercise })(ExerciseSet);
+export default connect(mapStateToProps)(ExerciseSet);
 
 const styles = StyleSheet.create({
   container: {
@@ -84,15 +70,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  reps: {
+  textbox: {
     flex: 1,
-    width: 50,
-    height: 50
-  },
-  weight: {
-    flex: 1,
-    width: 50,
-    height: 50
+    margin: 10,
+    padding: 10,
+    borderRadius: 2,
+    textAlign: 'center',
+    fontSize: 18,
+    backgroundColor: '#fff',
+    width: '40%'
   },
   multiple: {
     flex: 1,

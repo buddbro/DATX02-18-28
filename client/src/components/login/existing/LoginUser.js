@@ -106,6 +106,20 @@ class LoginUser extends React.Component {
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
+                  routeName: 'ForgotPassword'
+                })
+              );
+            }}
+          >
+            <Text style={{ color: '#858080', marginBottom: 30, }}>
+              Forgot your password?
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
                   routeName: 'CreateAccount'
                 })
               );
@@ -115,6 +129,7 @@ class LoginUser extends React.Component {
               Don't have an account yet? Create one!
             </Text>
           </TouchableOpacity>
+
         </View>
       </View>
     );

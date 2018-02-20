@@ -15,32 +15,18 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
 class ExerciseList extends React.PureComponent {
-  //keyExtractor = (item, index) => item.id;
-
-  constructor(props) {
-    super(props);
-
-    // //bytas ut med data från backend
-    // this.props.bigparts = {['Benchpress', 'Squat', 'Deadlift']}
-    // this.props.smallparts = {['Bicep curl', 'Tricep extension', 'Crunches']}
-  }
-
   renderSectionList() {
+    // Reduce exercises returned from database to build the datastructure
+    // required for the SectionList component.
     const sections = Object.keys(
       (exerciseList = this.props.exercises.reduce((acc, next) => {
-        const { id, name } = next;
-        if (acc[next.exercise_type]) {
-          acc[next.exercise_type] = [...acc[next.exercise_type], { id, name }];
-        } else {
-          acc[next.exercise_type] = [{ id, name }];
-        }
-
+        acc[next.exercise_type] = acc[next.exercise_type]
+          ? [...acc[next.exercise_type], { id: next.id, name: next.name }]
+          : [{ id: next.id, name: next.name }];
         return acc;
       }, {}))
     ).reduce((acc, next) => {
-      // const exerciseTypes = exerciseList[next].map(key => key.name);
-      const exerciseTypes = exerciseList[next];
-      return [...acc, { data: exerciseTypes, title: next }];
+      return [...acc, { data: exerciseList[next], title: next }];
     }, []);
 
     return (
@@ -72,7 +58,7 @@ class ExerciseList extends React.PureComponent {
             );
           }}
         >
-          <Text>Back</Text>
+          <Text style={{ fontSize: 20, marginLeft: 10 }}>Back</Text>
         </TouchableOpacity>
         {this.renderSectionList()}
       </View>

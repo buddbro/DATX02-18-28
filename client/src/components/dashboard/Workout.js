@@ -17,9 +17,14 @@ import NavigationActions from 'react-navigation';
 const { height, width } = Dimensions.get('window');
 // Dashboard screen
 class Workout extends React.Component {
-  componentDidMount() {
-    console.log('Elin testar', this.props.navigation);
-  }
+  // Ta bort om appen ska funka som vanligt
+  /*componentWillReceiveProps(nextProps) {
+    this.props.navigation.dispatch(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'Settings'
+      })
+    );
+  }*/
 
   render() {
     return (
@@ -70,7 +75,6 @@ export default connect(mapStateToProps, { addWorkout, logout })(Workout);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#b9baf1',
     marginTop: -50
   },
   addWorkout: {
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 5,
     paddingBottom: 15,
-    backgroundColor: '#7AD9C6'
+    backgroundColor: '#b9baf1'
   },
   plusSign: {
     color: '#fff',
