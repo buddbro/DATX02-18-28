@@ -17,14 +17,11 @@ import NavigationActions from 'react-navigation';
 
 class Settings extends React.Component {
   render() {
-
     //console.log(this.props.exercises);
 
     return (
       <View style={styles.container}>
-        <View
-          style={styles.headerContainer}
-        >
+        <View style={styles.headerContainer}>
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.dispatch(
@@ -36,7 +33,7 @@ class Settings extends React.Component {
           >
             <Image
               source={require('../../../assets/back_arrow.png')}
-              style={{ width: 35, height: 35,}}
+              style={{ width: 35, height: 35 }}
             />
           </TouchableOpacity>
           <Text style={styles.heading}>Settings</Text>
@@ -48,16 +45,22 @@ class Settings extends React.Component {
           >
             <Image
               source={require('../../../assets/edit.png')}
-              style={{ width: 30, height: 30,}}
+              style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.standardText}>Name: </Text>
-          <Text style={styles.standardText}>{this.props.name}</Text>
+          <Text style={styles.standardText}>
+            {this.props.name}
+          </Text>
           <Text style={styles.standardText}>Email: </Text>
-          <Text style={styles.standardText}>{this.props.email}</Text>
-          <Text style={styles.standardText}>{this.props.counter}</Text>
+          <Text style={styles.standardText}>
+            {this.props.email}
+          </Text>
+          <Text style={styles.standardText}>
+            {this.props.counter}
+          </Text>
           <Button onPress={() => this.props.increase(5)} title="Increase" />
           <Button onPress={() => this.props.decrease()} title="Decrease" />
         </View>
@@ -74,7 +77,6 @@ const mapStateToProps = ({ settings, exercises, user }) => {
     exercises: exercises.list
   };
 };
-
 
 const mapDispatchToProps = { increase, decrease };
 
@@ -110,5 +112,5 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 15,
     fontWeight: 'bold'
-  },
+  }
 });
