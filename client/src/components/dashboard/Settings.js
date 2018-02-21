@@ -26,9 +26,7 @@ class Settings extends React.Component {
     //console.log(this.props.exercises);
     return (
       <View style={styles.container}>
-        <View
-          style={styles.headerContainer}
-        >
+        <View style={styles.headerContainer}>
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.dispatch(
@@ -40,7 +38,7 @@ class Settings extends React.Component {
           >
             <Image
               source={require('../../../assets/back_arrow.png')}
-              style={{ width: 35, height: 35,}}
+              style={{ width: 35, height: 35 }}
             />
           </TouchableOpacity>
           <Text style={styles.heading}>Settings</Text>
@@ -52,7 +50,7 @@ class Settings extends React.Component {
           >
             <Image
               source={require('../../../assets/edit.png')}
-              style={{ width: 30, height: 30,}}
+              style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </View>
@@ -86,7 +84,6 @@ const mapStateToProps = ({ settings, exercises, user }) => {
     exercises: exercises.list
   };
 };
-
 
 const mapDispatchToProps = { increase, decrease };
 
@@ -147,5 +144,5 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 15,
     fontWeight: 'bold'
-  },
+  }
 });
