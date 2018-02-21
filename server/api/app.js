@@ -30,11 +30,17 @@ app.get('/api', (req, res) =>
 
 app.get('/api/getall', db.getAllUsers);
 
+app.post('/api/users/update', db.updateUser);
+
 app.post('/api/users/register', db.registerUser);
 app.post('/api/users/getuserbyemail', db.getUserByEmail);
 app.post('/api/users/login', db.login);
 app.post('/api/users/login/token', db.loginWithToken);
-app.post('/api/users/resetpassword', db.resetPasswordRequest);
+app.post('/api/users/logout', db.logout);
+app.post('/api/users/resetpassword', db.sendResetPasswordEmail);
+
+app.get('/api/resetpassword/:id/:token', db.resetPasswordGet);
+app.post('/api/resetpassword/:id/:token', db.resetPasswordPost);
 
 app.post('/api/workouts/exercise/:id', db.addSetToExercise);
 

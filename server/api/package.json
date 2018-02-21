@@ -11,7 +11,9 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.1",
+    "connect-datadog": "0.0.6",
     "express": "^4.16.2",
+    "mailgun-js": "^0.14.2",
     "pg-promise": "^7.4.0",
     "sha256": "^0.2.0"
   }
