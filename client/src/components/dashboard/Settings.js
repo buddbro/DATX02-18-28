@@ -16,9 +16,14 @@ import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 class Settings extends React.Component {
+
+  constructor(props) {
+      super(props);
+      this.state = { text: 'Useless Placeholder' };
+    }
+
   render() {
     //console.log(this.props.exercises);
-
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -49,21 +54,23 @@ class Settings extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.standardText}>Name: </Text>
-          <Text style={styles.standardText}>
-            {this.props.name}
-          </Text>
-          <Text style={styles.standardText}>Email: </Text>
-          <Text style={styles.standardText}>
-            {this.props.email}
-          </Text>
-          <Text style={styles.standardText}>
-            {this.props.counter}
-          </Text>
-          <Button onPress={() => this.props.increase(5)} title="Increase" />
-          <Button onPress={() => this.props.decrease()} title="Decrease" />
+        <View style={styles.outerTextContainer}>
+          <Text style={styles.biggerStandardText}>NAME: </Text>
+          <View style={styles.innerTextContainer}>
+            {/*<TextInput
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}/>*/}
+            <Text style={styles.standardText}>{this.props.name}</Text>
+          </View>
+          <Text style={styles.biggerStandardText}>EMAIL: </Text>
+          <View style={styles.innerTextContainer}>
+            <Text style={styles.standardText}>{this.props.email}</Text>
+          </View>
         </View>
+        {/*<Text style={styles.standardText}>{this.props.counter}</Text>
+        <Button onPress={() => this.props.increase(5)} title="Increase" />
+        <Button onPress={() => this.props.decrease()} title="Decrease" />*/}
+        {/*<TextInput placeholder="Enter password"/>*/}
       </View>
     );
   }
@@ -88,25 +95,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#8b8ddf',
+    backgroundColor: '#6669cb',
     paddingTop: 40
   },
   headerContainer: {
-    backgroundColor: '#8b8ddf',
+    backgroundColor: '#6669cb',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15
   },
-  textContainer: {
+  outerTextContainer: {
+    justifyContent: 'center',
     backgroundColor: '#8b8ddf',
     marginTop: 15,
-    marginLeft: 15
+    marginLeft: 15,
+    marginRight: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 1,
+    borderRadius: 5,
+    borderWidth: 5,
+    borderColor: '#8b8ddf'
+  },
+  innerTextContainer: {
+    justifyContent: 'center',
+    backgroundColor: '#b9baf1',
+    marginTop: 3,
+    marginBottom: 5,
+    paddingLeft: 5,
+    paddingTop: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#b9baf1'
   },
   heading: {
     color: '#ffffff',
     fontSize: 35
+  },
+  biggerStandardText: {
+    color: '#ffffff',
+    fontSize: 17,
+    fontWeight: 'bold',
+    marginTop: 8
   },
   standardText: {
     color: '#ffffff',
