@@ -89,7 +89,6 @@ class ProfileHeader extends React.Component {
                 marginLeft: 10
               }}
               onPress={() => {
-                this.props.logout(this.props.user.id);
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'Settings'
