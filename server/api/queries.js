@@ -4,6 +4,8 @@ const MAILGUN = require('./config');
 const mailTemplates = require('./mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
 
+// const userQueries = require('./queries/userQueries');
+
 const sendMail = (email, name) => {
   const data = {
     from: 'PushApp <noreply@getpushapp.com>',
@@ -63,8 +65,6 @@ const resetPasswordPost = (req, res, next) => {
     res.status(200).json({ success: false });
   }
 
-  console.log(passwordOne);
-
   db
     .any(
       "UPDATE users SET password = $1, reset_token = '' WHERE id = $2 AND reset_token = $3",
@@ -76,11 +76,6 @@ const resetPasswordPost = (req, res, next) => {
     .catch(function(err) {
       return next(err);
     });
-};
-
-const mail = (req, res, next) => {
-  sendMail('andreasc89@gmail.com', 'Andreas Carlsson');
-  res.status(200).json({ success: true });
 };
 
 const getAllUsers = (req, res, next) => {
@@ -194,27 +189,28 @@ const login = (req, res, next) => {
     });
 };
 
-const loginWithToken = (req, res, next) => {
-  db
-    .any(
-      'SELECT id, password, name FROM users WHERE email = $1 AND token = $2',
-      [req.body.email, req.body.token]
-    )
-    .then(function(data) {
-      if (!data.length) {
-        res.status(200).json({ error: 'User not found' });
-        return next();
-      } else {
-        const { id, name } = data[0];
-        res
-          .status(200)
-          .json({ id, name, token: req.body.token, success: true });
-      }
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const loginWithToken = (req, res, next) =>
+  userQueries.loginWithToken(req, res, next, db);
+// const loginWithToken = (req, res, next) => {
+//   db
+//     .any(
+//       'SELECT id, password, name FROM users WHERE email = $1 AND token = $2',
+//       [req.body.email, req.body.token]
+//     )
+//     .then(function(data) {
+//       if (!data.length) {
+//         res.status(200).json({ error: 'User not found' });
+//       } else {
+//         const { id, name } = data[0];
+//         res
+//           .status(200)
+//           .json({ id, name, token: req.body.token, success: true });
+//       }
+//     })
+//     .catch(function(err) {
+//       return next(err);
+//     });
+// };
 
 const logout = (req, res, next) => {
   db
@@ -235,6 +231,8 @@ const sendResetPasswordEmail = (req, res, next) => {
     .any('SELECT id FROM users WHERE email = $1', [req.body.email])
     .then(function(data) {
       if (data.length) {
+        const { id } = data[0];
+        console.log(id);
         db
           .any('UPDATE users SET reset_token = $1 WHERE email = $2', [
             token,
@@ -245,7 +243,7 @@ const sendResetPasswordEmail = (req, res, next) => {
               from: 'PushApp <noreply@getpushapp.com>',
               to: req.body.email,
               subject: `Reset password for PushApp`,
-              html: mailTemplates.forgotPassword(token)
+              html: mailTemplates.forgotPassword(id, token)
             }, function(error, body) {
               if (error) {
                 console.log(error);
@@ -490,7 +488,6 @@ const fetchExerciseDescription = (req, res, next) => {
 
 const addExerciseToWorkout = (req, res, next) => {
   const { workoutId, exerciseId } = req.body;
-
   db
     .any('INSERT INTO exercises(exercise_type, workout) VALUES($1, $2)', [
       exerciseId,
@@ -567,6 +564,5 @@ module.exports = {
   addExerciseToWorkout,
   addSetToExercise,
   getSetsForExercise,
-  mail,
   updateUser
 };
