@@ -16,7 +16,16 @@ class ExerciseHelp extends React.Component {
     super(props);
 
   }
+  renderDescription() {
+    if(!this.props.description.description){
+      return null;
+    }
+    return (this.props.description.description.split('\n').map((string, index) =>
+      <View style={styles.descrList} key={`description${index}`}>
+        <Text>{string}</Text>
+      </View>))
 
+  }
   render() {
     return(
       <View style={styles.background}>
@@ -50,12 +59,9 @@ class ExerciseHelp extends React.Component {
               <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
             </View>
             <ScrollView>
-              {/*<View>
-                {this.props.description.description}.split('\n').map((string, index) => );
-              </View>*/}
-
-
-              <Text>{this.props.description.description}</Text>
+              <View>
+                {this.renderDescription()}
+              </View>
             </ScrollView>
           </View>
       </View>
@@ -127,5 +133,8 @@ const styles = StyleSheet.create({
     color: '#6669CB',
     fontSize: 22,
     marginLeft: 5,
+  },
+  descrList: {
+
   },
 });
