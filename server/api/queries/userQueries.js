@@ -19,4 +19,4 @@ const loginWithToken = (req, res, next, db) => {
     });
 };
 
-module.exports({ loginWithToken });
+module.exports = { loginWithToken };
