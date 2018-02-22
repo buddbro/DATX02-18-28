@@ -16,12 +16,12 @@ class Dashboard extends React.Component {
           navigation={this.props.navigation}
         />
         <Workout navigation={this.props.navigation} />
-        <View style={{ marginTop: 120 }}>
+        {/* <View style={{ marginTop: 120 }}>
           <Text>Hej</Text>
           <TouchableOpacity onPress={() => console.log('tihi')}>
             <View />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }

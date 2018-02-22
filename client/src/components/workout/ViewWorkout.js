@@ -61,7 +61,7 @@ class ViewWorkout extends React.Component {
             );
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
+                routeName: 'Dashboard'
               })
             );
           }
@@ -80,7 +80,7 @@ class ViewWorkout extends React.Component {
               this.props.clearWorkout();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
+                  routeName: 'Dashboard'
                 })
               );
             }}
