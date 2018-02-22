@@ -1,6 +1,6 @@
 const sha256 = require('sha256');
 const MAILGUN = require('../config');
-const mailTemplates = require('./mailtemplates');
+const mailTemplates = require('../mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
 
 const getDate = () => {
