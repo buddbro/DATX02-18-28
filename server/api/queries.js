@@ -153,72 +153,12 @@ const registerUser = (req, res, next) => {
     });
 };
 
-const login = (req, res, next) => {
-  db
-    .any('SELECT id, password, name FROM users WHERE email = $1', [
-      req.body.email
-    ])
-    .then(function(data) {
-      if (!data.length) {
-        res.status(200).json({ error: 'User not found' });
-        return next();
-      }
-
-      if (req.body.password === data[0].password) {
-        const token = sha256(
-          Math.round(
-            new Date().getMilliseconds() * Math.random() * 10000000000000
-          ).toString()
-        );
-        const { id, name } = data[0];
-        db
-          .any('UPDATE users SET token = $2, lastLogin = $3 WHERE email = $1', [
-            req.body.email,
-            token,
-            getDate()
-          ])
-          .then(function(data) {
-            res.status(200).json({ id, name, token, success: true });
-          });
-      } else {
-        res.status(200).json({ error: 'Wrong password' });
-      }
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const login = (req, res, next) => userQueries.login(req, res, next, db);
 
 const loginWithToken = (req, res, next) =>
   userQueries.loginWithToken(req, res, next, db);
-// const loginWithToken = (req, res, next) => {
-//   db
-//     .any(
-//       'SELECT id, password, name FROM users WHERE email = $1 AND token = $2',
-//       [req.body.email, req.body.token]
-//     )
-//     .then(function(data) {
-//       if (!data.length) {
-//         res.status(200).json({ error: 'User not found' });
-//       } else {
-//         const { id, name } = data[0];
-//         res
-//           .status(200)
-//           .json({ id, name, token: req.body.token, success: true });
-//       }
-//     })
-//     .catch(function(err) {
-//       return next(err);
-//     });
-// };
 
-const logout = (req, res, next) => {
-  db
-    .any("UPDATE users SET token = '' WHERE id = $1", [req.body.id])
-    .then(function(data) {
-      res.status(200).json({ success: true });
-    });
-};
+const logout = (req, res, next) => userQueries.logout(req, res, next, db);
 
 const sendResetPasswordEmail = (req, res, next) => {
   const token = sha256(
