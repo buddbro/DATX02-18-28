@@ -77,7 +77,7 @@ const logout = (req, res, next, db) => {
     });
 };
 
-const sendResetPasswordEmail(req, res, next, db) => {
+const sendResetPasswordEmail = (req, res, next, db) => {
   const token = sha256(
     Math.round(
       new Date().getMilliseconds() * Math.random() * 10000000000000
