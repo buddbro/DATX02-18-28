@@ -4,7 +4,7 @@ const MAILGUN = require('./config');
 const mailTemplates = require('./mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
 
-// const userQueries = require('./queries/userQueries');
+const userQueries = require('./queries/userQueries');
 
 const sendMail = (email, name) => {
   const data = {
