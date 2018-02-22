@@ -1,4 +1,7 @@
 import { TabNavigator } from 'react-navigation';
+
+import Dashboard from '../components/dashboard/Dashboard';
+
 import Workout from '../components/dashboard/Workout';
 import ViewWorkout from '../components/dashboard/ViewWorkout';
 import ViewExercise from '../components/dashboard/exercise/ViewExercise';
@@ -22,6 +25,12 @@ const AppRouteConfigs = {
   },
   CreateAccount: {
     screen: CreateAccount,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  Dashboard: {
+    screen: Dashboard,
     navigationOptions: {
       tabBarVisible: false
     }

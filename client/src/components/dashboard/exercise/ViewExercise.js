@@ -194,17 +194,14 @@ class ViewExercise extends React.Component {
 
             <FlatList
               style={{ marginLeft: 8, marginRight: 8 }}
-              data={[
-                { id: -1, reps: '', weight: '' },
-                ...this.props.sets.reverse()
-              ]}
+              data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
               keyExtractor={(item, index) => `${item.id}${this.props.id}`}
               renderItem={({ item, index }) => {
                 const key = `${this.props.id}${item.id}`;
                 return (
                   <ExerciseSet
                     id={item.id}
-                    index={this.props.sets.length - index}
+                    index={index}
                     reps={item.id === -1 ? this.state.reps : String(item.reps)}
                     weight={
                       item.id === -1 ? this.state.weight : String(item.weight)
