@@ -6,14 +6,14 @@ import {
   View,
   Button,
   List,
-  FlatList,
-  ListItem,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
+var {height, width} = Dimensions.get('window');
 
 class Settings extends React.Component {
   constructor(props) {
@@ -63,16 +63,71 @@ class Settings extends React.Component {
             />
           </TouchableOpacity>
         </View>
+        <View style={styles.subHeaderContainer}>
+          <Text style={styles.subHeading}>PROFILE</Text>
+        </View>
+
+        {/*Picture, name, age*/}
         <View style={styles.outerTextContainer}>
-          <Text style={styles.biggerStandardText}>NAME: </Text>
-          <View style={styles.innerTextContainer}>
-            <TextInput
-              style={styles.standardText}
-              onChangeText={nameText => this.setState({ nameText })}
-              value={this.state.nameText}
-            />
+          <View style={{flexDirection: 'row'}}>
+            <View style={{justifyContent: 'center', alignItems: 'center', paddingRight: 20}}>
+              <Image
+                source={require('../../../assets/avatar_default.png')}
+                style={{ width: 110, height: 110 }}
+              />
+            </View>
+            {/*Name and age*/}
+            <View>
+              <Text style={styles.biggerStandardText}>NAME</Text>
+              <View style={styles.innerTextContainer}>
+                <TextInput
+                  style={styles.standardText}
+                  onChangeText={nameText => this.setState({ nameText })}
+                  value={this.state.nameText}
+                />
+              </View>
+              <Text style={styles.biggerStandardText}>AGE</Text>
+              <View style={styles.innerTextContainer}>
+                <TextInput
+                  style={styles.standardText}
+                  onChangeText={nameText => this.setState({ nameText })}
+                  value={this.state.nameText}
+                />
+              </View>
+            </View>
           </View>
-          <Text style={styles.biggerStandardText}>EMAIL: </Text>
+
+          {/*Height and weight*/}
+          <View style={styles.twoColumnContainer}>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.biggerStandardText}>HEIGHT</Text>
+              <View style={styles.smallInnerTextContainer}>
+                <TextInput
+                  style={styles.standardText}
+                  onChangeText={nameText => this.setState({ nameText })}
+                  value={this.state.nameText}
+                />
+              </View>
+            </View>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.biggerStandardText}>WEIGHT</Text>
+              <View style={styles.smallInnerTextContainer}>
+                <TextInput
+                  style={styles.standardText}
+                  onChangeText={nameText => this.setState({ nameText })}
+                  value={this.state.nameText}
+                />
+              </View>
+            </View>
+          </View>
+
+        {/*Account down*/}
+        </View>
+        <View style={styles.subHeaderContainer}>
+          <Text style={styles.subHeading}>ACCOUNT</Text>
+        </View>
+        <View style={styles.outerTextContainer}>
+          <Text style={styles.biggerStandardText}>EMAIL </Text>
           <View style={styles.innerTextContainer}>
             <TextInput
               style={styles.standardText}
@@ -80,18 +135,38 @@ class Settings extends React.Component {
               value={this.state.emailText}
             />
           </View>
+          <Text style={styles.biggerStandardText}>NEW PASSWORD</Text>
+          <View style={styles.innerTextContainer}>
+            <TextInput
+              style={styles.standardText}
+              onChangeText={nameText => this.setState({ nameText })}
+              value={this.state.nameText}
+            />
+          </View>
+          <Text style={styles.biggerStandardText}>CONFIRM PASSWORD</Text>
+          <View style={styles.innerTextContainer}>
+            <TextInput
+              style={styles.standardText}
+              onChangeText={nameText => this.setState({ nameText })}
+              value={this.state.nameText}
+            />
+          </View>
+          <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Dashboard'
-              })
-            );
-          }}
-        >
-          <Text style={styles.standardText}>Save Changes</Text>
-        </TouchableOpacity>
+        <View style={{justifyContent: 'center',
+        alignItems: 'center'}}>
+          <TouchableOpacity style={styles.button}
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'Dashboard'
+                })
+              );
+            }}
+          >
+            <Text style={styles.buttontext}>SAVE</Text>
+          </TouchableOpacity>
+        </View>
         {/*<Text style={styles.standardText}>{this.props.counter}</Text>
         <Button onPress={() => this.props.increase(5)} title="Increase" />
         <Button onPress={() => this.props.decrease()} title="Decrease" />*/}
@@ -120,54 +195,99 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#6669cb',
+    backgroundColor: '#8b8ddf',
     paddingTop: 40
   },
   headerContainer: {
-    backgroundColor: '#6669cb',
+    backgroundColor: '#8b8ddf',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
     marginLeft: 15,
     marginRight: 15
   },
+  subHeaderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#6669cb',
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
+  twoColumnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: '15%',
+    marginRight: '15%'
+  },
   outerTextContainer: {
     justifyContent: 'center',
     backgroundColor: '#8b8ddf',
-    marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,
     paddingRight: 5,
-    paddingTop: 1,
-    borderRadius: 5,
-    borderWidth: 5,
-    borderColor: '#8b8ddf'
   },
   innerTextContainer: {
+    //flex: 1,
     justifyContent: 'center',
     backgroundColor: '#b9baf1',
     marginTop: 3,
     marginBottom: 5,
     paddingLeft: 5,
     paddingTop: 5,
-    borderRadius: 5,
+    borderRadius: 3,
     borderWidth: 1,
     borderColor: '#b9baf1'
   },
+  smallInnerTextContainer: {
+    justifyContent: 'center',
+    backgroundColor: '#b9baf1',
+    marginTop: 3,
+    marginBottom: 5,
+    paddingLeft: 5,
+    paddingTop: 5,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    width: 80
+  },
+  button: {
+    width: 160,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    backgroundColor: '#6669cb',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
+  buttontext: {
+    color: '#ffffff',
+    fontSize: 23
+  },
   heading: {
     color: '#ffffff',
-    fontSize: 35
+    fontSize: 22
+  },
+  subHeading: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   biggerStandardText: {
     color: '#ffffff',
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontSize: 15,
     marginTop: 8
   },
   standardText: {
-    color: '#ffffff',
+    color: '#606060',
     fontSize: 15,
-    fontWeight: 'bold'
   }
 });
