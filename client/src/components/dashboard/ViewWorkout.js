@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Alert,
   Text,
@@ -12,27 +12,27 @@ import {
   Animated,
   ListItem,
   FlatList
-} from 'react-native';
-import NavigationActions from 'react-navigation';
-import { connect } from 'react-redux';
+} from "react-native";
+import NavigationActions from "react-navigation";
+import { connect } from "react-redux";
 import {
   clearWorkout,
   editWorkout,
   fetchWorkouts,
   viewExercise,
   deleteWorkout
-} from '../../actions';
-import WorkoutExercisesList from './WorkoutExercisesList';
-import ExerciseCard from './exercise/ExerciseCard';
+} from "../../actions";
+import WorkoutExercisesList from "./WorkoutExercisesList";
+import ExerciseCard from "./exercise/ExerciseCard";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 // Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: '' };
+    this.state = { title: "" };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,16 +43,16 @@ class ViewWorkout extends React.Component {
 
   deleteWorkout() {
     Alert.alert(
-      'Are you sure?',
+      "Are you sure?",
       "This can't be undone",
       [
         {
-          text: 'Cancel',
+          text: "Cancel",
           onPress: () => {},
-          style: 'cancel'
+          style: "cancel"
         },
         {
-          text: 'Delete',
+          text: "Delete",
           onPress: () => {
             this.props.deleteWorkout(
               this.props.user.id,
@@ -61,7 +61,7 @@ class ViewWorkout extends React.Component {
             );
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
+                routeName: "Workout"
               })
             );
           }
@@ -80,31 +80,31 @@ class ViewWorkout extends React.Component {
               this.props.clearWorkout();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
+                  routeName: "Workout"
                 })
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+            <Text style={{ fontSize: 20, color: "#fff" }}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               this.deleteWorkout();
             }}
           >
-            <Text style={{ fontSize: 20, color: '#d33' }}>Delete</Text>
+            <Text style={{ fontSize: 20, color: "#d33" }}>Delete</Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
           <View
-            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
+            style={{ backgroundColor: "#7ad9c6", margin: 10, borderRadius: 3 }}
           >
             <Text
               style={{
                 marginLeft: 15,
                 marginTop: 6,
                 marginBottom: 15,
-                color: '#444',
+                color: "#444",
                 fontSize: 18
               }}
             >
@@ -114,12 +114,12 @@ class ViewWorkout extends React.Component {
               style={{
                 height: 40,
                 fontSize: 24,
-                borderColor: '#eee',
-                backgroundColor: '#fff',
+                borderColor: "#eee",
+                backgroundColor: "#fff",
                 borderWidth: 1,
                 borderRadius: 5,
                 padding: 3,
-                textAlign: 'center'
+                textAlign: "center"
               }}
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
@@ -142,14 +142,14 @@ class ViewWorkout extends React.Component {
           </View>
 
           <View
-            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
+            style={{ backgroundColor: "#7ad9c6", margin: 10, borderRadius: 3 }}
           >
             <Text
               style={{
                 marginLeft: 15,
                 marginTop: 6,
                 marginBottom: 15,
-                color: '#444',
+                color: "#444",
                 fontSize: 18
               }}
             >
@@ -177,7 +177,7 @@ class ViewWorkout extends React.Component {
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'ExerciseList'
+                  routeName: "ExerciseList"
                 })
               );
             }}
@@ -218,34 +218,34 @@ export default connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#51c1ab',
+    flexDirection: "column",
+    backgroundColor: "#51c1ab",
     paddingTop: 40
   },
   header: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     marginLeft: 10,
     marginRight: 10,
-    justifyContent: 'space-between'
+    justifyContent: "space-between"
   },
   nameTextStyle: {
     margin: 25,
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6669CB'
+    fontWeight: "bold",
+    color: "#6669CB"
   },
   category: {},
   addExerciseTitle: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   addExerciseItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     height: 80,
-    backgroundColor: '#8b8ddf'
+    backgroundColor: "#8b8ddf"
   },
   exerciseListStyle: {}
 });

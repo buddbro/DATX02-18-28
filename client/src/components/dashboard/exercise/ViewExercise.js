@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Text,
   View,
@@ -6,19 +6,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList
-} from 'react-native';
-import { connect } from 'react-redux';
+} from "react-native";
+import { connect } from "react-redux";
 import {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
   getExerciseDescription,
   clearExercise
-} from '../../../actions';
-import NavigationActions from 'react-navigation';
-import { BarChart } from 'react-native-svg-charts';
+} from "../../../actions";
+import NavigationActions from "react-navigation";
+import { BarChart } from "react-native-svg-charts";
 
-import ExerciseSet from './ExerciseSet';
+import ExerciseSet from "./ExerciseSet";
 
 class BarChartExample extends React.PureComponent {
   render() {
@@ -67,7 +67,7 @@ class ViewExercise extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { accordionToggled: false, reps: '', weight: '' };
+    this.state = { accordionToggled: false, reps: "", weight: "" };
   }
 
   setReps(reps) {
@@ -92,8 +92,8 @@ class ViewExercise extends React.Component {
     );
 
     this.setState({
-      reps: '',
-      weight: ''
+      reps: "",
+      weight: ""
     });
   }
 
@@ -108,10 +108,10 @@ class ViewExercise extends React.Component {
           return [...acc, next.reps * next.weight];
         }, []),
         positive: {
-          fill: '#6669cb'
+          fill: "#6669cb"
         },
         negative: {
-          fill: '#6669cb'
+          fill: "#6669cb"
         }
       }
     ];
@@ -124,22 +124,22 @@ class ViewExercise extends React.Component {
               this.props.clearExercise();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
+                  routeName: "ViewWorkout"
                 })
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+            <Text style={{ fontSize: 20, color: "#fff" }}>Back</Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
           <View
             style={{
-              backgroundColor: '#b9baf1',
+              backgroundColor: "#b9baf1",
               margin: 10,
               borderRadius: 3,
-              flexDirection: 'row',
-              justifyContent: 'space-between'
+              flexDirection: "row",
+              justifyContent: "space-between"
             }}
           >
             <Text
@@ -147,10 +147,10 @@ class ViewExercise extends React.Component {
                 marginTop: 15,
                 marginBottom: 15,
                 marginLeft: 15,
-                color: '#444',
+                color: "#444",
                 fontSize: 24,
-                fontWeight: 'bold',
-                textAlign: 'center'
+                fontWeight: "bold",
+                textAlign: "center"
               }}
             >
               {this.props.visibleExercise}
@@ -163,7 +163,7 @@ class ViewExercise extends React.Component {
                 this.props.getExerciseDescription(this.props.visibleExerciseId);
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
-                    routeName: 'ExerciseHelp'
+                    routeName: "ExerciseHelp"
                   })
                 );
               }}
@@ -172,10 +172,10 @@ class ViewExercise extends React.Component {
                 style={{
                   marginTop: 15,
                   marginBottom: 15,
-                  color: '#444',
+                  color: "#444",
                   fontSize: 24,
-                  fontWeight: 'bold',
-                  textAlign: 'center'
+                  fontWeight: "bold",
+                  textAlign: "center"
                 }}
               >
                 ?
@@ -184,14 +184,14 @@ class ViewExercise extends React.Component {
           </View>
 
           <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
+            style={{ backgroundColor: "#b9baf1", margin: 10, borderRadius: 3 }}
           >
             <Text
               style={{
                 marginLeft: 8,
                 marginTop: 6,
                 marginBottom: 15,
-                color: '#444',
+                color: "#444",
                 fontSize: 18
               }}
             >
@@ -200,35 +200,35 @@ class ViewExercise extends React.Component {
 
             <View
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                backgroundColor: '#6669cb',
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                backgroundColor: "#6669cb",
                 borderTopLeftRadius: 5,
                 borderTopRightRadius: 5,
                 marginLeft: 8,
                 marginRight: 8
               }}
             >
-              <View style={{ width: '20%' }}>
+              <View style={{ width: "20%" }}>
                 <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  style={{ textAlign: "center", fontSize: 18, color: "#fff" }}
                 >
                   #
                 </Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={{ width: "40%" }}>
                 <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  style={{ textAlign: "center", fontSize: 18, color: "#fff" }}
                 >
                   Reps
                 </Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={{ width: "40%" }}>
                 <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  style={{ textAlign: "center", fontSize: 18, color: "#fff" }}
                 >
                   Weight
                 </Text>
@@ -237,7 +237,7 @@ class ViewExercise extends React.Component {
 
             <FlatList
               style={{ marginLeft: 8, marginRight: 8 }}
-              data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+              data={[...this.props.sets, { id: -1, reps: "", weight: "" }]}
               keyExtractor={(item, index) => `${item.id}${this.props.id}`}
               renderItem={({ item, index }) => {
                 const key = `${this.props.id}${item.id}`;
@@ -263,7 +263,7 @@ class ViewExercise extends React.Component {
               <Text
                 style={{
                   fontSize: 20,
-                  color: '#fff'
+                  color: "#fff"
                 }}
               >
                 Add set
@@ -271,14 +271,14 @@ class ViewExercise extends React.Component {
             </TouchableOpacity>
           </View>
           <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
+            style={{ backgroundColor: "#b9baf1", margin: 10, borderRadius: 3 }}
           >
             <Text
               style={{
                 marginLeft: 15,
                 marginTop: 6,
                 marginBottom: 15,
-                color: '#444',
+                color: "#444",
                 fontSize: 18
               }}
             >
@@ -321,22 +321,22 @@ export default connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#8b8ddf',
+    flexDirection: "column",
+    backgroundColor: "#8b8ddf",
     paddingTop: 40
   },
   header: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     marginLeft: 10,
-    justifyContent: 'space-between'
+    justifyContent: "space-between"
   },
   addSetButton: {
-    backgroundColor: '#6669cb',
+    backgroundColor: "#6669cb",
     margin: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     height: 40,
     borderRadius: 5,
     paddingTop: 10,

@@ -27,6 +27,9 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('this.props.user.token');
+    console.log(this.props.user.token);
+    console.log('end');
     return this.props.user.token
       ? <AppNavigator
           navigation={addNavigationHelpers({

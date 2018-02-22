@@ -103,6 +103,7 @@ export function logout(id) {
         id
       })
       .then(() => {
+        AsyncStorage.removeItem('token');
         dispatch({
           type: LOGOUT
         });

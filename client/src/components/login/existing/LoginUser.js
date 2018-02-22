@@ -30,11 +30,11 @@ class LoginUser extends React.Component {
             this.setState({ email: '', password: '' });
             this.props.fetchWorkouts(nextProps.id, nextProps.token);
 
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'Workout'
-              })
-            );
+            // this.props.navigation.dispatch(
+            //   NavigationActions.NavigationActions.navigate({
+            //     routeName: 'Workout'
+            //   })
+            // );
           });
         });
       } catch (error) {
@@ -111,7 +111,7 @@ class LoginUser extends React.Component {
               );
             }}
           >
-            <Text style={{ color: '#858080', marginBottom: 30, }}>
+            <Text style={{ color: '#858080', marginBottom: 30 }}>
               Forgot your password?
             </Text>
           </TouchableOpacity>
@@ -129,7 +129,6 @@ class LoginUser extends React.Component {
               Don't have an account yet? Create one!
             </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     );

@@ -1,15 +1,17 @@
 import { TabNavigator } from 'react-navigation';
-import Workout from '../components/dashboard/Workout';
-import ViewWorkout from '../components/dashboard/ViewWorkout';
-import ViewExercise from '../components/dashboard/exercise/ViewExercise';
-//import NewWorkout from '../components/dashboard/NewWorkout';
+
+import Dashboard from '../components/dashboard/Dashboard';
+
+import Workout from '../components/workout/Workout';
+import ViewWorkout from '../components/workout/ViewWorkout';
+import ViewExercise from '../components/exercise/ViewExercise';
 
 import LoginUser from '../components/login/existing/LoginUser';
 import ForgotPassword from '../components/login/existing/ForgotPassword';
 import CreateAccount from '../components/login/create/CreateAccount';
 
-import ExerciseList from '../components/dashboard/exercise/ExerciseList';
-import ExerciseHelp from '../components/dashboard/exercise/ExerciseHelp';
+import ExerciseList from '../components/exercise/ExerciseList';
+import ExerciseHelp from '../components/exercise/ExerciseHelp';
 
 import Settings from '../components/dashboard/Settings';
 
@@ -22,6 +24,12 @@ const AppRouteConfigs = {
   },
   CreateAccount: {
     screen: CreateAccount,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  Dashboard: {
+    screen: Dashboard,
     navigationOptions: {
       tabBarVisible: false
     }

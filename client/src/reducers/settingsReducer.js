@@ -2,6 +2,7 @@ import { INCREASE, DECREASE } from '../actions/types';
 
 const INITIAL_STATE = {
   title: 'Rubrik',
+  name: 0,
   counter: 0,
   stuff: 42
 };
