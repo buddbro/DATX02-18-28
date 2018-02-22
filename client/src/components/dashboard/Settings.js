@@ -19,7 +19,17 @@ class Settings extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { text: 'Useless Placeholder' };
+      this.state = {
+        nameText: 'Useless Placeholder',
+        emailText: 'Useless Placeholder'
+      };
+    }
+
+    componentWillReceiveProps(nextProps){
+      this.setState({
+        nameText: nextProps.name,
+        emailText: nextProps.email
+      })
     }
 
   render() {
@@ -57,16 +67,28 @@ class Settings extends React.Component {
         <View style={styles.outerTextContainer}>
           <Text style={styles.biggerStandardText}>NAME: </Text>
           <View style={styles.innerTextContainer}>
-            {/*<TextInput
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}/>*/}
-            <Text style={styles.standardText}>{this.props.name}</Text>
+            <TextInput style={styles.standardText}
+              onChangeText={(nameText) => this.setState({nameText})}
+              value={this.state.nameText}/>
           </View>
           <Text style={styles.biggerStandardText}>EMAIL: </Text>
           <View style={styles.innerTextContainer}>
-            <Text style={styles.standardText}>{this.props.email}</Text>
+          <TextInput style={styles.standardText}
+            onChangeText={(emailText) => this.setState({emailText})}
+            value={this.state.emailText}/>
           </View>
         </View>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'Workout'
+              })
+            );
+          }}
+        >
+          <Text style={styles.standardText}>Save Changes</Text>
+        </TouchableOpacity>
         {/*<Text style={styles.standardText}>{this.props.counter}</Text>
         <Button onPress={() => this.props.increase(5)} title="Increase" />
         <Button onPress={() => this.props.decrease()} title="Decrease" />*/}
