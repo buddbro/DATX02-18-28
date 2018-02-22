@@ -56,7 +56,7 @@ app.get('/api/exercises', db.fetchExerciseList);
 app.get('/api/exercises/description/:id', db.fetchExerciseDescription);
 
 // Schedules
-app.post('/api/schedules', db.addSchedule);
+// app.post('/api/schedules', db.addSchedule);
 
 // Feedback
 app.get('/api/feedback', db.getFeedback);
