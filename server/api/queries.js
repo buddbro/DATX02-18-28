@@ -79,27 +79,10 @@ const resetPasswordPost = (req, res, next) => {
     });
 };
 
-const getAllUsers = (req, res, next) => {
-  db
-    .any('SELECT * FROM users ORDER BY id')
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getAllUsers = (req, res, next) =>
+  userQueries.getAllUsers(req, res, next, db);
 
-const getUserByEmail = (req, res, next) => {
-  db
-    .any('SELECT * FROM users WHERE email = $1', [req.body.email])
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getUserByEmail = (req, res, next) => userQueries(req, res, next, db);
 
 const updateUser = (req, res, next) => {
   db
@@ -117,42 +100,8 @@ const updateUser = (req, res, next) => {
     });
 };
 
-const registerUser = (req, res, next) => {
-  const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  if (!emailRegex.test(req.body.email)) {
-    res
-      .status(200)
-      .json({ success: false, error: 'Invalid email, please try again' });
-    return next();
-  }
-
-  db
-    .any(
-      'INSERT INTO users(email, password, name, created) VALUES($1, $2, $3, $4)',
-      [req.body.email, req.body.password, req.body.name, getDate()]
-    )
-    .then(function(data) {
-      const token = sha256(
-        Math.round(
-          new Date().getMilliseconds() * Math.random() * 10000000000000
-        ).toString()
-      );
-      db
-        .any('UPDATE users SET token = $2, lastLogin = $3 WHERE email = $1', [
-          req.body.email,
-          token,
-          getDate()
-        ])
-        .then(function(data) {
-          sendMail(req.body.email, req.body.name);
-          res.status(200).json({ token: token, success: true });
-          return next();
-        });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const registerUser = (req, res, next) =>
+  userQueries.registerUser(req, res, next, db);
 
 const login = (req, res, next) => userQueries.login(req, res, next, db);
 
