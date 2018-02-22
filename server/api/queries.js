@@ -45,60 +45,20 @@ const getDate = () => {
   );
 };
 
-const resetPasswordGet = (req, res, next) => {
-  db
-    .any('SELECT * FROM users WHERE id = $1 AND reset_token = $2', [
-      req.params.id,
-      req.params.token
-    ])
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const resetPasswordGet = (req, res, next) =>
+  userQueries.resetPasswordGet(req, res, next, db);
 
-const resetPasswordPost = (req, res, next) => {
-  const { passwordOne, passwordTwo } = req.body;
-
-  if (passwordOne !== passwordTwo) {
-    res.status(200).json({ success: false });
-  }
-
-  db
-    .any(
-      "UPDATE users SET password = $1, reset_token = '' WHERE id = $2 AND reset_token = $3",
-      [passwordOne, req.params.id, req.params.token]
-    )
-    .then(function(data) {
-      res.status(200).json({ success: true });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const resetPasswordPost = (req, res, next) =>
+  userQueries.resetPasswordPost(req, res, next, db);
 
 const getAllUsers = (req, res, next) =>
   userQueries.getAllUsers(req, res, next, db);
 
-const getUserByEmail = (req, res, next) => userQueries(req, res, next, db);
+const getUserByEmail = (req, res, next) =>
+  userQueries.getUserByEmail(req, res, next, db);
 
-const updateUser = (req, res, next) => {
-  db
-    .any('UPDATE users SET name = $1 WHERE id = $2', [
-      req.body.name,
-      req.body.id
-    ])
-    .then(function(data) {
-      res
-        .status(200)
-        .json({ success: true, result: `Change name to ${req.body.name}` });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const updateUser = (req, res, next) =>
+  userQueries.updateUser(req, res, next, db);
 
 const registerUser = (req, res, next) =>
   userQueries.registerUser(req, res, next, db);
@@ -272,17 +232,6 @@ const editWorkout = (req, res, next) => {
     });
 };
 
-const reset = (req, res, next) => {
-  db
-    .any(resetQuery)
-    .then(function(data) {
-      res.status(200).json({ success: true });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
-
 const getFeedback = (req, res, next) => {
   db
     .any('SELECT * FROM feedback')
@@ -411,7 +360,6 @@ module.exports = {
   addWorkout,
   deleteWorkout,
   editWorkout,
-  reset,
   postFeedback,
   getFeedback,
   getWorkoutsForUser,

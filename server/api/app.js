@@ -24,9 +24,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/api', (req, res) =>
-  res.send('Här hostar vi backend till DATX02-18-28 :)')
-);
+app.get('/api', (req, res) => res.send('Backend till DATX02-18-28 :)'));
 
 app.get('/api/getall', db.getAllUsers);
 
