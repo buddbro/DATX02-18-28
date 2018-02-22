@@ -16,6 +16,8 @@ import {
   Visibility
 } from 'semantic-ui-react';
 
+import FeedbackForm from './FeedbackForm';
+
 class Start extends React.Component {
   render() {
     return (
@@ -93,13 +95,11 @@ class Start extends React.Component {
                       </Header>
                       <p style={{ fontSize: '1.33em' }}>
                         <Image src="/help1.jpg" />
+                        <br />
                         <b>Download Expo</b> We are mirroring PushApp in another
                         application called Expo during the developing in order
                         not to publishing through AppStore and Google Play Store
-                        every iteration. The finalized version of the
-                        application will be available in the app stores later
-                        this spring. In the picture below you will see how Expo
-                        looks like in AppStore.
+                        every iteration.
                       </p>
                     </Grid.Column>
                     <Grid.Column
@@ -110,6 +110,7 @@ class Start extends React.Component {
                       </Header>
                       <p style={{ fontSize: '1.33em' }}>
                         <Image src="/help2.jpg" />
+                        <br />
                         <b>Add a mirror</b> By pressing the plus-icon in the
                         upperright corner you will add another mirror
                       </p>
@@ -122,6 +123,7 @@ class Start extends React.Component {
                       </Header>
                       <p style={{ fontSize: '1.33em' }}>
                         <Image src="/help3.jpg" />
+                        <br />
                         <b>Go to PushApp</b> In the input field you enter
                         '@PushApp/client' in order to reach our server. Once
                         you've pressed done you should be able to access the
@@ -140,14 +142,16 @@ class Start extends React.Component {
             <Header as="h3" style={{ fontSize: '2em' }}>
               Send us feedback
             </Header>
-            <p style={{ fontSize: '1.33em' }}>
+
+            <FeedbackForm />
+            {/* <p style={{ fontSize: '1.33em' }}>
               We really appreciate all feedback and you could either provide it
               to the person who invited you to test the application, or send us
               an email at{' '}
               <a href="maito: feedback@getpushapp.com">
                 feedback@getpushapp.com
               </a>
-            </p>
+            </p> */}
           </Container>
         </Segment>
       </div>
