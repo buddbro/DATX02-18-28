@@ -23,7 +23,7 @@ import {
   deleteWorkout
 } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
-import ExerciseCard from './exercise/ExerciseCard';
+import ExerciseCard from '../exercise/ExerciseCard';
 
 const { height, width } = Dimensions.get('window');
 

@@ -13,7 +13,7 @@ import {
   viewSet,
   viewExercise,
   addSetToExercise
-} from '../../../actions';
+} from '../../actions';
 import NavigationActions from 'react-navigation';
 
 import ExerciseSet from './ExerciseSet';

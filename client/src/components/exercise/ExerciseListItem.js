@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import NavigationActions from 'react-navigation';
-import { addExerciseToWorkout } from '../../../actions';
+import { addExerciseToWorkout } from '../../actions';
 import { connect } from 'react-redux';
 
 class ExerciseListItem extends React.Component {

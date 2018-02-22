@@ -8,7 +8,6 @@ import {
   StyleSheet
 } from 'react-native';
 import WorkoutLog from './WorkoutLog';
-import ProfileHeader from './ProfileHeader';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { addWorkout, logout } from '../../actions';
@@ -17,22 +16,9 @@ import NavigationActions from 'react-navigation';
 const { height, width } = Dimensions.get('window');
 // Dashboard screen
 class Workout extends React.Component {
-  // Ta bort om appen ska funka som vanligt
-  /*componentWillReceiveProps(nextProps) {
-    this.props.navigation.dispatch(
-      NavigationActions.NavigationActions.navigate({
-        routeName: 'Settings'
-      })
-    );
-  }*/
-
   render() {
     return (
       <View style={styles.container}>
-        <ProfileHeader
-          user={this.props.user}
-          navigation={this.props.navigation}
-        />
         <ScrollView style={{ paddingTop: 20, backgroundColor: '#fff' }}>
           <TouchableOpacity
             onPress={() => {

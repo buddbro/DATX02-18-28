@@ -16,11 +16,10 @@ import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 class Settings extends React.Component {
-
   constructor(props) {
-      super(props);
-      this.state = { text: 'Useless Placeholder' };
-    }
+    super(props);
+    this.state = { text: 'Useless Placeholder' };
+  }
 
   render() {
     //console.log(this.props.exercises);
@@ -31,7 +30,7 @@ class Settings extends React.Component {
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
+                  routeName: 'Dashboard'
                 })
               );
             }}
@@ -60,11 +59,15 @@ class Settings extends React.Component {
             {/*<TextInput
               onChangeText={(text) => this.setState({text})}
               value={this.state.text}/>*/}
-            <Text style={styles.standardText}>{this.props.name}</Text>
+            <Text style={styles.standardText}>
+              {this.props.name}
+            </Text>
           </View>
           <Text style={styles.biggerStandardText}>EMAIL: </Text>
           <View style={styles.innerTextContainer}>
-            <Text style={styles.standardText}>{this.props.email}</Text>
+            <Text style={styles.standardText}>
+              {this.props.email}
+            </Text>
           </View>
         </View>
         {/*<Text style={styles.standardText}>{this.props.counter}</Text>
