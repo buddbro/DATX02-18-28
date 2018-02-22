@@ -1,4 +1,7 @@
 const sha256 = require('sha256');
+const MAILGUN = require('../config');
+const mailTemplates = require('./mailtemplates');
+const mailgun = require('mailgun-js')(MAILGUN);
 
 const getDate = () => {
   const date = new Date();
@@ -9,7 +12,7 @@ const getDate = () => {
   );
 };
 
-const login = (req, res, next) => {
+const login = (req, res, next, db) => {
   db
     .any('SELECT id, password, name FROM users WHERE email = $1', [
       req.body.email
@@ -71,6 +74,42 @@ const logout = (req, res, next, db) => {
     .any("UPDATE users SET token = '' WHERE id = $1", [req.body.id])
     .then(function(data) {
       res.status(200).json({ success: true });
+    });
+};
+
+const sendResetPasswordEmail(req, res, next, db) => {
+  const token = sha256(
+    Math.round(
+      new Date().getMilliseconds() * Math.random() * 10000000000000
+    ).toString()
+  );
+
+  db
+    .any('SELECT id FROM users WHERE email = $1', [req.body.email])
+    .then(function(data) {
+      if (data.length) {
+        const { id } = data[0];
+        db
+          .any('UPDATE users SET reset_token = $1 WHERE email = $2', [
+            token,
+            req.body.email
+          ])
+          .then(function(data) {
+            mailgun.messages().send({
+              from: 'PushApp <noreply@getpushapp.com>',
+              to: req.body.email,
+              subject: `Reset password for PushApp`,
+              html: mailTemplates.forgotPassword(id, token)
+            }, function(error, body) {
+              if (error) {
+                console.log(error);
+              }
+            });
+            res.status(200).json({ success: true });
+          });
+      } else {
+        res.status(200).json({ success: false });
+      }
     });
 };
 

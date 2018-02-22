@@ -1,5 +1,6 @@
 const sha256 = require('sha256');
 const promise = require('bluebird');
+
 const MAILGUN = require('./config');
 const mailTemplates = require('./mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
@@ -160,42 +161,8 @@ const loginWithToken = (req, res, next) =>
 
 const logout = (req, res, next) => userQueries.logout(req, res, next, db);
 
-const sendResetPasswordEmail = (req, res, next) => {
-  const token = sha256(
-    Math.round(
-      new Date().getMilliseconds() * Math.random() * 10000000000000
-    ).toString()
-  );
-
-  db
-    .any('SELECT id FROM users WHERE email = $1', [req.body.email])
-    .then(function(data) {
-      if (data.length) {
-        const { id } = data[0];
-        console.log(id);
-        db
-          .any('UPDATE users SET reset_token = $1 WHERE email = $2', [
-            token,
-            req.body.email
-          ])
-          .then(function(data) {
-            mailgun.messages().send({
-              from: 'PushApp <noreply@getpushapp.com>',
-              to: req.body.email,
-              subject: `Reset password for PushApp`,
-              html: mailTemplates.forgotPassword(id, token)
-            }, function(error, body) {
-              if (error) {
-                console.log(error);
-              }
-            });
-            res.status(200).json({ success: true });
-          });
-      } else {
-        res.status(200).json({ success: false });
-      }
-    });
-};
+const sendResetPasswordEmail = (req, res, next) =>
+  userQueries.sendResetPasswordEmail(req, res, next, db);
 
 const getWorkouts = (req, res, next) => {
   db
