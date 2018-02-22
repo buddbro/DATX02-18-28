@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   setListStyle: {},
   addSetButton: {
-    backgroundColor: '#484BB4',
+    backgroundColor: '#484bb4',
     margin: 30,
     flexDirection: 'row',
     alignItems: 'center',
