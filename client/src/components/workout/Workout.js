@@ -10,7 +10,6 @@ import {
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { addWorkout, logout } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 const { height, width } = Dimensions.get('window');
@@ -19,20 +18,28 @@ class Workout extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={{ paddingTop: 20, backgroundColor: '#fff' }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginLeft: 10,
+            height: 20,
+            justifyContent: 'space-between'
+          }}
+        >
           <TouchableOpacity
             onPress={() => {
-              this.props.addWorkout(this.props.user.id, this.props.user.token);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
+                  routeName: 'Dashboard'
                 })
               );
             }}
-            style={styles.addWorkout}
           >
-            <Text style={styles.plusSign}>+</Text>
+            <Text style={{ fontSize: 20, color: '#000' }}>Back</Text>
           </TouchableOpacity>
+        </View>
+        <ScrollView style={{ paddingTop: 50, backgroundColor: '#fff' }}>
           {this.props.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
@@ -55,30 +62,13 @@ const mapStateToProps = ({ workout, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { addWorkout, logout })(Workout);
+export default connect(mapStateToProps)(Workout);
 
 //Design
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  addWorkout: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 20,
-    marginTop: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    borderRadius: 5,
-    paddingBottom: 15,
-    backgroundColor: '#b9baf1'
-  },
-  plusSign: {
-    color: '#fff',
-    fontSize: 100,
-    fontWeight: 'bold'
+    flex: 1,
+    marginTop: 50
   },
   item: { marginBottom: 20 },
   text: {},

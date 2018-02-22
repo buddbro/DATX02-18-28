@@ -56,7 +56,7 @@ class CreateAccount extends React.Component {
               this.props.loginWithToken();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
+                  routeName: 'Dashboard'
                 })
               );
             });

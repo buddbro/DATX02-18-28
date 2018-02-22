@@ -41,6 +41,14 @@ class LoginUser extends React.Component {
         console.log(error);
       }
     }
+
+    if (!nextProps.loading && nextProps.email) {
+      this.props.navigation.dispatch(
+        NavigationActions.NavigationActions.navigate({
+          routeName: 'Dashboard'
+        })
+      );
+    }
   }
 
   componentDidMount() {

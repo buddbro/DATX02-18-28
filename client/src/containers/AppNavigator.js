@@ -2,6 +2,8 @@ import { TabNavigator } from 'react-navigation';
 
 import Dashboard from '../components/dashboard/Dashboard';
 
+import WorkoutSchedules from '../components/schedule/WorkoutSchedules';
+
 import Workout from '../components/workout/Workout';
 import ViewWorkout from '../components/workout/ViewWorkout';
 import ViewExercise from '../components/exercise/ViewExercise';
@@ -30,6 +32,12 @@ const AppRouteConfigs = {
   },
   Dashboard: {
     screen: Dashboard,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  WorkoutSchedules: {
+    screen: WorkoutSchedules,
     navigationOptions: {
       tabBarVisible: false
     }
