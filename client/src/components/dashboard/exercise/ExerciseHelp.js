@@ -4,6 +4,9 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import {connect} from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -18,17 +21,20 @@ class ExerciseHelp extends React.Component {
     return(
       <View style={styles.background}>
           <View style={styles.header}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'ViewExercise'
+                  })
+                );
+              }}>
+              <Image
+                source={require('../../../../assets/back_arrow.png')}
+                style={{ width: 35, height: 35, marginTop: 20, marginLeft: 5 }}
+              />
+            </TouchableOpacity>
             <View style={styles.headertop}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.dispatch(
-                    NavigationActions.NavigationActions.navigate({
-                      routeName: 'ViewExercise'
-                    })
-                  );
-                }}>
-                <Text style={styles.backarrow}>Back</Text>
-              </TouchableOpacity>
               <Text style={styles.title}>{this.props.description.name}</Text>
             </View>
               {/*<View style={styles.headerMenu}>
@@ -43,7 +49,14 @@ class ExerciseHelp extends React.Component {
             <View style={styles.menu}>
               <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
             </View>
-            <Text>{this.props.description.description}</Text>
+            <ScrollView>
+              {/*<View>
+                {this.props.description.description}.split('\n').map((string, index) => );
+              </View>*/}
+
+
+              <Text>{this.props.description.description}</Text>
+            </ScrollView>
           </View>
       </View>
     );
@@ -65,24 +78,20 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: '6%',
-    backgroundColor: '#18957C',
+    backgroundColor: '#51C1AB',
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
   },
   headertop:{
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   backarrow: {
     color: '#fff',
-    marginLeft: '10%',
+    marginLeft: 5,
   },
   title: {
     color: '#fff',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     fontSize: 24,
   },
   headerMenu: {
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'column',
     flex: 4,
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
     marginLeft: 5,
     marginRight: 5,
@@ -116,7 +125,7 @@ const styles = StyleSheet.create({
   },
   chosenTabTitle: {
     color: '#6669CB',
-    fontSize: 24,
+    fontSize: 22,
     marginLeft: 5,
   },
 });
