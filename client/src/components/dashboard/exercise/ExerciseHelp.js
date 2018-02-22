@@ -31,15 +31,17 @@ class ExerciseHelp extends React.Component {
               </TouchableOpacity>
               <Text style={styles.title}>{this.props.description.name}</Text>
             </View>
-            <View style={styles.menu}>
-              <Text>Instructions</Text>
+              {/*<View style={styles.headerMenu}>
               <Text>Tips</Text>
-              <Text>Personal Records</Text>
-            </View>
+              <Text>Personal Records</Text></View>*/}
+
           </View>
           <View style={styles.body}>
-            <View style={styles.video}>
+            {/*<View style={styles.video}>
               <Text>Insert Video here pls</Text>
+            </View>*/}
+            <View style={styles.menu}>
+              <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
             </View>
             <Text>{this.props.description.description}</Text>
           </View>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#18957C',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   headertop:{
@@ -79,20 +81,22 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
   },
   title: {
-    color: '#616A69',
+    color: '#fff',
     fontWeight: 'bold',
     fontSize: 24,
   },
-  menu: {
+  headerMenu: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   body: {
     backgroundColor: '#fff',
     flexDirection: 'column',
     flex: 4,
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    marginLeft: 5,
+    marginRight: 5,
   },
   video: {
     width: 250,
@@ -109,5 +113,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     marginTop: 5
+  },
+  chosenTabTitle: {
+    color: '#6669CB',
+    fontSize: 24,
+    marginLeft: 5,
   },
 });
