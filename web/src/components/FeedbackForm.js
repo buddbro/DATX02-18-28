@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Message } from 'semantic-ui-react';
+import { Form, Icon, Message, Label } from 'semantic-ui-react';
 import axios from 'axios';
 
 class FeedbackForm extends React.Component {
@@ -27,14 +27,15 @@ class FeedbackForm extends React.Component {
       return (
         <Message
           icon="inbox"
-          header="Thanks for your feedback!"
+          header="Thank you for your feedback! &hearts;"
           content="We read all feedback and try to implement suggested features as soon as possible."
         />
+
       );
     }
 
     return (
-      <Form onSubmit={this.onSubmit.bind(this)}>
+      <Form onSubmit={this.onSubmit.bind(this)} style={{ fontSize: '1.33em' }}>
         <Form.Group widths="equal">
           <Form.Input
             fluid
@@ -50,7 +51,7 @@ class FeedbackForm extends React.Component {
           value={this.state.feedback}
           onChange={input => this.setState({ feedback: input.target.value })}
         />
-        <Form.Button>Submit</Form.Button>
+        <Form.Button style= {{ fontSize: '1.33em' }}>Submit</Form.Button>
       </Form>
     );
   }
