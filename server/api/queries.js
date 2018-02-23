@@ -37,15 +37,6 @@ const connection = {
 };
 const db = pgp(connection);
 
-const getDate = () => {
-  const date = new Date();
-  return (
-    date.toISOString().substring(0, 10) +
-    ' ' +
-    date.toString().substring(16, 24)
-  );
-};
-
 const resetPasswordGet = (req, res, next) =>
   user.resetPasswordGet(req, res, next, db);
 const resetPasswordPost = (req, res, next) =>

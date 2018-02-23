@@ -12,5 +12,13 @@ module.exports = {
     'October',
     'November',
     'December'
-  ]
+  ],
+  getDate: () => {
+    const date = new Date();
+    return (
+      date.toISOString().substring(0, 10) +
+      ' ' +
+      date.toString().substring(16, 24)
+    );
+  };
 };
