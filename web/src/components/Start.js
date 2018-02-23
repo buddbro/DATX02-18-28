@@ -90,7 +90,6 @@ class Start extends React.Component {
             <Grid.Column>
               <Segment basic  vertical>
                 <Grid celled="internally" columns="equal" stackable>
-<<<<<<< HEAD
                   <Grid.Row textAlign="center" style={{ justifyContent: 'space-around', alignItems: 'stretch', marginTop: 0 }}>
 
                     <Card
@@ -124,52 +123,6 @@ class Start extends React.Component {
                         description='In the input field you enter @PushApp/client in order to reach our server. Once you have pressed done you should be able to access the application! Welcome!'
                       />
 
-=======
-                  <Grid.Row textAlign="center">
-                    <Grid.Column
-                      style={{ paddingBottom: '5em', paddingTop: '5em' }}
-                    >
-                      <Header as="h3" style={{ fontSize: '2em' }}>
-                        Step 1
-                      </Header>
-                      <p style={{ fontSize: '1.33em' }}>
-                        <Image src="/help1.jpg" />
-                        <br />
-                        <b>Download Expo</b> We are mirroring PushApp in another
-                        application called Expo during the developing in order
-                        not to publishing through AppStore and Google Play Store
-                        every iteration.
-                      </p>
-                    </Grid.Column>
-                    <Grid.Column
-                      style={{ paddingBottom: '5em', paddingTop: '5em' }}
-                    >
-                      <Header as="h3" style={{ fontSize: '2em' }}>
-                        Step 2
-                      </Header>
-                      <p style={{ fontSize: '1.33em' }}>
-                        <Image src="/help2.jpg" />
-                        <br />
-                        <b>Add a mirror</b> By pressing the plus-icon in the
-                        upperright corner you will add another mirror
-                      </p>
-                    </Grid.Column>
-                    <Grid.Column
-                      style={{ paddingBottom: '5em', paddingTop: '5em' }}
-                    >
-                      <Header as="h3" style={{ fontSize: '2em' }}>
-                        Step 3
-                      </Header>
-                      <p style={{ fontSize: '1.33em' }}>
-                        <Image src="/help3.jpg" />
-                        <br />
-                        <b>Go to PushApp</b> In the input field you enter
-                        '@PushApp/client' in order to reach our server. Once
-                        you've pressed done you should be able to access the
-                        application! Welcome!
-                      </p>
-                    </Grid.Column>
->>>>>>> c1764b8fd7369e65f60430888a49aeb503e6c1fb
                   </Grid.Row>
                 </Grid>
               </Segment>
