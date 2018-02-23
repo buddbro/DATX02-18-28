@@ -7,7 +7,8 @@ import {
   StyleSheet,
   SectionList,
   Header,
-  ListItem
+  ListItem,
+  Image
 } from 'react-native';
 import ExerciseListItem from './ExerciseListItem';
 import ExerciseListHeader from './ExerciseListHeader';
@@ -49,17 +50,22 @@ class ExerciseList extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.dispatch(
-              NavigationActions.NavigationActions.navigate({
-                routeName: 'ViewWorkout'
-              })
-            );
-          }}
-        >
-          <Text style={{ fontSize: 20, marginLeft: 10 }}>Back</Text>
-        </TouchableOpacity>
+        <View style={{ paddingLeft: 10 }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'ViewWorkout'
+                })
+              );
+            }}
+          >
+            <Image
+              source={require('../../../assets/back_arrow_black.png')}
+              style={{ width: 35, height: 35 }}
+            />
+          </TouchableOpacity>
+        </View>
         {this.renderSectionList()}
       </View>
     );

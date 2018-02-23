@@ -11,7 +11,8 @@ import {
   SectionList,
   Animated,
   ListItem,
-  FlatList
+  FlatList,
+  Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
@@ -85,7 +86,10 @@ class ViewWorkout extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+            <Image
+              source={require('../../../assets/back_arrow.png')}
+              style={{ width: 35, height: 35 }}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {

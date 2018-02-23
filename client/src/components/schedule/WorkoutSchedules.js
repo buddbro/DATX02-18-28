@@ -4,12 +4,15 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
+  ScrollView,
   Button,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import axios from 'axios';
+
+import ScheduleCard from './ScheduleCard';
 
 class WorkoutSchedules extends React.Component {
   constructor(props) {
@@ -25,28 +28,6 @@ class WorkoutSchedules extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Modal
-          visible={this.state.addWorkoutModalVisible}
-          animationType={'none'}
-          transparent
-          onRequestClose={() => setState({ addWorkoutModalVisible: false })}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.innerContainer}>
-              <Text>Title:</Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={title => this.setState({ title })}
-              />
-              <Button
-                color="#fff"
-                onPress={this.addSchedule.bind(this)}
-                title="Add Schedule"
-              />
-            </View>
-          </View>
-        </Modal>
-
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
@@ -57,7 +38,10 @@ class WorkoutSchedules extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+            <Image
+              source={require('../../../assets/back_arrow_black.png')}
+              style={{ width: 35, height: 35 }}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -69,13 +53,19 @@ class WorkoutSchedules extends React.Component {
                 marginTop: -24,
                 fontSize: 56,
                 fontWeight: '100',
-                color: '#fff'
+                color: '#000'
               }}
             >
               +
             </Text>
           </TouchableOpacity>
         </View>
+        <ScrollView>
+          <ScheduleCard />
+          <ScheduleCard />
+          <ScheduleCard />
+          <ScheduleCard />
+        </ScrollView>
       </View>
     );
   }
@@ -87,7 +77,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#51c1ab',
+    backgroundColor: '#fff',
+    // backgroundColor: '#51c1ab',
     paddingTop: 50
   },
   header: {
@@ -104,7 +95,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     alignItems: 'center',
-    backgroundColor: '#51c1ab'
+    backgroundColor: '#81c1ab'
   },
   textInput: {
     height: 40,

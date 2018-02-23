@@ -11,6 +11,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
+          <a name="top" />
           <TopMenu />
           <Route exact path="/" component={Start} />
           <Route path="/reset/:id/:token" component={PasswordReset} />
