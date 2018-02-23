@@ -78,7 +78,7 @@ class ViewWorkout extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
-              this.props.clearWorkout();
+              // this.props.clearWorkout();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Dashboard'
