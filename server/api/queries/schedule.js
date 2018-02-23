@@ -5,7 +5,7 @@ const fetchSchedules = (req, res, next, db) => {
         `
         SELECT
             schedules.id AS schedule_id,
-            schedele_exercises.id AS schedules_exercises_id,
+            schedules_exercises.id AS schedules_exercises_id,
             title,
             exercise_types.name AS exercise_name
           FROM schedules, schedules_exercises, exercise_types
