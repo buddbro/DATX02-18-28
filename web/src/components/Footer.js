@@ -9,18 +9,15 @@ class Footer extends React.Component {
           <Grid divided inverted stackable>
             <Grid.Row>
               <Grid.Column width={6}>
-                <Header inverted as="h4" content="About" />
-                <List link inverted>
-                  <List.Item as="a">Sitemap</List.Item>
-                </List>
+                <Header inverted as="h4" content="&reg; 2018 PushApp" />
               </Grid.Column>
               <Grid.Column width={7}>
                 <Header as="h4" inverted>
-                  Footer Header
+                  Quotes to live by
                 </Header>
                 <p>
-                  Extra space for a call to action inside the footer that could
-                  help re-engage users.
+                  “Everybody wants to be a bodybuilder, but nobody wants to lift no heavy-ass weights.”
+                  ― Ronnie Coleman
                 </p>
               </Grid.Column>
             </Grid.Row>

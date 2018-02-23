@@ -49,10 +49,10 @@ const getUserByEmail = (req, res, next) =>
   user.getUserByEmail(req, res, next, db);
 const updateUser = (req, res, next) => user.updateUser(req, res, next, db);
 const registerUser = (req, res, next) => user.registerUser(req, res, next, db);
-const login = (req, res, next) => userQueries.login(req, res, next, db);
+const login = (req, res, next) => user.login(req, res, next, db);
 const loginWithToken = (req, res, next) =>
   user.loginWithToken(req, res, next, db);
-const logout = (req, res, next) => userQueries.logout(req, res, next, db);
+const logout = (req, res, next) => user.logout(req, res, next, db);
 const sendResetPasswordEmail = (req, res, next) =>
   user.sendResetPasswordEmail(req, res, next, db);
 
@@ -74,6 +74,8 @@ const addSetToExercise = (req, res, next) =>
 
 const fetchSchedules = (req, res, next) =>
   schedule.fetchSchedules(req, res, next, db);
+const deleteExerciseFromSchedule = (req, res, next) =>
+  schedule.deleteExerciseFromSchedule(req, res, next, db);
 
 const getFeedback = (req, res, next) =>
   feedback.getFeedback(req, res, next, db);
@@ -83,7 +85,7 @@ const postFeedback = (req, res, next) =>
 const fetchExerciseList = (req, res, next) =>
   exercise.fetchExerciseList(req, res, next, db);
 const fetchExerciseDescription = (req, res, next) =>
-  exercise.postFeedback(req, res, next, db);
+  exercise.fetchExerciseDescription(req, res, next, db);
 
 module.exports = {
   getAllUsers,
@@ -109,5 +111,6 @@ module.exports = {
   addSetToExercise,
   getSetsForExercise,
   updateUser,
-  fetchSchedules
+  fetchSchedules,
+  deleteExerciseFromSchedule
 };

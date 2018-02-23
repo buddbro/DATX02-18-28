@@ -48,7 +48,6 @@ class Settings extends React.Component {
   }
 
   render() {
-    //console.log(this.props.exercises);
     return (
       <View style={styles.container}>
 
@@ -117,7 +116,7 @@ class Settings extends React.Component {
 
           {/*Height and weight*/}
           <View style={styles.twoColumnContainer}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>HEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
@@ -127,7 +126,7 @@ class Settings extends React.Component {
                 />
               </View>
             </View>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>WEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
@@ -267,7 +266,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
   innerTextContainer: {
     justifyContent: 'center',

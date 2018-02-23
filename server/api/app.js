@@ -55,6 +55,10 @@ app.get('/api/exercises/description/:id', db.fetchExerciseDescription);
 
 // Schedules
 app.get('/api/user/:id/schedules', db.fetchSchedules);
+app.delete(
+  '/api/user/:userId/schedules/exercise/:exerciseId',
+  db.deleteExerciseFromSchedule
+);
 
 // Feedback
 app.get('/api/feedback', db.getFeedback);

@@ -1,11 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
 import { addWorkout } from '../../actions';
 import ProfileHeader from './ProfileHeader';
 import Workout from '../workout/Workout';
+import LatestWorkout from './LatestWorkout';
 
 class Dashboard extends React.Component {
   renderToday() {
@@ -41,7 +48,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <ProfileHeader
@@ -58,73 +64,65 @@ class Dashboard extends React.Component {
             justifyContent: 'space-around'
           }}
         >
-          <View
-            style={{
-              marginBottom: 5,
-              borderRadius: 3,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
-              {this.renderToday()}
-            </Text>
-          </View>
+          <ScrollView>
+            <View
+              style={{
+                marginBottom: 5,
+                borderRadius: 3,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
+                {this.renderToday()}
+              </Text>
+            </View>
+            <LatestWorkout navigation={this.props.navigation} />
 
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              backgroundColor: '#b9baf1',
-              borderRadius: 3,
-              margin: 15
-            }}
-          >
-            <Text style={{ color: '#fff', padding: 20, fontSize: 26 }}>
-              Last workout
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              this.props.addWorkout(this.props.user.id, this.props.user.token);
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
-                })
-              );
-            }}
-            style={styles.addWorkout}
-          >
-            <Text style={styles.menuItem}>+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Workout'
-                })
-              )}
-            style={styles.addWorkout}
-          >
-            <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-              History
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'WorkoutSchedules'
-                })
-              )}
-            style={styles.addWorkout}
-          >
-            <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-              Schedules
-            </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.addWorkout(
+                  this.props.user.id,
+                  this.props.user.token
+                );
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'ViewWorkout'
+                  })
+                );
+              }}
+              style={styles.addWorkout}
+            >
+              <Text style={styles.menuItem}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'Workout'
+                  })
+                )}
+              style={styles.addWorkout}
+            >
+              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
+                History
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'WorkoutSchedules'
+                  })
+                );
+              }}
+              style={styles.addWorkout}
+            >
+              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
+                Schedules
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
       </View>
     );
@@ -143,7 +141,8 @@ export default connect(mapStateToProps, { addWorkout })(Dashboard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: -50
+    marginTop: -50,
+    flexDirection: 'column'
   },
   addWorkout: {
     marginLeft: 15,

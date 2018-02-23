@@ -79,7 +79,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-      console.log(exercises);
       const { workout_id, workout_title, date } = action.payload.exercises[0];
 
       return {
