@@ -6,6 +6,7 @@ import exercises from './exercisesReducer';
 import user from './userReducer';
 import app from './appReducer';
 import settings from './settingsReducer';
+import schedules from './schedulesReducer';
 
 export default combineReducers({
   nav,
@@ -14,5 +15,6 @@ export default combineReducers({
   exercises,
   user,
   app,
-  settings
+  settings,
+  schedules
 });
