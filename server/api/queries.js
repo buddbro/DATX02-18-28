@@ -65,121 +65,16 @@ const sendResetPasswordEmail = (req, res, next) =>
 const getWorkouts = (req, res, next) =>
   workouts.getWorkouts(req, res, next, db);
 
-const getWorkoutsForUser = (req, res, next) => {
-  db
-    .any(
-      'SELECT id, title, date FROM workouts WHERE userId = $1 ORDER BY date DESC',
-      [req.body.id]
-    )
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getWorkoutsForUser = (req, res, next) =>
+  workouts.getWorkoutsForUser(req, res, next, db);
 
-const getWorkoutWithId = (req, res, next) => {
-  db
-    .any(
-      `
-      SELECT
-        workouts.id AS workout_id,
-        workouts.title AS workout_title,
-        date, exercises.id AS exercise_id,
-        exercise_types.name AS exercise_title,
-        exercise_types.id AS exercise_type_id
-      FROM workouts, exercises, exercise_types
-      WHERE workouts.id = $1
-        AND workouts.id = exercises.workout
-        AND exercises.exercise_type = exercise_types.id`,
-      [req.params.id]
-    )
-    .then(function(data) {
-      if (data.length) {
-        res.status(200).json(data);
-      } else {
-        db
-          .any(
-            `
-            SELECT
-              workouts.id AS workout_id,
-              workouts.title AS workout_title,
-              date
-            FROM workouts
-            WHERE workouts.id = $1`,
-            [req.params.id]
-          )
-          .then(function(data) {
-            res.status(200).json(data);
-          })
-          .catch(function(err) {
-            return next(err);
-          });
-      }
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getWorkoutWithId = (req, res, next) =>
+  workouts.getWorkoutWithId(req, res, next, db);
 
-const getSetsForExercise = (req, res, next) => {
-  db
-    .any(
-      `
-      SELECT
-        sets.id, reps, weight
-      FROM exercises, sets
-      WHERE exercises.id = $1
-        AND sets.exercise = exercises.id`,
-      [req.params.id]
-    )
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getSetsForExercise = (req, res, next) =>
+  workout.getSetsForExercise(req, res, next, db);
 
-const addWorkout = (req, res, next) => {
-  const date = new Date();
-  const readableDate =
-    date.toISOString().substring(0, 10) +
-    ' ' +
-    date.toString().substring(16, 24);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const title = 'Workout ' + date.getDate() + ' ' + months[date.getMonth()];
-  db
-    .any('INSERT INTO workouts(title, date, userId) VALUES($1, $2, $3)', [
-      title,
-      readableDate,
-      req.body.id
-    ])
-    .then(function() {
-      db
-        .any('SELECT id, title, date FROM workouts ORDER BY id DESC LIMIT 1')
-        .then(function(data) {
-          res.status(200).json(data);
-        });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const addWorkout = (req, res, next) => workout.addWorkout(req, res, next, db);
 
 const deleteWorkout = (req, res, next) => {
   db
