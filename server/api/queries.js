@@ -111,5 +111,6 @@ module.exports = {
   addSetToExercise,
   getSetsForExercise,
   updateUser,
-  fetchSchedules
+  fetchSchedules,
+  deleteExerciseFromSchedule
 };
