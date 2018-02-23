@@ -74,6 +74,8 @@ const addSetToExercise = (req, res, next) =>
 
 const fetchSchedules = (req, res, next) =>
   schedule.fetchSchedules(req, res, next, db);
+const deleteExerciseFromSchedule = (req, res, next) =>
+  exercise.deleteExerciseFromSchedule(req, res, next, db);
 
 const getFeedback = (req, res, next) =>
   feedback.getFeedback(req, res, next, db);

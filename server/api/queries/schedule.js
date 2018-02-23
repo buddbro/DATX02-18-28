@@ -41,6 +41,11 @@ const fetchSchedules = (req, res, next, db) => {
   }
 };
 
+const deleteExerciseFromSchedule = (req, res, next, db) => {
+  console.log(req.params);
+};
+
 module.exports = {
-  fetchSchedules
+  fetchSchedules,
+  deleteExerciseFromSchedule
 };
