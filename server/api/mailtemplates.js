@@ -186,7 +186,10 @@ display: none!important;
 </body>
 </html>`,
 
-  forgotPassword: token => `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  forgotPassword: (
+    id,
+    token
+  ) => `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -312,7 +315,7 @@ display: none!important;
                         <table class="buttonwrapper" bgcolor="#6669CB" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td class="button" height="45" style="text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px;" align="center">
-                              <a href="https://www.getpushapp.com/resetpassword/${token}" target="_blank" style="color: #ffffff; text-decoration: none;">Reset password</a>
+                              <a href="https://www.getpushapp.com/reset/${id}/${token}" target="_blank" style="color: #ffffff; text-decoration: none;">Reset password</a>
                             </td>
                           </tr>
                         </table>
