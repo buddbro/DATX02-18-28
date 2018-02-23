@@ -5,7 +5,8 @@ const MAILGUN = require('./config');
 const mailTemplates = require('./mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
 
-const userQueries = require('./queries/userQueries');
+const user = require('./queries/user');
+const workout = require('./queries/workout');
 
 const sendMail = (email, name) => {
   const data = {
@@ -46,43 +47,23 @@ const getDate = () => {
 };
 
 const resetPasswordGet = (req, res, next) =>
-  userQueries.resetPasswordGet(req, res, next, db);
-
+  user.resetPasswordGet(req, res, next, db);
 const resetPasswordPost = (req, res, next) =>
-  userQueries.resetPasswordPost(req, res, next, db);
-
-const getAllUsers = (req, res, next) =>
-  userQueries.getAllUsers(req, res, next, db);
-
+  user.resetPasswordPost(req, res, next, db);
+const getAllUsers = (req, res, next) => user.getAllUsers(req, res, next, db);
 const getUserByEmail = (req, res, next) =>
-  userQueries.getUserByEmail(req, res, next, db);
-
-const updateUser = (req, res, next) =>
-  userQueries.updateUser(req, res, next, db);
-
-const registerUser = (req, res, next) =>
-  userQueries.registerUser(req, res, next, db);
-
+  user.getUserByEmail(req, res, next, db);
+const updateUser = (req, res, next) => user.updateUser(req, res, next, db);
+const registerUser = (req, res, next) => user.registerUser(req, res, next, db);
 const login = (req, res, next) => userQueries.login(req, res, next, db);
-
 const loginWithToken = (req, res, next) =>
-  userQueries.loginWithToken(req, res, next, db);
-
+  user.loginWithToken(req, res, next, db);
 const logout = (req, res, next) => userQueries.logout(req, res, next, db);
-
 const sendResetPasswordEmail = (req, res, next) =>
-  userQueries.sendResetPasswordEmail(req, res, next, db);
+  user.sendResetPasswordEmail(req, res, next, db);
 
-const getWorkouts = (req, res, next) => {
-  db
-    .any('SELECT * FROM workouts')
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getWorkouts = (req, res, next) =>
+  workouts.getWorkouts(req, res, next, db);
 
 const getWorkoutsForUser = (req, res, next) => {
   db

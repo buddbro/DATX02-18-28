@@ -226,13 +226,13 @@ const resetPasswordGet = (req, res, next, db) => {
 
 module.exports = {
   getAllUsers,
-  getUserByEmail,
-  registerUser,
-  sendResetPasswordEmail,
   login,
   loginWithToken,
-  logout,
-  updateUser,
   resetPasswordPost,
-  resetPasswordGet
+  resetPasswordGet,
+  updateUser,
+  registerUser,
+  getUserByEmail,
+  sendResetPasswordEmail,
+  logout
 };
