@@ -53,10 +53,10 @@ class Start extends React.Component {
                 marginTop: '1em'
               }}
             />
-            <Icon link="#section1" name="chevron circle down" size="huge" />
+            <a href="/" style={{ color: '#FFFFFF' }}><Icon link name="chevron circle down" size="huge"/></a>
           </Container>
         </Segment>
-        <Segment name="section1" style={{ padding: '8em 0em' }} vertical>
+        <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
@@ -84,6 +84,54 @@ class Start extends React.Component {
             </Grid.Row>
           </Grid>
         </Segment>
+
+        <Grid container stackable verticalAlign="middle">
+          <Grid.Row>
+            <Grid.Column>
+              <Header as="h1" style={{ fontSize: '3em', textAlign: 'center', marginTop: '1em' }}>
+                Download
+              </Header>
+              <Segment basic  vertical>
+                <Grid celled="internally" columns="equal" stackable>
+                  <Grid.Row textAlign="center" style={{ justifyContent: 'space-around', alignItems: 'stretch', marginTop: 0 }}>
+
+                    <Card
+                      image='/help1.jpg'
+                      header='Step 1'
+                      style={{ marginTop: '1em', fontSize: '1.33em' }}
+                      meta='Download Expo'
+                      description='We are mirroring PushApp in another
+                      application called Expo during the developing in order
+                      not to publishing through AppStore and Google Play Store
+                      every iteration. The finalized version of the
+                      application will be available in the app stores later
+                      this spring. In the picture above you will see how Expo
+                      looks like in AppStore.'
+                    />
+
+                      <Card
+                        image='/help2.jpg'
+                        header='Step 2'
+                        meta='Add a mirror'
+                        style={{ fontSize: '1.33em' }}
+                        description='By pressing the plus-icon in the
+                        upperright corner you will add another mirror.'
+                      />
+
+                      <Card
+                        image='/help3.jpg'
+                        header='Step 3'
+                        meta='Go to PushApp'
+                        style={{ marginBottom: '1em', fontSize: '1.33em' }}
+                        description='In the input field you enter @PushApp/client in order to reach our server. Once you have pressed done you should be able to access the application! Welcome!'
+                      />
+
+                  </Grid.Row>
+                </Grid>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
