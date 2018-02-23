@@ -83,7 +83,7 @@ const postFeedback = (req, res, next) =>
 const fetchExerciseList = (req, res, next) =>
   exercise.fetchExerciseList(req, res, next, db);
 const fetchExerciseDescription = (req, res, next) =>
-  exercise.postFeedback(req, res, next, db);
+  exercise.fetchExerciseDescription(req, res, next, db);
 
 module.exports = {
   getAllUsers,
