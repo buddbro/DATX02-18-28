@@ -3,8 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -12,6 +12,7 @@ import NavigationActions from 'react-navigation';
 import { addWorkout } from '../../actions';
 import ProfileHeader from './ProfileHeader';
 import Workout from '../workout/Workout';
+import LatestWorkout from './LatestWorkout';
 
 class Dashboard extends React.Component {
   renderToday() {
@@ -76,21 +77,7 @@ class Dashboard extends React.Component {
                 {this.renderToday()}
               </Text>
             </View>
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                backgroundColor: '#b9baf1',
-                borderRadius: 3,
-                margin: 15
-              }}
-            >
-              <Text style={{ color: '#fff', padding: 20, fontSize: 26 }}>
-                Last workout
-              </Text>
-            </View>
+            <LatestWorkout navigation={this.props.navigation} />
 
             <TouchableOpacity
               onPress={() => {
@@ -122,12 +109,13 @@ class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'WorkoutSchedules'
                   })
-                )}
+                );
+              }}
               style={styles.addWorkout}
             >
               <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
@@ -153,7 +141,8 @@ export default connect(mapStateToProps, { addWorkout })(Dashboard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: -50
+    marginTop: -50,
+    flexDirection: 'column'
   },
   addWorkout: {
     marginLeft: 15,
