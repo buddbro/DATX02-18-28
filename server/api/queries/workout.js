@@ -1,7 +1,3 @@
-const sha256 = require('sha256');
-const MAILGUN = require('../config');
-const mailTemplates = require('../mailtemplates');
-const mailgun = require('mailgun-js')(MAILGUN);
 const { months, getDate } = require('../utilities');
 
 const getWorkouts = (req, res, next, db) => {

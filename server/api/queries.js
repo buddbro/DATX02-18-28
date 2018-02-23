@@ -7,6 +7,9 @@ const mailgun = require('mailgun-js')(MAILGUN);
 
 const user = require('./queries/user');
 const workout = require('./queries/workout');
+const schedule = require('./queries/schedule');
+const feedback = require('./queries/feedback');
+const exercise = require('./queries/exercise');
 
 const sendMail = (email, name) => {
   const data = {
@@ -69,64 +72,18 @@ const addExerciseToWorkout = (req, res, next) =>
 const addSetToExercise = (req, res, next) =>
   workout.addSetToExercise(req, res, next, db);
 
-const fetchExerciseList = (req, res, next) => {
-  db
-    .any(
-      `SELECT exercise_types.id AS id, name, title AS exercise_type
-          FROM exercise_types, exercise_sections
-          WHERE exercise_types.section = exercise_sections.id
-          ORDER BY section
-        `
-    )
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const fetchSchedules = (req, res, next) =>
+  schedule.fetchSchedules(req, res, next, db);
 
-const getFeedback = (req, res, next) => {
-  db
-    .any('SELECT * FROM feedback')
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const getFeedback = (req, res, next) =>
+  feedback.getFeedback(req, res, next, db);
+const postFeedback = (req, res, next) =>
+  feedback.postFeedback(req, res, next, db);
 
-const postFeedback = (req, res, next) => {
-  db
-    .any('INSERT INTO feedback(name, feedback) VALUES($1, $2)', [
-      req.body.name,
-      req.body.feedback
-    ])
-    .then(function() {
-      res.status(200).json({ success: true });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
-
-const fetchExerciseDescription = (req, res, next) => {
-  db
-    .any(
-      `SELECT name, description
-          FROM exercise_types
-          WHERE id = $1
-        `,
-      [req.params.id]
-    )
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
+const fetchExerciseList = (req, res, next) =>
+  exercise.fetchExerciseList(req, res, next, db);
+const fetchExerciseDescription = (req, res, next) =>
+  exercise.postFeedback(req, res, next, db);
 
 module.exports = {
   getAllUsers,
@@ -151,5 +108,6 @@ module.exports = {
   addExerciseToWorkout,
   addSetToExercise,
   getSetsForExercise,
-  updateUser
+  updateUser,
+  fetchSchedules
 };

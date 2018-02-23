@@ -2,7 +2,7 @@ const sha256 = require('sha256');
 const MAILGUN = require('../config');
 const mailTemplates = require('../mailtemplates');
 const mailgun = require('mailgun-js')(MAILGUN);
-const { getDate } = require('../utilities');
+const { getDate, generateToken } = require('../utilities');
 
 const getAllUsers = (req, res, next, db) => {
   db
@@ -81,11 +81,7 @@ const logout = (req, res, next, db) => {
 };
 
 const sendResetPasswordEmail = (req, res, next, db) => {
-  const token = sha256(
-    Math.round(
-      new Date().getMilliseconds() * Math.random() * 10000000000000
-    ).toString()
-  );
+  const token = generateToken();
 
   db
     .any('SELECT id FROM users WHERE email = $1', [req.body.email])

@@ -1,3 +1,5 @@
+const sha256 = require('sha256');
+
 module.exports = {
   months: [
     'January',
@@ -20,5 +22,11 @@ module.exports = {
       ' ' +
       date.toString().substring(16, 24)
     );
-  }
+  },
+  generateToken: () =>
+    sha256(
+      Math.round(new Date().getMilliseconds() * Math.random() * 10000000000000)
+        .toString()
+        .substring(0, 16)
+    )
 };

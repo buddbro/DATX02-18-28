@@ -14,7 +14,7 @@ const resetQuery = `
   CREATE TABLE exercise_types(id SERIAL PRIMARY KEY, section INT REFERENCES exercise_sections(id), name VARCHAR(60));
   CREATE TABLE exercises(id SERIAL PRIMARY KEY, exercise_type INT REFERENCES exercise_types(id), workout INT REFERENCES workouts(id));
   CREATE TABLE sets(id SERIAL PRIMARY KEY, exercise INT REFERENCES exercises(id), reps INT, weight INT);
-  CREATE TABLE schedules(id SERIAL PRIMARY KEY, user_id INT, title TEXXT);
+  CREATE TABLE schedules(id SERIAL PRIMARY KEY, user_id INT, title TEXT);
   CREATE TABLE schedules_exercises(id SERIAL PRIMARY KEY, exercise_id INT REFERENCES exercise_types(id), schedule_id INT REFERENCES schedules(id));
 
   INSERT INTO users(email, password, name, created) VALUES('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test User', '2018-02-04 19:03:42');
