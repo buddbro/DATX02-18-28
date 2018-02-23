@@ -75,7 +75,6 @@ class ForgotPassword extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  console.log(user);
   return { resetStatus: user.resetStatus, sent: user.sent };
 };
 

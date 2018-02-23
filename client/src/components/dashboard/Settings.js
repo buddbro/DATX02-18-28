@@ -13,7 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
-var {height, width} = Dimensions.get('window');
+var { height, width } = Dimensions.get('window');
 
 class Settings extends React.Component {
   constructor(props) {
@@ -32,7 +32,6 @@ class Settings extends React.Component {
   }
 
   render() {
-    //console.log(this.props.exercises);
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -69,8 +68,14 @@ class Settings extends React.Component {
 
         {/*Picture, name, age*/}
         <View style={styles.outerTextContainer}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center', paddingRight: 20}}>
+          <View style={{ flexDirection: 'row' }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingRight: 20
+              }}
+            >
               <Image
                 source={require('../../../assets/avatar_default.png')}
                 style={{ width: 110, height: 110 }}
@@ -99,7 +104,7 @@ class Settings extends React.Component {
 
           {/*Height and weight*/}
           <View style={styles.twoColumnContainer}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>HEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
@@ -109,7 +114,7 @@ class Settings extends React.Component {
                 />
               </View>
             </View>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>WEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
@@ -121,7 +126,7 @@ class Settings extends React.Component {
             </View>
           </View>
 
-        {/*Account down*/}
+          {/*Account down*/}
         </View>
         <View style={styles.subHeaderContainer}>
           <Text style={styles.subHeading}>ACCOUNT</Text>
@@ -153,9 +158,14 @@ class Settings extends React.Component {
           </View>
           <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
         </View>
-        <View style={{justifyContent: 'center',
-        alignItems: 'center'}}>
-          <TouchableOpacity style={styles.button}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -229,7 +239,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
   innerTextContainer: {
     //flex: 1,
@@ -288,6 +298,6 @@ const styles = StyleSheet.create({
   },
   standardText: {
     color: '#606060',
-    fontSize: 15,
+    fontSize: 15
   }
 });

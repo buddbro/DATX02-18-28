@@ -6,6 +6,10 @@ const INITIAL_STATE = {
 
 export default function schedulesReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case FETCH_SCHEDULES:
+      return {
+        list: action.payload
+      };
     case ADD_SCHEDULE:
       return {
         ...state,

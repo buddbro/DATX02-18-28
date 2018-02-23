@@ -8,8 +8,11 @@ import {
   AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
-import { loginWithPassword } from '../../../actions';
-import { fetchWorkouts } from '../../../actions';
+import {
+  loginWithPassword,
+  fetchWorkouts,
+  fetchSchedules
+} from '../../../actions';
 import NavigationActions from 'react-navigation';
 
 class LoginUser extends React.Component {
@@ -29,6 +32,7 @@ class LoginUser extends React.Component {
           AsyncStorage.getItem('token').then(() => {
             this.setState({ email: '', password: '' });
             this.props.fetchWorkouts(nextProps.id, nextProps.token);
+            this.props.fetchSchedules(nextProps.id);
 
             // this.props.navigation.dispatch(
             //   NavigationActions.NavigationActions.navigate({
@@ -148,9 +152,11 @@ const mapStateToProps = ({ user }) => {
   return { loading, id, email, token, error };
 };
 
-export default connect(mapStateToProps, { loginWithPassword, fetchWorkouts })(
-  LoginUser
-);
+export default connect(mapStateToProps, {
+  loginWithPassword,
+  fetchWorkouts,
+  fetchSchedules
+})(LoginUser);
 
 const styles = StyleSheet.create({
   container: {
