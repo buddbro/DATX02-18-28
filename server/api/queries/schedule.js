@@ -5,6 +5,7 @@ const fetchSchedules = (req, res, next, db) => {
         `
         SELECT
             schedules.id AS schedule_id,
+            schedele_exercises.id AS schedules_exercises_id,
             title,
             exercise_types.name AS exercise_name
           FROM schedules, schedules_exercises, exercise_types
@@ -17,16 +18,17 @@ const fetchSchedules = (req, res, next, db) => {
       )
       .then(function(data) {
         const { schedule_id, title, exercise_name } = data;
-        console.log(data);
-        console.log(data[2]);
         const schedules = data.reduce((acc, next) => {
           if (acc[next.title]) {
-            console.log(`Adding ${next.title} - e `);
-            acc[next.title] = [...acc[next.title], next.exercise_name];
+            acc[next.title] = [
+              ...acc[next.title],
+              { id: next.schedules_exercises_id, name: next.exercise_name }
+            ];
             return acc;
           } else {
-            console.log(`finns inte :()`);
-            acc[next.title] = [next.exercise_name];
+            acc[next.title] = [
+              { id: next.schedules_exercises_id, name: next.exercise_name }
+            ];
             return acc;
           }
         }, {});
