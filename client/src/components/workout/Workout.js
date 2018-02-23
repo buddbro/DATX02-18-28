@@ -5,7 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import WorkoutLog from './WorkoutLog';
 import axios from 'axios';
@@ -23,7 +24,6 @@ class Workout extends React.Component {
             display: 'flex',
             flexDirection: 'row',
             marginLeft: 10,
-            height: 20,
             justifyContent: 'space-between'
           }}
         >
@@ -36,7 +36,10 @@ class Workout extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#000' }}>Back</Text>
+            <Image
+              source={require('../../../assets/back_arrow_black.png')}
+              style={{ width: 35, height: 35 }}
+            />
           </TouchableOpacity>
         </View>
         <ScrollView style={{ paddingTop: 50, backgroundColor: '#fff' }}>

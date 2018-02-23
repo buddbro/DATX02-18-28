@@ -23,5 +23,9 @@ export const VIEW_SET = 'view_set';
 
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 
+// Schedules
+export const ADD_SCHEDULE = 'add_schedule';
+export const FETCH_SCHEDULES = 'fetch_schedules';
+
 export const INCREASE = 'increase';
 export const DECREASE = 'decrease';

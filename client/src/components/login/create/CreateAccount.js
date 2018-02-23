@@ -102,7 +102,6 @@ class CreateAccount extends React.Component {
             placeholder="Email"
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })}
-            // value={this.state.email}
             keyboardType="email-address"
             secureTextEntry={false}
           />
@@ -111,7 +110,6 @@ class CreateAccount extends React.Component {
             placeholder="Password"
             onChangeText={password =>
               this.setState({ password: password.toLowerCase() })}
-            // value={this.state.password}
             secureTextEntry={true}
           />
 
