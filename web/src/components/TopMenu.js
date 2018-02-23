@@ -26,6 +26,7 @@ class TopMenu extends React.Component {
               name="pushapp"
               active={activeItem === 'pushapp'}
               onClick={this.handleItemClick}
+              href="#top"
             >
               <Icon name="home" inverted />
               PushApp
@@ -45,6 +46,7 @@ class TopMenu extends React.Component {
               name="update"
               active={activeItem === 'update'}
               onClick={this.handleItemClick}
+              href="#update"
             >
               <Icon name="idea" inverted />
               Update
@@ -54,6 +56,7 @@ class TopMenu extends React.Component {
               name="feedback"
               active={activeItem === 'feedback'}
               onClick={this.handleItemClick}
+              href="#feedback"
             >
               <Icon name="mail outline" inverted />
               Feedback

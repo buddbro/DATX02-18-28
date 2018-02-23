@@ -55,14 +55,13 @@ class Start extends React.Component {
             <Header.Subheader
               as="h2"
               content="The most amazing workout app. Currently in beta.."
-              inverted
               style={{
                 fontSize: '1.6em',
                 fontWeight: 'normal',
                 marginTop: '1em'
               }}
             />
-            <Icon link="#section1" name="chevron circle down" size="huge" />
+            <Icon name="chevron circle down" size="huge" />
           </Container>
         </Segment>
         <Segment name="section1" style={{ padding: '8em 0em' }} vertical>
@@ -105,6 +104,7 @@ class Start extends React.Component {
             <Grid.Column>
               <Segment basic vertical>
                 <Grid celled="internally" columns="equal" stackable>
+                  <Header as="h3">Download</Header>
                   <Grid.Row
                     textAlign="center"
                     style={{
@@ -150,6 +150,12 @@ class Start extends React.Component {
           </Grid.Row>
         </Grid>
 
+        <a name="update" />
+        <Container text>
+          <Header as="h3">Update... coming soon</Header>
+        </Container>
+
+        <a name="feedback" />
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Container text>
             <Header as="h3" style={{ fontSize: '2em' }}>
