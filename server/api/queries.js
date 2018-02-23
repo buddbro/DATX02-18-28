@@ -49,10 +49,10 @@ const getUserByEmail = (req, res, next) =>
   user.getUserByEmail(req, res, next, db);
 const updateUser = (req, res, next) => user.updateUser(req, res, next, db);
 const registerUser = (req, res, next) => user.registerUser(req, res, next, db);
-const login = (req, res, next) => userQueries.login(req, res, next, db);
+const login = (req, res, next) => user.login(req, res, next, db);
 const loginWithToken = (req, res, next) =>
   user.loginWithToken(req, res, next, db);
-const logout = (req, res, next) => userQueries.logout(req, res, next, db);
+const logout = (req, res, next) => user.logout(req, res, next, db);
 const sendResetPasswordEmail = (req, res, next) =>
   user.sendResetPasswordEmail(req, res, next, db);
 

@@ -23,6 +23,7 @@ class Start extends React.Component {
   render() {
     return (
       <div>
+      <a name="top">
         <Segment
           inverted
           textAlign="center"
@@ -61,10 +62,12 @@ class Start extends React.Component {
                 marginTop: '1em'
               }}
             />
-            <Icon name="chevron circle down" size="huge" />
+            <a href="#welcome" style={{ color: '#FFFFFF' }}><Icon link name="chevron circle down" size="huge"/></a>
           </Container>
         </Segment>
-        <Segment name="section1" style={{ padding: '8em 0em' }} vertical>
+        </a>
+        <a name="welcome" />
+        <Segment style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
@@ -102,47 +105,88 @@ class Start extends React.Component {
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <Grid.Column>
-              <Segment basic vertical>
+              <Header as="h1" style={{ fontSize: '3em', textAlign: 'center', marginTop: '1em' }}>
+                Download
+              </Header>
+              <Segment basic  vertical>
+                <Header.Subheader as="h3" style={{ fontSize: '2em', textAlign: 'center' }}>
+                  iOS instructions
+                </Header.Subheader>
                 <Grid celled="internally" columns="equal" stackable>
-                  <Header as="h3">Download</Header>
-                  <Grid.Row
-                    textAlign="center"
-                    style={{
-                      justifyContent: 'space-around',
-                      alignItems: 'stretch',
-                      marginTop: 0
-                    }}
-                  >
+
+                  <Grid.Row textAlign="center" style={{ justifyContent: 'space-around', alignItems: 'stretch', marginTop: 0 }}>
+
                     <Card
-                      image="/help1.jpg"
-                      header="Step 1"
-                      style={{ marginTop: '1em', fontSize: '1.33em' }}
-                      meta="Download Expo"
-                      description="We are mirroring PushApp in another
+                      image='/help1-ios.jpg'
+                      header='Step 1'
+                      style={{ marginTop: '1em', fontSize: '1.33em', textAlign: 'center' }}
+                      meta='Download Expo'
+                      description='We are mirroring PushApp in another
                       application called Expo during the developing in order
                       not to publishing through AppStore and Google Play Store
                       every iteration. The finalized version of the
                       application will be available in the app stores later
                       this spring. In the picture above you will see how Expo
-                      looks like in AppStore."
+                      looks like in AppStore.'
                     />
 
                     <Card
-                      image="/help2.jpg"
-                      header="Step 2"
-                      meta="Add a mirror"
-                      style={{ fontSize: '1.33em' }}
-                      description="By pressing the plus-icon in the
-                        upperright corner you will add another mirror."
+                      image='/help2-ios.jpg'
+                      header='Step 2'
+                      meta='Add a mirror'
+                      style={{ fontSize: '1.33em', textAlign: 'center' }}
+                      description='By pressing the plus-icon in the
+                      upperright corner you will add another mirror.'
                     />
 
                     <Card
-                      image="/help3.jpg"
-                      header="Step 3"
-                      meta="Go to PushApp"
-                      style={{ marginBottom: '1em', fontSize: '1.33em' }}
-                      description="In the input field you enter @PushApp/client in order to reach our server. Once you have pressed done you should be able to access the application! Welcome!"
+                      image='/help3-ios.jpg'
+                      header='Step 3'
+                      meta='Go to PushApp'
+                      style={{ marginBottom: '1em', fontSize: '1.33em', textAlign: 'center' }}
+                      description='In the input field you enter @PushApp/client in order to reach our server. Once you have pressed done you should be able to access the application! Welcome!'
                     />
+
+                  </Grid.Row>
+                </Grid>
+                <Header.Subheader as="h3" style={{ fontSize: '2em', textAlign: 'center' }}>
+                  Android instructions
+                </Header.Subheader>
+                <Grid celled="internally" columns="equal" stackable>
+
+                  <Grid.Row textAlign="center" style={{ justifyContent: 'space-around', alignItems: 'stretch', marginTop: 0 }}>
+
+                    <Card
+                      image='/help1-android.png'
+                      header='Step 1'
+                      style={{ marginTop: '1em', fontSize: '1.33em', textAlign: 'center' }}
+                      meta='Download Expo'
+                      description='We are mirroring PushApp in another
+                      application called Expo during the developing in order
+                      not to publishing through AppStore and Google Play Store
+                      every iteration. The finalized version of the
+                      application will be available in the app stores later
+                      this spring. In the picture above you will see how Expo
+                      looks like in Google Play Store.'
+                    />
+
+                    <Card
+                      image='/help2-android.png'
+                      header='Step 2'
+                      meta='Add a mirror'
+                      style={{ fontSize: '1.33em', textAlign: 'center' }}
+                      description='To add another mirror, navigate to
+                      "Explore" in the bottom-menu.'
+                    />
+
+                    <Card
+                      image='/help3-android.png'
+                      header='Step 3'
+                      meta='Go to PushApp'
+                      style={{ marginBottom: '1em', fontSize: '1.33em', textAlign: 'center' }}
+                      description='Press the search-icon. In the input field you enter @PushApp/client in order to reach our server. Tap the search result (as seen in the picture above). You should now be able to access the application. Welcome!'
+                    />
+
                   </Grid.Row>
                 </Grid>
               </Segment>
@@ -151,9 +195,43 @@ class Start extends React.Component {
         </Grid>
 
         <a name="update" />
-        <Container text>
-          <Header as="h3">Update... coming soon</Header>
-        </Container>
+        <Grid container stackable verticalAlign="middle">
+          <Grid.Row>
+            <Grid.Column>
+              <Header as="h1" style={{ fontSize: '3em', textAlign: 'center', marginTop: '1em' }}>
+                Update
+              </Header>
+              <Segment basic  vertical>
+                <Grid celled="internally" columns="equal" stackable>
+                  <Grid.Row textAlign="center" style={{ justifyContent: 'space-around', alignItems: 'stretch', marginTop: 0 }}>
+
+                    <Card
+                      image='/update-ios.png'
+                      header='iOS'
+                      style={{ marginTop: '1em', fontSize: '1.33em' }}
+                      meta='Update'
+                      description='If you have an iOS phone, simply shake your device
+                      to navigate to the screen in the picture above. Once there, tap
+                      "Refresh". Your app is now updated!'
+                    />
+
+                      <Card
+                        image='/update-android.png'
+                        header='Android'
+                        meta='Update'
+                        style={{ marginBottom: '1em', fontSize: '1.33em' }}
+                        description='If you have an android phone, navigate to the
+                        quick settings menu in android by swiping down from the top
+                        of your phone. Once there, tap the refresh-button. Your app
+                        is now updated!'
+                      />
+
+                  </Grid.Row>
+                </Grid>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <a name="feedback" />
         <Segment style={{ padding: '8em 0em' }} vertical>

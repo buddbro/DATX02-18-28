@@ -15,7 +15,7 @@ const resetQuery = `
   CREATE TABLE exercises(id SERIAL PRIMARY KEY, exercise_type INT REFERENCES exercise_types(id), workout INT REFERENCES workouts(id));
   CREATE TABLE sets(id SERIAL PRIMARY KEY, exercise INT REFERENCES exercises(id), reps INT, weight INT);
   CREATE TABLE schedules(id SERIAL PRIMARY KEY, user_id INT, title TEXT);
-  CREATE TABLE schedules_exercises(id SERIAL PRIMARY KEY, exercise_id INT REFERENCES exercise_types(id), schedule_id INT REFERENCES schedules(id));
+  CREATE TABLE schedules_exercises(id SERIAL PRIMARY KEY, schedule_id INT REFERENCES schedules(id), exercise_id INT REFERENCES exercise_types(id));
 
   INSERT INTO users(email, password, name, created) VALUES('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test User', '2018-02-04 19:03:42');
   INSERT INTO users(email, password, name, created) VALUES('fest', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Fest User', '2018-02-05 10:13:22');
@@ -121,6 +121,19 @@ const resetQuery = `
   INSERT INTO sets(exercise, reps, weight) VALUES(9, 5, 30);
   INSERT INTO sets(exercise, reps, weight) VALUES(9, 5, 30);
   INSERT INTO sets(exercise, reps, weight) VALUES(9, 5, 30);
+  INSERT INTO sets(exercise, reps, weight) VALUES(8, 5, 30);
+
+  INSERT INTO schedules(user_id, title) VALUES(2, 'Upper body');
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(1, 1);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(1, 2);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(1, 3);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(1, 4);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(1, 5);
+
+  INSERT INTO schedules(user_id, title) VALUES(2, 'Leg day');
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 15);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 10);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 12);
 `;
 
 const reset = (db, req, res, next) => {
