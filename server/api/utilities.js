@@ -20,5 +20,5 @@ module.exports = {
       ' ' +
       date.toString().substring(16, 24)
     );
-  };
+  }
 };
