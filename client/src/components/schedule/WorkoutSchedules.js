@@ -9,6 +9,7 @@ import {
   TextInput,
   Image
 } from 'react-native';
+import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import axios from 'axios';
 
@@ -61,17 +62,26 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <ScheduleCard />
-          <ScheduleCard />
-          <ScheduleCard />
-          <ScheduleCard />
+          {Object.keys(this.props.scheduleList).map((title, index) =>
+            <ScheduleCard
+              key={`schedule${index}`}
+              title={title}
+              exercises={this.props.scheduleList[title]}
+            />
+          )}
         </ScrollView>
       </View>
     );
   }
 }
 
-export default WorkoutSchedules;
+const mapStateToProps = ({ schedules }) => {
+  return {
+    scheduleList: schedules.list
+  };
+};
+
+export default connect(mapStateToProps)(WorkoutSchedules);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,19 +8,35 @@ import {
   List,
   TextInput,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  AppRegistry
 } from 'react-native';
 import { connect } from 'react-redux';
 import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
+import ToggleSwitch from 'toggle-switch-react-native';
+
 var {height, width} = Dimensions.get('window');
+
+//TODO in Settings
+//notifications togglebutton
+//Image
+//implement savebutton
+//take age, height, weight from database
 
 class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameText: 'Useless Placeholder',
-      emailText: 'Useless Placeholder'
+      //klara
+      nameText: '',
+      emailText: '',
+      //ej klara
+      ageText: '23',
+      heightText: '190cm',
+      weightText: '90kg',
+      newPasswordText: '',
+      confirmPasswordText: ''
     };
   }
 
@@ -32,37 +48,37 @@ class Settings extends React.Component {
   }
 
   render() {
-    //console.log(this.props.exercises);
     return (
       <View style={styles.container}>
+
+        {/*Header (back, settings, edit)*/}
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              );
-            }}
-          >
-            <Image
-              source={require('../../../assets/back_arrow.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.heading}>Settings</Text>
-          <TouchableOpacity
-            style={{
-              marginLeft: 10
-            }}
-            onPress={() => this.props.increase(5)}
-          >
-            <Image
-              source={require('../../../assets/edit.png')}
-              style={{ width: 30, height: 30 }}
-            />
-          </TouchableOpacity>
+          {/*back icon*/}
+          <View style={{flex: 1}}>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'Dashboard'
+                  })
+                );
+              }}
+            >
+              <Image
+                source={require('../../../assets/back_arrow.png')}
+                style={{ width: 35, height: 35 }}
+              />
+            </TouchableOpacity>
+          </View>
+          {/*Settings text*/}
+          <View>
+            <Text style={styles.heading}>Settings</Text>
+          </View>
+          {/*View to fix alignment n stuff*/}
+          <View style={{flex: 1}}/>
         </View>
+
+        {/*Profile*/}
         <View style={styles.subHeaderContainer}>
           <Text style={styles.subHeading}>PROFILE</Text>
         </View>
@@ -70,14 +86,15 @@ class Settings extends React.Component {
         {/*Picture, name, age*/}
         <View style={styles.outerTextContainer}>
           <View style={{flexDirection: 'row'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center', paddingRight: 20}}>
+            <View style={{justifyContent: 'center', alignItems: 'center',
+            paddingRight: 20, flexDirection: 'row', flexWrap: 'wrap'}}>
               <Image
                 source={require('../../../assets/avatar_default.png')}
                 style={{ width: 110, height: 110 }}
               />
             </View>
             {/*Name and age*/}
-            <View>
+            <View style={{flex: 1}}>
               <Text style={styles.biggerStandardText}>NAME</Text>
               <View style={styles.innerTextContainer}>
                 <TextInput
@@ -90,8 +107,8 @@ class Settings extends React.Component {
               <View style={styles.innerTextContainer}>
                 <TextInput
                   style={styles.standardText}
-                  onChangeText={nameText => this.setState({ nameText })}
-                  value={this.state.nameText}
+                  onChangeText={ageText => this.setState({ ageText })}
+                  value={this.state.ageText}
                 />
               </View>
             </View>
@@ -99,32 +116,33 @@ class Settings extends React.Component {
 
           {/*Height and weight*/}
           <View style={styles.twoColumnContainer}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>HEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
-                  style={styles.standardText}
-                  onChangeText={nameText => this.setState({ nameText })}
-                  value={this.state.nameText}
+                  style={styles.standardTextCentered}
+                  onChangeText={heightText => this.setState({ heightText })}
+                  value={this.state.heightText}
                 />
               </View>
             </View>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.biggerStandardText}>WEIGHT</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
-                  style={styles.standardText}
-                  onChangeText={nameText => this.setState({ nameText })}
-                  value={this.state.nameText}
+                  style={styles.standardTextCentered}
+                  onChangeText={weightText => this.setState({ weightText })}
+                  value={this.state.weightText}
                 />
               </View>
             </View>
           </View>
-
-        {/*Account down*/}
         </View>
+
+        {/*Account and down*/}
+        <View style={{height: 25}}/>
         <View style={styles.subHeaderContainer}>
-          <Text style={styles.subHeading}>ACCOUNT</Text>
+         <Text style={styles.subHeading}>ACCOUNT</Text>
         </View>
         <View style={styles.outerTextContainer}>
           <Text style={styles.biggerStandardText}>EMAIL </Text>
@@ -139,22 +157,38 @@ class Settings extends React.Component {
           <View style={styles.innerTextContainer}>
             <TextInput
               style={styles.standardText}
-              onChangeText={nameText => this.setState({ nameText })}
-              value={this.state.nameText}
+              secureTextEntry='true'
+              onChangeText={newPasswordText => this.setState({ newPasswordText })}
+              value={this.state.newPasswordText}
             />
           </View>
           <Text style={styles.biggerStandardText}>CONFIRM PASSWORD</Text>
           <View style={styles.innerTextContainer}>
             <TextInput
               style={styles.standardText}
-              onChangeText={nameText => this.setState({ nameText })}
-              value={this.state.nameText}
+              secureTextEntry='true'
+              onChangeText={confirmPasswordText => this.setState({ confirmPasswordText })}
+              value={this.state.confirmPasswordText}
             />
           </View>
-          <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
+
+          {/*Notifications and togglebutton*/}
+          <View style={{paddingTop: 10, flexDirection: 'row',
+          alignItems: 'center', justifyContent: 'space-between', paddingRight: 10}}>
+            <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
+            <ToggleSwitch
+              isOn={false}
+              onColor='#6669cb'
+              offColor='#b9baf1'
+              size='medium'
+              onToggle={ (isOn) => console.log('changed to : ', isOn) }
+            />
+          </View>
+
         </View>
-        <View style={{justifyContent: 'center',
-        alignItems: 'center'}}>
+        {/*Save button*/}
+        <View style={{justifyContent: 'center', alignItems: 'center',
+          paddingTop: 10}}>
           <TouchableOpacity style={styles.button}
             onPress={() => {
               this.props.navigation.dispatch(
@@ -210,7 +244,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#6669cb',
-    marginTop: 15,
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    marginTop: 5,
     marginLeft: 15,
     marginRight: 15,
     borderRadius: 8,
@@ -224,15 +260,15 @@ const styles = StyleSheet.create({
     marginRight: '15%'
   },
   outerTextContainer: {
+    alignItems: 'stretch',
     justifyContent: 'center',
     backgroundColor: '#8b8ddf',
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
   innerTextContainer: {
-    //flex: 1,
     justifyContent: 'center',
     backgroundColor: '#b9baf1',
     marginTop: 3,
@@ -241,7 +277,10 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: '#b9baf1'
+    borderColor: '#b9baf1',
+    marginLeft: 8,
+    marginRight: 8,
+    height: 30
   },
   smallInnerTextContainer: {
     justifyContent: 'center',
@@ -253,7 +292,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 1,
     borderColor: '#b9baf1',
-    width: 80
+    width: 85,
+    height: 30
   },
   button: {
     width: 160,
@@ -282,11 +322,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   biggerStandardText: {
+    marginLeft: 8,
+    marginRight: 8,
     color: '#ffffff',
     fontSize: 15,
     marginTop: 8
   },
   standardText: {
+    color: '#606060',
+    fontSize: 15,
+  },
+  standardTextCentered: {
+    textAlign: 'center',
     color: '#606060',
     fontSize: 15,
   }

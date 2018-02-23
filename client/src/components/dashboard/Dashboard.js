@@ -42,30 +42,29 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
-      months[date.getMonth()]
-    }`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
+      date.getMonth()
+    ]}`;
   }
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <ProfileHeader
-            user={this.props.user}
-            navigation={this.props.navigation}
-          />
+        <ProfileHeader
+          user={this.props.user}
+          navigation={this.props.navigation}
+        />
 
-          <View
-            style={{
-              marginTop: 80,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around'
-            }}
-          >
+        <View
+          style={{
+            marginTop: 80,
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around'
+          }}
+        >
+          <ScrollView>
             <View
               style={{
                 marginBottom: 5,
@@ -102,8 +101,7 @@ class Dashboard extends React.Component {
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'Workout'
                   })
-                )
-              }
+                )}
               style={styles.addWorkout}
             >
               <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
@@ -111,21 +109,21 @@ class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'WorkoutSchedules'
                   })
-                )
-              }
+                );
+              }}
               style={styles.addWorkout}
             >
               <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
                 Schedules
               </Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     );
   }

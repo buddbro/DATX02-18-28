@@ -41,6 +41,22 @@ const fetchSchedules = (req, res, next, db) => {
   }
 };
 
+const deleteExerciseFromSchedule = (req, res, next, db) => {
+  const { userId, exerciseId } = req.params;
+
+  db
+    .any(
+      `
+      DELETE FROM schedules_exercises WHERE id = $1
+        `,
+      [exerciseId]
+    )
+    .then(function(data) {
+      res.status(200).json({ success: true });
+    });
+};
+
 module.exports = {
-  fetchSchedules
+  fetchSchedules,
+  deleteExerciseFromSchedule
 };
