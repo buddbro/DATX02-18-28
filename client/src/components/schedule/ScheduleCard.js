@@ -8,6 +8,8 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
+import { deleteExerciseFromSchedule } from '../../actions';
 
 class ScheduleCard extends React.Component {
   constructor(props) {
@@ -62,7 +64,14 @@ class ScheduleCard extends React.Component {
                 <Text style={styles.nameText}>
                   {item.name}
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.deleteExerciseFromSchedule(
+                      item.id,
+                      this.props.user.id
+                    );
+                  }}
+                >
                   <Image
                     source={require('../../../assets/delete.png')}
                     style={{ width: 20, height: 20, margin: 5 }}
@@ -72,7 +81,7 @@ class ScheduleCard extends React.Component {
             );
           }}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => console.log('Add')}>
           <View
             style={[
               styles.listItemContainer,
@@ -89,7 +98,13 @@ class ScheduleCard extends React.Component {
   }
 }
 
-export default ScheduleCard;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps, { deleteExerciseFromSchedule })(
+  ScheduleCard
+);
 
 const styles = StyleSheet.create({
   container: {

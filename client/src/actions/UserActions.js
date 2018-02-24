@@ -43,9 +43,17 @@ export function loginWithPassword(email, password) {
             payload: { error: data.error }
           });
         } else {
-          dispatch({
-            type: LOGIN_SUCCESS,
-            payload: { id: data.id, token: data.token, name: data.name, email }
+          AsyncStorage.setItem('jwt', data.jwt).then(() => {
+            dispatch({
+              type: LOGIN_SUCCESS,
+              payload: {
+                id: data.id,
+                token: data.token,
+                name: data.name,
+                email,
+                jwt: data.jwt
+              }
+            });
           });
         }
       })

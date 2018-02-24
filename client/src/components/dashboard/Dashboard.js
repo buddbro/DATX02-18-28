@@ -4,7 +4,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Modal,
+  Button
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -15,6 +17,12 @@ import Workout from '../workout/Workout';
 import LatestWorkout from './LatestWorkout';
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { addWorkoutModalVisible: false };
+  }
+
   renderToday() {
     const weekdays = [
       'Monday',
@@ -81,15 +89,16 @@ class Dashboard extends React.Component {
 
             <TouchableOpacity
               onPress={() => {
-                this.props.addWorkout(
-                  this.props.user.id,
-                  this.props.user.token
-                );
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'ViewWorkout'
-                  })
-                );
+                this.setState({ addWorkoutModalVisible: true });
+                // this.props.addWorkout(
+                //   this.props.user.id,
+                //   this.props.user.token
+                // );
+                // this.props.navigation.dispatch(
+                //   NavigationActions.NavigationActions.navigate({
+                //     routeName: 'ViewWorkout'
+                //   })
+                // );
               }}
               style={styles.addWorkout}
             >

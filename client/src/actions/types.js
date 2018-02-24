@@ -26,6 +26,7 @@ export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 // Schedules
 export const ADD_SCHEDULE = 'add_schedule';
 export const FETCH_SCHEDULES = 'fetch_schedules';
+export const DELETE_EXERCISE_FROM_SCHEDULE = 'delete_exercise_from_schedule';
 
 export const INCREASE = 'increase';
 export const DECREASE = 'decrease';

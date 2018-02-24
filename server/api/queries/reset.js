@@ -134,6 +134,12 @@ const resetQuery = `
   INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 15);
   INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 10);
   INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 12);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 1);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 11);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 3);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 7);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 9);
+  INSERT INTO schedules_exercises(schedule_id, exercise_id) VALUES(2, 14);
 `;
 
 const reset = (db, req, res, next) => {

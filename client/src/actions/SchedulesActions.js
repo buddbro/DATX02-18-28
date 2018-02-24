@@ -1,4 +1,8 @@
-import { ADD_SCHEDULE, FETCH_SCHEDULES } from './types.js';
+import {
+  ADD_SCHEDULE,
+  FETCH_SCHEDULES,
+  DELETE_EXERCISE_FROM_SCHEDULE
+} from './types.js';
 import axios from 'axios';
 
 export function addSchedule(id, token) {
@@ -14,14 +18,17 @@ export function addSchedule(id, token) {
   };
 }
 
-export function deleteExerciseFromSchedule(id, token) {
+export function deleteExerciseFromSchedule(exerciseId, userId, token) {
+  console.log(userId, exerciseId);
   return dispatch => {
     axios
-      .post(`https://getpushapp.com/api/schedules`, { id, token })
-      .then(({ data }) => {
+      .delete(
+        `https://getpushapp.com/api/user/${userId}/schedules/exercise/${exerciseId}`
+      )
+      .then(() => {
         dispatch({
           type: DELETE_EXERCISE_FROM_SCHEDULE,
-          payload: data[0]
+          payload: exerciseId
         });
       });
   };

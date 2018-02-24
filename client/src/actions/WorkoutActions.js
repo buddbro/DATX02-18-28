@@ -46,14 +46,19 @@ export function clearExercise() {
 
 export function fetchWorkouts(id, token) {
   return dispatch => {
-    axios
-      .post(`https://getpushapp.com/api/workouts`, { id, token })
-      .then(({ data }) => {
-        dispatch({
-          type: FETCH_WORKOUTS,
-          payload: data
+    AsyncStorage.getItem('jwt').then(jwt => {
+      console.log('fetch', jwt);
+      axios
+        .get(`https://getpushapp.com/api/workouts`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: FETCH_WORKOUTS,
+            payload: data
+          });
         });
-      });
+    });
   };
 }
 
