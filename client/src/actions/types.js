@@ -24,8 +24,12 @@ export const VIEW_SET = 'view_set';
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 
 // Schedules
+export const SET_ACTIVE_SCHEDULE = 'set_active_schedule';
 export const ADD_SCHEDULE = 'add_schedule';
+export const DELETE_SCHEDULE = 'delete_schedule';
+export const EDIT_SCHEDULE = 'edit_schedule';
 export const FETCH_SCHEDULES = 'fetch_schedules';
+export const ADD_EXERCISE_TO_SCHEDULE = 'add_exercise_to_schedule';
 export const DELETE_EXERCISE_FROM_SCHEDULE = 'delete_exercise_from_schedule';
 
 export const INCREASE = 'increase';

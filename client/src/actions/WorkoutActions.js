@@ -47,7 +47,6 @@ export function clearExercise() {
 export function fetchWorkouts(id, token) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
-      console.log('fetch', jwt);
       axios
         .get(`https://getpushapp.com/api/workouts`, {
           headers: { Authorization: `Bearer ${jwt}` }

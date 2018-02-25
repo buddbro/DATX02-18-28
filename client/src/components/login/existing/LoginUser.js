@@ -32,7 +32,7 @@ class LoginUser extends React.Component {
           AsyncStorage.getItem('token').then(() => {
             this.setState({ email: '', password: '' });
             this.props.fetchWorkouts(nextProps.id, nextProps.token);
-            this.props.fetchSchedules(nextProps.id);
+            this.props.fetchSchedules();
 
             // this.props.navigation.dispatch(
             //   NavigationActions.NavigationActions.navigate({

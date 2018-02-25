@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { addWorkoutModalVisible: false };
+    this.state = { addWorkoutVisible: false };
   }
 
   renderToday() {
@@ -53,6 +53,14 @@ class Dashboard extends React.Component {
     return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
       date.getMonth()
     ]}`;
+  }
+
+  renderAddMenu() {
+    if (this.state.addWorkoutVisible) {
+      return <View />;
+    } else {
+      return <Text style={styles.menuItem}>+</Text>;
+    }
   }
 
   render() {
@@ -89,7 +97,9 @@ class Dashboard extends React.Component {
 
             <TouchableOpacity
               onPress={() => {
-                this.setState({ addWorkoutModalVisible: true });
+                this.setState({
+                  addWorkoutVisible: !this.state.addWorkoutVisible
+                });
                 // this.props.addWorkout(
                 //   this.props.user.id,
                 //   this.props.user.token
@@ -102,7 +112,7 @@ class Dashboard extends React.Component {
               }}
               style={styles.addWorkout}
             >
-              <Text style={styles.menuItem}>+</Text>
+              {this.renderAddMenu()}
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
@@ -138,10 +148,11 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user }) => {
+const mapStateToProps = ({ workout, user, schedule }) => {
   return {
     workout,
-    user
+    user,
+    schedule
   };
 };
 
