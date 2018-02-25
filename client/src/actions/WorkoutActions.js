@@ -1,5 +1,6 @@
 import {
   ADD_WORKOUT,
+  ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
@@ -88,6 +89,28 @@ export function addWorkout(id, token) {
           payload: data[0]
         });
       });
+  };
+}
+
+export function addWorkoutFromSchedule(schedule) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .post(
+          `https://getpushapp.com/api/workoutsnew`,
+          { schedule },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          const { id, title, date } = data;
+          dispatch({
+            type: ADD_WORKOUT_FROM_SCHEDULE,
+            payload: { id, title, date }
+          });
+        });
+    });
   };
 }
 

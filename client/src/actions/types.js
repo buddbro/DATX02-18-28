@@ -5,6 +5,7 @@ export const LOADING_FALSE = 'loading_false';
 export const SEND_FORGOT_PASSWORD = 'send_forgot_password';
 
 export const ADD_WORKOUT = 'add_workout';
+export const ADD_WORKOUT_FROM_SCHEDULE = 'add_workout_from_schedule';
 export const DELETE_WORKOUT = 'delete_workout';
 export const FETCH_WORKOUTS = 'fetch_workouts';
 export const CHOOSE_WORKOUT = 'choose_workout';

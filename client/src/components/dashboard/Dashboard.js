@@ -11,18 +11,12 @@ import {
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
-import { addWorkout } from '../../actions';
 import ProfileHeader from './ProfileHeader';
 import Workout from '../workout/Workout';
 import LatestWorkout from './LatestWorkout';
+import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { addWorkoutVisible: false };
-  }
-
   renderToday() {
     const weekdays = [
       'Monday',
@@ -53,14 +47,6 @@ class Dashboard extends React.Component {
     return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
       date.getMonth()
     ]}`;
-  }
-
-  renderAddMenu() {
-    if (this.state.addWorkoutVisible) {
-      return <View />;
-    } else {
-      return <Text style={styles.menuItem}>+</Text>;
-    }
   }
 
   render() {
@@ -95,25 +81,7 @@ class Dashboard extends React.Component {
             </View>
             <LatestWorkout navigation={this.props.navigation} />
 
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({
-                  addWorkoutVisible: !this.state.addWorkoutVisible
-                });
-                // this.props.addWorkout(
-                //   this.props.user.id,
-                //   this.props.user.token
-                // );
-                // this.props.navigation.dispatch(
-                //   NavigationActions.NavigationActions.navigate({
-                //     routeName: 'ViewWorkout'
-                //   })
-                // );
-              }}
-              style={styles.addWorkout}
-            >
-              {this.renderAddMenu()}
-            </TouchableOpacity>
+            <AddWorkout navigation={this.props.navigation} />
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.dispatch(
@@ -148,15 +116,14 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user, schedule }) => {
+const mapStateToProps = ({ workout, user }) => {
   return {
     workout,
-    user,
-    schedule
+    user
   };
 };
 
-export default connect(mapStateToProps, { addWorkout })(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
   container: {
