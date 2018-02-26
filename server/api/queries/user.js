@@ -1,8 +1,9 @@
 const sha256 = require('sha256');
-const MAILGUN = require('../config');
+const config = require('../config');
 const mailTemplates = require('../mailtemplates');
-const mailgun = require('mailgun-js')(MAILGUN);
+const mailgun = require('mailgun-js')(config.MAILGUN);
 const { getDate, generateToken } = require('../utilities');
+const jwt = require('jsonwebtoken');
 
 const getAllUsers = (req, res, next, db) => {
   db
@@ -40,7 +41,8 @@ const login = (req, res, next, db) => {
             getDate()
           ])
           .then(function(data) {
-            res.status(200).json({ id, name, token, success: true });
+            jwt.sign({id}, config)
+            res.status(200).json({ id, name, token, success: true, jwt:  });
           });
       } else {
         res.status(200).json({ error: 'Wrong password' });

@@ -74,6 +74,8 @@ const addSetToExercise = (req, res, next) =>
 
 const fetchSchedules = (req, res, next) =>
   schedule.fetchSchedules(req, res, next, db);
+const deleteExerciseFromSchedule = (req, res, next) =>
+  schedule.deleteExerciseFromSchedule(req, res, next, db);
 
 const getFeedback = (req, res, next) =>
   feedback.getFeedback(req, res, next, db);
@@ -83,7 +85,7 @@ const postFeedback = (req, res, next) =>
 const fetchExerciseList = (req, res, next) =>
   exercise.fetchExerciseList(req, res, next, db);
 const fetchExerciseDescription = (req, res, next) =>
-  exercise.postFeedback(req, res, next, db);
+  exercise.fetchExerciseDescription(req, res, next, db);
 
 module.exports = {
   getAllUsers,
@@ -109,5 +111,6 @@ module.exports = {
   addSetToExercise,
   getSetsForExercise,
   updateUser,
-  fetchSchedules
+  fetchSchedules,
+  deleteExerciseFromSchedule
 };

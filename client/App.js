@@ -13,12 +13,16 @@ import {
   bindActionCreators
 } from 'redux';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { loginWithToken, fetchExerciseList } from './src/actions';
 import reducers from './src/reducers';
 
 import AppNavigator from './src/containers/AppNavigator';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 class App extends React.Component {
   componentDidMount() {
@@ -27,9 +31,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('this.props.user.token');
-    console.log(this.props.user.token);
-    console.log('end');
     return this.props.user.token
       ? <AppNavigator
           navigation={addNavigationHelpers({

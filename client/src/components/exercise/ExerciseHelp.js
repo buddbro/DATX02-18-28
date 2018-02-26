@@ -20,16 +20,14 @@ class ExerciseHelp extends React.Component {
       return null;
     }
 
-    return this.props.description.description.split('|').map((string, index) =>
-      <View style={styles.descrList} key={`description${index}`}>
-        <Text style={{ fontWeight: 'bold' }}>
-          {index + 1}:{' '}
-        </Text>
-        <Text>
-          {string}
-        </Text>
-      </View>
-    );
+    return this.props.description.description
+      .split('|')
+      .map((string, index) => (
+        <View style={styles.descrList} key={`description${index}`}>
+          <Text style={{ fontWeight: 'bold' }}>{index + 1}: </Text>
+          <Text>{string}</Text>
+        </View>
+      ));
   }
   render() {
     return (
@@ -46,13 +44,16 @@ class ExerciseHelp extends React.Component {
           >
             <Image
               source={require('../../../assets/back_arrow.png')}
-              style={{ width: 35, height: 35, marginTop: 20, marginLeft: 5 }}
+              style={{
+                width: 35,
+                height: 35,
+                marginTop: 10,
+                marginLeft: 5
+              }}
             />
           </TouchableOpacity>
           <View style={styles.headertop}>
-            <Text style={styles.title}>
-              {this.props.description.name}
-            </Text>
+            <Text style={styles.title}>{this.props.description.name}</Text>
           </View>
           {/*<View style={styles.headerMenu}>
               <Text>Tips</Text>
@@ -66,9 +67,7 @@ class ExerciseHelp extends React.Component {
             <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
           </View>
           <ScrollView>
-            <View>
-              {this.renderDescription()}
-            </View>
+            <View>{this.renderDescription()}</View>
           </ScrollView>
         </View>
       </View>
@@ -89,9 +88,11 @@ const styles = StyleSheet.create({
     zIndex: -999
   },
   header: {
-    marginTop: '6%',
     backgroundColor: '#51C1AB',
-    flex: 1
+    height: 100,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 20
   },
   headertop: {
     flexDirection: 'row',
@@ -102,9 +103,12 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   title: {
+    marginTop: 10,
     color: '#fff',
     //fontWeight: 'bold',
-    fontSize: 24
+    fontSize: 24,
+    textAlign: 'center',
+    marginLeft: '25%'
   },
   headerMenu: {
     flexDirection: 'row',
@@ -138,9 +142,11 @@ const styles = StyleSheet.create({
   chosenTabTitle: {
     color: '#6669CB',
     fontSize: 22,
-    marginLeft: 5
+    marginLeft: 5,
+    marginBottom: 20
   },
   descrList: {
+    marginLeft: 5,
     marginBottom: 4
   }
 });

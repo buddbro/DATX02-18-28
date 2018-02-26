@@ -9,9 +9,11 @@ import {
   TextInput,
   Image
 } from 'react-native';
+import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import axios from 'axios';
 
+import { addSchedule } from '../../actions';
 import ScheduleCard from './ScheduleCard';
 
 class WorkoutSchedules extends React.Component {
@@ -45,7 +47,7 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.setState({ addWorkoutModalVisible: true });
+              this.props.addSchedule();
             }}
           >
             <Text
@@ -61,17 +63,28 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <ScheduleCard />
-          <ScheduleCard />
-          <ScheduleCard />
-          <ScheduleCard />
+          {Object.keys(this.props.list).map((id, index) =>
+            <ScheduleCard
+              key={`schedule${index}`}
+              title={this.props.list[id].title}
+              id={id}
+              exercises={this.props.list[id].exercises}
+              navigation={this.props.navigation}
+            />
+          )}
         </ScrollView>
       </View>
     );
   }
 }
 
-export default WorkoutSchedules;
+const mapStateToProps = ({ schedules }) => {
+  return {
+    list: schedules.list
+  };
+};
+
+export default connect(mapStateToProps, { addSchedule })(WorkoutSchedules);
 
 const styles = StyleSheet.create({
   container: {

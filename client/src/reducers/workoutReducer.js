@@ -5,6 +5,7 @@ import {
   CLEAR_EXERCISE,
   EDIT_WORKOUT,
   ADD_WORKOUT,
+  ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
   ADD_SET_TO_EXERCISE,
@@ -79,7 +80,6 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-      console.log(exercises);
       const { workout_id, workout_title, date } = action.payload.exercises[0];
 
       return {
@@ -90,6 +90,22 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
+      return {
+        ...state,
+        id: action.payload.id,
+        title: action.payload.title,
+        date: action.payload.date,
+        exercises: [],
+        workouts: [
+          {
+            id: action.payload.id,
+            title: action.payload.title,
+            date: action.payload.date
+          },
+          ...state.workouts
+        ]
+      };
+    case ADD_WORKOUT_FROM_SCHEDULE:
       return {
         ...state,
         id: action.payload.id,
