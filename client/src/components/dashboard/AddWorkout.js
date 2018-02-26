@@ -63,15 +63,7 @@ class AddWorkout extends React.Component {
   renderAddMenu() {
     if (this.state.addWorkoutVisible) {
       return (
-        <View
-          style={{
-            backgroundColor: '#A6A8E5',
-            marginTop: -10,
-            marginLeft: 20,
-            marginRight: 20,
-            paddingBottom: 10
-          }}
-        >
+        <View style={styles.container}>
           <TouchableOpacity
             onPress={() => {
               this.setState({ waitForWorkout: true });
@@ -155,5 +147,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingBottom: 15,
     backgroundColor: '#b9baf1'
+  },
+  container: {
+    backgroundColor: '#A6A8E5',
+    marginTop: -10,
+    marginLeft: 20,
+    marginRight: 20,
+    paddingBottom: 10
   }
 });
