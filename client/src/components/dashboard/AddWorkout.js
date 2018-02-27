@@ -32,27 +32,8 @@ class AddWorkout extends React.Component {
         }}
         key={`schedule${schedule}`}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignSelf: 'stretch',
-            backgroundColor: '#fff',
-            marginTop: 12,
-            marginLeft: 20,
-            marginRight: 20,
-            borderRadius: 3
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              color: '#333',
-              paddingTop: 10,
-              paddingBottom: 10,
-              textAlign: 'center'
-            }}
-          >
+        <View style={styles.body}>
+          <Text style={styles.text}>
             {this.props.schedules.list[schedule].title}
           </Text>
         </View>
@@ -70,29 +51,8 @@ class AddWorkout extends React.Component {
               this.props.addWorkoutFromSchedule(0);
             }}
           >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                alignSelf: 'stretch',
-                backgroundColor: '#fff',
-                marginTop: 12,
-                marginLeft: 20,
-                marginRight: 20,
-                borderRadius: 3
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#333',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  textAlign: 'center'
-                }}
-              >
-                Quick Start
-              </Text>
+            <View style={styles.body}>
+              <Text style={styles.text}>Quick Start</Text>
             </View>
           </TouchableOpacity>
           {this.renderSchedules()}
@@ -154,5 +114,22 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     paddingBottom: 10
+  },
+  body: {
+    flex: 1,
+    flexDirection: 'column',
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    marginTop: 12,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 3
+  },
+  text: {
+    fontSize: 18,
+    color: '#333',
+    paddingTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center'
   }
 });
