@@ -1,5 +1,6 @@
 import {
   ADD_WORKOUT,
+  ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
@@ -46,14 +47,18 @@ export function clearExercise() {
 
 export function fetchWorkouts(id, token) {
   return dispatch => {
-    axios
-      .post(`https://getpushapp.com/api/workouts`, { id, token })
-      .then(({ data }) => {
-        dispatch({
-          type: FETCH_WORKOUTS,
-          payload: data
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .get(`https://getpushapp.com/api/workouts`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: FETCH_WORKOUTS,
+            payload: data
+          });
         });
-      });
+    });
   };
 }
 
@@ -84,6 +89,28 @@ export function addWorkout(id, token) {
           payload: data[0]
         });
       });
+  };
+}
+
+export function addWorkoutFromSchedule(schedule) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .post(
+          `https://getpushapp.com/api/workoutsnew`,
+          { schedule },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          const { id, title, date } = data;
+          dispatch({
+            type: ADD_WORKOUT_FROM_SCHEDULE,
+            payload: { id, title, date }
+          });
+        });
+    });
   };
 }
 

@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import axios from 'axios';
 
+import { addSchedule } from '../../actions';
 import ScheduleCard from './ScheduleCard';
 
 class WorkoutSchedules extends React.Component {
@@ -46,7 +47,7 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.setState({ addWorkoutModalVisible: true });
+              this.props.addSchedule();
             }}
           >
             <Text
@@ -62,11 +63,13 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          {Object.keys(this.props.scheduleList).map((title, index) =>
+          {Object.keys(this.props.list).map((id, index) =>
             <ScheduleCard
               key={`schedule${index}`}
-              title={title}
-              exercises={this.props.scheduleList[title]}
+              title={this.props.list[id].title}
+              id={id}
+              exercises={this.props.list[id].exercises}
+              navigation={this.props.navigation}
             />
           )}
         </ScrollView>
@@ -77,11 +80,11 @@ class WorkoutSchedules extends React.Component {
 
 const mapStateToProps = ({ schedules }) => {
   return {
-    scheduleList: schedules.list
+    list: schedules.list
   };
 };
 
-export default connect(mapStateToProps)(WorkoutSchedules);
+export default connect(mapStateToProps, { addSchedule })(WorkoutSchedules);
 
 const styles = StyleSheet.create({
   container: {

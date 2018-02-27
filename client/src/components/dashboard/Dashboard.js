@@ -4,15 +4,17 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Modal,
+  Button
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
-import { addWorkout } from '../../actions';
 import ProfileHeader from './ProfileHeader';
 import Workout from '../workout/Workout';
 import LatestWorkout from './LatestWorkout';
+import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
   renderToday() {
@@ -79,22 +81,7 @@ class Dashboard extends React.Component {
             </View>
             <LatestWorkout navigation={this.props.navigation} />
 
-            <TouchableOpacity
-              onPress={() => {
-                this.props.addWorkout(
-                  this.props.user.id,
-                  this.props.user.token
-                );
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'ViewWorkout'
-                  })
-                );
-              }}
-              style={styles.addWorkout}
-            >
-              <Text style={styles.menuItem}>+</Text>
-            </TouchableOpacity>
+            <AddWorkout navigation={this.props.navigation} />
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.dispatch(
@@ -136,7 +123,7 @@ const mapStateToProps = ({ workout, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { addWorkout })(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
   container: {

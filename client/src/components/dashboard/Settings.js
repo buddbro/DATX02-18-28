@@ -16,7 +16,7 @@ import { increase, decrease } from '../../actions';
 import NavigationActions from 'react-navigation';
 import ToggleSwitch from 'toggle-switch-react-native';
 
-var {height, width} = Dimensions.get('window');
+var { height, width } = Dimensions.get('window');
 
 //TODO in Settings
 //notifications togglebutton
@@ -50,11 +50,10 @@ class Settings extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
         {/*Header (back, settings, edit)*/}
         <View style={styles.headerContainer}>
           {/*back icon*/}
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.dispatch(
@@ -75,7 +74,7 @@ class Settings extends React.Component {
             <Text style={styles.heading}>Settings</Text>
           </View>
           {/*View to fix alignment n stuff*/}
-          <View style={{flex: 1}}/>
+          <View style={{ flex: 1 }} />
         </View>
 
         {/*Profile*/}
@@ -85,16 +84,23 @@ class Settings extends React.Component {
 
         {/*Picture, name, age*/}
         <View style={styles.outerTextContainer}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{justifyContent: 'center', alignItems: 'center',
-            paddingRight: 20, flexDirection: 'row', flexWrap: 'wrap'}}>
+          <View style={{ flexDirection: 'row' }}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingRight: 20,
+                flexDirection: 'row',
+                flexWrap: 'wrap'
+              }}
+            >
               <Image
                 source={require('../../../assets/avatar_default.png')}
                 style={{ width: 110, height: 110 }}
               />
             </View>
             {/*Name and age*/}
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.biggerStandardText}>NAME</Text>
               <View style={styles.innerTextContainer}>
                 <TextInput
@@ -140,9 +146,9 @@ class Settings extends React.Component {
         </View>
 
         {/*Account and down*/}
-        <View style={{height: 25}}/>
+        <View style={{ height: 25 }} />
         <View style={styles.subHeaderContainer}>
-         <Text style={styles.subHeading}>ACCOUNT</Text>
+          <Text style={styles.subHeading}>ACCOUNT</Text>
         </View>
         <View style={styles.outerTextContainer}>
           <Text style={styles.biggerStandardText}>EMAIL </Text>
@@ -157,8 +163,9 @@ class Settings extends React.Component {
           <View style={styles.innerTextContainer}>
             <TextInput
               style={styles.standardText}
-              secureTextEntry='true'
-              onChangeText={newPasswordText => this.setState({ newPasswordText })}
+              secureTextEntry
+              onChangeText={newPasswordText =>
+                this.setState({ newPasswordText })}
               value={this.state.newPasswordText}
             />
           </View>
@@ -166,30 +173,43 @@ class Settings extends React.Component {
           <View style={styles.innerTextContainer}>
             <TextInput
               style={styles.standardText}
-              secureTextEntry='true'
-              onChangeText={confirmPasswordText => this.setState({ confirmPasswordText })}
+              secureTextEntry
+              onChangeText={confirmPasswordText =>
+                this.setState({ confirmPasswordText })}
               value={this.state.confirmPasswordText}
             />
           </View>
 
           {/*Notifications and togglebutton*/}
-          <View style={{paddingTop: 10, flexDirection: 'row',
-          alignItems: 'center', justifyContent: 'space-between', paddingRight: 10}}>
+          <View
+            style={{
+              paddingTop: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingRight: 10
+            }}
+          >
             <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
             <ToggleSwitch
               isOn={false}
-              onColor='#6669cb'
-              offColor='#b9baf1'
-              size='medium'
-              onToggle={ (isOn) => console.log('changed to : ', isOn) }
+              onColor="#6669cb"
+              offColor="#b9baf1"
+              size="medium"
+              onToggle={isOn => console.log('changed to : ', isOn)}
             />
           </View>
-
         </View>
         {/*Save button*/}
-        <View style={{justifyContent: 'center', alignItems: 'center',
-          paddingTop: 10}}>
-          <TouchableOpacity style={styles.button}
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 10
+          }}
+        >
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -330,11 +350,11 @@ const styles = StyleSheet.create({
   },
   standardText: {
     color: '#606060',
-    fontSize: 15,
+    fontSize: 15
   },
   standardTextCentered: {
     textAlign: 'center',
     color: '#606060',
-    fontSize: 15,
+    fontSize: 15
   }
 });

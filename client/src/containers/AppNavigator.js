@@ -12,6 +12,8 @@ import LoginUser from '../components/login/existing/LoginUser';
 import ForgotPassword from '../components/login/existing/ForgotPassword';
 import CreateAccount from '../components/login/create/CreateAccount';
 
+import ExerciseListForSchedule from '../components/schedule/ExerciseListForSchedule';
+
 import ExerciseList from '../components/exercise/ExerciseList';
 import ExerciseHelp from '../components/exercise/ExerciseHelp';
 
@@ -62,6 +64,12 @@ const AppRouteConfigs = {
   },
   ExerciseList: {
     screen: ExerciseList,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  ExerciseListForSchedule: {
+    screen: ExerciseListForSchedule,
     navigationOptions: {
       tabBarVisible: false
     }
