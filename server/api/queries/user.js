@@ -1,8 +1,9 @@
 const sha256 = require('sha256');
-const MAILGUN = require('../config');
+const config = require('../config');
 const mailTemplates = require('../mailtemplates');
-const mailgun = require('mailgun-js')(MAILGUN);
+const mailgun = require('mailgun-js')(config.MAILGUN);
 const { getDate, generateToken } = require('../utilities');
+const jwt = require('jsonwebtoken');
 
 const getAllUsers = (req, res, next, db) => {
   db
@@ -40,11 +41,57 @@ const login = (req, res, next, db) => {
             getDate()
           ])
           .then(function(data) {
-            res.status(200).json({ id, name, token, success: true });
+            jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, jwt) => {
+              res.json({ id, name, token, success: true, jwt });
+            });
           });
       } else {
         res.status(200).json({ error: 'Wrong password' });
       }
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
+const loginJWT = (req, res, next, db) => {
+  db
+    .any('SELECT id, password, name FROM users WHERE email = $1', [
+      req.body.email
+    ])
+    .then(function(data) {
+      console.log(data);
+      if (!data.length) {
+        res.json({ error: 'User not found' });
+      }
+
+      if (req.body.password === data[0].password) {
+        const { id, name } = data[0];
+        db
+          .any('UPDATE users SET lastLogin = $1 WHERE email = $2', [
+            getDate(),
+            req.body.email
+          ])
+          .then(function(data) {
+            jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, token) => {
+              res.json({ name, token });
+            });
+          });
+      } else {
+        res.status(200).json({ error: 'Wrong password' });
+      }
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
+const verifyToken = (req, res, next, db) => {
+  db
+    .any('SELECT id, email, name FROM users WHERE id = $1', [req.user.id])
+    .then(function(data) {
+      const { name, email } = data[0];
+      res.json({ name, email });
     })
     .catch(function(err) {
       return next(err);
@@ -62,9 +109,9 @@ const loginWithToken = (req, res, next, db) => {
         res.status(200).json({ error: 'User not found' });
       } else {
         const { id, name } = data[0];
-        res
-          .status(200)
-          .json({ id, name, token: req.body.token, success: true });
+        jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, jwt) => {
+          res.json({ id, name, token: req.body.token, success: true, jwt });
+        });
       }
     })
     .catch(function(err) {
@@ -123,7 +170,7 @@ const getUserByEmail = (req, res, next, db) => {
     });
 };
 
-const registerUser = (req, res, next, db) => {
+const registerUser = (req, res, next, db, sendMail) => {
   {
     const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (!emailRegex.test(req.body.email)) {
@@ -215,6 +262,8 @@ const resetPasswordGet = (req, res, next, db) => {
 module.exports = {
   getAllUsers,
   login,
+  loginJWT,
+  verifyToken,
   loginWithToken,
   resetPasswordPost,
   resetPasswordGet,
