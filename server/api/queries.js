@@ -1,9 +1,9 @@
 const sha256 = require('sha256');
 const promise = require('bluebird');
 
-const MAILGUN = require('./config');
+const config = require('./config');
 const mailTemplates = require('./mailtemplates');
-const mailgun = require('mailgun-js')(MAILGUN);
+const mailgun = require('mailgun-js')(config.MAILGUN);
 
 const user = require('./queries/user');
 const workout = require('./queries/workout');
@@ -48,8 +48,11 @@ const getAllUsers = (req, res, next) => user.getAllUsers(req, res, next, db);
 const getUserByEmail = (req, res, next) =>
   user.getUserByEmail(req, res, next, db);
 const updateUser = (req, res, next) => user.updateUser(req, res, next, db);
-const registerUser = (req, res, next) => user.registerUser(req, res, next, db);
+const registerUser = (req, res, next) =>
+  user.registerUser(req, res, next, db, sendMail);
 const login = (req, res, next) => user.login(req, res, next, db);
+const loginJWT = (req, res, next) => user.loginJWT(req, res, next, db);
+const verifyToken = (req, res, next) => user.verifyToken(req, res, next, db);
 const loginWithToken = (req, res, next) =>
   user.loginWithToken(req, res, next, db);
 const logout = (req, res, next) => user.logout(req, res, next, db);
@@ -59,11 +62,15 @@ const sendResetPasswordEmail = (req, res, next) =>
 const getWorkouts = (req, res, next) => workout.getWorkouts(req, res, next, db);
 const getWorkoutsForUser = (req, res, next) =>
   workout.getWorkoutsForUser(req, res, next, db);
+const getWorkoutsForUserLegacy = (req, res, next) =>
+  workout.getWorkoutsForUserLegacy(req, res, next, db);
 const getWorkoutWithId = (req, res, next) =>
   workout.getWorkoutWithId(req, res, next, db);
 const getSetsForExercise = (req, res, next) =>
   workout.getSetsForExercise(req, res, next, db);
 const addWorkout = (req, res, next) => workout.addWorkout(req, res, next, db);
+const addWorkoutFromSchedule = (req, res, next) =>
+  workout.addWorkoutFromSchedule(req, res, next, db);
 const deleteWorkout = (req, res, next) =>
   workout.deleteWorkout(req, res, next, db);
 const editWorkout = (req, res, next) => workout.editWorkout(req, res, next, db);
@@ -76,6 +83,14 @@ const fetchSchedules = (req, res, next) =>
   schedule.fetchSchedules(req, res, next, db);
 const deleteExerciseFromSchedule = (req, res, next) =>
   schedule.deleteExerciseFromSchedule(req, res, next, db);
+const addSchedule = (req, res, next) =>
+  schedule.addSchedule(req, res, next, db);
+const deleteSchedule = (req, res, next) =>
+  schedule.deleteSchedule(req, res, next, db);
+const editSchedule = (req, res, next) =>
+  schedule.editSchedule(req, res, next, db);
+const addExeciseToSchedule = (req, res, next) =>
+  schedule.addExeciseToSchedule(req, res, next, db);
 
 const getFeedback = (req, res, next) =>
   feedback.getFeedback(req, res, next, db);
@@ -86,12 +101,18 @@ const fetchExerciseList = (req, res, next) =>
   exercise.fetchExerciseList(req, res, next, db);
 const fetchExerciseDescription = (req, res, next) =>
   exercise.fetchExerciseDescription(req, res, next, db);
+const addExerciseType = (req, res, next) =>
+  exercise.addExerciseType(req, res, next, db);
+const editExercise = (req, res, next) =>
+  exercise.editExercise(req, res, next, db);
 
 module.exports = {
   getAllUsers,
   registerUser,
   getUserByEmail,
   login,
+  loginJWT,
+  verifyToken,
   loginWithToken,
   logout,
   sendResetPasswordEmail,
@@ -105,12 +126,20 @@ module.exports = {
   postFeedback,
   getFeedback,
   getWorkoutsForUser,
+  getWorkoutsForUserLegacy,
   fetchExerciseList,
   fetchExerciseDescription,
+  addExerciseType,
+  editExercise,
   addExerciseToWorkout,
   addSetToExercise,
   getSetsForExercise,
   updateUser,
   fetchSchedules,
-  deleteExerciseFromSchedule
+  deleteExerciseFromSchedule,
+  addSchedule,
+  deleteSchedule,
+  editSchedule,
+  addExeciseToSchedule,
+  addWorkoutFromSchedule
 };

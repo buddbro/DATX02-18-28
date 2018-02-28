@@ -1,4 +1,6 @@
+const jwt = require('jsonwebtoken');
 const db = require('./queries');
+const config = require('./config');
 
 const dd_options = {
   response_code: true,
@@ -19,10 +21,33 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
+    'Content-Type, Authorization, Content-Length, X-Requested-With'
+  );
+  res.header(
+    'Access-Control-Allow-Methods',
+    'PUT, PATCH, POST, GET, DELETE, OPTIONS'
   );
   next();
 });
+
+const verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers['authorization'];
+
+  if (typeof bearerHeader !== 'undefined') {
+    token = bearerHeader.split(' ')[1];
+
+    jwt.verify(token, config.AUTH_SECRET_KEY, (err, { id }) => {
+      if (err) {
+        res.sendStatus(403);
+      } else {
+        req.user = { id };
+        next();
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
+};
 
 app.get('/api', (req, res) => res.send('Backend till DATX02-18-28 :)'));
 
@@ -34,6 +59,8 @@ app.post('/api/users/register', db.registerUser);
 app.post('/api/users/getuserbyemail', db.getUserByEmail);
 app.post('/api/users/login', db.login);
 app.post('/api/users/login/token', db.loginWithToken);
+app.post('/api/login', db.loginJWT);
+app.post('/api/verifytoken', verifyToken, db.verifyToken);
 app.post('/api/users/logout', db.logout);
 app.post('/api/users/resetpassword', db.sendResetPasswordEmail);
 app.get('/api/resetpassword/:id/:token', db.resetPasswordGet);
@@ -41,24 +68,32 @@ app.post('/api/resetpassword/:id/:token', db.resetPasswordPost);
 
 // Workout
 app.post('/api/workouts/exercise/:id', db.addSetToExercise);
-app.get('/api/workouts', db.getWorkouts);
 app.post('/api/workouts/delete/:id', db.deleteWorkout);
 app.get('/api/workouts/:id', db.getWorkoutWithId);
-app.post('/api/workouts', db.getWorkoutsForUser);
+app.get('/api/workouts', verifyToken, db.getWorkoutsForUser);
+app.post('/api/workouts', db.getWorkoutsForUserLegacy);
 app.post('/api/workouts/new', db.addWorkout);
+app.post('/api/workoutsnew', verifyToken, db.addWorkoutFromSchedule);
 app.patch('/api/workouts/:id', db.editWorkout);
 app.post('/api/workouts/exercise', db.addExerciseToWorkout);
 app.get('/api/workouts/exercise/:id/sets', db.getSetsForExercise);
 app.post('/api/workouts/exercise/:id', db.addSetToExercise);
 app.get('/api/exercises', db.fetchExerciseList);
 app.get('/api/exercises/description/:id', db.fetchExerciseDescription);
+app.post('/api/exercises', verifyToken, db.addExerciseType);
+app.patch('/api/exercises/:id', verifyToken, db.editExercise);
 
 // Schedules
-app.get('/api/user/:id/schedules', db.fetchSchedules);
+app.get('/api/schedules', verifyToken, db.fetchSchedules);
 app.delete(
-  '/api/user/:userId/schedules/exercise/:exerciseId',
+  '/api/schedules/exercise/:exerciseId',
+  verifyToken,
   db.deleteExerciseFromSchedule
 );
+app.post('/api/schedules', verifyToken, db.addSchedule);
+app.delete('/api/schedules/:id', verifyToken, db.deleteSchedule);
+app.put('/api/schedules/:id', verifyToken, db.editSchedule);
+app.post('/api/schedules/exercise', verifyToken, db.addExeciseToSchedule);
 
 // Feedback
 app.get('/api/feedback', db.getFeedback);
