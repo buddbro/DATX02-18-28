@@ -5,7 +5,8 @@ import { verifyToken } from './actions';
 
 import PasswordReset from './components/PasswordReset';
 import Start from './components/Start';
-import TopMenu from './components/TopMenu';
+import LoggedInMenu from './components/LoggedInMenu';
+import LoggedOutMenu from './components/LoggedOutMenu';
 import Footer from './components/Footer';
 
 import Authenticated from './components/app/Authenticated';
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <TopMenu />
+          {this.props.loggedIn ? <LoggedInMenu /> : <LoggedOutMenu />}
           <Route exact path="/" component={Start} />
           <Route path="/app" component={Authenticated} />
           <Route path="/reset/:id/:token" component={PasswordReset} />
@@ -30,4 +31,8 @@ class App extends Component {
   }
 }
 
-export default connect(null, { verifyToken })(App);
+const mapStateToProps = ({ user }) => {
+  return { loggedIn: user.loggedIn };
+};
+
+export default connect(mapStateToProps, { verifyToken })(App);

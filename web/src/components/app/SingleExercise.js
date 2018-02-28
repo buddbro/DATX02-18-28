@@ -48,16 +48,13 @@ class SingleExercise extends React.Component {
               primary
               disabled={
                 this.props.exercise.description === this.state.description ||
-                this.state.saved
+                this.state.saved ||
+                this.state.description === ''
               }
             >
               {this.state.saved ? 'Saved!' : 'Save'}
             </Form.Button>
           </Form>
-          {/* <Message success>
-            <Icon name="help" />
-            Already signed up?&nbsp;<a href="#">Login here</a>&nbsp;instead.
-          </Message> */}
         </Table.Cell>
       </Table.Row>
     );
