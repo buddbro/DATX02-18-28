@@ -5,7 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  FlatList
+  FlatList,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -19,12 +20,35 @@ import NavigationActions from 'react-navigation';
 import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
+import ExerciseHelp from './ExerciseHelp';
 
 class ViewExercise extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { accordionToggled: false, reps: '', weight: '' };
+    this.state = {
+      accordionToggled: false,
+      reps: '',
+      weight: '',
+      instructionsToggled: false
+    };
+  }
+
+  viewInstructions() {
+    if (this.state.instructionsToggled) {
+      this.props.getExerciseDescription(this.props.visibleExerciseId);
+      return (
+        <View style={styles.popup}>
+          <ExerciseHelp style={{ zIndex: 500 }} />
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ instructionsToggled: false });
+            }}
+            style={styles.popupBackground}
+          />
+        </View>
+      );
+    }
   }
 
   setReps(reps) {
@@ -73,8 +97,10 @@ class ViewExercise extends React.Component {
 
     return (
       <View style={styles.container}>
+        {this.viewInstructions()}
         <View style={styles.header}>
           <TouchableOpacity
+            style={{ flex: 1 }}
             onPress={() => {
               this.props.clearExercise();
               this.props.navigation.dispatch(
@@ -84,75 +110,21 @@ class ViewExercise extends React.Component {
               );
             }}
           >
-            <Text style={{ fontSize: 20, color: '#fff' }}>Back</Text>
+            <Image
+              style={{ width: 35, height: 35 }}
+              source={require('../../../assets/back_arrow_black.png')}
+            />
           </TouchableOpacity>
+          <View style={styles.titleContainer}>
+            <Text style={styles.exerciseTitle}>
+              {this.props.visibleExercise}
+            </Text>
+          </View>
         </View>
         <ScrollView>
           <View
-            style={{
-              backgroundColor: '#b9baf1',
-              margin: 10,
-              borderRadius: 3,
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}
+            style={{ backgroundColor: '#fff', margin: 10, borderRadius: 3 }}
           >
-            <Text
-              style={{
-                marginTop: 15,
-                marginBottom: 15,
-                marginLeft: 15,
-                color: '#444',
-                fontSize: 24,
-                fontWeight: 'bold',
-                textAlign: 'center'
-              }}
-            >
-              {this.props.visibleExercise}
-            </Text>
-            <TouchableOpacity
-              style={{
-                marginRight: 10
-              }}
-              onPress={() => {
-                this.props.getExerciseDescription(this.props.visibleExerciseId);
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'ExerciseHelp'
-                  })
-                );
-              }}
-            >
-              <Text
-                style={{
-                  marginTop: 15,
-                  marginBottom: 15,
-                  color: '#444',
-                  fontSize: 24,
-                  fontWeight: 'bold',
-                  textAlign: 'center'
-                }}
-              >
-                ?
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
-          >
-            <Text
-              style={{
-                marginLeft: 8,
-                marginTop: 6,
-                marginBottom: 15,
-                color: '#444',
-                fontSize: 18
-              }}
-            >
-              Sets
-            </Text>
-
             <View
               style={{
                 display: 'flex',
@@ -211,21 +183,9 @@ class ViewExercise extends React.Component {
                 );
               }}
             />
-            <TouchableOpacity
-              onPress={() => this.addSetToExercise()}
-              style={styles.addSetButton}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: '#fff'
-                }}
-              >
-                Add set
-              </Text>
-            </TouchableOpacity>
           </View>
-          <View
+
+          {/*        <View
             style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
           >
             <Text
@@ -244,8 +204,46 @@ class ViewExercise extends React.Component {
               data={statisticsData}
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
-          </View>
+          </View> */}
         </ScrollView>
+        <View style={{ bottom: 0 }}>
+          <TouchableOpacity
+            onPress={() => this.addSetToExercise()}
+            style={styles.addSetButton}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                color: '#6669cb'
+              }}
+            >
+              Add set
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ bottom: 0 }}>
+          <TouchableOpacity
+            style={styles.addSetButton}
+            onPress={() => {
+              //this.props.getExerciseDescription(this.props.visibleExerciseId);
+              //this.props.navigation.dispatch(
+              //NavigationActions.NavigationActions.navigate({
+              //  routeName: 'ExerciseHelp'
+              //})
+              //);
+              this.setState({ instructionsToggled: true });
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                color: '#6669cb'
+              }}
+            >
+              Instructions
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -274,26 +272,62 @@ export default connect(mapStateToProps, {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    paddingTop: 40
+    paddingTop: 50,
+    height: '100%'
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
     marginLeft: 10,
-    justifyContent: 'space-between'
+    marginRight: 10,
+    paddingBottom: 10
   },
   addSetButton: {
-    backgroundColor: '#6669cb',
-    margin: 30,
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 40,
-    borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10
+    height: 60,
+    width: '104%',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#8b8ddf',
+    marginBottom: 15
+  },
+  exerciseTitle: {
+    color: '#6669cb',
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  instructions: {
+    fontWeight: '200',
+    fontSize: 18,
+    color: '#7B7B7B'
+  },
+  titleContainer: {
+    marginLeft: -35,
+    justifyContent: 'center',
+    flex: 7,
+    borderRadius: 3,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  popup: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 99
+  },
+  popupBackground: {
+    position: 'absolute',
+    backgroundColor: 'black',
+    opacity: 0.5,
+    width: '100%',
+    height: '100%',
+    marginBottom: -500,
+    zIndex: 100,
+    bottom: 0
   }
 });
