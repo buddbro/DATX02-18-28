@@ -108,7 +108,6 @@ export function addWorkout(schedule) {
 }
 
 export function deleteWorkout(workout) {
-  console.log(workout);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -143,12 +142,10 @@ export function addExerciseToWorkout(userId, token, workoutId, exerciseId) {
   };
 }
 
-export function addSetToExercise(userId, token, exerciseId, reps, weight) {
+export function addSetToExercise(exerciseId, reps, weight) {
   return dispatch => {
     axios
       .post(`https://getpushapp.com/api/workouts/exercise/${exerciseId}`, {
-        userId,
-        token,
         reps,
         weight
       })
