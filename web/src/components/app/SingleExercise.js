@@ -4,6 +4,8 @@ import { Header, Table, Form, Message, Icon } from 'semantic-ui-react';
 
 import { editExercise } from '../../actions';
 
+import './style.css';
+
 class SingleExercise extends React.Component {
   constructor(props) {
     super(props);
@@ -25,18 +27,19 @@ class SingleExercise extends React.Component {
     const { exercise } = this.props;
 
     return (
-      <Table.Row key={exercise.id}>
-        <Table.Cell style={{ width: 200 }}>
-          <Header as="h4" textAlign="center">
+      <Table.Row className="striped" key={exercise.id}>
+        <Table.Cell style={{ width: 150, borderColor: '#51C1AB' }}>
+          <Header as="h4" textAlign="center" style={{ color: '#5A6175' }}>
             {exercise.name}
           </Header>
         </Table.Cell>
-        <Table.Cell style={{ width: 140 }} textAlign="center">
+        <Table.Cell style={{ width: 150, backgroundColor: '#AEEEE1', color: '#5A6175', borderColor: '#51C1AB' }} textAlign="center">
           {exercise.exercise_type}
         </Table.Cell>
-        <Table.Cell>
-          <Form onSubmit={this.onSubmit.bind(this)}>
+        <Table.Cell style={{ backgroundColor: '#AEEEE1', borderColor: '#51C1AB' }}>
+          <Form onSubmit={this.onSubmit.bind(this)} style={{ display: 'flex', flexDirection: 'row', flexWrap: 'no-wrap', alignItems: 'center' }}>
             <Form.TextArea
+              style={{ backgroundColor: '#D7F7F1', width: '35vw', marginTop: '0.8em', color: '#5A6175' }}
               onChange={input =>
                 this.setState({
                   description: input.target.value,
@@ -45,6 +48,7 @@ class SingleExercise extends React.Component {
               value={this.state.description}
             />
             <Form.Button
+              style={{ marginLeft: '1.3em', backgroundColor: '#2DB79B' }}
               primary
               disabled={
                 this.props.exercise.description === this.state.description ||
