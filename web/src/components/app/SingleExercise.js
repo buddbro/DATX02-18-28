@@ -27,16 +27,16 @@ class SingleExercise extends React.Component {
     const { exercise } = this.props;
 
     return (
-      <Table.Row className="striped" key={exercise.id}>
+      <Table.Row style={{ borderColor: '#51C1AB' }} className="striped" key={exercise.id}>
         <Table.Cell style={{ width: 150, borderColor: '#51C1AB' }}>
           <Header as="h4" textAlign="center" style={{ color: '#5A6175' }}>
             {exercise.name}
           </Header>
         </Table.Cell>
-        <Table.Cell style={{ width: 150, backgroundColor: '#AEEEE1', color: '#5A6175', borderColor: '#51C1AB' }} textAlign="center">
+        <Table.Cell style={{ width: 150, color: '#5A6175', borderColor: '#51C1AB' }} textAlign="center">
           {exercise.exercise_type}
         </Table.Cell>
-        <Table.Cell style={{ backgroundColor: '#AEEEE1', borderColor: '#51C1AB' }}>
+        <Table.Cell style={{ borderColor: '#51C1AB' }}>
           <Form onSubmit={this.onSubmit.bind(this)} style={{ display: 'flex', flexDirection: 'row', flexWrap: 'no-wrap', alignItems: 'center' }}>
             <Form.TextArea
               style={{ backgroundColor: '#D7F7F1', width: '35vw', marginTop: '0.8em', color: '#5A6175' }}

@@ -11,8 +11,6 @@ class ExerciseListItem extends React.Component {
         style={styles.container}
         onPress={() => {
           this.props.addExerciseToWorkout(
-            this.props.userId,
-            this.props.token,
             this.props.workoutId,
             this.props.exerciseId
           );
