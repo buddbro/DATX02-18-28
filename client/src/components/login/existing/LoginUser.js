@@ -13,6 +13,7 @@ import {
   fetchWorkouts,
   fetchSchedules
 } from '../../../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import NavigationActions from 'react-navigation';
 
 class LoginUser extends React.Component {
@@ -53,7 +54,12 @@ class LoginUser extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#fff' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+    >
         <View style={styles.head}>
           <Text style={styles.headline}>PushApp</Text>
         </View>
@@ -112,12 +118,10 @@ class LoginUser extends React.Component {
               );
             }}
           >
-            <Text style={{ color: '#858080' }}>
-              Don't have an account yet? Create one!
-            </Text>
+            <Text style={{ color: '#858080' }}>Don't have an account yet? Create one!</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
