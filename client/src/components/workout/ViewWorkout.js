@@ -83,7 +83,7 @@ class ViewWorkout extends React.Component {
             }}
           >
             <Image
-              source={require('../../../assets/back_arrow.png')}
+              source={require('../../../assets/back_arrow_black.png')}
               style={{ width: 35, height: 35 }}
             />
           </TouchableOpacity>
@@ -96,32 +96,9 @@ class ViewWorkout extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <View
-            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
-          >
-            <Text
-              style={{
-                marginLeft: 15,
-                marginTop: 8,
-                marginBottom: 15,
-                color: '#444',
-                fontSize: 18,
-                alignSelf: 'center'
-              }}
-            >
-              {this.props.date.substring(0, 16)}
-            </Text>
+          <View style={{ margin: 10, borderRadius: 3 }}>
             <TextInput
-              style={{
-                height: 40,
-                fontSize: 24,
-                borderColor: '#eee',
-                backgroundColor: '#fff',
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 3,
-                textAlign: 'center'
-              }}
+              style={styles.inputField}
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
                 this.props.editWorkout(this.props.id, this.state.title);
@@ -132,22 +109,29 @@ class ViewWorkout extends React.Component {
               spellCheck={false}
               value={this.state.title}
             />
-          </View>
-
-          <View
-            style={{ backgroundColor: '#7ad9c6', margin: 10, borderRadius: 3 }}
-          >
             <Text
               style={{
                 marginLeft: 15,
-                marginTop: 6,
+                marginTop: 8,
                 marginBottom: 15,
-                color: '#444',
-                fontSize: 18
+                color: '#7B7B7B',
+                fontSize: 18,
+                fontWeight: '200',
+                alignSelf: 'center'
               }}
             >
-              Exercises
+              {this.props.date.substring(0, 16)}
             </Text>
+          </View>
+
+          <View
+            style={{
+              backgroundColor: '#7ad9c6',
+              margin: 10,
+              borderRadius: 3
+            }}
+          >
+            <Text style={styles.exercisesTitle}>Exercises</Text>
             <FlatList
               style={styles.exerciseListStyle}
               data={this.props.exercises}
@@ -212,7 +196,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#51c1ab',
+    backgroundColor: '#fff',
     paddingTop: 50
   },
   header: {
@@ -230,15 +214,36 @@ const styles = StyleSheet.create({
   },
   category: {},
   addExerciseTitle: {
-    color: '#fff',
+    color: '#8b8ddf',
     fontSize: 24,
     fontWeight: 'bold'
   },
   addExerciseItem: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 80,
-    backgroundColor: '#8b8ddf'
+    height: 60,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#8b8ddf',
+    marginBottom: 15
   },
-  exerciseListStyle: {}
+  exerciseListStyle: {},
+  inputField: {
+    height: 70,
+    fontSize: 32,
+    borderColor: '#eee',
+    backgroundColor: '#7ad9c6',
+    borderWidth: 0,
+    borderRadius: 5,
+    color: '#fff',
+    padding: 3,
+    textAlign: 'center'
+  },
+  exercisesTitle: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    padding: 15
+  }
 });

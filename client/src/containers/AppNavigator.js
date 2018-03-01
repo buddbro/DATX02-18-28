@@ -4,7 +4,7 @@ import Dashboard from '../components/dashboard/Dashboard';
 
 import WorkoutSchedules from '../components/schedule/WorkoutSchedules';
 
-import Workout from '../components/workout/Workout';
+import WorkoutHistory from '../components/workout/WorkoutHistory';
 import ViewWorkout from '../components/workout/ViewWorkout';
 import ViewExercise from '../components/exercise/ViewExercise';
 
@@ -44,8 +44,8 @@ const AppRouteConfigs = {
       tabBarVisible: false
     }
   },
-  Workout: {
-    screen: Workout,
+  WorkoutHistory: {
+    screen: WorkoutHistory,
     navigationOptions: {
       tabBarVisible: false
     }

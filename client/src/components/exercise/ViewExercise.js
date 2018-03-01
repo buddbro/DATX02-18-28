@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#8b8ddf',
+    backgroundColor: '#fff',
     paddingTop: 40
   },
   header: {

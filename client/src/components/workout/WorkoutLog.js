@@ -4,7 +4,8 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { chooseWorkout } from '../../actions';
@@ -55,15 +56,15 @@ class WorkoutLog extends React.Component {
         style={styles.workoutItem}
       >
         <View>
-          <Text style={styles.title}>
-            {this.props.workout.title}
-          </Text>
+          <Text style={styles.title}>{this.props.workout.title}</Text>
         </View>
         <View>
-          <Text style={styles.date}>
-            {this.renderDate()}
-          </Text>
+          <Text style={styles.date}>{this.renderDate()}</Text>
         </View>
+        <Image
+          style={styles.arrow}
+          source={require('../../../assets/right_arrow.png')}
+        />
       </TouchableOpacity>
     );
   }
@@ -73,21 +74,29 @@ export default connect(null, { chooseWorkout })(WorkoutLog);
 
 const styles = StyleSheet.create({
   workoutItem: {
-    marginLeft: 15,
-    marginRight: 15,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     height: 80,
-    borderRadius: 5,
-    backgroundColor: '#b9baf1'
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    width: '100%'
   },
   title: {
-    color: '#fff',
+    marginLeft: 25,
+    color: '#b9baf1',
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   date: {
     color: '#fff',
     fontSize: 18
+  },
+  arrow: {
+    opacity: 0.5,
+    height: 15,
+    width: 15,
+    marginRight: 15
   }
 });
