@@ -11,7 +11,7 @@ import {
   Button
 } from 'semantic-ui-react';
 
-import { editExercise } from '../../actions';
+import { deleteExercise, editExercise } from '../../actions';
 
 import './style.css';
 
@@ -107,18 +107,20 @@ class SingleExercise extends React.Component {
                 }
               >
                 <Modal.Content>
-                  //{' '}
                   <h2>
-                    {this.state.inUse
-                      ? 'Warning!'
-                      : 'Are you sure you want to do this?'}
+                    Are you sure you want to do this? This exercise is used{' '}
+                    {exercise.count} times
                   </h2>
                 </Modal.Content>
                 <Modal.Actions>
                   <Button basic color="red" inverted>
                     <Icon name="remove" /> No
                   </Button>
-                  <Button color="green" inverted>
+                  <Button
+                    color="green"
+                    inverted
+                    onClick={() => this.props.deleteExercise(exercise.id)}
+                  >
                     <Icon name="checkmark" /> Yes
                   </Button>
                 </Modal.Actions>
@@ -131,4 +133,4 @@ class SingleExercise extends React.Component {
   }
 }
 
-export default connect(null, { editExercise })(SingleExercise);
+export default connect(null, { editExercise, deleteExercise })(SingleExercise);
