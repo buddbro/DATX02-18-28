@@ -16,6 +16,7 @@ import NavigationActions from 'react-navigation';
 import sha256 from 'sha256';
 import { connect } from 'react-redux';
 import { loginWithToken } from '../../../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -85,7 +86,12 @@ class CreateAccount extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#fff' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+    >
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome</Text>
         </View>
@@ -134,7 +140,7 @@ class CreateAccount extends React.Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
