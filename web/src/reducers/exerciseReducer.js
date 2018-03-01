@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_EXERCISE_SECTIONS:
-      console.log(action.payload);
       return {
         ...state,
         sections: action.payload
@@ -32,7 +31,8 @@ export default function user(state = INITIAL_STATE, action) {
           {
             id,
             name,
-            exercise_type: state.sections.filter(s => s.id === section)[0].title,
+            exercise_type: state.sections.filter(s => s.id === section)[0]
+              .title,
             description
           }
         ]
