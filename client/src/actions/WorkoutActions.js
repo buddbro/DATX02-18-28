@@ -149,30 +149,42 @@ export function addExerciseToWorkout(workoutId, exerciseId) {
 
 export function addSetToExercise(exerciseId, reps, weight) {
   return dispatch => {
-    axios
-      .post(`https://getpushapp.com/api/workouts/exercise/${exerciseId}`, {
-        reps,
-        weight
-      })
-      .then(({ data }) => {
-        dispatch({
-          type: ADD_SET_TO_EXERCISE,
-          payload: { id: data[0].id, reps, weight }
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .post(
+          `https://getpushapp.com/api/workouts/exercise/${exerciseId}`,
+          {
+            reps,
+            weight
+          },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          dispatch({
+            type: ADD_SET_TO_EXERCISE,
+            payload: { id: data[0].id, reps, weight }
+          });
         });
-      });
+    });
   };
 }
 
 export function getSetsForExercise(id) {
   return dispatch => {
-    axios
-      .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`)
-      .then(({ data }) => {
-        dispatch({
-          type: GET_SETS_FOR_EXERCISE,
-          payload: data
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .get(`https://getpushapp.com/api/workouts/exercise/${id}/sets`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: GET_SETS_FOR_EXERCISE,
+            payload: data
+          });
         });
-      });
+    });
   };
 }
 
