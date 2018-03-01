@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, Table, Form, Message, Icon } from 'semantic-ui-react';
+import { Header, Segment, Modal, Table, Form, Message, Icon } from 'semantic-ui-react';
 
 import { editExercise } from '../../actions';
 
@@ -10,7 +10,7 @@ class SingleExercise extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { description: '', saved: false };
+    this.state = { description: '', saved: false, inUse: false };
   }
 
   componentDidMount() {
@@ -47,17 +47,47 @@ class SingleExercise extends React.Component {
                 })}
               value={this.state.description}
             />
-            <Form.Button
-              style={{ marginLeft: '1.3em', backgroundColor: '#2DB79B' }}
-              primary
-              disabled={
-                this.props.exercise.description === this.state.description ||
-                this.state.saved ||
-                this.state.description === ''
-              }
-            >
-              {this.state.saved ? 'Saved!' : 'Save'}
-            </Form.Button>
+            <Segment basic style={{ marginTop: 0 }}>
+              <Form.Button
+                style={{ marginLeft: '1.3em', backgroundColor: '#2DB79B', width: '90px' }}
+                primary
+                disabled={
+                  this.props.exercise.description === this.state.description ||
+                  this.state.saved ||
+                  this.state.description === ''
+                }
+              >
+                {this.state.saved ? 'Saved!' : 'Save'}
+              </Form.Button>
+              <Modal
+                trigger={
+                  <Form.Button
+                    style={
+                      {
+                        marginLeft: '1.3em',
+                        backgroundColor: '#FF6E6E',
+                        width: '90px'
+                      }
+                    }
+                    primary
+                  >
+                    Delete
+                  </Form.Button>
+                }
+              >
+                <Modal.Content>
+                //  <h2>{ this.state.inUse ? 'Warning!' : 'Are you sure you want to do this?' }</h2>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button basic color='red' inverted>
+                    <Icon name='remove' /> No
+                  </Button>
+                  <Button color='green' inverted>
+                    <Icon name='checkmark' /> Yes
+                  </Button>
+                </Modal.Actions>
+              </Modal>
+            </Segment>
           </Form>
         </Table.Cell>
       </Table.Row>
