@@ -19,13 +19,13 @@ class Exercises extends React.Component {
   render() {
     return (
       <div>
-        <Header as="h2">Exercises</Header>
-        <Table celled padded>
+        <Header as="h1" style={{ textAlign: 'center', marginTop: '0.5em', marginBottom: '1em', color: '#5A6175' }}>Exercises</Header>
+        <Table celled padded style={{ borderColor: '#51C1AB' }}>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell singleLine>Name</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell>Description</Table.HeaderCell>
+              <Table.HeaderCell singleLine style={{textAlign: 'center', backgroundColor: '#51C1AB', color: 'white' }}>NAME</Table.HeaderCell>
+              <Table.HeaderCell style={{textAlign: 'center', backgroundColor: '#51C1AB', color: 'white' }}>CATEGORY</Table.HeaderCell>
+              <Table.HeaderCell style={{textAlign: 'center', backgroundColor: '#51C1AB', color: 'white' }}>DESCRIPTION</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
