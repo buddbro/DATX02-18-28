@@ -32,7 +32,7 @@ export default function user(state = INITIAL_STATE, action) {
           {
             id,
             name,
-            exercise_type: state.sections.filter(s => s.id === section).title,
+            exercise_type: state.sections.filter(s => s.id === section)[0].title,
             description
           }
         ]

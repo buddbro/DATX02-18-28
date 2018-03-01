@@ -39,7 +39,7 @@ class SingleExercise extends React.Component {
         <Table.Cell style={{ borderColor: '#51C1AB' }}>
           <Form onSubmit={this.onSubmit.bind(this)} style={{ display: 'flex', flexDirection: 'row', flexWrap: 'no-wrap', alignItems: 'center' }}>
             <Form.TextArea
-              style={{ backgroundColor: '#D7F7F1', width: '35vw', marginTop: '0.8em', color: '#5A6175' }}
+              style={{ backgroundColor: '#F6FFFD', width: '35vw', marginTop: '0.8em', color: '#5A6175' }}
               onChange={input =>
                 this.setState({
                   description: input.target.value,
