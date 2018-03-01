@@ -324,10 +324,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'black',
     opacity: 0.5,
-    width: '100%',
-    height: '100%',
-    marginBottom: -500,
+    width: '150%',
+    height: '150%',
     zIndex: 100,
-    bottom: 0
+    alignSelf: 'stretch'
   }
 });
