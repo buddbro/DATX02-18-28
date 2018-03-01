@@ -176,8 +176,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7ad9c6',
     height: 222,
-    paddingTop: 220,
-    top: -140
+    paddingTop: 40
   },
   userWelcome: {
     paddingTop: 0,

@@ -57,16 +57,16 @@ class Dashboard extends React.Component {
           navigation={this.props.navigation}
         />
 
-        <View
-          style={{
-            marginTop: 80,
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-around'
-          }}
-        >
-          <ScrollView>
+        <ScrollView>
+          <View
+            style={{
+              marginTop: 80,
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around'
+            }}
+          >
             <View
               style={{
                 marginBottom: 5,
@@ -109,8 +109,8 @@ class Dashboard extends React.Component {
                 Schedules
               </Text>
             </TouchableOpacity>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -128,7 +128,6 @@ export default connect(mapStateToProps)(Dashboard);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: -50,
     flexDirection: 'column'
   },
   addWorkout: {
