@@ -139,7 +139,7 @@ class LoggedOutMenu extends React.Component {
                             })}
                         />
                       </Form.Field>
-                      <Button type="Sign In">Submit</Button>
+                      <Form.Button>Submit</Form.Button>
                     </Form>
                   </Dropdown>
                 </Dropdown.Menu>

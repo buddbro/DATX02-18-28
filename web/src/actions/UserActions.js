@@ -29,17 +29,15 @@ export function logout() {
 export function verifyToken() {
   return dispatch => {
     const token = localStorage.getItem('token');
+
     if (token) {
       axios
-        .post(
-          `${API_ENDPOINT}/verifytoken`,
-          {},
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        )
+        .get(`${API_ENDPOINT}/verifytoken`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
         .then(({ data }) => {
           const { error, email, name } = data;
+          console.log(email, name);
           dispatch({
             type: LOGIN,
             payload: { email, name, error: error || '' }

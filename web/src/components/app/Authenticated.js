@@ -10,7 +10,7 @@ const Workouts = () => <div>Workout</div>;
 
 class Authenticated extends React.Component {
   render() {
-    if (!this.props.user.loggedIn) {
+    if (!this.props.user.loggedIn && !this.props.user.loading) {
       return <Redirect to="/" />;
     }
 
