@@ -32,7 +32,7 @@ export function retrievePassword(email) {
 export function loginWithPassword(email, password) {
   return dispatch => {
     axios
-      .post('https://getpushapp.com/api/users/login', {
+      .post('https://getpushapp.com/api/login', {
         email,
         password: sha256(password)
       })
@@ -43,15 +43,13 @@ export function loginWithPassword(email, password) {
             payload: { error: data.error }
           });
         } else {
-          AsyncStorage.setItem('jwt', data.jwt).then(() => {
+          AsyncStorage.setItem('jwt', data.token).then(() => {
             dispatch({
               type: LOGIN_SUCCESS,
               payload: {
                 id: data.id,
-                token: data.token,
                 name: data.name,
-                email,
-                jwt: data.jwt
+                email
               }
             });
           });
@@ -65,29 +63,20 @@ export function loginWithPassword(email, password) {
 
 export function loginWithToken() {
   return dispatch => {
-    AsyncStorage.getItem('token').then(value => {
-      if (value) {
-        const token = value.substring(0, 64);
-        const email = value.substring(64);
-
+    AsyncStorage.getItem('jwt').then(jwt => {
+      if (jwt) {
         axios
-          .post('https://getpushapp.com/api/users/login/token', {
-            email,
-            token
+          .get('https://getpushapp.com/api/verifytoken', {
+            headers: { Authorization: `Bearer ${jwt}` }
           })
           .then(({ data }) => {
             if (!data.error) {
-              AsyncStorage.setItem('jwt', data.jwt).then(() => {
-                dispatch({
-                  type: LOGIN_SUCCESS,
-                  payload: {
-                    id: data.id,
-                    token: data.token,
-                    name: data.name,
-                    email,
-                    jwt: data.jwt
-                  }
-                });
+              dispatch({
+                type: LOGIN_SUCCESS,
+                payload: {
+                  name: data.name,
+                  email: data.email
+                }
               });
             } else {
               dispatch({
@@ -109,18 +98,10 @@ export function loginWithToken() {
 
 export function logout(id) {
   return dispatch => {
-    axios
-      .post('https://getpushapp.com/api/users/logout', {
-        id
-      })
-      .then(() => {
-        AsyncStorage.removeItem('token');
-        dispatch({
-          type: LOGOUT
-        });
-      })
-      .catch(error => {
-        console.log(error);
+    AsyncStorage.removeItem('jwt').then(() => {
+      dispatch({
+        type: LOGOUT
       });
+    });
   };
 }
