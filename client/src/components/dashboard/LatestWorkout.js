@@ -62,6 +62,8 @@ class LatestWorkout extends React.Component {
               );
             }}
           />
+          <Text style={styles.workoutTraitText}>Difficulty</Text>
+          <Text style={styles.workoutTraitText>Notes</Text>
           <TouchableOpacity
             style={styles.continueButton}
             onPress={() => {
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     textAlign: 'center',
     color: 'white',
-    fontSize: 22
+    fontSize: 20
   },
   exercises: {
     padding: 5
@@ -180,5 +182,9 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontWeight: 'bold'
+  },
+  workoutTraitText: {
+    fontSize: 18,
+    color: 'white',
   }
 });

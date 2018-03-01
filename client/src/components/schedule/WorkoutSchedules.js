@@ -35,6 +35,7 @@ class WorkoutSchedules extends React.Component {
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       scrollEnabled={false}
+      enableOnAndroid={true}
     >
         <View style={styles.header}>
           <TouchableOpacity
