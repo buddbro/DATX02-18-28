@@ -21,18 +21,24 @@ import axios from 'axios';
 
 export function chooseWorkout(id) {
   return dispatch => {
-    axios.get(`https://getpushapp.com/api/workouts/${id}`).then(({ data }) => {
-      const exercises = data;
-      const sets = {};
-      // axios
-      //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
-      //   .then(({ data }) => {
-      //     const sets = data;
-      dispatch({
-        type: CHOOSE_WORKOUT,
-        payload: { exercises, sets }
-      });
-      // });
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .get(`https://getpushapp.com/api/workouts/${id}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          const exercises = data;
+          const sets = {};
+          // axios
+          //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
+          //   .then(({ data }) => {
+          //     const sets = data;
+          dispatch({
+            type: CHOOSE_WORKOUT,
+            payload: { exercises, sets }
+          });
+          // });
+        });
     });
   };
 }
