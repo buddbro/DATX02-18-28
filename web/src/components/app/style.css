@@ -1,2 +1,3 @@
 
-.striped { background-color: #0F0; }
+tr:nth-child(odd) { background-color: #AEEEE1; }
+tr:nth-child(even) { background-color: #C4F7EC; }
