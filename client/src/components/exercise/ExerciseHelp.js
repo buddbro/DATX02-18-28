@@ -55,7 +55,7 @@ export default connect(mapStateToProps, {})(ExerciseHelp);
 
 const styles = StyleSheet.create({
   background: {
-    width: '100%',
+    width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 999
@@ -66,7 +66,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: '100%'
+    width: '100%',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
   },
   headertop: {
     flexDirection: 'row',
@@ -93,7 +95,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    padding: 10
   },
   video: {
     width: 250,
