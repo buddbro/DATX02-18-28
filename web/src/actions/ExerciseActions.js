@@ -1,5 +1,6 @@
 import {
   ADD_EXERCISE,
+  DELETE_EXERCISE,
   FETCH_EXERCISES,
   FETCH_EXERCISE_SECTIONS,
   EDIT_EXERCISE
@@ -48,6 +49,22 @@ export function addExercise(name, section, description) {
         dispatch({
           type: ADD_EXERCISE,
           payload: { id: data, name, section, description }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+}
+
+export function deleteExercise(id) {
+  return dispatch => {
+    axios
+      .delete(`${API_ENDPOINT}/exercises/${id}`)
+      .then(({ data }) => {
+        dispatch({
+          type: DELETE_EXERCISE,
+          payload: { id }
         });
       })
       .catch(error => {

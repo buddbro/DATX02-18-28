@@ -2,7 +2,8 @@ import {
   FETCH_EXERCISES,
   FETCH_EXERCISE_SECTIONS,
   EDIT_EXERCISE,
-  ADD_EXERCISE
+  ADD_EXERCISE,
+  DELETE_EXERCISE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,7 +14,6 @@ const INITIAL_STATE = {
 export default function user(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_EXERCISE_SECTIONS:
-      console.log(action.payload);
       return {
         ...state,
         sections: action.payload
@@ -32,11 +32,22 @@ export default function user(state = INITIAL_STATE, action) {
           {
             id,
             name,
-            exercise_type: state.sections.filter(s => s.id === section)[0].title,
+            exercise_type: state.sections.filter(s => s.id === section)[0]
+              .title,
             description
           }
         ]
       };
+    case DELETE_EXERCISE:
+      const listWithDeletedExercise = state.list.reduce((acc, next) => {
+        return action.payload.id === next.id ? acc : [...acc, next];
+      }, []);
+
+      return {
+        ...state,
+        list: listWithDeletedExercise
+      };
+
     case EDIT_EXERCISE:
       const list = [];
       state.list.forEach((exercise, index) => {

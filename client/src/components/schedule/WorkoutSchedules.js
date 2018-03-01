@@ -15,7 +15,7 @@ import axios from 'axios';
 
 import { addSchedule } from '../../actions';
 import ScheduleCard from './ScheduleCard';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class WorkoutSchedules extends React.Component {
   constructor(props) {
