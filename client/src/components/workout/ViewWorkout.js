@@ -153,7 +153,10 @@ class ViewWorkout extends React.Component {
               }}
             />
           </View>
+          <Text style={styles.traitText}>Difficulty</Text>
+          <Text style={styles.traitText}>Notes</Text>
         </ScrollView>
+
         <View style={{ bottom: 0 }}>
           <TouchableOpacity
             onPress={() => {
@@ -250,5 +253,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     padding: 15
-  }
+  },
+  traitText: {
+    color: '#7ad9c6',
+    fontSize: 20,
+    padding: 15
+  },
 });
