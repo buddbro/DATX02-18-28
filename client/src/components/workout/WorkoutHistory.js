@@ -15,7 +15,7 @@ import NavigationActions from 'react-navigation';
 
 const { height, width } = Dimensions.get('window');
 // Dashboard screen
-class Workout extends React.Component {
+class WorkoutHistory extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -43,7 +43,7 @@ class Workout extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView style={{ paddingTop: 50, backgroundColor: '#fff' }}>
-          {this.props.workouts.map((workout, index) =>
+          {this.props.workouts.map((workout, index) => (
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
                 workout={workout}
@@ -51,7 +51,7 @@ class Workout extends React.Component {
               />
               <View style={styles.separator} />
             </View>
-          )}
+          ))}
         </ScrollView>
       </View>
     );
@@ -65,7 +65,7 @@ const mapStateToProps = ({ workout, user }) => {
   };
 };
 
-export default connect(mapStateToProps)(Workout);
+export default connect(mapStateToProps)(WorkoutHistory);
 
 //Design
 const styles = StyleSheet.create({

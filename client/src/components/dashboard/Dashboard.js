@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
 import ProfileHeader from './ProfileHeader';
-import Workout from '../workout/Workout';
+import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 
@@ -44,9 +44,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
@@ -86,9 +86,10 @@ class Dashboard extends React.Component {
               onPress={() =>
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
-                    routeName: 'Workout'
+                    routeName: 'WorkoutHistory'
                   })
-                )}
+                )
+              }
               style={styles.addWorkout}
             >
               <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>

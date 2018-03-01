@@ -5,7 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  FlatList
+  FlatList,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -76,6 +77,10 @@ class ExerciseCard extends React.Component {
           {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
             <Text style={{ marginLeft: 5, marginRight: 5 }}>123</Text>
           </View> */}
+          <Image
+            style={styles.backarrow}
+            source={require('../../../assets/right_arrow.png')}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -113,21 +118,23 @@ const styles = StyleSheet.create({
   },
   accordionHeaderTextStyle: {
     fontSize: 18,
-    color: '#333',
+    color: '#7B7B7B',
     paddingTop: 10,
     paddingBottom: 10,
+    marginLeft: 30,
     textAlign: 'center',
     backgroundColor: '#aeeee1'
   },
   accordionBody: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: '#aeeee1',
     paddingBottom: 5,
     marginBottom: 5
   },
-  setListStyle: {},
   addSetButton: {
     backgroundColor: '#484bb4',
     margin: 30,
@@ -138,5 +145,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingTop: 10,
     paddingBottom: 10
+  },
+  backarrow: {
+    width: 10,
+    height: 10,
+    opacity: 0.5,
+    marginRight: 15
   }
 });
