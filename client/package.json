@@ -29,6 +29,7 @@
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-camera-roll-picker": "^1.2.3",
+    "react-native-keyboard-aware-scroll-view": "^0.4.4",
     "react-native-remote-svg": "^1.0.1",
     "react-native-svg-charts": "^2.2.3",
     "react-navigation": "^1.0.0-beta.27",

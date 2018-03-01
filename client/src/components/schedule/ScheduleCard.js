@@ -7,7 +7,7 @@ import {
   TextInput,
   StyleSheet,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -17,6 +17,7 @@ import {
   editSchedule
 } from '../../actions';
 import NavigationActions from 'react-navigation';
+
 
 class ScheduleCard extends React.Component {
   constructor(props) {

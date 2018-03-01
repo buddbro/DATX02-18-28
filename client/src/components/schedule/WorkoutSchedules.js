@@ -15,6 +15,7 @@ import axios from 'axios';
 
 import { addSchedule } from '../../actions';
 import ScheduleCard from './ScheduleCard';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class WorkoutSchedules extends React.Component {
   constructor(props) {
@@ -29,7 +30,13 @@ class WorkoutSchedules extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: '#fff' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+        enableOnAndroid
+      >
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
@@ -73,7 +80,7 @@ class WorkoutSchedules extends React.Component {
             />
           )}
         </ScrollView>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
