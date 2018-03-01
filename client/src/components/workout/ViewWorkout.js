@@ -55,11 +55,7 @@ class ViewWorkout extends React.Component {
         {
           text: 'Delete',
           onPress: () => {
-            this.props.deleteWorkout(
-              this.props.user.id,
-              this.props.user.token,
-              this.props.id
-            );
+            this.props.deleteWorkout(this.props.id);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
                 routeName: 'Dashboard'
@@ -128,16 +124,8 @@ class ViewWorkout extends React.Component {
               }}
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
-                this.props.editWorkout(
-                  this.props.user.id,
-                  this.props.user.token,
-                  this.props.id,
-                  this.state.title
-                );
-                this.props.fetchWorkouts(
-                  this.props.user.id,
-                  this.props.user.token
-                );
+                this.props.editWorkout(this.props.id, this.state.title);
+                this.props.fetchWorkouts();
               }}
               returnKeyLabel="Save"
               clearButtonMode="while-editing"

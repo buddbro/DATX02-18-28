@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { addWorkoutFromSchedule, chooseWorkout } from '../../actions';
+import { addWorkout, chooseWorkout } from '../../actions';
 import NavigationActions from 'react-navigation';
 
 class AddWorkout extends React.Component {
@@ -28,7 +28,7 @@ class AddWorkout extends React.Component {
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
-          this.props.addWorkoutFromSchedule(schedule);
+          this.props.addWorkout(schedule);
         }}
         key={`schedule${schedule}`}
       >
@@ -48,7 +48,7 @@ class AddWorkout extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.setState({ waitForWorkout: true });
-              this.props.addWorkoutFromSchedule(0);
+              this.props.addWorkout(0);
             }}
           >
             <View style={styles.body}>
@@ -85,7 +85,7 @@ const mapStateToProps = ({ schedules, workout }) => {
 };
 
 export default connect(mapStateToProps, {
-  addWorkoutFromSchedule,
+  addWorkout,
   chooseWorkout
 })(AddWorkout);
 

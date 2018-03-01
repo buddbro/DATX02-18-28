@@ -23,40 +23,15 @@ class LoginUser extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.token && (nextProps.email || this.state.email)) {
-      try {
-        AsyncStorage.setItem(
-          'token',
-          nextProps.token + (nextProps.email || this.state.email)
-        ).then(() => {
-          AsyncStorage.getItem('token').then(() => {
-            this.setState({ email: '', password: '' });
-            this.props.fetchWorkouts(nextProps.id, nextProps.token);
-            this.props.fetchSchedules();
-
-            // this.props.navigation.dispatch(
-            //   NavigationActions.NavigationActions.navigate({
-            //     routeName: 'Workout'
-            //   })
-            // );
-          });
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     if (!nextProps.loading && nextProps.email) {
+      this.props.fetchWorkouts();
+      this.props.fetchSchedules();
       this.props.navigation.dispatch(
         NavigationActions.NavigationActions.navigate({
           routeName: 'Dashboard'
         })
       );
     }
-  }
-
-  componentDidMount() {
-    let { dispatch } = this.props.navigation;
   }
 
   renderError() {

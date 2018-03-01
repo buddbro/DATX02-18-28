@@ -45,7 +45,7 @@ export function clearExercise() {
   return { type: CLEAR_EXERCISE };
 }
 
-export function fetchWorkouts(id, token) {
+export function fetchWorkouts() {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -62,42 +62,35 @@ export function fetchWorkouts(id, token) {
   };
 }
 
-export function editWorkout(userId, token, workoutId, title) {
+export function editWorkout(workoutId, title) {
   return dispatch => {
-    axios
-      .patch(`https://getpushapp.com/api/workouts/${workoutId}`, {
-        userId,
-        token,
-        title
-      })
-      .then(({ data }) => {
-        dispatch({
-          type: EDIT_WORKOUT,
-          payload: { title }
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/${workoutId}`,
+          {
+            userId
+          },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          dispatch({
+            type: EDIT_WORKOUT,
+            payload: { title }
+          });
         });
-      });
+    });
   };
 }
 
-export function addWorkout(id, token) {
-  return dispatch => {
-    axios
-      .post(`https://getpushapp.com/api/workouts/new`, { id, token })
-      .then(({ data }) => {
-        dispatch({
-          type: ADD_WORKOUT,
-          payload: data[0]
-        });
-      });
-  };
-}
-
-export function addWorkoutFromSchedule(schedule) {
+export function addWorkout(schedule) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
         .post(
-          `https://getpushapp.com/api/workoutsnew`,
+          `https://getpushapp.com/api/workouts`,
           { schedule },
           {
             headers: { Authorization: `Bearer ${jwt}` }
@@ -114,19 +107,21 @@ export function addWorkoutFromSchedule(schedule) {
   };
 }
 
-export function deleteWorkout(id, token, workout) {
+export function deleteWorkout(workout) {
+  console.log(workout);
   return dispatch => {
-    axios
-      .post(`https://getpushapp.com/api/workouts/delete/${workout}`, {
-        id,
-        token
-      })
-      .then(({ data }) => {
-        dispatch({
-          type: DELETE_WORKOUT,
-          payload: workout
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .delete(`https://getpushapp.com/api/workouts/${workout}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: DELETE_WORKOUT,
+            payload: workout
+          });
         });
-      });
+    });
   };
 }
 
