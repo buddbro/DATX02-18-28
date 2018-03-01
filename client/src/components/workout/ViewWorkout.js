@@ -68,6 +68,10 @@ class ViewWorkout extends React.Component {
     );
   }
 
+  saveWorkout() {
+    this.props.editWorkout(this.props.id, this.state.title);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -75,6 +79,7 @@ class ViewWorkout extends React.Component {
           <TouchableOpacity
             onPress={() => {
               // this.props.clearWorkout();
+              this.saveWorkout();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Dashboard'
@@ -124,7 +129,7 @@ class ViewWorkout extends React.Component {
               }}
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
-                this.props.editWorkout(this.props.id, this.state.title);
+                this.saveWorkout();
                 this.props.fetchWorkouts();
               }}
               returnKeyLabel="Save"

@@ -41,8 +41,6 @@ class ViewExercise extends React.Component {
     }
 
     this.props.addSetToExercise(
-      this.props.userId,
-      this.props.token,
       this.props.visibleSet,
       this.state.reps,
       this.state.weight

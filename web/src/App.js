@@ -20,7 +20,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          {this.props.loggedIn ? <LoggedInMenu /> : <LoggedOutMenu />}
+          {!this.props.user.loading && this.props.user.loggedIn
+            ? <LoggedInMenu />
+            : <LoggedOutMenu />}
           <Route exact path="/" component={Start} />
           <Route path="/app" component={Authenticated} />
           <Route path="/reset/:id/:token" component={PasswordReset} />
@@ -32,7 +34,7 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  return { loggedIn: user.loggedIn };
+  return { user };
 };
 
 export default connect(mapStateToProps, { verifyToken })(App);

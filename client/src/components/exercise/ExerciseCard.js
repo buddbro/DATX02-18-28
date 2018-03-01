@@ -39,8 +39,6 @@ class ExerciseCard extends React.Component {
     }
 
     this.props.addSetToExercise(
-      this.props.userId,
-      this.props.token,
       this.props.id,
       this.state.reps,
       this.state.weight
