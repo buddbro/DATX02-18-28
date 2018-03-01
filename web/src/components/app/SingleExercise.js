@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, Segment, Modal, Table, Form, Message, Icon } from 'semantic-ui-react';
+import { Header, Segment, Button, Modal, Table, Form, Message, Icon } from 'semantic-ui-react';
 
 import { editExercise } from '../../actions';
 
