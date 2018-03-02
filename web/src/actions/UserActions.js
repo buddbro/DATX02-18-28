@@ -21,34 +21,25 @@ export function login(email, password) {
   };
 }
 
-export function register(email, passwordone, passwordtwo) {
+export function register(name, email, passwordone, passwordtwo) {
   return dispatch => {
-    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
-    if(!(passwordone === passwordtwo)) {
-      dispatch({
-        type: REGISTER,
-        payload: { email: '', name: '', error: 'Passwords does not match' }
-      });
-    } else if (!emailRegex.test(email)) {
-      dispatch({
-        type: REGISTER,
-        payload: { email: '', name: '', error: 'Invalid email' }
-      });
-    } else {
-      axios
-        .post(`${API_ENDPOINT}/users/register`, { email, passwordone })
-        .then(({ data }) => {
-          const { error, name } = data;
-          dispatch({
-            type: REGISTER,
-            payload: { email, passwordone, name, error: error || '' }
-          });
-        })
-        .catch(error => {
-          console.log(error);
+    axios
+      .post(`${API_ENDPOINT}/users/register`, {
+        name,
+        email,
+        password: passwordone
+      })
+      .then(({ data }) => {
+        localStorage.setItem('token', data.token);
+        dispatch({
+          type: REGISTER,
+          payload: { email, name, error: '' }
         });
-    };
-  }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 }
 
 export function logout() {
@@ -67,7 +58,6 @@ export function verifyToken() {
         })
         .then(({ data }) => {
           const { error, email, name } = data;
-          console.log(email, name);
           dispatch({
             type: LOGIN,
             payload: { email, name, error: error || '' }
