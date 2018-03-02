@@ -223,13 +223,9 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   difficultyStyle: {
-<<<<<<< HEAD
-    flexDirection: 'row'
-=======
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
     marginRight: 10
->>>>>>> ac805548fb5479063f976bbf820d191a2e00ac0e
   }
 });
