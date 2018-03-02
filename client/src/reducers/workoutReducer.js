@@ -11,7 +11,8 @@ import {
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_EXERCISE,
-  VIEW_SET
+  VIEW_SET,
+  SET_DIFFICULTY
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,7 +25,8 @@ const INITIAL_STATE = {
   visibleExerciseId: -1,
   visibleExercise: '',
   visibleSet: -1,
-  exerciseLoading: true
+  exerciseLoading: true,
+  difficulty: 0,
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {

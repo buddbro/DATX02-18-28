@@ -24,7 +24,8 @@ import {
   editWorkout,
   fetchWorkouts,
   viewExercise,
-  deleteWorkout
+  deleteWorkout,
+  setDifficulty
 } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
@@ -173,7 +174,7 @@ class ViewWorkout extends React.Component {
               <Rating
                 selectedStar={images.flexFilled}
                 unselectedStar={images.flexUnfilled}
-                onChange={a=>console.log(a)}
+                onChange={level => this.props.setDifficulty(this.props.id, level)}
                 config={{
                   easing: Easing.inOut(Easing.ease),
                   duration: 350
@@ -244,6 +245,7 @@ export default connect(mapStateToProps, {
   fetchWorkouts,
   viewExercise,
   deleteWorkout,
+  setDifficulty,
 })(ViewWorkout);
 
 const styles = StyleSheet.create({

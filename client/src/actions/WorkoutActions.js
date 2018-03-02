@@ -12,7 +12,8 @@ import {
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_SET,
-  VIEW_EXERCISE
+  VIEW_EXERCISE,
+  SET_DIFFICULTY
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -205,5 +206,26 @@ export function viewExercise(name, id, typeId) {
   return {
     type: VIEW_EXERCISE,
     payload: { name, id, typeId }
+  };
+}
+
+export function setDifficulty(id, level) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/difficulty/${id}`,
+          { level },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          dispatch({
+            type: SET_DIFFICULTY,
+            payload: { id, level }
+          });
+        });
+    });
   };
 }
