@@ -141,6 +141,15 @@ class ViewWorkout extends React.Component {
               {this.props.date.substring(0, 16)}
             </Text>
           </View>
+          <View style={styles.category}>
+            <Text style={{
+              fontSize: 18,
+              color: '#7ad9c6',
+              marginBottom: 15,
+              marginLeft: 10,}}>
+            Categories
+            </Text>
+          </View>
 
           <View
             style={{
@@ -282,7 +291,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#6669CB'
   },
-  category: {},
+  category: {
+
+  },
   addExerciseTitle: {
     color: '#8b8ddf',
     fontSize: 24,

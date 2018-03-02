@@ -68,6 +68,7 @@ class LatestWorkout extends React.Component {
               );
             }}
           />
+
           <View style={styles.difficultyStyle}>
             <Text style={styles.workoutTraitText}>Difficulty</Text>
             <Rating
@@ -219,6 +220,8 @@ const styles = StyleSheet.create({
   },
   difficultyStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 10
   }
 });
