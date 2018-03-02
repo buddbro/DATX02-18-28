@@ -86,12 +86,12 @@ class LatestWorkout extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.accordionHeader}
+          style={styles.addWorkout}
           onPress={() => {
             this.setState({ toggled: !this.state.toggled });
           }}
         >
-          <Text style={styles.accordionTitle}>Latest workout</Text>
+          <Text style={styles.menuItem}>Latest workout</Text>
         </TouchableOpacity>
         {this.toggleAccordion()}
       </View>
@@ -111,11 +111,25 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  addWorkout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    backgroundColor: 'white'
+  },
+  menuItem: {
+    color: '#b9baf1',
+    fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   container: {
-    marginLeft: 15,
-    marginRight: 15,
     marginBottom: 10,
-    marginTop: 10,
+    width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -185,6 +199,6 @@ const styles = StyleSheet.create({
   },
   workoutTraitText: {
     fontSize: 18,
-    color: 'white',
-  },
+    color: 'white'
+  }
 });
