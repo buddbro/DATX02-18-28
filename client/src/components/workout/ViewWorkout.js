@@ -36,7 +36,6 @@ const images = {
   flexUnfilled: require('../../../assets/flex_empty.png')
 };
 
-// Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
