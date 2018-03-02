@@ -74,10 +74,14 @@ class LatestWorkout extends React.Component {
             <Rating
               selectedStar={images.flexFilled}
               unselectedStar={images.flexUnfilled}
-              initial={this.props.difficulty}
+              initial={4}
               editable={false}
               stagger={80}
               maxScale={1.4}
+              starStyle={{
+                width: 30,
+                height: 30
+              }}
             />
           </View>
           <TouchableOpacity
@@ -219,9 +223,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   difficultyStyle: {
+<<<<<<< HEAD
+    flexDirection: 'row'
+=======
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
     marginRight: 10
+>>>>>>> ac805548fb5479063f976bbf820d191a2e00ac0e
   }
 });
