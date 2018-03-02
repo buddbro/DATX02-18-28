@@ -80,7 +80,8 @@ class LatestWorkout extends React.Component {
               starStyle={{
                 width: 30,
                 height: 30
-              }}/>/>
+              }}
+            />/>
           </View>
           <TouchableOpacity
             style={styles.continueButton}
@@ -120,6 +121,7 @@ const mapStateToProps = ({ workout }) => {
   //const latestWorkout = workout.workouts[workout.workouts.length - 1];
   const latestWorkout = workout.workouts[0];
   const { exercises, difficulty } = workout;
+  console.log(difficulty);
   return {
     latestWorkout,
     exercises,
@@ -204,9 +206,9 @@ const styles = StyleSheet.create({
   },
   workoutTraitText: {
     fontSize: 18,
-    color: 'white',
+    color: 'white'
   },
   difficultyStyle: {
-    flexDirection: 'row',
-  },
+    flexDirection: 'row'
+  }
 });
