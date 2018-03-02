@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   password: '',
   firstname: '',
   lastname: '',
-  error: '',
+  error: ''
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -30,11 +30,12 @@ export default function user(state = INITIAL_STATE, action) {
       }
 
     case REGISTER:
-      if(!action.payload.error) {
-        const {email, password, name } = action.payload;
+      if (!action.payload.error) {
+        const { email, password, name } = action.payload;
         return {
           ...state,
           loading: false,
+          loggedIn: true,
           email,
           password,
           name
