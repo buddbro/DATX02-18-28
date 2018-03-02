@@ -77,10 +77,7 @@ class LatestWorkout extends React.Component {
               editable={false}
               stagger={80}
               maxScale={1.4}
-              starStyle={{
-                width: 30,
-                height: 30
-              }}/>/>
+            />
           </View>
           <TouchableOpacity
             style={styles.continueButton}
@@ -208,5 +205,6 @@ const styles = StyleSheet.create({
   },
   difficultyStyle: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
