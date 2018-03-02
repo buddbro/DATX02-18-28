@@ -73,7 +73,7 @@ class LatestWorkout extends React.Component {
             <Rating
               selectedStar={images.flexFilled}
               unselectedStar={images.flexUnfilled}
-              initial={this.props.difficulty}
+              initial={4}
               editable={false}
               stagger={80}
               maxScale={1.4}
@@ -81,7 +81,7 @@ class LatestWorkout extends React.Component {
                 width: 30,
                 height: 30
               }}
-            />/>
+            />
           </View>
           <TouchableOpacity
             style={styles.continueButton}
