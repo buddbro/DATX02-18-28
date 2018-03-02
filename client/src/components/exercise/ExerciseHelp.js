@@ -33,36 +33,9 @@ class ExerciseHelp extends React.Component {
     return (
       <View style={styles.background}>
         <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewExercise'
-                })
-              );
-            }}
-          >
-            <Image
-              source={require('../../../assets/back_arrow.png')}
-              style={{
-                width: 35,
-                height: 35,
-                marginTop: 10,
-                marginLeft: 5
-              }}
-            />
-          </TouchableOpacity>
-          <View style={styles.headertop}>
-            <Text style={styles.title}>{this.props.description.name}</Text>
-          </View>
-          {/*<View style={styles.headerMenu}>
-              <Text>Tips</Text>
-              <Text>Personal Records</Text></View>*/}
+          <Text style={styles.title}>{this.props.description.name}</Text>
         </View>
         <View style={styles.body}>
-          {/*<View style={styles.video}>
-              <Text>Insert Video here pls</Text>
-            </View>*/}
           <View style={styles.menu}>
             <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
           </View>
@@ -82,17 +55,20 @@ export default connect(mapStateToProps, {})(ExerciseHelp);
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#fff',
-    width: '100%',
-    height: '100%',
-    zIndex: -999
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999
   },
   header: {
     backgroundColor: '#51C1AB',
-    height: 100,
+    height: 60,
     alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    marginBottom: 20
+    width: '100%',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
   },
   headertop: {
     flexDirection: 'row',
@@ -106,22 +82,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#fff',
     //fontWeight: 'bold',
-    fontSize: 24,
-    textAlign: 'center',
-    marginLeft: '25%'
+    fontSize: 32,
+    textAlign: 'center'
   },
   headerMenu: {
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   body: {
+    paddingTop: 15,
     backgroundColor: '#fff',
     flexDirection: 'column',
-    flex: 4,
+    width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    marginLeft: 5,
-    marginRight: 5
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    padding: 10
   },
   video: {
     width: 250,
