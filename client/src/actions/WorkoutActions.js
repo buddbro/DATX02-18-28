@@ -36,7 +36,7 @@ export function chooseWorkout(id) {
           //     const sets = data;
           dispatch({
             type: CHOOSE_WORKOUT,
-            payload: { exercises, sets }
+            payload: { exercises, sets, difficulty: data[0].difficulty }
           });
           // });
         });
@@ -223,7 +223,7 @@ export function setDifficulty(id, level) {
         .then(({ data }) => {
           dispatch({
             type: SET_DIFFICULTY,
-            payload: { id, level }
+            payload: level
           });
         });
     });

@@ -18,7 +18,7 @@ import {
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   clearWorkout,
   editWorkout,
@@ -80,15 +80,14 @@ class ViewWorkout extends React.Component {
     this.props.editWorkout(this.props.id, this.state.title);
   }
 
-
   render() {
     return (
       <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={true}
-      enableOnAndroid={true}
+        style={{ backgroundColor: '#fff' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
+        enableOnAndroid={true}
       >
         <View style={styles.header}>
           <TouchableOpacity
@@ -174,7 +173,9 @@ class ViewWorkout extends React.Component {
               <Rating
                 selectedStar={images.flexFilled}
                 unselectedStar={images.flexUnfilled}
-                onChange={level => this.props.setDifficulty(this.props.id, level)}
+                initial={this.props.difficulty}
+                onChange={level =>
+                  this.props.setDifficulty(this.props.id, level)}
                 config={{
                   easing: Easing.inOut(Easing.ease),
                   duration: 350
@@ -184,22 +185,35 @@ class ViewWorkout extends React.Component {
                 starStyle={{
                   width: 40,
                   height: 40
-                }}/>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Text style={{color: '#8b8ddf'}}>No Sweat</Text>
-                  <Text style={{color: '#8b8ddf'}}>Hellish</Text>
-                </View>
+                }}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Text style={{ color: '#8b8ddf' }}>No Sweat</Text>
+                <Text style={{ color: '#8b8ddf' }}>Hellish</Text>
+              </View>
             </View>
           </View>
 
           <View style={styles.notes}>
             <Text style={styles.traitText}>Notes</Text>
             <TextInput
-              style={{height: 80, marginLeft: 10, marginRight: 10, marginBottom: 10, borderColor: 'gray', borderWidth: 1}}
-              onChangeText={(text) => this.setState({text})}
+              style={{
+                height: 80,
+                marginLeft: 10,
+                marginRight: 10,
+                marginBottom: 10,
+                borderColor: 'gray',
+                borderWidth: 1
+              }}
+              onChangeText={text => this.setState({ text })}
               value={this.state.text}
-              multiline = {true}
-              underlineColorAndroid='transparent'
+              multiline={true}
+              underlineColorAndroid="transparent"
             />
           </View>
         </ScrollView>
@@ -226,11 +240,12 @@ class ViewWorkout extends React.Component {
 }
 
 const mapStateToProps = ({ workout, user }) => {
-  const { id, title, date } = workout;
+  const { id, title, date, difficulty } = workout;
   return {
     id,
     title,
     date,
+    difficulty,
     exercises: workout.exercises,
     user: {
       id: user.id,
@@ -245,7 +260,7 @@ export default connect(mapStateToProps, {
   fetchWorkouts,
   viewExercise,
   deleteWorkout,
-  setDifficulty,
+  setDifficulty
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
@@ -308,10 +323,8 @@ const styles = StyleSheet.create({
     padding: 15
   },
   difficulty: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
-  ratingStyle: {
-  },
-  notes: {
-  },
+  ratingStyle: {},
+  notes: {}
 });
