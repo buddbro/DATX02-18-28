@@ -21,6 +21,27 @@ export function login(email, password) {
   };
 }
 
+export function register(name, email, passwordone, passwordtwo) {
+  return dispatch => {
+    axios
+      .post(`${API_ENDPOINT}/users/register`, {
+        name,
+        email,
+        password: passwordone
+      })
+      .then(({ data }) => {
+        localStorage.setItem('token', data.token);
+        dispatch({
+          type: REGISTER,
+          payload: { email, name, error: '' }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+}
+
 export function logout() {
   localStorage.removeItem('token');
   return { type: LOGOUT };
@@ -37,7 +58,6 @@ export function verifyToken() {
         })
         .then(({ data }) => {
           const { error, email, name } = data;
-          console.log(email, name);
           dispatch({
             type: LOGIN,
             payload: { email, name, error: error || '' }
