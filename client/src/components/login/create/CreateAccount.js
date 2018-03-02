@@ -91,7 +91,7 @@ class CreateAccount extends React.Component {
       resetScrollToCoords={{ x: 0, y: 0 }}
       contentContainerStyle={styles.container}
       scrollEnabled={false}
-    >
+      >
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome</Text>
         </View>
@@ -102,6 +102,7 @@ class CreateAccount extends React.Component {
             onChangeText={name => this.setState({ name })}
             // value={this.state.name}
             secureTextEntry={false}
+            underlineColorAndroid='transparent'
           />
           <TextInput
             style={styles.textInput}
@@ -110,6 +111,7 @@ class CreateAccount extends React.Component {
               this.setState({ email: email.toLowerCase() })}
             keyboardType="email-address"
             secureTextEntry={false}
+            underlineColorAndroid='transparent'
           />
           <TextInput
             style={styles.textInput}
@@ -117,6 +119,7 @@ class CreateAccount extends React.Component {
             onChangeText={password =>
               this.setState({ password: password.toLowerCase() })}
             secureTextEntry={true}
+            underlineColorAndroid='transparent'
           />
 
           {this.renderError()}

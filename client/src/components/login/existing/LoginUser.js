@@ -72,6 +72,7 @@ class LoginUser extends React.Component {
               this.setState({ email: email.toLowerCase() })}
             // value={this.state.email}
             keyboardType="email-address"
+            underlineColorAndroid='transparent'
           />
           <TextInput
             style={styles.textInput}
@@ -80,6 +81,7 @@ class LoginUser extends React.Component {
               this.setState({ password: password.toLowerCase() })}
             // value={this.state.password}
             secureTextEntry={true}
+            underlineColorAndroid='transparent'
           />
 
           {this.renderError()}
@@ -118,7 +120,8 @@ class LoginUser extends React.Component {
               );
             }}
           >
-            <Text style={{ color: '#858080' }}>Don't have an account yet? Create one!</Text>
+            <Text style={{ color: '#858080' }}>
+            Don't have an account yet? Create one!</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>

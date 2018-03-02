@@ -12,10 +12,13 @@ import {
   Animated,
   ListItem,
   FlatList,
-  Image
+  Image,
+  Easing
 } from 'react-native';
 import NavigationActions from 'react-navigation';
+import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   clearWorkout,
   editWorkout,
@@ -27,6 +30,10 @@ import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
 
 const { height, width } = Dimensions.get('window');
+const images = {
+  flexFilled: require('../../../assets/flex_full.png'),
+  flexUnfilled: require('../../../assets/flex_empty.png')
+};
 
 // Denna ska hämta information om loggat träningspass
 class ViewWorkout extends React.Component {
@@ -72,9 +79,16 @@ class ViewWorkout extends React.Component {
     this.props.editWorkout(this.props.id, this.state.title);
   }
 
+
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#fff' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}
+      enableOnAndroid={true}
+      >
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
@@ -153,8 +167,40 @@ class ViewWorkout extends React.Component {
               }}
             />
           </View>
-          <Text style={styles.traitText}>Difficulty</Text>
-          <Text style={styles.traitText}>Notes</Text>
+          <View style={styles.difficulty}>
+            <Text style={styles.traitText}>Difficulty</Text>
+            <View style={styles.ratingStyle}>
+              <Rating
+                selectedStar={images.flexFilled}
+                unselectedStar={images.flexUnfilled}
+                onChange={a=>console.log(a)}
+                config={{
+                  easing: Easing.inOut(Easing.ease),
+                  duration: 350
+                }}
+                stagger={80}
+                maxScale={1.4}
+                starStyle={{
+                  width: 40,
+                  height: 40
+                }}/>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Text style={{color: '#8b8ddf'}}>No Sweat</Text>
+                  <Text style={{color: '#8b8ddf'}}>Hellish</Text>
+                </View>
+            </View>
+          </View>
+
+          <View style={styles.notes}>
+            <Text style={styles.traitText}>Notes</Text>
+            <TextInput
+              style={{height: 80, marginLeft: 10, marginRight: 10, marginBottom: 10, borderColor: 'gray', borderWidth: 1}}
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}
+              multiline = {true}
+              underlineColorAndroid='transparent'
+            />
+          </View>
         </ScrollView>
 
         <View style={{ bottom: 0 }}>
@@ -173,7 +219,7 @@ class ViewWorkout extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -197,7 +243,7 @@ export default connect(mapStateToProps, {
   editWorkout,
   fetchWorkouts,
   viewExercise,
-  deleteWorkout
+  deleteWorkout,
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
@@ -258,5 +304,12 @@ const styles = StyleSheet.create({
     color: '#7ad9c6',
     fontSize: 20,
     padding: 15
+  },
+  difficulty: {
+    flexDirection: 'row',
+  },
+  ratingStyle: {
+  },
+  notes: {
   },
 });
