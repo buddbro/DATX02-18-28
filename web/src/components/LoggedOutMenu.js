@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import sha256 from 'sha256';
 
-import { login } from '../actions';
+import { login, register } from '../actions';
 
 class LoggedOutMenu extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class LoggedOutMenu extends React.Component {
     this.state = {
       activeItem: 'pushapp',
       login: { email: '', password: '' },
-      signup: { email: '', name: '', passwordone: '', passwordtwo: '' }
+      register: { email: '', name: '', passwordone: '', passwordtwo: '' }
     };
   }
 
@@ -36,8 +36,8 @@ class LoggedOutMenu extends React.Component {
     this.props.login(this.state.login.email, sha256(this.state.login.password));
   }
 
-  signup(event) {
-    event.preventDefault();
+  register(event) {
+    this.props.register(this.state.register.email, this.state.register.passwordone, this.state.register.passwordtwo);
   }
 
   render() {
@@ -149,7 +149,7 @@ class LoggedOutMenu extends React.Component {
                 trigger={
                   <Menu.Item
                     name="signup"
-                    active={this.state.activeItem === 'signup'}
+                    active={this.state.activeItem === 'register'}
                     onClick={this.handleItemClick}
                   >
                     <Icon name="signup" />
@@ -168,8 +168,8 @@ class LoggedOutMenu extends React.Component {
                           placeholder="ex. Emilia"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 name: input.target.value
                               }
                             })}
@@ -181,8 +181,8 @@ class LoggedOutMenu extends React.Component {
                           placeholder="example@gmail.com"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 email: input.target.value
                               }
                             })}
@@ -194,8 +194,8 @@ class LoggedOutMenu extends React.Component {
                           placeholder="********"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 passwordone: input.target.value
                               }
                             })}
@@ -207,8 +207,8 @@ class LoggedOutMenu extends React.Component {
                           placeholder="********"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 passwordtwo: input.target.value
                               }
                             })}
@@ -227,4 +227,4 @@ class LoggedOutMenu extends React.Component {
   }
 }
 
-export default connect(null, { login })(LoggedOutMenu);
+export default connect(null, { login }, { register })(LoggedOutMenu);
