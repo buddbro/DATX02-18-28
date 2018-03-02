@@ -121,7 +121,6 @@ const mapStateToProps = ({ workout }) => {
   //const latestWorkout = workout.workouts[workout.workouts.length - 1];
   const latestWorkout = workout.workouts[0];
   const { exercises, difficulty } = workout;
-  console.log(difficulty);
   return {
     latestWorkout,
     exercises,
