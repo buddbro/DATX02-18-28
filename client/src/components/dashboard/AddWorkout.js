@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView
+} from 'react-native';
 import { connect } from 'react-redux';
 import { addWorkout, chooseWorkout } from '../../actions';
 import NavigationActions from 'react-navigation';
@@ -24,7 +30,7 @@ class AddWorkout extends React.Component {
   }
 
   renderSchedules() {
-    return Object.keys(this.props.schedules.list).map(schedule =>
+    return Object.keys(this.props.schedules.list).map(schedule => (
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
@@ -38,13 +44,13 @@ class AddWorkout extends React.Component {
           </Text>
         </View>
       </TouchableOpacity>
-    );
+    ));
   }
 
   renderAddMenu() {
-    if (this.state.addWorkoutVisible) {
-      return (
-        <View style={styles.container}>
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollcontainer}>
           <TouchableOpacity
             onPress={() => {
               this.setState({ waitForWorkout: true });
@@ -56,27 +62,13 @@ class AddWorkout extends React.Component {
             </View>
           </TouchableOpacity>
           {this.renderSchedules()}
-        </View>
-      );
-    }
+        </ScrollView>
+      </View>
+    );
   }
 
   render() {
-    return (
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({
-              addWorkoutVisible: !this.state.addWorkoutVisible
-            });
-          }}
-          style={styles.addWorkout}
-        >
-          <Text style={styles.menuItem}>+</Text>
-        </TouchableOpacity>
-        {this.renderAddMenu()}
-      </View>
-    );
+    return this.renderAddMenu();
   }
 }
 
@@ -90,30 +82,18 @@ export default connect(mapStateToProps, {
 })(AddWorkout);
 
 const styles = StyleSheet.create({
-  menuItem: {
-    color: '#fff',
-    fontSize: 100,
-    fontWeight: 'bold'
-  },
-  addWorkout: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    borderRadius: 5,
-    paddingBottom: 15,
-    backgroundColor: '#b9baf1'
-  },
   container: {
+    top: 0,
+    width: '80%',
     backgroundColor: '#A6A8E5',
-    marginTop: -10,
-    marginLeft: 20,
-    marginRight: 20,
-    paddingBottom: 10
+    paddingBottom: 10,
+    marginTop: 50,
+    marginBottom: 50,
+    zIndex: 999
+  },
+  scrollcontainer: {
+    paddingBottom: 10,
+    paddingTop: 10
   },
   body: {
     flex: 1,

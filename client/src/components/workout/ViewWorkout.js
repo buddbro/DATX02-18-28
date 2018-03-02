@@ -80,7 +80,6 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    console.log('difficulty', this.props.difficulty);
     return (
       <KeyboardAwareScrollView
         style={{ backgroundColor: '#fff' }}
@@ -142,7 +141,6 @@ class ViewWorkout extends React.Component {
               {this.props.date.substring(0, 16)}
             </Text>
           </View>
-
           <View
             style={{
               backgroundColor: '#7ad9c6',
@@ -166,6 +164,18 @@ class ViewWorkout extends React.Component {
                 );
               }}
             />
+            <View style={styles.category}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: 'white',
+                  marginBottom: 15,
+                  marginLeft: 10
+                }}
+              >
+                Categories
+              </Text>
+            </View>
           </View>
           <View style={styles.difficulty}>
             <Text style={styles.traitText}>Difficulty</Text>

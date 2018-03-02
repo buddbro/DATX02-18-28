@@ -17,6 +17,29 @@ import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { addWorkoutVisible: false };
+  }
+
+  renderPopup() {
+    if (this.state.addWorkoutVisible) {
+      return (
+        <View style={styles.popupContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                addWorkoutVisible: !this.state.addWorkoutVisible
+              });
+            }}
+            style={styles.popupBackground}
+          />
+          <AddWorkout navigation={this.props.navigation} />
+        </View>
+      );
+    }
+  }
   renderToday() {
     const weekdays = [
       'Monday',
@@ -56,32 +79,31 @@ class Dashboard extends React.Component {
           user={this.props.user}
           navigation={this.props.navigation}
         />
-
+        <View
+          style={{
+            marginBottom: 5,
+            borderRadius: 3,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20
+          }}
+        >
+          <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
+            {this.renderToday()}
+          </Text>
+        </View>
         <ScrollView>
           <View
             style={{
-              marginTop: 80,
+              marginTop: 30,
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around'
             }}
           >
-            <View
-              style={{
-                marginBottom: 5,
-                borderRadius: 3,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
-                {this.renderToday()}
-              </Text>
-            </View>
             <LatestWorkout navigation={this.props.navigation} />
 
-            <AddWorkout navigation={this.props.navigation} />
             <TouchableOpacity
               onPress={() =>
                 this.props.navigation.dispatch(
@@ -92,9 +114,7 @@ class Dashboard extends React.Component {
               }
               style={styles.addWorkout}
             >
-              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-                History
-              </Text>
+              <Text style={styles.menuItem}>History</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -106,12 +126,23 @@ class Dashboard extends React.Component {
               }}
               style={styles.addWorkout}
             >
-              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-                Schedules
-              </Text>
+              <Text style={styles.menuItem}>Workouts</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                addWorkoutVisible: !this.state.addWorkoutVisible
+              });
+            }}
+            style={styles.addWorkoutClean}
+          >
+            <Text style={styles.menuItemClean}>+</Text>
+          </TouchableOpacity>
+        </View>
+        {this.renderPopup()}
       </View>
     );
   }
@@ -127,26 +158,65 @@ const mapStateToProps = ({ workout, user }) => {
 export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    position: 'absolute',
+    marginTop: 10,
+    bottom: 0,
+    marginBottom: 10,
+    width: '100%',
+    zIndex: 100
+  },
+  menuItemClean: {
+    color: '#b9baf1',
+    fontSize: 100,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  addWorkoutClean: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    zIndex: 101,
+    backgroundColor: 'white'
+  },
+  popupContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 199
+  },
+  popupBackground: {
+    position: 'absolute',
+    backgroundColor: '#000',
+    opacity: 0.5,
+    width: '150%',
+    height: '150%',
+    zIndex: 200,
+    alignSelf: 'stretch'
+  },
   container: {
     flex: 1,
     flexDirection: 'column'
   },
   addWorkout: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    borderRadius: 5,
-    paddingBottom: 15,
-    backgroundColor: '#b9baf1'
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    backgroundColor: 'white',
+    marginBottom: 10
   },
   menuItem: {
-    color: '#fff',
-    fontSize: 100,
-    fontWeight: 'bold'
+    color: '#b9baf1',
+    fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
