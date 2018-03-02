@@ -79,20 +79,21 @@ class Dashboard extends React.Component {
           user={this.props.user}
           navigation={this.props.navigation}
         />
-        <View
-          style={{
-            marginBottom: 5,
-            borderRadius: 3,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 20
-          }}
-        >
-          <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
-            {this.renderToday()}
-          </Text>
-        </View>
+
         <ScrollView>
+          <View
+            style={{
+              marginBottom: 5,
+              borderRadius: 3,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 20
+            }}
+          >
+            <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
+              {this.renderToday()}
+            </Text>
+          </View>
           <View
             style={{
               marginTop: 30,
@@ -139,7 +140,7 @@ class Dashboard extends React.Component {
             }}
             style={styles.addWorkoutClean}
           >
-            <Text style={styles.menuItemClean}>+</Text>
+            <Text style={styles.menuItemClean}>Lift weights!</Text>
           </TouchableOpacity>
         </View>
         {this.renderPopup()}
@@ -167,8 +168,8 @@ const styles = StyleSheet.create({
     zIndex: 100
   },
   menuItemClean: {
-    color: '#b9baf1',
-    fontSize: 100,
+    color: '#fff',
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center'
   },
@@ -177,10 +178,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    borderWidth: 1,
-    borderColor: '#b9baf1',
-    zIndex: 101,
-    backgroundColor: 'white'
+    backgroundColor: '#53F2D3',
+    zIndex: 101
   },
   popupContainer: {
     position: 'absolute',

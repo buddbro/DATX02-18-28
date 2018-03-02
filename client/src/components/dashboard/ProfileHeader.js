@@ -99,10 +99,10 @@ class ProfileHeader extends React.Component {
             >
               <Image
                 source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 20, opacity: 0 }}
+                style={{ width: 35, height: 35, marginTop: 0, opacity: 0 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            {/*<TouchableOpacity
               style={{
                 marginRight: 10
               }}
@@ -119,7 +119,7 @@ class ProfileHeader extends React.Component {
                 source={require('../../../assets/exit.png')}
                 style={{ width: 35, height: 35, marginTop: 20 }}
               />
-            </TouchableOpacity>
+          </TouchableOpacity>*/}
           </View>
           <View
             style={{
@@ -128,12 +128,12 @@ class ProfileHeader extends React.Component {
               backgroundColor: '#7ad9c6'
             }}
           >
-            {
+            {/*
               <Image
                 source={require('../../../assets/avatar_default.png')}
                 style={{ width: 45, height: 45, alignSelf: 'center' }}
               />
-            }
+            */}
             <Text style={styles.userWelcome}>
               Welcome back {this.props.user.name}!
             </Text>
@@ -145,7 +145,7 @@ class ProfileHeader extends React.Component {
           >
             <Text style={styles.tagline}>Ready to rock?</Text>
           </View>
-          <Svg height="100" width={width}>
+          <Svg height="50" width={width}>
             <Svg.Ellipse
               cx={width / 2}
               cy="5"
@@ -175,8 +175,9 @@ class ProfileHeader extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7ad9c6',
-    height: 222,
-    paddingTop: 40
+    height: 50,
+    paddingTop: 10,
+    marginBottom: 100
   },
   userWelcome: {
     paddingTop: 0,
