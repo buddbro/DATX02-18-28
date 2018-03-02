@@ -11,7 +11,8 @@ import {
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_EXERCISE,
-  VIEW_SET
+  VIEW_SET,
+  SET_DIFFICULTY
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,7 +25,8 @@ const INITIAL_STATE = {
   visibleExerciseId: -1,
   visibleExercise: '',
   visibleSet: -1,
-  exerciseLoading: true
+  exerciseLoading: true,
+  difficulty: 0
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
@@ -87,7 +89,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         id: workout_id,
         title: workout_title,
         date,
-        exercises: exercises[0].id ? exercises : []
+        exercises: exercises[0].id ? exercises : [],
+        difficulty: action.payload.difficulty
       };
     case ADD_WORKOUT:
       return {
@@ -150,6 +153,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
     case FETCH_WORKOUTS:
       const workouts = action.payload;
       return { ...state, workouts };
+    case SET_DIFFICULTY:
+      return { ...state, difficulty: action.payload };
     default:
       return state;
   }

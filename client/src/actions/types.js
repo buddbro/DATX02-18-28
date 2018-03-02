@@ -12,6 +12,7 @@ export const CHOOSE_WORKOUT = 'choose_workout';
 export const EDIT_WORKOUT = 'edit_workout';
 export const CLEAR_WORKOUT = 'clear_workout';
 export const CLEAR_EXERCISE = 'clear_exercise';
+export const SET_DIFFICULTY = 'set_difficulty';
 
 export const FETCH_EXERCISE_LIST = 'fetch_exercise_list';
 
