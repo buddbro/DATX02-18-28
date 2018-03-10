@@ -13,7 +13,8 @@ import {
   GET_SETS_FOR_EXERCISE,
   VIEW_SET,
   VIEW_EXERCISE,
-  SET_DIFFICULTY
+  SET_DIFFICULTY,
+  SAVE_NOTES
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -225,6 +226,26 @@ export function setDifficulty(id, level) {
           dispatch({
             type: SET_DIFFICULTY,
             payload: level
+          });
+        });
+    });
+  };
+}
+
+export function saveNotes(id, notes) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/notes/${id}`,
+          { notes },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(() => {
+          dispatch({
+            type: SAVE_NOTES
           });
         });
     });

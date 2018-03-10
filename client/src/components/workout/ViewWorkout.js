@@ -25,7 +25,8 @@ import {
   fetchWorkouts,
   viewExercise,
   deleteWorkout,
-  setDifficulty
+  setDifficulty,
+  saveNotes
 } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
@@ -41,12 +42,13 @@ class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: '' };
+    this.state = { title: '', notes: 'hej' };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      title: nextProps.title
+      title: nextProps.title,
+      notes: nextProps.notes
     });
   }
 
@@ -203,19 +205,14 @@ class ViewWorkout extends React.Component {
             </View>
           </View>
 
-          <View style={styles.notes}>
+          <View>
             <Text style={styles.traitText}>Notes</Text>
             <TextInput
-              style={{
-                height: 80,
-                marginLeft: 10,
-                marginRight: 10,
-                marginBottom: 10,
-                borderColor: 'gray',
-                borderWidth: 1
-              }}
-              onChangeText={text => this.setState({ text })}
-              value={this.state.text}
+              style={styles.notes}
+              onChangeText={notes => this.setState({ notes })}
+              onEndEditing={() =>
+                this.props.saveNotes(this.props.id, this.state.notes)}
+              value={this.state.notes}
               multiline={true}
               underlineColorAndroid="transparent"
             />
@@ -245,6 +242,8 @@ class ViewWorkout extends React.Component {
 
 const mapStateToProps = ({ workout, user }) => {
   const { id, title, date, difficulty, notes } = workout;
+  console.log('workout');
+  console.log(workout);
   return {
     id,
     title,
@@ -265,7 +264,8 @@ export default connect(mapStateToProps, {
   fetchWorkouts,
   viewExercise,
   deleteWorkout,
-  setDifficulty
+  setDifficulty,
+  saveNotes
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
@@ -331,5 +331,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   ratingStyle: {},
-  notes: {}
+  notes: {
+    height: 80,
+    padding: 3,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    borderColor: '#aaa',
+    borderRadius: 3,
+    borderWidth: 1
+  }
 });

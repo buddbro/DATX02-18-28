@@ -26,7 +26,8 @@ const INITIAL_STATE = {
   visibleExercise: '',
   visibleSet: -1,
   exerciseLoading: true,
-  difficulty: 0
+  difficulty: 0,
+  notes: ''
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
@@ -82,7 +83,12 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-      const { workout_id, workout_title, date } = action.payload.exercises[0];
+      const {
+        workout_id,
+        workout_title,
+        date,
+        notes
+      } = action.payload.exercises[0];
 
       return {
         ...state,
@@ -90,7 +96,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         title: workout_title,
         date,
         exercises: exercises[0].id ? exercises : [],
-        difficulty: action.payload.difficulty
+        difficulty: action.payload.difficulty,
+        notes
       };
     case ADD_WORKOUT:
       return {
