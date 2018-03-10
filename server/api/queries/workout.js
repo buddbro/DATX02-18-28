@@ -14,7 +14,7 @@ const getWorkouts = (req, res, next, db) => {
 const getWorkoutsForUser = (req, res, next, db) => {
   db
     .any(
-      'SELECT id, title, date FROM workouts WHERE userId = $1 ORDER BY date DESC',
+      'SELECT id, title, date, difficulty FROM workouts WHERE userId = $1 ORDER BY date DESC',
       [req.user.id]
     )
     .then(function(data) {
@@ -25,14 +25,28 @@ const getWorkoutsForUser = (req, res, next, db) => {
     });
 };
 
-const getWorkoutsForUserLegacy = (req, res, next, db) => {
+const setDifficulty = (req, res, next, db) => {
   db
-    .any(
-      'SELECT id, title, date FROM workouts WHERE userId = $1 ORDER BY date DESC',
-      [req.body.id]
-    )
-    .then(function(data) {
-      res.json(data);
+    .any('UPDATE workouts SET difficulty = $1 WHERE id = $2', [
+      req.body.level,
+      req.params.id
+    ])
+    .then(function() {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
+const saveNotes = (req, res, next, db) => {
+  db
+    .any('UPDATE workouts SET notes = $1 WHERE id = $2', [
+      req.body.notes,
+      req.params.id
+    ])
+    .then(function() {
+      res.sendStatus(200);
     })
     .catch(function(err) {
       return next(err);
@@ -48,7 +62,9 @@ const getWorkoutWithId = (req, res, next, db) => {
         workouts.title AS workout_title,
         date, exercises.id AS exercise_id,
         exercise_types.name AS exercise_title,
-        exercise_types.id AS exercise_type_id
+        exercise_types.id AS exercise_type_id,
+        difficulty,
+        notes
       FROM workouts, exercises, exercise_types
       WHERE workouts.id = $1
         AND workouts.id = exercises.workout
@@ -65,7 +81,9 @@ const getWorkoutWithId = (req, res, next, db) => {
             SELECT
               workouts.id AS workout_id,
               workouts.title AS workout_title,
-              date
+              date,
+              difficulty,
+              notes
             FROM workouts
             WHERE workouts.id = $1`,
             [req.params.id]
@@ -109,34 +127,10 @@ const addWorkout = (req, res, next, db) => {
     ' ' +
     date.toString().substring(16, 24);
   const title = 'Workout ' + date.getDate() + ' ' + months[date.getMonth()];
-  db
-    .any('INSERT INTO workouts(title, date, userId) VALUES($1, $2, $3)', [
-      title,
-      readableDate,
-      req.body.id
-    ])
-    .then(function() {
-      db
-        .any('SELECT id, title, date FROM workouts ORDER BY id DESC LIMIT 1')
-        .then(function(data) {
-          res.status(200).json(data);
-        });
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
 
-const addWorkoutFromSchedule = (req, res, next, db) => {
-  const date = new Date();
-  const readableDate =
-    date.toISOString().substring(0, 10) +
-    ' ' +
-    date.toString().substring(16, 24);
-  const title = 'Workout ' + date.getDate() + ' ' + months[date.getMonth()];
   db
     .any(
-      'INSERT INTO workouts(title, date, userId) VALUES($1, $2, $3) RETURNING id, title, date',
+      "INSERT INTO workouts(title, date, userId, difficulty, notes) VALUES($1, $2, $3, 3, '') RETURNING id, title, date",
       [title, readableDate, req.user.id]
     )
     .then(function(data) {
@@ -185,19 +179,12 @@ const addWorkoutFromSchedule = (req, res, next, db) => {
 
 const deleteWorkout = (req, res, next, db) => {
   db
-    .any(
-      'SELECT exercises.id AS id FROM workouts, users, exercises WHERE workouts.userId = $1 AND users.token = $2 AND workouts.id = $3 AND exercises.workout = $3',
-      [req.body.id, req.body.token, req.params.id]
-    )
-    .then(function(data) {
-      db
-        .any('DELETE FROM workouts WHERE id = $1', [req.params.id])
-        .then(function() {
-          res.status(200).json({ success: true });
-        });
-    })
-    .catch(function(err) {
-      return next(err);
+    .any('DELETE FROM workouts WHERE id = $1 AND userid = $2', [
+      req.params.id,
+      req.user.id
+    ])
+    .then(function() {
+      res.status(200).json({ success: true });
     });
 };
 
@@ -242,41 +229,27 @@ const addExerciseToWorkout = (req, res, next, db) => {
 };
 
 const addSetToExercise = (req, res, next, db) => {
-  const { userId, token, reps, weight } = req.body;
+  const { reps, weight } = req.body;
   const { id } = req.params;
 
   db
-    .any('INSERT INTO sets(exercise, reps, weight) VALUES($1, $2, $3)', [
-      Number(id),
-      Number(reps),
-      Number(weight)
-    ])
+    .any(
+      'INSERT INTO sets(exercise, reps, weight) VALUES($1, $2, $3) RETURNING id',
+      [Number(id), Number(reps), Number(weight)]
+    )
     .then(function(data) {
-      db
-        .any(
-          `SELECT id
-            FROM sets
-            ORDER BY id DESC
-            LIMIT 1
-          `
-        )
-        .then(function(data) {
-          res.status(200).json(data);
-        });
-    })
-    .catch(function(err) {
-      return next(err);
+      res.status(200).json(data);
     });
 };
 
 module.exports = {
   getWorkouts,
   getWorkoutsForUser,
-  getWorkoutsForUserLegacy,
   getWorkoutWithId,
+  setDifficulty,
+  saveNotes,
   getSetsForExercise,
   addWorkout,
-  addWorkoutFromSchedule,
   deleteWorkout,
   editWorkout,
   addExerciseToWorkout,

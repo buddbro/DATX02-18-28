@@ -142,7 +142,6 @@ const reset = (db, req, res, next) => {
   db
     .any(resetQuery)
     .then(function(data) {
-      console.log(data);
       res.status(200).json({ success: true });
     })
     .catch(function(err) {
