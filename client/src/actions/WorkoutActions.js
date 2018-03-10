@@ -34,6 +34,7 @@ export function chooseWorkout(id) {
           //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
           //   .then(({ data }) => {
           //     const sets = data;
+          console.log(data[0]);
           dispatch({
             type: CHOOSE_WORKOUT,
             payload: { exercises, sets, difficulty: data[0].difficulty }

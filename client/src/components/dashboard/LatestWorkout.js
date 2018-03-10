@@ -11,14 +11,9 @@ import {
 import ExerciseCard from '../exercise/ExerciseCard';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
-import Rating from 'react-native-rating';
 import { chooseWorkout } from '../../actions';
 import LatestExercise from './LatestExercise';
-
-const images = {
-  flexFilled: require('../../../assets/flex_full.png'),
-  flexUnfilled: require('../../../assets/flex_empty.png')
-};
+import RatingWrapper from './RatingWrapper';
 
 class LatestWorkout extends React.Component {
   constructor(props) {
@@ -69,21 +64,13 @@ class LatestWorkout extends React.Component {
             }}
           />
 
-          <View style={styles.difficultyStyle}>
-            <Text style={styles.workoutTraitText}>Difficulty</Text>
-            <Rating
-              selectedStar={images.flexFilled}
-              unselectedStar={images.flexUnfilled}
-              initial={4}
-              editable={false}
-              stagger={80}
-              maxScale={1.4}
-              starStyle={{
-                width: 30,
-                height: 30
-              }}
-            />
-          </View>
+          {this.props.difficulty
+            ? <View style={styles.difficultyStyle}>
+                <Text style={styles.workoutTraitText}>Difficulty</Text>
+                <RatingWrapper rating={this.props.difficulty} />
+              </View>
+            : null}
+
           <TouchableOpacity
             style={styles.continueButton}
             onPress={() => {

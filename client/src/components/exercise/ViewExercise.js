@@ -103,6 +103,7 @@ class ViewExercise extends React.Component {
             style={{ flex: 1 }}
             onPress={() => {
               this.props.clearExercise();
+              this.setState({ reps: '', sets: '' });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
@@ -122,30 +123,13 @@ class ViewExercise extends React.Component {
           </View>
         </View>
         <ScrollView>
-          <View
-            style={{ backgroundColor: '#fff', margin: 10, borderRadius: 3 }}
-          >
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                backgroundColor: '#6669cb',
-                borderTopLeftRadius: 5,
-                borderTopRightRadius: 5,
-                marginLeft: 8,
-                marginRight: 8
-              }}
-            >
+          <View style={styles.setsContainer}>
+            <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  #
-                </Text>
+                <Text style={styles.setNumber}>#</Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={styles.sets}>
                 <Text
                   style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
                 >
@@ -153,7 +137,7 @@ class ViewExercise extends React.Component {
                 </Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={styles.reps}>
                 <Text
                   style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
                 >
@@ -298,6 +282,32 @@ const styles = StyleSheet.create({
     color: '#6669cb',
     fontSize: 32,
     fontWeight: 'bold'
+  },
+  setsContainer: {
+    backgroundColor: '#fff',
+    margin: 10,
+    borderRadius: 3
+  },
+  singleSetContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#6669cb',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginLeft: 8,
+    marginRight: 8
+  },
+  setNumber: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#fff'
+  },
+  sets: {
+    width: '40%'
+  },
+  reps: {
+    width: '40%'
   },
   instructions: {
     fontWeight: '200',

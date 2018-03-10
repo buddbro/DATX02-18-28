@@ -80,6 +80,10 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
+    if (!this.props.difficulty) {
+      return <View />;
+    }
+
     return (
       <KeyboardAwareScrollView
         style={{ backgroundColor: '#fff' }}

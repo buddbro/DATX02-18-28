@@ -67,9 +67,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
-      months[date.getMonth()]
-    }`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
+      date.getMonth()
+    ]}`;
   }
 
   render() {
@@ -90,19 +90,11 @@ class Dashboard extends React.Component {
               marginTop: 20
             }}
           >
-            <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
+            <Text style={styles.today}>
               {this.renderToday()}
             </Text>
           </View>
-          <View
-            style={{
-              marginTop: 30,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around'
-            }}
-          >
+          <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
 
             <TouchableOpacity
@@ -111,8 +103,7 @@ class Dashboard extends React.Component {
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'WorkoutHistory'
                   })
-                )
-              }
+                )}
               style={styles.addWorkout}
             >
               <Text style={styles.menuItem}>History</Text>
@@ -201,6 +192,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column'
+  },
+  today: {
+    fontSize: 26,
+    color: '#444',
+    fontWeight: '200'
+  },
+  latestWorkout: {
+    marginTop: 30,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   addWorkout: {
     flexDirection: 'row',
