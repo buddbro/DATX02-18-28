@@ -126,55 +126,73 @@ const addWorkout = (req, res, next, db) => {
     date.toISOString().substring(0, 10) +
     ' ' +
     date.toString().substring(16, 24);
-  const title = 'Workout ' + date.getDate() + ' ' + months[date.getMonth()];
 
-  db
-    .any(
-      "INSERT INTO workouts(title, date, userId, difficulty, notes) VALUES($1, $2, $3, 3, '') RETURNING id, title, date",
-      [title, readableDate, req.user.id]
-    )
-    .then(function(data) {
-      const { id, title, date } = data[0];
+  const titleGenerator = () => {
+    return new Promise((resolve, reject) => {
       if (req.body.schedule === 0) {
-        res.json({ id, title, date });
+        resolve('Workout ' + date.getDate() + ' ' + months[date.getMonth()]);
       } else {
         db
-          .any(
-            'SELECT exercise_id FROM schedules_exercises WHERE schedule_id = $1',
-            [req.body.schedule]
-          )
+          .any('SELECT title FROM schedules WHERE id = $1', [req.body.schedule])
           .then(function(data) {
-            const exercises = data.reduce((acc, next) => {
-              return [...acc, next.exercise_id, id];
-            }, []);
-
-            const workouts = data.reduce((acc, next) => {
-              return [...acc, id];
-            }, []);
-
-            const values = workouts
-              .reduce(
-                (acc, next) => {
-                  return { q: `${acc.q}, ($${acc.i++},$${acc.i++})`, i: acc.i };
-                },
-                { q: '', i: 1 }
-              )
-              .q.substring(2);
-
-            db
-              .any(
-                `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
-                exercises
-              )
-              .then(function(data) {
-                res.json({ id, title, date });
-              });
+            resolve(data[0].title);
           });
       }
-    })
-    .catch(function(err) {
-      return next(err);
     });
+  };
+
+  titleGenerator().then(title => {
+    db
+      .any(
+        "INSERT INTO workouts(title, date, userId, difficulty, notes) VALUES($1, $2, $3, 3, '') RETURNING id, title, date",
+        [title, readableDate, req.user.id]
+      )
+      .then(function(data) {
+        const { id, title, date } = data[0];
+        if (req.body.schedule === 0) {
+          res.json({ id, title, date });
+        } else {
+          db
+            .any(
+              'SELECT exercise_id FROM schedules_exercises WHERE schedule_id = $1',
+              [req.body.schedule]
+            )
+            .then(function(data) {
+              const exercises = data.reduce((acc, next) => {
+                return [...acc, next.exercise_id, id];
+              }, []);
+
+              const workouts = data.reduce((acc, next) => {
+                return [...acc, id];
+              }, []);
+
+              const values = workouts
+                .reduce(
+                  (acc, next) => {
+                    return {
+                      q: `${acc.q}, ($${acc.i++},$${acc.i++})`,
+                      i: acc.i
+                    };
+                  },
+                  { q: '', i: 1 }
+                )
+                .q.substring(2);
+
+              db
+                .any(
+                  `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
+                  exercises
+                )
+                .then(function(data) {
+                  res.json({ id, title, date });
+                });
+            });
+        }
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+  });
 };
 
 const deleteWorkout = (req, res, next, db) => {
