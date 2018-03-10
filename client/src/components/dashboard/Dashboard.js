@@ -23,6 +23,11 @@ class Dashboard extends React.Component {
     this.state = { addWorkoutVisible: false };
   }
 
+  hideModal() {
+    console.log('hide moda');
+    this.setState({ addWorkoutVisible: false });
+  }
+
   renderPopup() {
     if (this.state.addWorkoutVisible) {
       return (
@@ -35,13 +40,17 @@ class Dashboard extends React.Component {
             }}
             style={styles.popupBackground}
           />
-          <AddWorkout navigation={this.props.navigation} />
+          <AddWorkout
+            navigation={this.props.navigation}
+            hideModal={this.hideModal.bind(this)}
+          />
         </View>
       );
     }
   }
   renderToday() {
     const weekdays = [
+      null,
       'Monday',
       'Tuesday',
       'Wednesday',
@@ -169,7 +178,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    backgroundColor: '#53F2D3',
+    backgroundColor: '#7ad9c6',
     zIndex: 101
   },
   popupContainer: {

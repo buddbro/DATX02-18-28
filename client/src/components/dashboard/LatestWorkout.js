@@ -31,7 +31,6 @@ class LatestWorkout extends React.Component {
       this.props.chooseWorkout(nextProps.latestWorkout.id);
       this.setState({ loading: false });
     }
-    console.log(nextProps);
   }
 
   toggleAccordion() {

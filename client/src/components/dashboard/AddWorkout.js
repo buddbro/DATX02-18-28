@@ -33,6 +33,7 @@ class AddWorkout extends React.Component {
     return Object.keys(this.props.schedules.list).map(schedule =>
       <TouchableOpacity
         onPress={() => {
+          this.props.hideModal();
           this.setState({ waitForWorkout: true });
           this.props.addWorkout(schedule);
         }}
@@ -53,6 +54,7 @@ class AddWorkout extends React.Component {
         <ScrollView style={styles.scrollcontainer}>
           <TouchableOpacity
             onPress={() => {
+              this.props.hideModal();
               this.setState({ waitForWorkout: true });
               this.props.addWorkout(0);
             }}

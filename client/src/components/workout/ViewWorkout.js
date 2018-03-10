@@ -109,7 +109,7 @@ class ViewWorkout extends React.Component {
           >
             <Image
               source={require('../../../assets/back_arrow_black.png')}
-              style={{ width: 35, height: 35 }}
+              style={styles.back}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -117,7 +117,7 @@ class ViewWorkout extends React.Component {
               this.deleteWorkout();
             }}
           >
-            <Text style={{ fontSize: 20, color: '#d33' }}>Delete</Text>
+            <Text style={styles.delete}>Delete</Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
@@ -134,27 +134,11 @@ class ViewWorkout extends React.Component {
               spellCheck={false}
               value={this.state.title}
             />
-            <Text
-              style={{
-                marginLeft: 15,
-                marginTop: 8,
-                marginBottom: 15,
-                color: '#7B7B7B',
-                fontSize: 18,
-                fontWeight: '200',
-                alignSelf: 'center'
-              }}
-            >
+            <Text style={styles.workoutDate}>
               {this.props.date.substring(0, 16)}
             </Text>
           </View>
-          <View
-            style={{
-              backgroundColor: '#7ad9c6',
-              margin: 10,
-              borderRadius: 3
-            }}
-          >
+          <View style={styles.exercisesContainer}>
             <Text style={styles.exercisesTitle}>Exercises</Text>
             <FlatList
               style={styles.exerciseListStyle}
@@ -172,16 +156,7 @@ class ViewWorkout extends React.Component {
               }}
             />
             <View style={styles.category}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: 'white',
-                  marginBottom: 15,
-                  marginLeft: 10
-                }}
-              >
-                Categories
-              </Text>
+              <Text style={styles.categoriesText}>Categories</Text>
             </View>
           </View>
           <View style={styles.difficulty}>
@@ -199,8 +174,8 @@ class ViewWorkout extends React.Component {
                   justifyContent: 'space-between'
                 }}
               >
-                <Text style={{ color: '#8b8ddf' }}>No Sweat</Text>
-                <Text style={{ color: '#8b8ddf' }}>Hellish</Text>
+                <Text style={styles.difficultyText}>No Sweat</Text>
+                <Text style={styles.difficultyText}>Hellish</Text>
               </View>
             </View>
           </View>
@@ -242,8 +217,6 @@ class ViewWorkout extends React.Component {
 
 const mapStateToProps = ({ workout, user }) => {
   const { id, title, date, difficulty, notes } = workout;
-  console.log('workout');
-  console.log(workout);
   return {
     id,
     title,
@@ -282,6 +255,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
     justifyContent: 'space-between'
   },
+  back: {
+    width: 35,
+    height: 35
+  },
+  delete: {
+    fontSize: 20,
+    color: '#d33'
+  },
   nameTextStyle: {
     margin: 25,
     fontSize: 32,
@@ -293,6 +274,12 @@ const styles = StyleSheet.create({
     color: '#8b8ddf',
     fontSize: 24,
     fontWeight: 'bold'
+  },
+  categoriesText: {
+    fontSize: 18,
+    color: 'white',
+    marginBottom: 15,
+    marginLeft: 10
   },
   addExerciseItem: {
     alignItems: 'center',
@@ -315,6 +302,20 @@ const styles = StyleSheet.create({
     padding: 3,
     textAlign: 'center'
   },
+  workoutDate: {
+    marginLeft: 15,
+    marginTop: 8,
+    marginBottom: 15,
+    color: '#7B7B7B',
+    fontSize: 18,
+    fontWeight: '200',
+    alignSelf: 'center'
+  },
+  exercisesContainer: {
+    backgroundColor: '#7ad9c6',
+    margin: 10,
+    borderRadius: 3
+  },
   exercisesTitle: {
     textAlign: 'center',
     color: '#fff',
@@ -331,6 +332,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   ratingStyle: {},
+  difficultyText: {
+    color: '#8b8ddf'
+  },
   notes: {
     height: 80,
     padding: 3,
