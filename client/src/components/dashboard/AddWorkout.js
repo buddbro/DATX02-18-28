@@ -30,7 +30,7 @@ class AddWorkout extends React.Component {
   }
 
   renderSchedules() {
-    return Object.keys(this.props.schedules.list).map(schedule => (
+    return Object.keys(this.props.schedules.list).map(schedule =>
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
@@ -44,7 +44,7 @@ class AddWorkout extends React.Component {
           </Text>
         </View>
       </TouchableOpacity>
-    ));
+    );
   }
 
   renderAddMenu() {

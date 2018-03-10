@@ -1,11 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Easing } from 'react-native';
 import Rating from 'react-native-rating';
 
 const images = {
   flexFilled: require('../../../assets/flex_full.png'),
   flexUnfilled: require('../../../assets/flex_empty.png')
 };
+
+const ANIMATION_DURATION = 350;
 
 // This is a wrapper component around react-native-rating.
 // Solves the problem that the initial state of the rating can't be
@@ -35,6 +37,15 @@ class RatingWrapper extends React.Component {
     }
   }
 
+  onChange(level) {
+    if (this.props.onChange) {
+      setTimeout(
+        () => this.props.onChange(this.props.id, level),
+        ANIMATION_DURATION
+      );
+    }
+  }
+
   render() {
     if (this.state.update) {
       return <View />;
@@ -45,12 +56,17 @@ class RatingWrapper extends React.Component {
         selectedStar={images.flexFilled}
         unselectedStar={images.flexUnfilled}
         initial={this.props.rating}
-        editable={false}
+        onChange={level => this.onChange(level)}
+        editable={this.props.editable}
         stagger={80}
         maxScale={1.4}
+        config={{
+          easing: Easing.inOut(Easing.ease),
+          duration: ANIMATION_DURATION
+        }}
         starStyle={{
-          width: 30,
-          height: 30
+          width: 40,
+          height: 40
         }}
       />
     );

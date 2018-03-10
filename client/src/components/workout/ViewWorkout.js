@@ -29,6 +29,7 @@ import {
 } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
+import RatingWrapper from '../utilities/RatingWrapper';
 
 const { height, width } = Dimensions.get('window');
 const images = {
@@ -184,22 +185,11 @@ class ViewWorkout extends React.Component {
           <View style={styles.difficulty}>
             <Text style={styles.traitText}>Difficulty</Text>
             <View style={styles.ratingStyle}>
-              <Rating
-                selectedStar={images.flexFilled}
-                unselectedStar={images.flexUnfilled}
-                initial={this.props.difficulty}
-                onChange={level =>
-                  this.props.setDifficulty(this.props.id, level)}
-                config={{
-                  easing: Easing.inOut(Easing.ease),
-                  duration: 350
-                }}
-                stagger={80}
-                maxScale={1.4}
-                starStyle={{
-                  width: 40,
-                  height: 40
-                }}
+              <RatingWrapper
+                rating={this.props.difficulty}
+                editable
+                id={this.props.id}
+                onChange={this.props.setDifficulty.bind(this)}
               />
               <View
                 style={{
@@ -254,12 +244,13 @@ class ViewWorkout extends React.Component {
 }
 
 const mapStateToProps = ({ workout, user }) => {
-  const { id, title, date, difficulty } = workout;
+  const { id, title, date, difficulty, notes } = workout;
   return {
     id,
     title,
     date,
     difficulty,
+    notes,
     exercises: workout.exercises,
     user: {
       id: user.id,

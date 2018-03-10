@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { chooseWorkout } from '../../actions';
 import LatestExercise from './LatestExercise';
-import RatingWrapper from './RatingWrapper';
+import RatingWrapper from '../utilities/RatingWrapper';
 
 class LatestWorkout extends React.Component {
   constructor(props) {
@@ -31,6 +31,7 @@ class LatestWorkout extends React.Component {
       this.props.chooseWorkout(nextProps.latestWorkout.id);
       this.setState({ loading: false });
     }
+    console.log(nextProps);
   }
 
   toggleAccordion() {
@@ -64,10 +65,13 @@ class LatestWorkout extends React.Component {
             }}
           />
 
-          {this.props.difficulty
+          {this.props.latestWorkout.difficulty
             ? <View style={styles.difficultyStyle}>
                 <Text style={styles.workoutTraitText}>Difficulty</Text>
-                <RatingWrapper rating={this.props.difficulty} />
+                <RatingWrapper
+                  rating={this.props.latestWorkout.difficulty}
+                  editable={false}
+                />
               </View>
             : null}
 
@@ -106,13 +110,11 @@ class LatestWorkout extends React.Component {
   }
 }
 const mapStateToProps = ({ workout }) => {
-  //const latestWorkout = workout.workouts[workout.workouts.length - 1];
   const latestWorkout = workout.workouts[0];
-  const { exercises, difficulty } = workout;
+  const { exercises } = workout;
   return {
     latestWorkout,
-    exercises,
-    difficulty
+    exercises
   };
 };
 
