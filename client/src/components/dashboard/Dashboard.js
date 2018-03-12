@@ -24,7 +24,6 @@ class Dashboard extends React.Component {
   }
 
   hideModal() {
-    console.log('hide moda');
     this.setState({ addWorkoutVisible: false });
   }
 
@@ -50,14 +49,13 @@ class Dashboard extends React.Component {
   }
   renderToday() {
     const weekdays = [
-      null,
+      'Sunday',
       'Monday',
       'Tuesday',
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday',
-      'Sunday'
+      'Saturday'
     ];
 
     const months = [
