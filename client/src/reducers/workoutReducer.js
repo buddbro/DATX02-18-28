@@ -87,6 +87,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
+      const { id, title, date, difficulty, start } = action.payload;
+
       return {
         ...state,
         id: action.payload.id,
@@ -95,25 +97,13 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: [],
         workouts: [
           {
-            id: action.payload.id,
-            title: action.payload.title,
-            date: action.payload.date
-          },
-          ...state.workouts
-        ]
-      };
-    case ADD_WORKOUT_FROM_SCHEDULE:
-      return {
-        ...state,
-        id: action.payload.id,
-        title: action.payload.title,
-        date: action.payload.date,
-        exercises: [],
-        workouts: [
-          {
-            id: action.payload.id,
-            title: action.payload.title,
-            date: action.payload.date
+            id,
+            title,
+            date,
+            difficulty,
+            notes: '',
+            start,
+            stop: ''
           },
           ...state.workouts
         ]
@@ -140,9 +130,19 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exerciseLoading: true
       };
     case EDIT_WORKOUT:
+      const editWorkouts = [];
+      state.workouts.forEach(workout => {
+        editWorkouts.push(workout);
+        if (state.id === workout.id) {
+          workout.title = action.payload.title;
+          workout.start = action.payload.start;
+          workout.stop = action.payload.stop;
+        }
+      });
+
       return {
         ...state,
-        title: action.payload.title
+        workouts: editWorkouts
       };
     case FETCH_WORKOUTS:
       return { ...state, workouts: action.payload };

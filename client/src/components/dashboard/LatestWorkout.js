@@ -110,7 +110,6 @@ class LatestWorkout extends React.Component {
 }
 const mapStateToProps = ({ workout }) => {
   const latestWorkout = workout.workouts[0];
-  console.log('latestWorkout', latestWorkout);
   const { exercises } = workout;
   return {
     latestWorkout,

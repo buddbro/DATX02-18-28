@@ -1,6 +1,5 @@
 import {
   ADD_WORKOUT,
-  ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
@@ -70,21 +69,17 @@ export function fetchWorkouts() {
   };
 }
 
-export function editWorkout(id, title) {
+export function editWorkout(id, properties) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
-        .patch(
-          `https://getpushapp.com/api/workouts/${id}`,
-          { title },
-          {
-            headers: { Authorization: `Bearer ${jwt}` }
-          }
-        )
+        .patch(`https://getpushapp.com/api/workouts/${id}`, properties, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
         .then(({ data }) => {
           dispatch({
             type: EDIT_WORKOUT,
-            payload: { title }
+            payload: properties
           });
         });
     });
@@ -103,10 +98,10 @@ export function addWorkout(schedule) {
           }
         )
         .then(({ data }) => {
-          const { id, title, date } = data;
+          const { id, title, date, difficulty, notes, start } = data;
           dispatch({
-            type: ADD_WORKOUT_FROM_SCHEDULE,
-            payload: { id, title, date }
+            type: ADD_WORKOUT,
+            payload: { id, title, date, difficulty, notes, start }
           });
         });
     });
@@ -231,7 +226,6 @@ export function setDifficulty(id, level) {
 }
 
 export function saveNotes(id, notes) {
-  console.log(id, notes);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

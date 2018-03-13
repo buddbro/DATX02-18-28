@@ -13,7 +13,9 @@ import {
   ListItem,
   FlatList,
   Image,
-  Easing
+  DatePickerAndroid,
+  DatePickerIOS,
+  Platform
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
@@ -42,14 +44,26 @@ class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: '', notes: '' };
+    this.state = {
+      initiated: false,
+      title: '',
+      notes: '',
+      start: '--:--',
+      stop: '--;--',
+      timePicker: ''
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      title: nextProps.workout.title,
-      notes: nextProps.workout.notes
-    });
+    if (!this.state.initiated) {
+      this.setState({
+        initiated: true,
+        title: nextProps.workout.title,
+        notes: nextProps.workout.notes,
+        start: nextProps.workout.start || '--:--',
+        stop: nextProps.workout.stop || '--:--'
+      });
+    }
   }
 
   deleteWorkout() {
@@ -79,7 +93,63 @@ class ViewWorkout extends React.Component {
   }
 
   saveWorkout() {
-    this.props.editWorkout(this.props.id, this.state.title);
+    const { title } = this.state;
+    const start = new Date(
+      `${this.props.workout.date.substring(0, 10)}T${this.state.start}:00`
+    );
+    const stop =
+      this.state.stop !== '--:--'
+        ? new Date(
+            `${this.props.workout.date.substring(0, 10)}T${this.state.stop}:00`
+          )
+        : null;
+
+    this.props.editWorkout(this.props.id, { title, start, stop });
+  }
+
+  setStartTime(time) {
+    this.setState({ start: time.toString().substring(16, 21) });
+  }
+
+  setStopTime(time) {
+    this.setState({ stop: time.toString().substring(16, 21) });
+  }
+
+  renderTimePicker() {
+    if (this.state.timePicker) {
+      if (Platform.OS === 'ios') {
+        const callback =
+          this.state.timePicker === 'start'
+            ? this.setStartTime
+            : this.setStopTime;
+
+        const currentDate =
+          this.state.timePicker === 'start'
+            ? this.state.start
+            : this.state.stop;
+
+        return (
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({
+                  timePicker: ''
+                });
+                this.saveWorkout();
+              }}
+              style={styles.saveDateButton}
+            >
+              <Text style={styles.saveDateButtonText}>Save</Text>
+            </TouchableOpacity>
+            <DatePickerIOS
+              mode="time"
+              date={new Date(`2000-01-01T${currentDate}:00`)}
+              onDateChange={callback.bind(this)}
+            />
+          </View>
+        );
+      }
+    }
   }
 
   render() {
@@ -99,6 +169,12 @@ class ViewWorkout extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.saveWorkout();
+              this.setState({
+                initiated: false,
+                title: '',
+                start: '',
+                stop: ''
+              });
               this.props.fetchWorkouts();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
@@ -136,8 +212,36 @@ class ViewWorkout extends React.Component {
             />
             <View>
               <Text style={styles.workoutDate}>
-                {this.props.workout.date.substring(0, 16)}
+                {this.props.workout.date.substring(0, 10)}
               </Text>
+            </View>
+            <View style={styles.timeContainer}>
+              <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      timePicker: 'start'
+                    })}
+                >
+                  <Text style={styles.workoutTimeTitle}>Start Time</Text>
+                  <Text style={styles.workoutTime}>
+                    {this.state.start}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      timePicker: 'stop'
+                    })}
+                >
+                  <Text style={styles.workoutTimeTitle}>End Time</Text>
+                  <Text style={styles.workoutTime}>
+                    {this.state.stop}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           <View style={styles.exercisesContainer}>
@@ -212,6 +316,7 @@ class ViewWorkout extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
+        {this.renderTimePicker()}
       </KeyboardAwareScrollView>
     );
   }
@@ -287,6 +392,20 @@ const styles = StyleSheet.create({
     borderColor: '#8b8ddf',
     marginBottom: 15
   },
+  saveDateButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#8b8ddf',
+    marginBottom: 15
+  },
+  saveDateButtonText: {
+    color: '#8b8ddf',
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
   exerciseListStyle: {},
   inputField: {
     height: 70,
@@ -302,10 +421,28 @@ const styles = StyleSheet.create({
   workoutDate: {
     marginLeft: 15,
     marginTop: 8,
-    marginBottom: 15,
+    color: '#7B7B7B',
+    fontSize: 32,
+    fontWeight: '200',
+    alignSelf: 'center'
+  },
+  timeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  workoutTimeTitle: {
+    marginTop: 8,
     color: '#7B7B7B',
     fontSize: 18,
     fontWeight: '200',
+    alignSelf: 'center'
+  },
+  workoutTime: {
+    marginTop: 8,
+    color: '#7B7B7B',
+    fontSize: 24,
+    fontWeight: '600',
     alignSelf: 'center'
   },
   exercisesContainer: {
