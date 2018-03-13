@@ -231,6 +231,7 @@ export function setDifficulty(id, level) {
 }
 
 export function saveNotes(id, notes) {
+  console.log(id, notes);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

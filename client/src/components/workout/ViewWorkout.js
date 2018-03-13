@@ -42,13 +42,13 @@ class ViewWorkout extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { title: '', notes: 'hej' };
+    this.state = { title: '', notes: '' };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      title: nextProps.title,
-      notes: nextProps.notes
+      title: nextProps.workout.title,
+      notes: nextProps.workout.notes
     });
   }
 
@@ -83,7 +83,7 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    if (!this.props.difficulty) {
+    if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
 
@@ -98,8 +98,8 @@ class ViewWorkout extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
-              // this.props.clearWorkout();
               this.saveWorkout();
+              this.props.fetchWorkouts();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Dashboard'
@@ -134,9 +134,11 @@ class ViewWorkout extends React.Component {
               spellCheck={false}
               value={this.state.title}
             />
-            <Text style={styles.workoutDate}>
-              {this.props.date.substring(0, 16)}
-            </Text>
+            <View>
+              <Text style={styles.workoutDate}>
+                {this.props.workout.date.substring(0, 16)}
+              </Text>
+            </View>
           </View>
           <View style={styles.exercisesContainer}>
             <Text style={styles.exercisesTitle}>Exercises</Text>
@@ -163,7 +165,7 @@ class ViewWorkout extends React.Component {
             <Text style={styles.traitText}>Difficulty</Text>
             <View style={styles.ratingStyle}>
               <RatingWrapper
-                rating={this.props.difficulty}
+                rating={this.props.workout.difficulty}
                 editable
                 id={this.props.id}
                 onChange={this.props.setDifficulty.bind(this)}
@@ -215,19 +217,14 @@ class ViewWorkout extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user }) => {
-  const { id, title, date, difficulty, notes } = workout;
+const mapStateToProps = props => {
+  const { id, workouts, exercises } = props.workout;
+  const workout = workouts.filter(w => w.id === id)[0];
+
   return {
     id,
-    title,
-    date,
-    difficulty,
-    notes,
-    exercises: workout.exercises,
-    user: {
-      id: user.id,
-      token: user.token
-    }
+    workout,
+    exercises
   };
 };
 

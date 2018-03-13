@@ -17,17 +17,13 @@ import {
 
 const INITIAL_STATE = {
   id: -1,
-  title: '',
-  date: '',
   workouts: [],
   exercises: [],
   sets: [],
   visibleExerciseId: -1,
   visibleExercise: '',
   visibleSet: -1,
-  exerciseLoading: true,
-  difficulty: 0,
-  notes: ''
+  exerciseLoading: true
 };
 
 export default function workoutReducer(state = INITIAL_STATE, action) {
@@ -83,21 +79,12 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-      const {
-        workout_id,
-        workout_title,
-        date,
-        notes
-      } = action.payload.exercises[0];
+      const { workout_id } = action.payload.exercises[0];
 
       return {
         ...state,
         id: workout_id,
-        title: workout_title,
-        date,
-        exercises: exercises[0].id ? exercises : [],
-        difficulty: action.payload.difficulty,
-        notes
+        exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
       return {
@@ -158,10 +145,16 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         title: action.payload.title
       };
     case FETCH_WORKOUTS:
-      const workouts = action.payload;
-      return { ...state, workouts };
+      return { ...state, workouts: action.payload };
     case SET_DIFFICULTY:
-      return { ...state, difficulty: action.payload };
+      const setDifficultyWorkouts = [];
+      state.workouts.forEach(workout => {
+        setDifficultyWorkouts.push(workout);
+        if (state.id === workout.id) {
+          workout.difficulty = action.payload;
+        }
+      });
+      return { ...state, workouts: setDifficultyWorkouts };
     default:
       return state;
   }

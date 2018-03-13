@@ -102,7 +102,7 @@ class ProfileHeader extends React.Component {
                 style={{ width: 35, height: 35, marginTop: 0, opacity: 0 }}
               />
             </TouchableOpacity>
-            {/*<TouchableOpacity
+            <TouchableOpacity
               style={{
                 marginRight: 10
               }}
@@ -119,7 +119,7 @@ class ProfileHeader extends React.Component {
                 source={require('../../../assets/exit.png')}
                 style={{ width: 35, height: 35, marginTop: 20 }}
               />
-          </TouchableOpacity>*/}
+            </TouchableOpacity>
           </View>
           <View
             style={{
