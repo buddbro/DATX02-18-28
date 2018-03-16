@@ -111,9 +111,9 @@ class Dashboard extends React.Component {
                     routeName: 'WorkoutHistory'
                   })
                 )}
-              style={styles.addWorkout}
+              style={styles.menuItem}
             >
-              <Text style={styles.menuItem}>History</Text>
+              <Text style={styles.menuItemText}>History</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -123,9 +123,21 @@ class Dashboard extends React.Component {
                   })
                 );
               }}
-              style={styles.addWorkout}
+              style={styles.menuItem}
             >
-              <Text style={styles.menuItem}>Workouts</Text>
+              <Text style={styles.menuItemText}>Workouts</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'Achievements'
+                  })
+                );
+              }}
+              style={styles.menuItem}
+            >
+              <Text style={styles.menuItemText}>Achievements</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -212,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around'
   },
-  addWorkout: {
+  menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -222,7 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginBottom: 10
   },
-  menuItem: {
+  menuItemText: {
     color: '#b9baf1',
     fontSize: 32,
     fontWeight: 'bold',

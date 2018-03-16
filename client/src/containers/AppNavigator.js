@@ -8,6 +8,8 @@ import WorkoutHistory from '../components/workout/WorkoutHistory';
 import ViewWorkout from '../components/workout/ViewWorkout';
 import ViewExercise from '../components/exercise/ViewExercise';
 
+import Achievements from '../components/achievements/Achievements';
+
 import LoginUser from '../components/login/existing/LoginUser';
 import ForgotPassword from '../components/login/existing/ForgotPassword';
 import CreateAccount from '../components/login/create/CreateAccount';
@@ -34,6 +36,12 @@ const AppRouteConfigs = {
   },
   Dashboard: {
     screen: Dashboard,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  Achievements: {
+    screen: Achievements,
     navigationOptions: {
       tabBarVisible: false
     }
