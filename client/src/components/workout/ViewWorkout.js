@@ -203,7 +203,6 @@ class ViewWorkout extends React.Component {
               onChangeText={title => this.setState({ title })}
               onEndEditing={() => {
                 this.saveWorkout();
-                this.props.fetchWorkouts();
               }}
               returnKeyLabel="Save"
               clearButtonMode="while-editing"
