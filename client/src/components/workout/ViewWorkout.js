@@ -116,17 +116,15 @@ class ViewWorkout extends React.Component {
   }
 
   renderTimePicker() {
-    if (this.state.timePicker) {
+    const { timePicker } = this.state;
+
+    if (timePicker) {
       if (Platform.OS === 'ios') {
         const callback =
-          this.state.timePicker === 'start'
-            ? this.setStartTime
-            : this.setStopTime;
+          timePicker === 'start' ? this.setStartTime : this.setStopTime;
 
         const currentDate =
-          this.state.timePicker === 'start'
-            ? this.state.start
-            : this.state.stop;
+          timePicker === 'start' ? this.state.start : this.state.stop;
 
         return (
           <View>
@@ -142,6 +140,16 @@ class ViewWorkout extends React.Component {
               <Text style={styles.saveDateButtonText}>Save</Text>
             </TouchableOpacity>
             <DatePickerIOS
+              minimumDate={
+                timePicker === 'stop'
+                  ? new Date(`2000-01-01T${this.state.start}:00`)
+                  : null
+              }
+              maximumDate={
+                timePicker === 'start'
+                  ? new Date(`2000-01-01T${this.state.stop}:00`)
+                  : null
+              }
               mode="time"
               date={new Date(`2000-01-01T${currentDate}:00`)}
               onDateChange={callback.bind(this)}
