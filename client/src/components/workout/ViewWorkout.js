@@ -33,6 +33,8 @@ import {
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
+import Header from '../utilities/Header';
+import BackArrow from '../utilities/BackArrow';
 
 const { height, width } = Dimensions.get('window');
 const images = {
@@ -177,9 +179,9 @@ class ViewWorkout extends React.Component {
         scrollEnabled={true}
         enableOnAndroid={true}
       >
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => {
+        <Header>
+          <BackArrow
+            callback={() => {
               this.saveWorkout();
               this.setState({
                 initiated: false,
@@ -194,12 +196,7 @@ class ViewWorkout extends React.Component {
                 })
               );
             }}
-          >
-            <Image
-              source={require('../../../assets/back_arrow_black.png')}
-              style={styles.back}
-            />
-          </TouchableOpacity>
+          />
           <TouchableOpacity
             onPress={() => {
               this.deleteWorkout();
@@ -207,7 +204,7 @@ class ViewWorkout extends React.Component {
           >
             <Text style={styles.delete}>Delete</Text>
           </TouchableOpacity>
-        </View>
+        </Header>
         <ScrollView>
           <View style={{ margin: 10, borderRadius: 3 }}>
             <TextInput
@@ -360,17 +357,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     paddingTop: 50
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    justifyContent: 'space-between'
-  },
-  back: {
-    width: 35,
-    height: 35
   },
   delete: {
     fontSize: 20,
