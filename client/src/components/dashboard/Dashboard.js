@@ -87,17 +87,9 @@ class Dashboard extends React.Component {
           navigation={this.props.navigation}
         />
 
-        <ScrollView>
-          <View
-            style={{
-              marginBottom: 5,
-              borderRadius: 3,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20
-            }}
-          >
-            <Text style={styles.today}>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.todayContainer}>
+            <Text style={styles.todayText}>
               {this.renderToday()}
             </Text>
           </View>
@@ -169,9 +161,13 @@ const mapStateToProps = ({ workout, user }) => {
 export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
+  scrollView: {
+    // marginTop: 200,
+    // bottom: 100
+  },
   buttonContainer: {
-    position: 'absolute',
-    marginTop: 10,
+    // position: 'absolute',
+    // marginTop: 10,
     bottom: 0,
     marginBottom: 10,
     width: '100%',
@@ -212,7 +208,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  today: {
+  todayContainer: {
+    marginBottom: 5,
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20
+  },
+  todayText: {
     fontSize: 26,
     color: '#444',
     fontWeight: '200'
