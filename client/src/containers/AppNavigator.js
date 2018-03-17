@@ -102,4 +102,7 @@ const AppRouteConfigs = {
   }
 };
 
-export default (AppNavigator = TabNavigator(AppRouteConfigs));
+export default (AppNavigator = TabNavigator(AppRouteConfigs, {
+  swipeEnabled: false,
+  animationEnabled: false
+}));
