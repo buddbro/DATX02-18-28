@@ -89,7 +89,6 @@ class ProfileHeader extends React.Component {
                 marginLeft: 10
               }}
               onPress={() => {
-                return;
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'Settings'
@@ -99,7 +98,7 @@ class ProfileHeader extends React.Component {
             >
               <Image
                 source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 0, opacity: 0 }}
+                style={{ width: 35, height: 35, marginTop: 20 }}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -145,7 +144,7 @@ class ProfileHeader extends React.Component {
           >
             <Text style={styles.tagline}>Ready to rock?</Text>
           </View>
-          <Svg height="50" width={width}>
+          {/* <Svg height="50" width={width}>
             <Svg.Ellipse
               cx={width / 2}
               cy="5"
@@ -154,9 +153,9 @@ class ProfileHeader extends React.Component {
               stroke="#7ad9c6"
               strokeWidth="0"
               fill="#7ad9c6"
-            />
+            /> */}
 
-            {/* <Image
+          {/* <Image
               source={require('../../../assets/down-arrow.png')}
               style={{
                 marginTop: 5,
@@ -165,7 +164,7 @@ class ProfileHeader extends React.Component {
                 alignSelf: 'center'
               }}
             /> */}
-          </Svg>
+          {/* </Svg> */}
         </View>
       </Animated.View>
     );
@@ -175,9 +174,8 @@ class ProfileHeader extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7ad9c6',
-    height: 50,
     paddingTop: 10,
-    marginBottom: 100
+    paddingBottom: 10
   },
   userWelcome: {
     paddingTop: 0,
