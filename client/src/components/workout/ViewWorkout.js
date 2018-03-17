@@ -115,6 +115,14 @@ class ViewWorkout extends React.Component {
     this.setState({ stop: time.toString().substring(16, 21) });
   }
 
+  createDate(date) {
+    const returnDate = new Date(`2000-01-01T${date}:00`);
+    returnDate.setTime(
+      returnDate.getTime() + returnDate.getTimezoneOffset() * 60 * 1000
+    );
+    return returnDate;
+  }
+
   renderTimePicker() {
     const { timePicker } = this.state;
 
@@ -141,17 +149,13 @@ class ViewWorkout extends React.Component {
             </TouchableOpacity>
             <DatePickerIOS
               minimumDate={
-                timePicker === 'stop'
-                  ? new Date(`2000-01-01T${this.state.start}:00`)
-                  : null
+                timePicker === 'stop' ? this.createDate(this.state.start) : null
               }
               maximumDate={
-                timePicker === 'start'
-                  ? new Date(`2000-01-01T${this.state.stop}:00`)
-                  : null
+                timePicker === 'start' ? this.createDate(this.state.stop) : null
               }
               mode="time"
-              date={new Date(`2000-01-01T${currentDate}:00`)}
+              date={this.createDate(currentDate)}
               onDateChange={callback.bind(this)}
             />
           </View>
