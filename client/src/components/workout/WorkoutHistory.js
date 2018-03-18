@@ -33,7 +33,7 @@ class WorkoutHistory extends React.Component {
             }}
           />
         </Header>
-        <ScrollView style={{ paddingTop: 50, backgroundColor: '#fff' }}>
+        <ScrollView>
           {this.props.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
               <WorkoutLog

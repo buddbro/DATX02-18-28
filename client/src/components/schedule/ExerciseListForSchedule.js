@@ -15,6 +15,8 @@ import ExerciseListHeader from '../exercise/ExerciseListHeader';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
+import { addExerciseToSchedule } from '../../actions';
+
 class ExerciseListForSchedule extends React.PureComponent {
   renderSectionList() {
     // Reduce exercises returned from database to build the datastructure
@@ -37,6 +39,18 @@ class ExerciseListForSchedule extends React.PureComponent {
             name={item.name}
             exerciseId={item.id}
             navigation={this.props.navigation}
+            callback={() => {
+              this.props.addExerciseToSchedule(
+                item.id,
+                item.name,
+                this.props.active.id
+              );
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'WorkoutSchedules'
+                })
+              );
+            }}
           />}
         renderSectionHeader={({ section }) =>
           <ExerciseListHeader title={section.title} />}
@@ -72,13 +86,16 @@ class ExerciseListForSchedule extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ exercises }) => {
+const mapStateToProps = ({ exercises, schedules }) => {
   return {
-    exercises: exercises.list
+    exercises: exercises.list,
+    active: schedules.active
   };
 };
 
-export default connect(mapStateToProps)(ExerciseListForSchedule);
+export default connect(mapStateToProps, { addExerciseToSchedule })(
+  ExerciseListForSchedule
+);
 
 const styles = StyleSheet.create({
   container: {

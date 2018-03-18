@@ -7,21 +7,7 @@ import { connect } from 'react-redux';
 class ExerciseListForScheduleItem extends React.Component {
   render() {
     return (
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => {
-          this.props.addExerciseToSchedule(
-            this.props.exerciseId,
-            this.props.name,
-            this.props.active.id
-          );
-          this.props.navigation.dispatch(
-            NavigationActions.NavigationActions.navigate({
-              routeName: 'WorkoutSchedules'
-            })
-          );
-        }}
-      >
+      <TouchableOpacity style={styles.container} onPress={this.props.callback}>
         <Text style={styles.nameText}>
           {this.props.name}
         </Text>

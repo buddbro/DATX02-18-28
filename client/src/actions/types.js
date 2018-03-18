@@ -24,6 +24,7 @@ export const VIEW_EXERCISE = 'view_exercise';
 export const VIEW_SET = 'view_set';
 
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
+export const SET_EXERCISE_LIST_TYPE = 'set_exercise_list_type';
 
 // Schedules
 export const SET_ACTIVE_SCHEDULE = 'set_active_schedule';

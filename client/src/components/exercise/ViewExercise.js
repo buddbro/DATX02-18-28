@@ -21,6 +21,8 @@ import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
+import Header from '../utilities/Header';
+import BackArrow from '../utilities/BackArrow';
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -98,10 +100,9 @@ class ViewExercise extends React.Component {
     return (
       <View style={styles.container}>
         {this.viewInstructions()}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            onPress={() => {
+        <Header>
+          <BackArrow
+            callback={() => {
               this.props.clearExercise();
               this.setState({ reps: '', sets: '' });
               this.props.navigation.dispatch(
@@ -110,18 +111,13 @@ class ViewExercise extends React.Component {
                 })
               );
             }}
-          >
-            <Image
-              style={{ width: 35, height: 35 }}
-              source={require('../../../assets/back_arrow_black.png')}
-            />
-          </TouchableOpacity>
+          />
           <View style={styles.titleContainer}>
             <Text style={styles.exerciseTitle}>
               {this.props.visibleExercise}
             </Text>
           </View>
-        </View>
+        </Header>
         <ScrollView>
           <View style={styles.setsContainer}>
             <View style={styles.singleSetContainer}>
@@ -258,15 +254,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: '#fff',
-    paddingTop: 50,
     height: '100%'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingBottom: 10
   },
   addSetButton: {
     alignItems: 'center',
@@ -280,7 +268,7 @@ const styles = StyleSheet.create({
   },
   exerciseTitle: {
     color: '#6669cb',
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: 'bold'
   },
   setsContainer: {
@@ -316,6 +304,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginLeft: -35,
+    zIndex: -5,
     justifyContent: 'center',
     flex: 7,
     borderRadius: 3,

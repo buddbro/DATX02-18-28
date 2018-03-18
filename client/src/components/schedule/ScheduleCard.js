@@ -7,17 +7,17 @@ import {
   TextInput,
   StyleSheet,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
   setActiveSchedule,
   deleteSchedule,
   deleteExerciseFromSchedule,
-  editSchedule
+  editSchedule,
+  setExerciseListType
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-
 
 class ScheduleCard extends React.Component {
   constructor(props) {
@@ -133,10 +133,11 @@ class ScheduleCard extends React.Component {
         />
         <TouchableOpacity
           onPress={() => {
+            this.props.setExerciseListType('schedule');
             this.props.setActiveSchedule(this.props.id, this.props.title);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'ExerciseListForSchedule'
+                routeName: 'ExerciseList'
               })
             );
           }}
@@ -165,7 +166,8 @@ export default connect(mapStateToProps, {
   setActiveSchedule,
   deleteSchedule,
   deleteExerciseFromSchedule,
-  editSchedule
+  editSchedule,
+  setExerciseListType
 })(ScheduleCard);
 
 const styles = StyleSheet.create({

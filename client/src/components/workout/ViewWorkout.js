@@ -28,7 +28,8 @@ import {
   viewExercise,
   deleteWorkout,
   setDifficulty,
-  saveNotes
+  saveNotes,
+  setExerciseListType
 } from '../../actions';
 import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
@@ -169,7 +170,6 @@ class ViewWorkout extends React.Component {
           is24Hour: true
         }).then(({ action, hour, minute }) => {
           if (action !== TimePickerAndroid.dismissedAction) {
-            // Selected year, month (0-11), day
             hour = hour < 10 ? `0${hour}` : `${hour}`;
             minute = minute < 10 ? `0${minute}` : `${minute}`;
             this.setState({
@@ -184,7 +184,6 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
@@ -329,6 +328,7 @@ class ViewWorkout extends React.Component {
         <View style={{ bottom: 0 }}>
           <TouchableOpacity
             onPress={() => {
+              this.props.setExerciseListType('workout');
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ExerciseList'
@@ -366,7 +366,8 @@ export default connect(mapStateToProps, {
   viewExercise,
   deleteWorkout,
   setDifficulty,
-  saveNotes
+  saveNotes,
+  setExerciseListType
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
