@@ -126,60 +126,84 @@ class ViewWorkout extends React.Component {
     return returnDate;
   }
 
+  renderAddExercise() {
+    if (!this.state.timePicker) {
+      return (
+        <View style={{ bottom: 0 }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.setExerciseListType('workout');
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'ExerciseList'
+                })
+              );
+            }}
+            style={styles.addExerciseItem}
+          >
+            <Text style={styles.addExerciseTitle}>Add exercise</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
   renderTimePicker() {
     const { timePicker } = this.state;
 
-    if (timePicker !== '') {
-      const callback =
-        timePicker === 'start' ? this.setStartTime : this.setStopTime;
+    if (!timePicker) {
+      return;
+    }
 
-      const currentTime =
-        timePicker === 'start' ? this.state.start : this.state.stop;
+    const callback =
+      timePicker === 'start' ? this.setStartTime : this.setStopTime;
 
-      if (Platform.OS === 'ios') {
-        return (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({
-                  timePicker: ''
-                });
-                this.saveWorkout();
-              }}
-              style={styles.saveDateButton}
-            >
-              <Text style={styles.saveDateButtonText}>Save</Text>
-            </TouchableOpacity>
-            <DatePickerIOS
-              minimumDate={
-                timePicker === 'stop' ? this.createDate(this.state.start) : null
-              }
-              maximumDate={
-                timePicker === 'start' ? this.createDate(this.state.stop) : null
-              }
-              mode="time"
-              date={this.createDate(currentTime)}
-              onDateChange={callback.bind(this)}
-            />
-          </View>
-        );
-      } else {
-        TimePickerAndroid.open({
-          hour: Number(currentTime.substring(0, 2)),
-          minute: Number(currentTime.substring(3, 5)),
-          is24Hour: true
-        }).then(({ action, hour, minute }) => {
-          if (action !== TimePickerAndroid.dismissedAction) {
-            hour = hour < 10 ? `0${hour}` : `${hour}`;
-            minute = minute < 10 ? `0${minute}` : `${minute}`;
-            this.setState({
-              [timePicker]: `${hour}:${minute}`,
-              timePicker: ''
-            });
-            this.saveWorkout();
-          }
-        });
-      }
+    const currentTime =
+      timePicker === 'start' ? this.state.start : this.state.stop;
+
+    if (Platform.OS === 'ios') {
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                timePicker: ''
+              });
+              this.saveWorkout();
+            }}
+            style={styles.saveDateButton}
+          >
+            <Text style={styles.saveDateButtonText}>Save</Text>
+          </TouchableOpacity>
+          <DatePickerIOS
+            minimumDate={
+              timePicker === 'stop' ? this.createDate(this.state.start) : null
+            }
+            maximumDate={
+              timePicker === 'start' ? this.createDate(this.state.stop) : null
+            }
+            mode="time"
+            date={this.createDate(currentTime)}
+            onDateChange={callback.bind(this)}
+          />
+        </View>
+      );
+    } else {
+      TimePickerAndroid.open({
+        hour: Number(currentTime.substring(0, 2)),
+        minute: Number(currentTime.substring(3, 5)),
+        is24Hour: true
+      }).then(({ action, hour, minute }) => {
+        if (action !== TimePickerAndroid.dismissedAction) {
+          hour = hour < 10 ? `0${hour}` : `${hour}`;
+          minute = minute < 10 ? `0${minute}` : `${minute}`;
+          this.setState({
+            [timePicker]: `${hour}:${minute}`,
+            timePicker: ''
+          });
+          this.saveWorkout();
+        }
+      });
     }
   }
 
@@ -326,23 +350,7 @@ class ViewWorkout extends React.Component {
           </View>
         </ScrollView>
 
-        <View style={{ bottom: 0 }}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.setExerciseListType('workout');
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'ExerciseList'
-                })
-              );
-            }}
-            style={styles.addExerciseItem}
-          >
-            <View>
-              <Text style={styles.addExerciseTitle}>Add exercise</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {this.renderAddExercise()}
         {this.renderTimePicker()}
       </KeyboardAwareScrollView>
     );
