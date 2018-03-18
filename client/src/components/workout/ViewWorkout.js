@@ -13,7 +13,7 @@ import {
   ListItem,
   FlatList,
   Image,
-  DatePickerAndroid,
+  TimePickerAndroid,
   DatePickerIOS,
   Platform
 } from 'react-native';
@@ -128,14 +128,14 @@ class ViewWorkout extends React.Component {
   renderTimePicker() {
     const { timePicker } = this.state;
 
-    if (timePicker) {
+    if (timePicker !== '') {
+      const callback =
+        timePicker === 'start' ? this.setStartTime : this.setStopTime;
+
+      const currentTime =
+        timePicker === 'start' ? this.state.start : this.state.stop;
+
       if (Platform.OS === 'ios') {
-        const callback =
-          timePicker === 'start' ? this.setStartTime : this.setStopTime;
-
-        const currentDate =
-          timePicker === 'start' ? this.state.start : this.state.stop;
-
         return (
           <View>
             <TouchableOpacity
@@ -157,16 +157,34 @@ class ViewWorkout extends React.Component {
                 timePicker === 'start' ? this.createDate(this.state.stop) : null
               }
               mode="time"
-              date={this.createDate(currentDate)}
+              date={this.createDate(currentTime)}
               onDateChange={callback.bind(this)}
             />
           </View>
         );
+      } else {
+        TimePickerAndroid.open({
+          hour: Number(currentTime.substring(0, 2)),
+          minute: Number(currentTime.substring(3, 5)),
+          is24Hour: true
+        }).then(({ action, hour, minute }) => {
+          if (action !== TimePickerAndroid.dismissedAction) {
+            // Selected year, month (0-11), day
+            hour = hour < 10 ? `0${hour}` : `${hour}`;
+            minute = minute < 10 ? `0${minute}` : `${minute}`;
+            this.setState({
+              [timePicker]: `${hour}:${minute}`,
+              timePicker: ''
+            });
+            this.saveWorkout();
+          }
+        });
       }
     }
   }
 
   render() {
+    console.log(this.state);
     if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
@@ -355,8 +373,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
-    paddingTop: 50
+    backgroundColor: '#fff'
   },
   delete: {
     fontSize: 20,
