@@ -34,7 +34,6 @@ class ExerciseList extends React.Component {
     }, []);
 
     let callback = () => {};
-    console.log(this.props.type);
     switch (this.props.type) {
       case 'workout':
         callback = item => {
