@@ -230,6 +230,7 @@ class ViewWorkout extends React.Component {
               onEndEditing={() => {
                 this.saveWorkout();
               }}
+              underlineColorAndroid="transparent"
               returnKeyLabel="Save"
               clearButtonMode="while-editing"
               spellCheck={false}

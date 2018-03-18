@@ -82,6 +82,7 @@ class ScheduleCard extends React.Component {
             onEndEditing={() =>
               this.props.editSchedule(this.props.id, this.state.title)}
             returnKeyLabel="Save"
+            underlineColorAndroid="transparent"
             clearButtonMode="while-editing"
             spellCheck={false}
             value={this.state.title}
