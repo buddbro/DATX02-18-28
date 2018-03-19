@@ -28,7 +28,7 @@ class LatestWorkout extends React.Component {
     if (this.props.latestWorkout.difficulty == 1) {
       return (
         <AnimatedCircularProgress
-          size={80}
+          size={60}
           width={15}
           fill={20}
           tintColor="#94F5E2"
@@ -39,7 +39,7 @@ class LatestWorkout extends React.Component {
     } else if (this.props.latestWorkout.difficulty == 2) {
       return (
         <AnimatedCircularProgress
-          size={80}
+          size={60}
           width={15}
           fill={40}
           tintColor="#00EFC0"
@@ -50,7 +50,7 @@ class LatestWorkout extends React.Component {
     } else if (this.props.latestWorkout.difficulty == 3) {
       return (
         <AnimatedCircularProgress
-          size={80}
+          size={60}
           width={15}
           fill={60}
           tintColor="#51C1AB"
@@ -61,7 +61,7 @@ class LatestWorkout extends React.Component {
     } else if (this.props.latestWorkout.difficulty == 4) {
       return (
         <AnimatedCircularProgress
-          size={80}
+          size={60}
           width={15}
           fill={80}
           tintColor="#FFE319"
@@ -72,7 +72,7 @@ class LatestWorkout extends React.Component {
     } else if (this.props.latestWorkout.difficulty == 5) {
       return (
         <AnimatedCircularProgress
-          size={80}
+          size={60}
           width={15}
           fill={100}
           tintColor="#FF5858"
@@ -84,7 +84,7 @@ class LatestWorkout extends React.Component {
   }
 
   convertTimeStamp() {
-    if (!this.props.latestWorkout) {
+    if (!this.props.latestWorkout.stop || !this.props.latestWorkout.start) {
       return null;
     }
     var hours =
@@ -179,10 +179,10 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   iconsSpecial: {
-    width: 35,
-    height: 35,
+    width: 25,
+    height: 25,
     zIndex: 999,
-    position: 'absolute'
+    marginRight: 10
   },
   icons: {
     marginLeft: -30,

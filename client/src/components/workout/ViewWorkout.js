@@ -246,19 +246,39 @@ class ViewWorkout extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-          <View style={{ margin: 10, borderRadius: 3 }}>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={title => this.setState({ title })}
-              onEndEditing={() => {
-                this.saveWorkout();
+          <View
+            style={{
+              margin: 10,
+              borderRadius: 3
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+                backgroundColor: '#7ad9c6',
+                borderRadius: 5,
+                paddingRight: 20
               }}
-              underlineColorAndroid="transparent"
-              returnKeyLabel="Save"
-              clearButtonMode="while-editing"
-              autoCorrect={false}
-              value={this.state.title}
-            />
+            >
+              <TextInput
+                style={styles.inputField}
+                onChangeText={title => this.setState({ title })}
+                onEndEditing={() => {
+                  this.saveWorkout();
+                }}
+                underlineColorAndroid="transparent"
+                returnKeyLabel="Save"
+                autoCorrect={false}
+                value={this.state.title}
+              />
+              <Image
+                source={require('../../../assets/edit-pen.png')}
+                style={styles.icons}
+              />
+            </View>
             <View>
               <Text style={styles.workoutDate}>
                 {this.props.workout.date.substring(0, 10)}
@@ -270,12 +290,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'start'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>Start Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.start}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.start}</Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -283,12 +302,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'stop'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>End Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.stop}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.stop}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -325,8 +343,7 @@ class ViewWorkout extends React.Component {
               />
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between'
+                  flexDirection: 'row'
                 }}
               >
                 <Text style={styles.difficultyText}>No Sweat</Text>
@@ -341,7 +358,8 @@ class ViewWorkout extends React.Component {
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
-                this.props.saveNotes(this.props.id, this.state.notes)}
+                this.props.saveNotes(this.props.id, this.state.notes)
+              }
               value={this.state.notes}
               multiline={true}
               underlineColorAndroid="transparent"
@@ -379,6 +397,11 @@ export default connect(mapStateToProps, {
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
+  icons: {
+    width: 25,
+    height: 25,
+    marginLeft: -25
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -439,7 +462,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: '#fff',
     padding: 3,
-    textAlign: 'center'
+    textAlign: 'center',
+    width: '90%'
   },
   workoutDate: {
     marginLeft: 15,
