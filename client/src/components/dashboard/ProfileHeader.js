@@ -101,11 +101,14 @@ class ProfileHeader extends React.Component {
               </Text>
               <Text style={styles.tagline}>Ready to rock?</Text>
             </View>
-            <View
-              style={{
-                backgroundColor: '#7ad9c6'
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
+            >
+              <Image
+                source={require('../../../assets/menu.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
           </View>
 
           {/* <Svg height="50" width={width}>
