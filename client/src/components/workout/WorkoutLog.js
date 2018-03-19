@@ -80,21 +80,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 80,
     borderWidth: 1,
-    borderColor: '#b9baf1',
+    borderColor: '#D9D9E0',
     width: '100%'
   },
   title: {
     marginLeft: 25,
-    color: '#b9baf1',
+    color: '#000',
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'left'
+    fontWeight: '200',
+    textAlign: 'left',
+    opacity: 0.8
   },
   date: {
     color: '#b9baf1',
     fontSize: 16,
     fontWeight: '200',
-    marginLeft: 35
+    marginLeft: 25
   },
   arrow: {
     opacity: 0.5,

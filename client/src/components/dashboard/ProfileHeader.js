@@ -106,14 +106,6 @@ class ProfileHeader extends React.Component {
                 backgroundColor: '#7ad9c6'
               }}
             />
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('DrawerOpen')}
-            >
-              <Image
-                source={require('../../../assets/menu.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableOpacity>
           </View>
 
           {/* <Svg height="50" width={width}>
