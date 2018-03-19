@@ -16,51 +16,35 @@ const getAllUsers = (req, res, next, db) => {
     });
 };
 
-const login = (req, res, next, db) => {
+const getUser = (req, res, next, db) => {
   db
-    .any('SELECT id, password, name FROM users WHERE email = $1', [
-      req.body.email
-    ])
+    .any(
+      `SELECT id, email, name, created, lastlogin FROM users WHERE id = $1`,
+      [req.user.id]
+    )
     .then(function(data) {
-      if (!data.length) {
-        res.status(200).json({ error: 'User not found' });
-        return next();
-      }
+      const user = data[0];
 
-      if (req.body.password === data[0].password) {
-        const token = sha256(
-          Math.round(
-            new Date().getMilliseconds() * Math.random() * 10000000000000
-          ).toString()
-        );
-        const { id, name } = data[0];
-        db
-          .any('UPDATE users SET token = $2, lastLogin = $3 WHERE email = $1', [
-            req.body.email,
-            token,
-            getDate()
-          ])
-          .then(function(data) {
-            jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, jwt) => {
-              res.json({ id, name, token, success: true, jwt });
-            });
-          });
-      } else {
-        res.status(200).json({ error: 'Wrong password' });
-      }
+      db
+        .any(`SELECT id, title, date FROM workouts WHERE userid = $1`, [
+          req.user.id
+        ])
+        .then(function(data) {
+          user.workouts = data;
+          res.status(200).json(user);
+        });
     })
     .catch(function(err) {
       return next(err);
     });
 };
 
-const loginJWT = (req, res, next, db) => {
+const login = (req, res, next, db) => {
   db
     .any('SELECT id, password, name FROM users WHERE email = $1', [
       req.body.email
     ])
     .then(function(data) {
-      console.log(data);
       if (!data.length) {
         res.json({ error: 'User not found' });
       }
@@ -95,35 +79,6 @@ const verifyToken = (req, res, next, db) => {
     })
     .catch(function(err) {
       return next(err);
-    });
-};
-
-const loginWithToken = (req, res, next, db) => {
-  db
-    .any(
-      'SELECT id, password, name FROM users WHERE email = $1 AND token = $2',
-      [req.body.email, req.body.token]
-    )
-    .then(function(data) {
-      if (!data.length) {
-        res.status(200).json({ error: 'User not found' });
-      } else {
-        const { id, name } = data[0];
-        jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, jwt) => {
-          res.json({ id, name, token: req.body.token, success: true, jwt });
-        });
-      }
-    })
-    .catch(function(err) {
-      return next(err);
-    });
-};
-
-const logout = (req, res, next, db) => {
-  db
-    .any("UPDATE users SET token = '' WHERE id = $1", [req.body.id])
-    .then(function(data) {
-      res.status(200).json({ success: true });
     });
 };
 
@@ -182,29 +137,14 @@ const registerUser = (req, res, next, db, sendMail) => {
 
     db
       .any(
-        'INSERT INTO users(email, password, name, created) VALUES($1, $2, $3, $4)',
-        [req.body.email, req.body.password, req.body.name, getDate()]
+        'INSERT INTO users(email, password, name, created, lastlogin) VALUES($1, $2, $3, $4, $5) RETURNING id',
+        [req.body.email, req.body.password, req.body.name, getDate(), getDate()]
       )
       .then(function(data) {
-        const token = sha256(
-          Math.round(
-            new Date().getMilliseconds() * Math.random() * 10000000000000
-          ).toString()
-        );
-        db
-          .any('UPDATE users SET token = $2, lastLogin = $3 WHERE email = $1', [
-            req.body.email,
-            token,
-            getDate()
-          ])
-          .then(function(data) {
-            sendMail(req.body.email, req.body.name);
-            res.status(200).json({ token: token, success: true });
-            return next();
-          });
-      })
-      .catch(function(err) {
-        return next(err);
+        jwt.sign({ id: data[0].id }, config.AUTH_SECRET_KEY, (err, token) => {
+          // sendMail(req.body.email, req.body.name);
+          res.json({ token });
+        });
       });
   }
 };
@@ -260,16 +200,14 @@ const resetPasswordGet = (req, res, next, db) => {
 };
 
 module.exports = {
+  getUser,
   getAllUsers,
   login,
-  loginJWT,
   verifyToken,
-  loginWithToken,
   resetPasswordPost,
   resetPasswordGet,
   updateUser,
   registerUser,
   getUserByEmail,
-  sendResetPasswordEmail,
-  logout
+  sendResetPasswordEmail
 };

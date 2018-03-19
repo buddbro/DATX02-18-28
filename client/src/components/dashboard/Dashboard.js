@@ -6,26 +6,65 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Button
+  Button,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
 import ProfileHeader from './ProfileHeader';
-import Workout from '../workout/Workout';
+import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/dashboard.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+  constructor(props) {
+    super(props);
+
+    this.state = { addWorkoutVisible: false };
+  }
+
+  hideModal() {
+    this.setState({ addWorkoutVisible: false });
+  }
+
+  renderPopup() {
+    if (this.state.addWorkoutVisible) {
+      return (
+        <View style={styles.popupContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                addWorkoutVisible: !this.state.addWorkoutVisible
+              });
+            }}
+            style={styles.popupBackground}
+          />
+          <AddWorkout
+            navigation={this.props.navigation}
+            hideModal={this.hideModal.bind(this)}
+          />
+        </View>
+      );
+    }
+  }
   renderToday() {
     const weekdays = [
+      'Sunday',
       'Monday',
       'Tuesday',
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday',
-      'Sunday'
+      'Saturday'
     ];
 
     const months = [
@@ -44,9 +83,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
@@ -57,60 +96,27 @@ class Dashboard extends React.Component {
           navigation={this.props.navigation}
         />
 
-        <ScrollView>
-          <View
-            style={{
-              marginTop: 80,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around'
-            }}
-          >
-            <View
-              style={{
-                marginBottom: 5,
-                borderRadius: 3,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Text style={{ fontSize: 26, color: '#444', fontWeight: '200' }}>
-                {this.renderToday()}
-              </Text>
-            </View>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.todayContainer}>
+            <Text style={styles.todayText}>{this.renderToday()}</Text>
+          </View>
+          <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
-
-            <AddWorkout navigation={this.props.navigation} />
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Workout'
-                  })
-                )}
-              style={styles.addWorkout}
-            >
-              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-                History
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'WorkoutSchedules'
-                  })
-                );
-              }}
-              style={styles.addWorkout}
-            >
-              <Text style={[styles.menuItem, { fontSize: 48, paddingTop: 12 }]}>
-                Schedules
-              </Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({
+                addWorkoutVisible: !this.state.addWorkoutVisible
+              });
+            }}
+            style={styles.addWorkoutClean}
+          >
+            <Text style={styles.menuItemClean}>Lift weights!</Text>
+          </TouchableOpacity>
+        </View>
+        {this.renderPopup()}
       </View>
     );
   }
@@ -126,26 +132,88 @@ const mapStateToProps = ({ workout, user }) => {
 export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column'
+  scrollView: {
+    // marginTop: 200,
+    // bottom: 100
   },
-  addWorkout: {
-    marginLeft: 15,
-    marginRight: 15,
+  buttonContainer: {
+    // position: 'absolute',
+    // marginTop: 10,
+    bottom: 0,
     marginBottom: 10,
-    marginTop: 10,
+    width: '100%',
+    zIndex: 100
+  },
+  menuItemClean: {
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  addWorkoutClean: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    borderRadius: 5,
-    paddingBottom: 15,
-    backgroundColor: '#b9baf1'
+    backgroundColor: '#7ad9c6',
+    zIndex: 101
+  },
+  popupContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 199
+  },
+  popupBackground: {
+    position: 'absolute',
+    backgroundColor: '#000',
+    opacity: 0.5,
+    width: '150%',
+    height: '150%',
+    zIndex: 200,
+    alignSelf: 'stretch'
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  todayContainer: {
+    marginBottom: 5,
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    borderColor: 'gray',
+    paddingBottom: 20
+  },
+  todayText: {
+    fontSize: 26,
+    color: '#444',
+    fontWeight: '200'
+  },
+  latestWorkout: {
+    marginTop: 10,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   menuItem: {
-    color: '#fff',
-    fontSize: 100,
-    fontWeight: 'bold'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 60,
+    backgroundColor: '#b9baf1',
+    marginBottom: 10
+  },
+  menuItemText: {
+    color: 'white',
+    fontSize: 26,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft: 15,
+    marginRight: 15
   }
 });

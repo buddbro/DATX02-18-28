@@ -21,7 +21,6 @@ export function setActiveSchedule(id, title) {
 export function addSchedule() {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
-      console.log('auth: ', jwt);
       axios
         .post(
           `https://getpushapp.com/api/schedules/`,
@@ -58,7 +57,6 @@ export function deleteSchedule(id) {
 }
 
 export function editSchedule(id, title) {
-  console.log(id, title);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

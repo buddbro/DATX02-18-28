@@ -11,13 +11,12 @@ import {
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_EXERCISE,
-  VIEW_SET
+  VIEW_SET,
+  SET_DIFFICULTY
 } from '../actions/types';
 
 const INITIAL_STATE = {
   id: -1,
-  title: '',
-  date: '',
   workouts: [],
   exercises: [],
   sets: [],
@@ -80,16 +79,16 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           }
         ];
       }, []);
-      const { workout_id, workout_title, date } = action.payload.exercises[0];
+      const { workout_id } = action.payload.exercises[0];
 
       return {
         ...state,
         id: workout_id,
-        title: workout_title,
-        date,
         exercises: exercises[0].id ? exercises : []
       };
     case ADD_WORKOUT:
+      const { id, title, date, difficulty, start } = action.payload;
+
       return {
         ...state,
         id: action.payload.id,
@@ -98,25 +97,13 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: [],
         workouts: [
           {
-            id: action.payload.id,
-            title: action.payload.title,
-            date: action.payload.date
-          },
-          ...state.workouts
-        ]
-      };
-    case ADD_WORKOUT_FROM_SCHEDULE:
-      return {
-        ...state,
-        id: action.payload.id,
-        title: action.payload.title,
-        date: action.payload.date,
-        exercises: [],
-        workouts: [
-          {
-            id: action.payload.id,
-            title: action.payload.title,
-            date: action.payload.date
+            id,
+            title,
+            date,
+            difficulty,
+            notes: '',
+            start,
+            stop: ''
           },
           ...state.workouts
         ]
@@ -143,13 +130,31 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exerciseLoading: true
       };
     case EDIT_WORKOUT:
+      const editWorkouts = [];
+      state.workouts.forEach(workout => {
+        editWorkouts.push(workout);
+        if (state.id === workout.id) {
+          workout.title = action.payload.title;
+          workout.start = action.payload.start;
+          workout.stop = action.payload.stop;
+        }
+      });
+
       return {
         ...state,
-        title: action.payload.title
+        workouts: editWorkouts
       };
     case FETCH_WORKOUTS:
-      const workouts = action.payload;
-      return { ...state, workouts };
+      return { ...state, workouts: action.payload };
+    case SET_DIFFICULTY:
+      const setDifficultyWorkouts = [];
+      state.workouts.forEach(workout => {
+        setDifficultyWorkouts.push(workout);
+        if (state.id === workout.id) {
+          workout.difficulty = action.payload;
+        }
+      });
+      return { ...state, workouts: setDifficultyWorkouts };
     default:
       return state;
   }

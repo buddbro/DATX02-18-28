@@ -58,6 +58,9 @@ class ForgotPassword extends React.Component {
               this.setState({ email: email.toLowerCase() })}
             // value={this.state.email}
             keyboardType="email-address"
+            autoCapitalize="none"
+            returnKeyType="send"
+            autoCorrect={false}
           />
           <TouchableOpacity
             style={styles.loginButton}

@@ -25,6 +25,15 @@ var { height, width } = Dimensions.get('window');
 //implement savebutton
 
 class Settings extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/settings.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -171,7 +180,8 @@ class Settings extends React.Component {
               style={styles.standardText}
               secureTextEntry
               onChangeText={newPasswordText =>
-                this.setState({ newPasswordText })}
+                this.setState({ newPasswordText })
+              }
               value={this.state.newPasswordText}
             />
           </View>
@@ -181,7 +191,8 @@ class Settings extends React.Component {
               style={styles.standardText}
               secureTextEntry
               onChangeText={confirmPasswordText =>
-                this.setState({ confirmPasswordText })}
+                this.setState({ confirmPasswordText })
+              }
               value={this.state.confirmPasswordText}
             />
           </View>

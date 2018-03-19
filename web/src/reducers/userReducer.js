@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT, SET_USER_ON_STARTUP } from '../actions/types';
+import { LOGIN, LOGOUT, REGISTER, SET_USER_ON_STARTUP } from '../actions/types';
 
 const INITIAL_STATE = {
   loading: true,
   loggedIn: false,
   email: '',
+  password: '',
   firstname: '',
   lastname: '',
   error: ''
@@ -19,6 +20,24 @@ export default function user(state = INITIAL_STATE, action) {
           loading: false,
           loggedIn: true,
           email,
+          name
+        };
+      } else {
+        return {
+          ...INITIAL_STATE,
+          loading: false
+        };
+      }
+
+    case REGISTER:
+      if (!action.payload.error) {
+        const { email, password, name } = action.payload;
+        return {
+          ...state,
+          loading: false,
+          loggedIn: true,
+          email,
+          password,
           name
         };
       } else {

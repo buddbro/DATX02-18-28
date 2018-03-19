@@ -10,13 +10,14 @@ import {
   Header,
   Button,
   Form,
-  Icon
+  Icon,
+  Message
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import sha256 from 'sha256';
 
-import { login } from '../actions';
+import { login, register } from '../actions';
 
 class LoggedOutMenu extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class LoggedOutMenu extends React.Component {
     this.state = {
       activeItem: 'pushapp',
       login: { email: '', password: '' },
-      signup: { email: '', name: '', passwordone: '', passwordtwo: '' }
+      register: { name: '', email: '', passwordone: '', passwordtwo: '' }
     };
   }
 
@@ -36,8 +37,35 @@ class LoggedOutMenu extends React.Component {
     this.props.login(this.state.login.email, sha256(this.state.login.password));
   }
 
-  signup(event) {
+  register(event) {
     event.preventDefault();
+    this.props.register(
+      this.state.register.name,
+      this.state.register.email,
+      this.state.register.passwordone,
+      this.state.register.passwordtwo
+    );
+
+    this.setState({
+      register: { name: '', email: '', passwordone: '', passwordtwo: '' }
+    });
+  }
+
+  renderEmailWarning() {
+    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
+
+    if (
+      this.state.register.email.length > 10 &&
+      !emailRegex.test(this.state.register.email)
+    ) {
+      return (
+        <Message
+          warning
+          header="Error:"
+          list={['Please enter a valid email.']}
+        />
+      );
+    }
   }
 
   render() {
@@ -139,7 +167,7 @@ class LoggedOutMenu extends React.Component {
                             })}
                         />
                       </Form.Field>
-                      <Button type="Sign In">Submit</Button>
+                      <Form.Button>Submit</Form.Button>
                     </Form>
                   </Dropdown>
                 </Dropdown.Menu>
@@ -149,7 +177,7 @@ class LoggedOutMenu extends React.Component {
                 trigger={
                   <Menu.Item
                     name="signup"
-                    active={this.state.activeItem === 'signup'}
+                    active={this.state.activeItem === 'register'}
                     onClick={this.handleItemClick}
                   >
                     <Icon name="signup" />
@@ -161,15 +189,15 @@ class LoggedOutMenu extends React.Component {
                 <Modal.Header>Sign Up</Modal.Header>
                 <Modal.Content>
                   <Modal.Description>
-                    <Form>
+                    <Form warning onSubmit={this.register.bind(this)}>
                       <Form.Field>
                         <label>Name</label>
                         <input
                           placeholder="ex. Emilia"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 name: input.target.value
                               }
                             })}
@@ -181,21 +209,23 @@ class LoggedOutMenu extends React.Component {
                           placeholder="example@gmail.com"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 email: input.target.value
                               }
                             })}
                         />
+                        {this.renderEmailWarning()}
                       </Form.Field>
                       <Form.Field>
                         <label>Password</label>
                         <input
                           placeholder="********"
+                          type="password"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 passwordone: input.target.value
                               }
                             })}
@@ -205,10 +235,11 @@ class LoggedOutMenu extends React.Component {
                         <label>Confirm Password</label>
                         <input
                           placeholder="********"
+                          type="password"
                           onChange={input =>
                             this.setState({
-                              signup: {
-                                ...this.state.signup,
+                              register: {
+                                ...this.state.register,
                                 passwordtwo: input.target.value
                               }
                             })}
@@ -227,4 +258,4 @@ class LoggedOutMenu extends React.Component {
   }
 }
 
-export default connect(null, { login })(LoggedOutMenu);
+export default connect(null, { login, register })(LoggedOutMenu);

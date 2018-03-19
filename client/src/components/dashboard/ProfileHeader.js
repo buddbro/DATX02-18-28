@@ -81,71 +81,42 @@ class ProfileHeader extends React.Component {
             style={{
               backgroundColor: '#7ad9c6',
               flexDirection: 'row',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginRight: 10,
+              marginLeft: 70,
+              paddingTop: 10,
+              paddingBottom: 10
             }}
           >
-            <TouchableOpacity
+            <View
               style={{
-                marginLeft: 10
-              }}
-              onPress={() => {
-                //return;
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Settings'
-                  })
-                );
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#7ad9c6'
               }}
             >
-              <Image
-                source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 20}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
+              <Text style={styles.userWelcome}>
+                Welcome back {this.props.user.name}!
+              </Text>
+              <Text style={styles.tagline}>Ready to rock?</Text>
+            </View>
+            <View
               style={{
-                marginRight: 10
+                backgroundColor: '#7ad9c6'
               }}
-              onPress={() => {
-                this.props.logout(this.props.user.id);
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginUser'
-                  })
-                );
-              }}
+            />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
             >
               <Image
-                source={require('../../../assets/exit.png')}
-                style={{ width: 35, height: 35, marginTop: 20 }}
+                source={require('../../../assets/menu.png')}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            {
-              <Image
-                source={require('../../../assets/avatar_default.png')}
-                style={{ width: 45, height: 45, alignSelf: 'center' }}
-              />
-            }
-            <Text style={styles.userWelcome}>
-              Welcome back {this.props.user.name}!
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            <Text style={styles.tagline}>Ready to rock?</Text>
-          </View>
-          <Svg height="100" width={width}>
+
+          {/* <Svg height="50" width={width}>
             <Svg.Ellipse
               cx={width / 2}
               cy="5"
@@ -154,9 +125,9 @@ class ProfileHeader extends React.Component {
               stroke="#7ad9c6"
               strokeWidth="0"
               fill="#7ad9c6"
-            />
+            /> */}
 
-            {/* <Image
+          {/* <Image
               source={require('../../../assets/down-arrow.png')}
               style={{
                 marginTop: 5,
@@ -165,7 +136,7 @@ class ProfileHeader extends React.Component {
                 alignSelf: 'center'
               }}
             /> */}
-          </Svg>
+          {/* </Svg> */}
         </View>
       </Animated.View>
     );
@@ -175,8 +146,8 @@ class ProfileHeader extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#7ad9c6',
-    height: 222,
-    paddingTop: 40
+    paddingTop: 10,
+    paddingBottom: 10
   },
   userWelcome: {
     paddingTop: 0,
