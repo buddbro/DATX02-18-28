@@ -21,8 +21,8 @@ var { height, width } = Dimensions.get('window');
 //TODO in Settings
 //notifications togglebutton
 //Image
-//implement savebutton
 //take age, height, weight from database
+//implement savebutton
 
 class Settings extends React.Component {
   static navigationOptions = {
@@ -45,14 +45,20 @@ class Settings extends React.Component {
       heightText: '190cm',
       weightText: '90kg',
       newPasswordText: '',
-      confirmPasswordText: ''
+      confirmPasswordText: '',
+      notifications: true
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       nameText: nextProps.name,
-      emailText: nextProps.email
+      emailText: nextProps.email//,
+      //ej klara
+      // ageText: nextProps.age,
+      // weightText: nextProps.weight,
+      // heightText: nextProps.height,
+      // notifications: nextProps.notifications
     });
   }
 
@@ -203,7 +209,7 @@ class Settings extends React.Component {
           >
             <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
             <ToggleSwitch
-              isOn={false}
+              isOn={this.state.notifications}
               onColor="#6669cb"
               offColor="#b9baf1"
               size="medium"
@@ -245,6 +251,10 @@ const mapStateToProps = ({ settings, exercises, user }) => {
   return {
     name: user.name,
     email: user.email,
+    // age: user.age,
+    // weight: user.weight,
+    // height: user.height,
+    // notifications: user.notifications,
     counter: settings.counter,
     exercises: exercises.list
   };
