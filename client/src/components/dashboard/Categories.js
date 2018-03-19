@@ -28,24 +28,14 @@ class Categories extends React.Component {
           }
         )
         .then(({ data }) => {
+          console.log(data);
+          Object.keys(data).map(d => data[d]++);
           this.setState({ data: [data] });
         });
     });
   }
 
   render() {
-    let data = [
-      {
-        speed: 74,
-        balance: 29,
-        explosives: 40,
-        energy: 40,
-        flexibility: 30,
-        agility: 25,
-        endurance: 44
-      }
-    ];
-
     const max = Object.keys(this.state.data[0]).reduce((acc, next) => {
       return acc < this.state.data[0][next] ? this.state.data[0][next] : acc;
     }, 0);
