@@ -74,9 +74,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
-      months[date.getMonth()]
-    }`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
+      date.getMonth()
+    ]}`;
   }
 
   render() {
@@ -89,7 +89,9 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>{this.renderToday()}</Text>
+            <Text style={styles.todayText}>
+              {this.renderToday()}
+            </Text>
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />

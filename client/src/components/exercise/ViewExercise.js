@@ -17,7 +17,7 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-import { BarChart } from 'react-native-svg-charts';
+// import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';

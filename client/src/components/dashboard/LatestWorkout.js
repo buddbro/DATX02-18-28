@@ -13,7 +13,7 @@ import ExerciseCard from '../exercise/ExerciseCard';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { chooseWorkout } from '../../actions';
-import LatestExercise from './LatestExercise';
+import Categories from './Categories';
 import RatingWrapper from '../utilities/RatingWrapper';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
@@ -138,16 +138,19 @@ class LatestWorkout extends React.Component {
                 style={styles.icons}
               />
               <View style={styles.innerRectangle}>
-                <Text style={styles.timeStamp}>{this.convertTimeStamp()}</Text>
+                <Text style={styles.timeStamp}>
+                  {this.convertTimeStamp()}
+                </Text>
                 <Text style={styles.smallText}>minutes</Text>
               </View>
             </View>
-            <View style={styles.rectangle}>{this.translateDifficulty()}</View>
+            <View style={styles.rectangle}>
+              {this.translateDifficulty()}
+            </View>
           </View>
 
           <View style={styles.difficultyStyle}>
-            <Text style={styles.workoutTraitText}>Tags</Text>
-            <Text>Chest, arms, booty</Text>
+            {/* <Categories workoutId={this.props.latestWorkout.id} /> */}
           </View>
           <Text style={styles.continueText}>Press to continue workout</Text>
         </TouchableOpacity>
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRightWidth: 0.5,
     borderBottomWidth: 0.5,
-    borderColor: '#98E0D2',
+    borderColor: '#98e0d2',
     paddingTop: 10,
     paddingBottom: 10
   },
