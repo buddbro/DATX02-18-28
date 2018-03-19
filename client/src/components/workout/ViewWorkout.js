@@ -31,7 +31,6 @@ import {
   saveNotes,
   setExerciseListType
 } from '../../actions';
-import WorkoutExercisesList from './WorkoutExercisesList';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
 import Header from '../utilities/Header';

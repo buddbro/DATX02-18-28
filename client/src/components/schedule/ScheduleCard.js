@@ -153,7 +153,7 @@ export default connect(mapStateToProps, {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#efefef',
+    backgroundColor: '#f5f6f5',
     justifyContent: 'center',
     padding: 10,
     margin: 10,

@@ -6,8 +6,11 @@ class AchievementCell extends React.PureComponent {
     return (
       <View style={styles.achievementItem}>
         <Image style={styles.achievementItemImage} source={this.props.image} />
-        <Text style={styles.achievementItemContent}>
+        <Text style={styles.header}>
           {this.props.title}
+        </Text>
+        <Text style={styles.date}>
+          {this.props.date}
         </Text>
       </View>
     );
@@ -18,21 +21,20 @@ export default AchievementCell;
 
 const styles = StyleSheet.create({
   achievementItem: {
-    backgroundColor: '#fde',
+    backgroundColor: '#ffdfef',
     width: '50%',
     justifyContent: 'center',
     borderWidth: 4,
     borderColor: '#fff',
     paddingTop: 10,
     paddingBottom: 10,
-    borderRadius: 35
+    borderRadius: 35,
+    alignItems: 'center'
   },
   achievementItemImage: {
-    alignSelf: 'center',
     width: 50,
     height: 50
   },
-  achievementItemContent: {
-    alignSelf: 'center'
-  }
+  header: { fontWeight: '600' },
+  date: {}
 });

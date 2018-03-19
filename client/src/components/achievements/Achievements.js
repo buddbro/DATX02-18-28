@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Text,
+  Image
+} from 'react-native';
 import NavigationActions from 'react-navigation';
 
 import AchievementCell from './AchievementCell';
@@ -24,16 +31,20 @@ class Achievements extends React.Component {
             <Text style={styles.info}>Info</Text>
           </TouchableOpacity>
         </Header>
-        <View style={styles.achievementsContainer}>
-          <AchievementCell
-            image={require('../../../assets/achievements/time.png')}
-            title="Stronger by the minute"
-          />
-          <AchievementCell
-            image={require('../../../assets/achievements/nightowl.png')}
-            title="Night Owl"
-          />
-        </View>
+        <ScrollView>
+          <View style={styles.achievementsContainer}>
+            <AchievementCell
+              image={require('../../../assets/achievements/time.png')}
+              title="Stronger by the minute"
+              date="19th March 2018"
+            />
+            <AchievementCell
+              image={require('../../../assets/achievements/nightowl.png')}
+              title="Night Owl"
+              date="19th March 2018"
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }
