@@ -1,12 +1,15 @@
 import {
   TabNavigator,
   DrawerNavigator,
-  StackNavigator
+  StackNavigator,
+  Image
 } from 'react-navigation';
 
 import { Text } from 'react-native';
 
 import React from 'react';
+
+import CustomDrawerNavigation from '../components/navigation/CustomDrawerNavigation';
 
 import Dashboard from '../components/dashboard/Dashboard';
 
@@ -32,12 +35,17 @@ const DrawerStack = DrawerNavigator(
     Dashboard: {
       screen: Dashboard
     },
-    WorkoutHistory: { screen: WorkoutHistory },
-    WorkoutSchedule: { screen: WorkoutSchedules },
+    History: { screen: WorkoutHistory },
+    Schedule: { screen: WorkoutSchedules },
     Achievements: { screen: Achievements },
     Settings: { screen: Settings }
   },
   {
+    drawerBackgroundColor: '#E2FBF6',
+    contentOptions: {
+      activeTintColor: '#7ED1C1',
+      labelStyle: { fontSize: 26, fontWeight: '200' }
+    },
     navigationOptions: {
       tabBarVisible: false
     }

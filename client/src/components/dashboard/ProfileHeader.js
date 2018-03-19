@@ -81,36 +81,41 @@ class ProfileHeader extends React.Component {
             style={{
               backgroundColor: '#7ad9c6',
               flexDirection: 'row',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginRight: 10,
+              marginLeft: 70,
+              paddingTop: 10,
+              paddingBottom: 10
             }}
           >
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#7ad9c6'
+              }}
+            >
+              <Text style={styles.userWelcome}>
+                Welcome back {this.props.user.name}!
+              </Text>
+              <Text style={styles.tagline}>Ready to rock?</Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: '#7ad9c6'
+              }}
+            />
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('DrawerOpen')}
             >
               <Image
-                source={require('../../../assets/menu-lines.png')}
-                style={{ width: 40, height: 40 }}
+                source={require('../../../assets/menu.png')}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            <Text style={styles.userWelcome}>
-              Welcome back {this.props.user.name}!
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            <Text style={styles.tagline}>Ready to rock?</Text>
-          </View>
+
           {/* <Svg height="50" width={width}>
             <Svg.Ellipse
               cx={width / 2}

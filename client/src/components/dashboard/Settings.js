@@ -25,6 +25,14 @@ var { height, width } = Dimensions.get('window');
 //take age, height, weight from database
 
 class Settings extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () =>
+      <Image
+        source={require('../../../assets/settings.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -41,6 +49,7 @@ class Settings extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
     this.setState({
       nameText: nextProps.name,
       emailText: nextProps.email

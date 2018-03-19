@@ -19,19 +19,29 @@ import BackArrow from '../utilities/BackArrow';
 const { height, width } = Dimensions.get('window');
 
 class WorkoutHistory extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/time.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Header>
-          <BackArrow
-            callback={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              );
-            }}
-          />
+        <Header backgroundColor="#b9baf1">
+          <View />
+          <Text style={styles.headerTitle}>Previous workouts</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={{ width: 30, height: 30 }}
+            />
+          </TouchableOpacity>
         </Header>
         <ScrollView>
           {this.props.workouts.map((workout, index) => (
@@ -61,9 +71,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  headerTitle: {
+    fontSize: 32,
+    color: 'white'
+  },
   headline: {
     fontSize: 32,
-    color: '#b9baf1'
+    color: 'gray'
   },
   headlineSmall: {
     fontSize: 24,

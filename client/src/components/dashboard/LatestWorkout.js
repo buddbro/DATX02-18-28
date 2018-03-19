@@ -145,12 +145,16 @@ class LatestWorkout extends React.Component {
               </View>
             </View>
             <View style={styles.rectangle}>
+              <Image
+                source={require('../../../assets/flash.png')}
+                style={styles.iconsSpecial}
+              />
               {this.translateDifficulty()}
             </View>
           </View>
 
           <View style={styles.difficultyStyle}>
-            {/* <Categories workoutId={this.props.latestWorkout.id} /> */}
+            <Categories workoutId={this.props.latestWorkout.id} />
           </View>
           <Text style={styles.continueText}>Press to continue workout</Text>
         </TouchableOpacity>
@@ -173,6 +177,12 @@ const styles = StyleSheet.create({
   innerRectangle: {
     flexDirection: 'column',
     marginLeft: 20
+  },
+  iconsSpecial: {
+    width: 35,
+    height: 35,
+    zIndex: 999,
+    position: 'absolute'
   },
   icons: {
     marginLeft: -30,

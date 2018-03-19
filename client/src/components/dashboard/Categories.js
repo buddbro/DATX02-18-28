@@ -1,7 +1,9 @@
 import React from 'react';
-import { AsyncStorage, View, StyleSheet, Text } from 'react-native';
+import { AsyncStorage, View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Radar } from 'react-native-pathjs-charts';
 import axios from 'axios';
+
+const { height, width } = Dimensions.get('window');
 
 class Categories extends React.Component {
   constructor(props) {
@@ -10,7 +12,7 @@ class Categories extends React.Component {
     this.state = {
       data: [
         {
-          speed: 0
+          loading: true
         }
       ]
     };
@@ -44,25 +46,24 @@ class Categories extends React.Component {
       }
     ];
 
+    const max = Object.keys(this.state.data[0]).reduce((acc, next) => {
+      return acc < this.state.data[0][next] ? this.state.data[0][next] : acc;
+    }, 0);
+
     let options = {
-      width: 270,
-      height: 270,
-      margin: {
-        top: 10,
-        left: 20,
-        right: 20,
-        bottom: 10
-      },
+      width,
+      height: 300,
+      // margin: {
+      //   top: 10,
+      //   left: 20,
+      //   right: 20,
+      //   bottom: 10
+      // },
       r: 120,
-      max: 3,
+      rings: 1,
+      max: max + 1,
       fill: '#b9baf1',
-      stroke: '#98e0d2',
-      // fill: '#2980B9',
-      // stroke: '#2980B9',
-      animate: {
-        type: 'oneByOne',
-        duration: 200
-      },
+      stroke: '#baf2d4',
       label: {
         fontFamily: 'Arial',
         fontSize: 14,
@@ -70,15 +71,13 @@ class Categories extends React.Component {
       }
     };
 
-    if (!this.state.data) {
+    if (this.state.data[0].loading) {
       return <View />;
     }
 
-    console.log(this.state.data);
-
     return (
       <View style={styles.container}>
-        {/* <Radar data={this.state.data} options={options} /> */}
+        <Radar data={this.state.data} options={options} />
       </View>
     );
   }

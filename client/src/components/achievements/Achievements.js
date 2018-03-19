@@ -15,20 +15,28 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class Achievements extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/achievements.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Header>
-          <BackArrow
-            callback={() =>
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              )}
-          />
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.info}>Info</Text>
+        <Header backgroundColor="#b9baf1">
+          <View />
+          <Text style={styles.headerTitle}>Achievements</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={{ width: 30, height: 30 }}
+            />
           </TouchableOpacity>
         </Header>
         <ScrollView>
@@ -57,6 +65,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff'
+  },
+  headerTitle: {
+    fontSize: 32,
+    color: 'white'
   },
   info: {
     fontSize: 20,

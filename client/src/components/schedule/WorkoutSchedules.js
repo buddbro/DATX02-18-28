@@ -21,6 +21,15 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/schedules.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   constructor(props) {
     super(props);
 
@@ -40,16 +49,7 @@ class WorkoutSchedules extends React.Component {
         scrollEnabled={false}
         enableOnAndroid={true}
       >
-        <Header>
-          <BackArrow
-            callback={() =>
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              )
-            }
-          />
+        <Header backgroundColor="#b9baf1">
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -57,14 +57,22 @@ class WorkoutSchedules extends React.Component {
           >
             <Text
               style={{
-                marginTop: -24,
                 fontSize: 56,
-                fontWeight: '100',
-                color: '#000'
+                color: '#fff',
+                fontWeight: '200'
               }}
             >
               +
             </Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Schedules</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={{ width: 30, height: 30 }}
+            />
           </TouchableOpacity>
         </Header>
         <ScrollView>
@@ -96,6 +104,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff'
+  },
+  headerTitle: {
+    fontSize: 32,
+    color: 'white'
   },
   headline: {
     fontSize: 32,
