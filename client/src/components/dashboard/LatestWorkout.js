@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { chooseWorkout } from '../../actions';
 import LatestExercise from './LatestExercise';
+import RatingWrapper from '../utilities/RatingWrapper';
 
 class LatestWorkout extends React.Component {
   constructor(props) {
@@ -62,8 +63,17 @@ class LatestWorkout extends React.Component {
               );
             }}
           />
-          <Text style={styles.workoutTraitText}>Difficulty</Text>
-          <Text style={styles.workoutTraitText}>Notes</Text>
+
+          {this.props.latestWorkout.difficulty
+            ? <View style={styles.difficultyStyle}>
+                <Text style={styles.workoutTraitText}>Difficulty</Text>
+                <RatingWrapper
+                  rating={this.props.latestWorkout.difficulty}
+                  editable={false}
+                />
+              </View>
+            : null}
+
           <TouchableOpacity
             style={styles.continueButton}
             onPress={() => {
@@ -86,12 +96,12 @@ class LatestWorkout extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.accordionHeader}
+          style={styles.addWorkout}
           onPress={() => {
             this.setState({ toggled: !this.state.toggled });
           }}
         >
-          <Text style={styles.accordionTitle}>Latest workout</Text>
+          <Text style={styles.menuItem}>Latest workout</Text>
         </TouchableOpacity>
         {this.toggleAccordion()}
       </View>
@@ -99,7 +109,6 @@ class LatestWorkout extends React.Component {
   }
 }
 const mapStateToProps = ({ workout }) => {
-  //const latestWorkout = workout.workouts[workout.workouts.length - 1];
   const latestWorkout = workout.workouts[0];
   const { exercises } = workout;
   return {
@@ -111,11 +120,25 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  addWorkout: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#b9baf1',
+    backgroundColor: 'white'
+  },
+  menuItem: {
+    color: '#b9baf1',
+    fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   container: {
-    marginLeft: 15,
-    marginRight: 15,
     marginBottom: 10,
-    marginTop: 10,
+    width: '100%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -185,6 +208,12 @@ const styles = StyleSheet.create({
   },
   workoutTraitText: {
     fontSize: 18,
-    color: 'white',
+    color: 'white'
   },
+  difficultyStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 10
+  }
 });

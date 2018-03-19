@@ -16,7 +16,7 @@ import NavigationActions from 'react-navigation';
 import sha256 from 'sha256';
 import { connect } from 'react-redux';
 import { loginWithToken } from '../../../actions';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -87,11 +87,11 @@ class CreateAccount extends React.Component {
   render() {
     return (
       <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-    >
+        style={{ backgroundColor: '#fff' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+      >
         <View style={styles.head}>
           <Text style={styles.headline}>Welcome</Text>
         </View>
@@ -100,8 +100,10 @@ class CreateAccount extends React.Component {
             style={styles.textInput}
             placeholder="Name"
             onChangeText={name => this.setState({ name })}
-            // value={this.state.name}
             secureTextEntry={false}
+            underlineColorAndroid="transparent"
+            autoCapitalize="words"
+            autoCorrect={false}
           />
           <TextInput
             style={styles.textInput}
@@ -109,7 +111,9 @@ class CreateAccount extends React.Component {
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })}
             keyboardType="email-address"
-            secureTextEntry={false}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
           <TextInput
             style={styles.textInput}
@@ -117,6 +121,9 @@ class CreateAccount extends React.Component {
             onChangeText={password =>
               this.setState({ password: password.toLowerCase() })}
             secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
 
           {this.renderError()}

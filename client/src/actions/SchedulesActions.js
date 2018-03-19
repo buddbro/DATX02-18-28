@@ -57,7 +57,6 @@ export function deleteSchedule(id) {
 }
 
 export function editSchedule(id, title) {
-  console.log(id, title);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

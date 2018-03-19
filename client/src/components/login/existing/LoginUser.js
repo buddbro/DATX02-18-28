@@ -13,7 +13,7 @@ import {
   fetchWorkouts,
   fetchSchedules
 } from '../../../actions';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import NavigationActions from 'react-navigation';
 
 class LoginUser extends React.Component {
@@ -55,11 +55,11 @@ class LoginUser extends React.Component {
 
     return (
       <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-    >
+        style={{ backgroundColor: '#fff' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+      >
         <View style={styles.head}>
           <Text style={styles.headline}>PushApp</Text>
         </View>
@@ -70,16 +70,22 @@ class LoginUser extends React.Component {
             placeholder="Email"
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })}
-            // value={this.state.email}
             keyboardType="email-address"
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            returnKeyType="go"
+            autoCorrect={false}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
             onChangeText={password =>
               this.setState({ password: password.toLowerCase() })}
-            // value={this.state.password}
             secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            returnKeyType="go"
+            autoCorrect={false}
           />
 
           {this.renderError()}
@@ -118,7 +124,9 @@ class LoginUser extends React.Component {
               );
             }}
           >
-            <Text style={{ color: '#858080' }}>Don't have an account yet? Create one!</Text>
+            <Text style={{ color: '#858080' }}>
+              Don't have an account yet? Create one!
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>

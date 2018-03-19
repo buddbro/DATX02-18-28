@@ -34,7 +34,7 @@ const pgp = require('pg-promise')(options);
 const connection = {
   host: 'localhost',
   port: 5432,
-  database: 'pushapp_v1',
+  database: 'pushapp_v2',
   user: 'postgres',
   password: 'postgres'
 };
@@ -45,16 +45,14 @@ const resetPasswordGet = (req, res, next) =>
 const resetPasswordPost = (req, res, next) =>
   user.resetPasswordPost(req, res, next, db);
 const getAllUsers = (req, res, next) => user.getAllUsers(req, res, next, db);
+const getUser = (req, res, next) => user.getUser(req, res, next, db);
 const getUserByEmail = (req, res, next) =>
   user.getUserByEmail(req, res, next, db);
 const updateUser = (req, res, next) => user.updateUser(req, res, next, db);
 const registerUser = (req, res, next) =>
   user.registerUser(req, res, next, db, sendMail);
 const login = (req, res, next) => user.login(req, res, next, db);
-const loginJWT = (req, res, next) => user.loginJWT(req, res, next, db);
 const verifyToken = (req, res, next) => user.verifyToken(req, res, next, db);
-const loginWithToken = (req, res, next) =>
-  user.loginWithToken(req, res, next, db);
 const logout = (req, res, next) => user.logout(req, res, next, db);
 const sendResetPasswordEmail = (req, res, next) =>
   user.sendResetPasswordEmail(req, res, next, db);
@@ -62,18 +60,17 @@ const sendResetPasswordEmail = (req, res, next) =>
 const getWorkouts = (req, res, next) => workout.getWorkouts(req, res, next, db);
 const getWorkoutsForUser = (req, res, next) =>
   workout.getWorkoutsForUser(req, res, next, db);
-const getWorkoutsForUserLegacy = (req, res, next) =>
-  workout.getWorkoutsForUserLegacy(req, res, next, db);
 const getWorkoutWithId = (req, res, next) =>
   workout.getWorkoutWithId(req, res, next, db);
 const getSetsForExercise = (req, res, next) =>
   workout.getSetsForExercise(req, res, next, db);
 const addWorkout = (req, res, next) => workout.addWorkout(req, res, next, db);
-const addWorkoutFromSchedule = (req, res, next) =>
-  workout.addWorkoutFromSchedule(req, res, next, db);
 const deleteWorkout = (req, res, next) =>
   workout.deleteWorkout(req, res, next, db);
 const editWorkout = (req, res, next) => workout.editWorkout(req, res, next, db);
+const setDifficulty = (req, res, next) =>
+  workout.setDifficulty(req, res, next, db);
+const saveNotes = (req, res, next) => workout.saveNotes(req, res, next, db);
 const addExerciseToWorkout = (req, res, next) =>
   workout.addExerciseToWorkout(req, res, next, db);
 const addSetToExercise = (req, res, next) =>
@@ -99,22 +96,26 @@ const postFeedback = (req, res, next) =>
 
 const fetchExerciseList = (req, res, next) =>
   exercise.fetchExerciseList(req, res, next, db);
+const fetchExerciseTypes = (req, res, next) =>
+  exercise.fetchExerciseTypes(req, res, next, db);
 const fetchExerciseDescription = (req, res, next) =>
   exercise.fetchExerciseDescription(req, res, next, db);
 const addExerciseType = (req, res, next) =>
   exercise.addExerciseType(req, res, next, db);
+const countExercises = (req, res, next) =>
+  exercise.countExercises(req, res, next, db);
 const editExercise = (req, res, next) =>
   exercise.editExercise(req, res, next, db);
+const deleteExerciseType = (req, res, next) =>
+  exercise.deleteExerciseType(req, res, next, db);
 
 module.exports = {
   getAllUsers,
+  getUser,
   registerUser,
   getUserByEmail,
   login,
-  loginJWT,
   verifyToken,
-  loginWithToken,
-  logout,
   sendResetPasswordEmail,
   resetPasswordGet,
   resetPasswordPost,
@@ -124,12 +125,16 @@ module.exports = {
   deleteWorkout,
   editWorkout,
   postFeedback,
+  setDifficulty,
+  saveNotes,
   getFeedback,
   getWorkoutsForUser,
-  getWorkoutsForUserLegacy,
   fetchExerciseList,
   fetchExerciseDescription,
   addExerciseType,
+  countExercises,
+  deleteExerciseType,
+  fetchExerciseTypes,
   editExercise,
   addExerciseToWorkout,
   addSetToExercise,
@@ -140,6 +145,5 @@ module.exports = {
   addSchedule,
   deleteSchedule,
   editSchedule,
-  addExeciseToSchedule,
-  addWorkoutFromSchedule
+  addExeciseToSchedule
 };

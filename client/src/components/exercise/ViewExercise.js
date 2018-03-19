@@ -21,6 +21,8 @@ import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
+import Header from '../utilities/Header';
+import BackArrow from '../utilities/BackArrow';
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -98,54 +100,32 @@ class ViewExercise extends React.Component {
     return (
       <View style={styles.container}>
         {this.viewInstructions()}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            onPress={() => {
+        <Header>
+          <BackArrow
+            callback={() => {
               this.props.clearExercise();
+              this.setState({ reps: '', sets: '' });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
                 })
               );
             }}
-          >
-            <Image
-              style={{ width: 35, height: 35 }}
-              source={require('../../../assets/back_arrow_black.png')}
-            />
-          </TouchableOpacity>
+          />
           <View style={styles.titleContainer}>
             <Text style={styles.exerciseTitle}>
               {this.props.visibleExercise}
             </Text>
           </View>
-        </View>
+        </Header>
         <ScrollView>
-          <View
-            style={{ backgroundColor: '#fff', margin: 10, borderRadius: 3 }}
-          >
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                backgroundColor: '#6669cb',
-                borderTopLeftRadius: 5,
-                borderTopRightRadius: 5,
-                marginLeft: 8,
-                marginRight: 8
-              }}
-            >
+          <View style={styles.setsContainer}>
+            <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  #
-                </Text>
+                <Text style={styles.setNumber}>#</Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={styles.sets}>
                 <Text
                   style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
                 >
@@ -153,7 +133,7 @@ class ViewExercise extends React.Component {
                 </Text>
               </View>
 
-              <View style={{ width: '40%' }}>
+              <View style={styles.reps}>
                 <Text
                   style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
                 >
@@ -274,15 +254,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     backgroundColor: '#fff',
-    paddingTop: 50,
     height: '100%'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingBottom: 10
   },
   addSetButton: {
     alignItems: 'center',
@@ -296,8 +268,34 @@ const styles = StyleSheet.create({
   },
   exerciseTitle: {
     color: '#6669cb',
-    fontSize: 32,
+    fontSize: 26,
     fontWeight: 'bold'
+  },
+  setsContainer: {
+    backgroundColor: '#fff',
+    margin: 10,
+    borderRadius: 3
+  },
+  singleSetContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#6669cb',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginLeft: 8,
+    marginRight: 8
+  },
+  setNumber: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#fff'
+  },
+  sets: {
+    width: '40%'
+  },
+  reps: {
+    width: '40%'
   },
   instructions: {
     fontWeight: '200',
@@ -306,6 +304,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginLeft: -35,
+    zIndex: -5,
     justifyContent: 'center',
     flex: 7,
     borderRadius: 3,
