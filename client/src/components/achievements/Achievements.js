@@ -15,6 +15,15 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class Achievements extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/achievements.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -25,7 +34,8 @@ class Achievements extends React.Component {
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Dashboard'
                 })
-              )}
+              )
+            }
           />
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles.info}>Info</Text>

@@ -19,6 +19,15 @@ import BackArrow from '../utilities/BackArrow';
 const { height, width } = Dimensions.get('window');
 
 class WorkoutHistory extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/time.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   render() {
     return (
       <View style={styles.container}>

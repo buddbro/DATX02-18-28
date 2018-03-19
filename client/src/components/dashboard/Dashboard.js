@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Button
+  Button,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -17,6 +18,14 @@ import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/dashboard.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
   constructor(props) {
     super(props);
 

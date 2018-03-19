@@ -21,6 +21,15 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/schedules.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   constructor(props) {
     super(props);
 

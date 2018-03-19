@@ -1,7 +1,8 @@
 import {
   TabNavigator,
   DrawerNavigator,
-  StackNavigator
+  StackNavigator,
+  Image
 } from 'react-navigation';
 
 import { Text } from 'react-native';
@@ -32,8 +33,8 @@ const DrawerStack = DrawerNavigator(
     Dashboard: {
       screen: Dashboard
     },
-    WorkoutHistory: { screen: WorkoutHistory },
-    WorkoutSchedule: { screen: WorkoutSchedules },
+    History: { screen: WorkoutHistory },
+    Schedule: { screen: WorkoutSchedules },
     Achievements: { screen: Achievements },
     Settings: { screen: Settings }
   },
