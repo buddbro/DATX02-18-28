@@ -9,6 +9,8 @@ import { Text } from 'react-native';
 
 import React from 'react';
 
+import CustomDrawerNavigation from '../components/navigation/CustomDrawerNavigation';
+
 import Dashboard from '../components/dashboard/Dashboard';
 
 import WorkoutSchedules from '../components/schedule/WorkoutSchedules';
@@ -39,6 +41,11 @@ const DrawerStack = DrawerNavigator(
     Settings: { screen: Settings }
   },
   {
+    drawerBackgroundColor: '#E2FBF6',
+    contentOptions: {
+      activeTintColor: '#7ED1C1',
+      labelStyle: { fontSize: 26, fontWeight: '200' }
+    },
     navigationOptions: {
       tabBarVisible: false
     }
