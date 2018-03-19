@@ -6,16 +6,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   SectionList,
-  Header,
   ListItem,
   Image
 } from 'react-native';
-import ExerciseListItem from './ExerciseListItem';
-import ExerciseListHeader from './ExerciseListHeader';
 import { connect } from 'react-redux';
+import { addExerciseToWorkout, addExerciseToSchedule } from '../../actions';
 import NavigationActions from 'react-navigation';
 
-class ExerciseList extends React.PureComponent {
+import ExerciseListItem from './ExerciseListItem';
+import ExerciseListHeader from './ExerciseListHeader';
+import Header from '../utilities/Header';
+import BackArrow from '../utilities/BackArrow';
+
+class ExerciseList extends React.Component {
   renderSectionList() {
     // Reduce exercises returned from database to build the datastructure
     // required for the SectionList component.
@@ -30,13 +33,39 @@ class ExerciseList extends React.PureComponent {
       return [...acc, { data: exerciseList[next], title: next }];
     }, []);
 
+    let callback = () => {};
+    switch (this.props.type) {
+      case 'workout':
+        callback = item => {
+          this.props.addExerciseToWorkout(this.props.workoutId, item.id);
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'ViewWorkout'
+            })
+          );
+        };
+        break;
+      case 'schedule':
+        callback = item => {
+          this.props.addExerciseToSchedule(
+            item.id,
+            item.name,
+            this.props.active.id
+          );
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'WorkoutSchedules'
+            })
+          );
+        };
+    }
+
     return (
       <SectionList
         renderItem={({ item }) =>
           <ExerciseListItem
             name={item.name}
-            exerciseId={item.id}
-            navigation={this.props.navigation}
+            callback={callback.bind(this, item)}
           />}
         renderSectionHeader={({ section }) =>
           <ExerciseListHeader title={section.title} />}
@@ -50,41 +79,41 @@ class ExerciseList extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ paddingLeft: 10 }}>
-          <TouchableOpacity
-            onPress={() => {
+        <Header>
+          <BackArrow
+            callback={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
                 })
               );
             }}
-          >
-            <Image
-              source={require('../../../assets/back_arrow_black.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
-        </View>
+          />
+        </Header>
         {this.renderSectionList()}
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ exercises }) => {
+const mapStateToProps = ({ exercises, workout, schedules, app }) => {
   return {
-    exercises: exercises.list
+    exercises: exercises.list,
+    workoutId: workout.id,
+    active: schedules.active,
+    type: app.exerciseListType
   };
 };
 
-export default connect(mapStateToProps)(ExerciseList);
+export default connect(mapStateToProps, {
+  addExerciseToWorkout,
+  addExerciseToSchedule
+})(ExerciseList);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    paddingTop: 50
+    flexDirection: 'column'
   },
   list: {
     marginTop: 10,

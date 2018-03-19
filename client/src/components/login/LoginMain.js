@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    // justifyContent: 'center',
     paddingTop: 50
   }
 });

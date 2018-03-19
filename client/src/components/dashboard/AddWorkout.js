@@ -21,6 +21,7 @@ class AddWorkout extends React.Component {
     if (this.state.waitForWorkout && nextProps.id >= 0) {
       this.setState({ waitForWorkout: false });
       this.props.chooseWorkout(nextProps.id);
+      this.props.hideModal();
       this.props.navigation.dispatch(
         NavigationActions.NavigationActions.navigate({
           routeName: 'ViewWorkout'
@@ -30,7 +31,7 @@ class AddWorkout extends React.Component {
   }
 
   renderSchedules() {
-    return Object.keys(this.props.schedules.list).map(schedule => (
+    return Object.keys(this.props.schedules.list).map(schedule =>
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
@@ -44,7 +45,7 @@ class AddWorkout extends React.Component {
           </Text>
         </View>
       </TouchableOpacity>
-    ));
+    );
   }
 
   renderAddMenu() {

@@ -11,11 +11,14 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 
 import { addSchedule } from '../../actions';
+
 import ScheduleCard from './ScheduleCard';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Header from '../utilities/Header';
+import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
   constructor(props) {
@@ -37,22 +40,16 @@ class WorkoutSchedules extends React.Component {
         scrollEnabled={false}
         enableOnAndroid={true}
       >
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => {
+        <Header>
+          <BackArrow
+            callback={() =>
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'Dashboard'
                 })
-              );
-            }}
-          >
-            <Image
-              source={require('../../../assets/back_arrow_black.png')}
-              style={{ width: 35, height: 35 }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headline}>Workouts</Text>
+              )
+            }
+          />
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -69,7 +66,7 @@ class WorkoutSchedules extends React.Component {
               +
             </Text>
           </TouchableOpacity>
-        </View>
+        </Header>
         <ScrollView>
           {Object.keys(this.props.list).map((id, index) => (
             <ScheduleCard
@@ -98,9 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
-    // backgroundColor: '#51c1ab',
-    paddingTop: 50
+    backgroundColor: '#fff'
   },
   headline: {
     fontSize: 32,

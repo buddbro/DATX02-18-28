@@ -1,7 +1,11 @@
-import { GET_EXERCISE_DESCRIPTION } from '../actions/types';
+import {
+  GET_EXERCISE_DESCRIPTION,
+  SET_EXERCISE_LIST_TYPE
+} from '../actions/types';
 
 const INITIAL_STATE = {
-  exerciseHelp: { title: 'ehej' }
+  exerciseHelp: { title: '' },
+  exerciseListType: ''
 };
 
 export default function appReducer(state = INITIAL_STATE, action) {
@@ -10,6 +14,11 @@ export default function appReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         exerciseHelp: action.payload
+      };
+    case SET_EXERCISE_LIST_TYPE:
+      return {
+        ...state,
+        exerciseListType: action.payload
       };
     default:
       return state;

@@ -1,41 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import NavigationActions from 'react-navigation';
-import { addExerciseToWorkout } from '../../actions';
-import { connect } from 'react-redux';
 
-class ExerciseListItem extends React.Component {
-  render() {
-    return (
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => {
-          this.props.addExerciseToWorkout(
-            this.props.workoutId,
-            this.props.exerciseId
-          );
-          this.props.navigation.dispatch(
-            NavigationActions.NavigationActions.navigate({
-              routeName: 'ViewWorkout'
-            })
-          );
-        }}
-      >
-        <Text style={styles.nameText}>
-          {this.props.name}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-}
-
-const mapStateToProps = ({ user, workout }) => {
-  return { workoutId: workout.id, userId: user.id, token: user.token };
-};
-
-export default connect(mapStateToProps, { addExerciseToWorkout })(
-  ExerciseListItem
-);
+export default (ExerciseListItem = ({ name, callback }) =>
+  <TouchableOpacity style={styles.container} onPress={callback}>
+    <Text style={styles.text}>
+      {name}
+    </Text>
+  </TouchableOpacity>);
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +16,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
     borderBottomWidth: 1
   },
-  nameText: {
+  text: {
     fontSize: 24
   }
 });

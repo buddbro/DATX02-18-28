@@ -1,6 +1,5 @@
 import {
   ADD_WORKOUT,
-  ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   CHOOSE_WORKOUT,
   FETCH_WORKOUTS,
@@ -13,7 +12,8 @@ import {
   GET_SETS_FOR_EXERCISE,
   VIEW_SET,
   VIEW_EXERCISE,
-  SET_DIFFICULTY
+  SET_DIFFICULTY,
+  SAVE_NOTES
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -69,22 +69,17 @@ export function fetchWorkouts() {
   };
 }
 
-export function editWorkout(id, title) {
+export function editWorkout(id, properties) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
-        .patch(
-          `https://getpushapp.com/api/workouts/${id}`,
-          { title },
-          {
-            headers: { Authorization: `Bearer ${jwt}` }
-          }
-        )
+        .patch(`https://getpushapp.com/api/workouts/${id}`, properties, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
         .then(({ data }) => {
-          console.log(data);
           dispatch({
             type: EDIT_WORKOUT,
-            payload: { title }
+            payload: properties
           });
         });
     });
@@ -103,10 +98,10 @@ export function addWorkout(schedule) {
           }
         )
         .then(({ data }) => {
-          const { id, title, date } = data;
+          const { id, title, date, difficulty, notes, start } = data;
           dispatch({
-            type: ADD_WORKOUT_FROM_SCHEDULE,
-            payload: { id, title, date }
+            type: ADD_WORKOUT,
+            payload: { id, title, date, difficulty, notes, start }
           });
         });
     });
@@ -224,6 +219,26 @@ export function setDifficulty(id, level) {
           dispatch({
             type: SET_DIFFICULTY,
             payload: level
+          });
+        });
+    });
+  };
+}
+
+export function saveNotes(id, notes) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/notes/${id}`,
+          { notes },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(() => {
+          dispatch({
+            type: SAVE_NOTES
           });
         });
     });

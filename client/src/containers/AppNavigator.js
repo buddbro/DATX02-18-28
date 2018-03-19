@@ -8,11 +8,11 @@ import WorkoutHistory from '../components/workout/WorkoutHistory';
 import ViewWorkout from '../components/workout/ViewWorkout';
 import ViewExercise from '../components/exercise/ViewExercise';
 
+import Achievements from '../components/achievements/Achievements';
+
 import LoginUser from '../components/login/existing/LoginUser';
 import ForgotPassword from '../components/login/existing/ForgotPassword';
 import CreateAccount from '../components/login/create/CreateAccount';
-
-import ExerciseListForSchedule from '../components/schedule/ExerciseListForSchedule';
 
 import ExerciseList from '../components/exercise/ExerciseList';
 import ExerciseHelp from '../components/exercise/ExerciseHelp';
@@ -34,6 +34,12 @@ const AppRouteConfigs = {
   },
   Dashboard: {
     screen: Dashboard,
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  },
+  Achievements: {
+    screen: Achievements,
     navigationOptions: {
       tabBarVisible: false
     }
@@ -68,12 +74,6 @@ const AppRouteConfigs = {
       tabBarVisible: false
     }
   },
-  ExerciseListForSchedule: {
-    screen: ExerciseListForSchedule,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
   Settings: {
     screen: Settings,
     navigationOptions: {
@@ -94,4 +94,7 @@ const AppRouteConfigs = {
   }
 };
 
-export default (AppNavigator = TabNavigator(AppRouteConfigs));
+export default (AppNavigator = TabNavigator(AppRouteConfigs, {
+  swipeEnabled: false,
+  animationEnabled: false
+}));
