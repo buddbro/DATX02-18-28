@@ -14,10 +14,24 @@ const getWorkouts = (req, res, next, db) => {
 const getWorkoutsForUser = (req, res, next, db) => {
   db
     .any(
-      'SELECT id, title, date, difficulty FROM workouts WHERE userId = $1 ORDER BY date DESC',
+      'SELECT id, title, date, difficulty, notes, start, stop FROM workouts WHERE userId = $1 ORDER BY date DESC',
       [req.user.id]
     )
     .then(function(data) {
+      data.map(d => {
+        if (d.start) {
+          const startTime = new Date(new Date(d.start).getTime())
+            .toString()
+            .substring(16, 21);
+          d.start = startTime;
+        }
+        if (d.stop) {
+          const stopTime = new Date(new Date(d.stop).getTime())
+            .toString()
+            .substring(16, 21);
+          d.stop = stopTime;
+        }
+      });
       res.json(data);
     })
     .catch(function(err) {
@@ -64,7 +78,9 @@ const getWorkoutWithId = (req, res, next, db) => {
         exercise_types.name AS exercise_title,
         exercise_types.id AS exercise_type_id,
         difficulty,
-        notes
+        notes,
+        start,
+        stop
       FROM workouts, exercises, exercise_types
       WHERE workouts.id = $1
         AND workouts.id = exercises.workout
@@ -83,7 +99,9 @@ const getWorkoutWithId = (req, res, next, db) => {
               workouts.title AS workout_title,
               date,
               difficulty,
-              notes
+              notes,
+              start,
+              stop
             FROM workouts
             WHERE workouts.id = $1`,
             [req.params.id]
@@ -134,9 +152,7 @@ const addWorkout = (req, res, next, db) => {
       } else {
         db
           .any('SELECT title FROM schedules WHERE id = $1', [req.body.schedule])
-          .then(function(data) {
-            resolve(data[0].title);
-          });
+          .then(data => resolve(data[0].title));
       }
     });
   };
@@ -144,27 +160,27 @@ const addWorkout = (req, res, next, db) => {
   titleGenerator().then(title => {
     db
       .any(
-        "INSERT INTO workouts(title, date, userId, difficulty, notes) VALUES($1, $2, $3, 3, '') RETURNING id, title, date",
+        "INSERT INTO workouts(title, date, userId, difficulty, notes, start) VALUES($1, $2, $3, 3, '', NOW()) RETURNING id, title, date, difficulty, notes, start",
         [title, readableDate, req.user.id]
       )
       .then(function(data) {
-        const { id, title, date } = data[0];
+        const { id, title, date, difficulty, notes, start } = data[0];
+        console.log(start);
         if (req.body.schedule === 0) {
-          res.json({ id, title, date });
+          res.json({ id, title, date, difficulty, notes, start });
         } else {
           db
             .any(
               'SELECT exercise_id FROM schedules_exercises WHERE schedule_id = $1',
               [req.body.schedule]
             )
-            .then(function(data) {
-              const exercises = data.reduce((acc, next) => {
-                return [...acc, next.exercise_id, id];
-              }, []);
+            .then(data => {
+              const exercises = data.reduce(
+                (acc, next) => [...acc, next.exercise_id, id],
+                []
+              );
 
-              const workouts = data.reduce((acc, next) => {
-                return [...acc, id];
-              }, []);
+              const workouts = data.reduce((acc, next) => [...acc, id], []);
 
               const values = workouts
                 .reduce(
@@ -184,7 +200,7 @@ const addWorkout = (req, res, next, db) => {
                   exercises
                 )
                 .then(function(data) {
-                  res.json({ id, title, date });
+                  res.json({ id, title, date, difficulty, notes, start });
                 });
             });
         }
@@ -208,10 +224,10 @@ const deleteWorkout = (req, res, next, db) => {
 
 const editWorkout = (req, res, next, db) => {
   db
-    .any('UPDATE workouts SET title = $1 WHERE id = $2', [
-      req.body.title,
-      req.params.id
-    ])
+    .any(
+      'UPDATE workouts SET title = $1, start = $2::timestamptz, stop = $3::timestamptz WHERE id = $4',
+      [req.body.title, req.body.start, req.body.stop, req.params.id]
+    )
     .then(function(data) {
       res.status(200).json(data);
     })

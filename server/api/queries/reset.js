@@ -9,13 +9,15 @@ const resetQuery = `
   DROP TABLE IF EXISTS schedules_exercises CASCADE;
 
   CREATE TABLE users(id SERIAL PRIMARY KEY, email VARCHAR(100) UNIQUE, password VARCHAR(100), name VARCHAR(100), token VARCHAR(100), created VARCHAR(20), lastLogin VARCHAR(20));
-  CREATE TABLE workouts(id SERIAL PRIMARY KEY, title VARCHAR(60), date VARCHAR(20), userId INT REFERENCES users(id) ON DELETE CASCADE);
+  CREATE TABLE workouts(id SERIAL PRIMARY KEY, title VARCHAR(60), date VARCHAR(20), userid INT REFERENCES users(id) ON DELETE CASCADE);
   CREATE TABLE exercise_sections(id SERIAL PRIMARY KEY, title VARCHAR(60));
   CREATE TABLE exercise_types(id SERIAL PRIMARY KEY, section INT REFERENCES exercise_sections(id) ON DELETE CASCADE, name VARCHAR(60));
   CREATE TABLE exercises(id SERIAL PRIMARY KEY, exercise_type INT REFERENCES exercise_types(id) ON DELETE CASCADE, workout INT REFERENCES workouts(id) ON DELETE CASCADE);
   CREATE TABLE sets(id SERIAL PRIMARY KEY, exercise INT REFERENCES exercises(id) ON DELETE CASCADE, reps INT, weight INT);
   CREATE TABLE schedules(id SERIAL PRIMARY KEY, user_id INT, title TEXT);
   CREATE TABLE schedules_exercises(id SERIAL PRIMARY KEY, schedule_id INT REFERENCES schedules(id) ON DELETE CASCADE, exercise_id INT REFERENCES exercise_types(id) ON DELETE CASCADE);
+  CREATE TABLE achievements(id SERIAL PRIMARY KEY, name TEXT, image TEXT, description TEXT);
+  CREATE TABLE achievements_user(id serial primary key, user_id INT REFERENCES users(id), achievement INT REFERENCES achievements(id), obtained_date TIMESTAMP WITHOUT TIME ZONE, obtained_times INT);
 
   INSERT INTO users(email, password, name, created) VALUES('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test User', '2018-02-04 19:03:42');
   INSERT INTO users(email, password, name, created) VALUES('fest', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Fest User', '2018-02-05 10:13:22');
