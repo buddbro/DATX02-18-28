@@ -6,12 +6,12 @@ const INITIAL_STATE = {
   list: []
 };
 
-export default function user(state = INITIAL_STATE, action) {
+export default function workouts(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_WORKOUTS:
       return {
         ...state,
-        list: action.payload
+        list: action.payload.workouts
       };
     default:
       return state;
