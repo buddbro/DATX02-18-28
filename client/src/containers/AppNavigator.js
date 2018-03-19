@@ -1,4 +1,12 @@
-import { TabNavigator } from 'react-navigation';
+import {
+  TabNavigator,
+  DrawerNavigator,
+  StackNavigator
+} from 'react-navigation';
+
+import { Text } from 'react-native';
+
+import React from 'react';
 
 import Dashboard from '../components/dashboard/Dashboard';
 
@@ -19,82 +27,85 @@ import ExerciseHelp from '../components/exercise/ExerciseHelp';
 
 import Settings from '../components/dashboard/Settings';
 
-const AppRouteConfigs = {
-  LoginUser: {
-    screen: LoginUser,
-    navigationOptions: {
-      tabBarVisible: false
-    }
+const DrawerStack = DrawerNavigator(
+  {
+    Dashboard: {
+      screen: Dashboard
+    },
+    WorkoutHistory: { screen: WorkoutHistory },
+    WorkoutSchedule: { screen: WorkoutSchedules },
+    Achievements: { screen: Achievements },
+    Settings: { screen: Settings }
   },
-  CreateAccount: {
-    screen: CreateAccount,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  Dashboard: {
-    screen: Dashboard,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  Achievements: {
-    screen: Achievements,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  WorkoutSchedules: {
-    screen: WorkoutSchedules,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  WorkoutHistory: {
-    screen: WorkoutHistory,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  ViewWorkout: {
-    screen: ViewWorkout,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  ViewExercise: {
-    screen: ViewExercise,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  ExerciseList: {
-    screen: ExerciseList,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  Settings: {
-    screen: Settings,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  ExerciseHelp: {
-    screen: ExerciseHelp,
-    navigationOptions: {
-      tabBarVisible: false
-    }
-  },
-  ForgotPassword: {
-    screen: ForgotPassword,
+  {
     navigationOptions: {
       tabBarVisible: false
     }
   }
-};
+);
 
-export default (AppNavigator = TabNavigator(AppRouteConfigs, {
-  swipeEnabled: false,
-  animationEnabled: false
-}));
+const MiscStack = TabNavigator(
+  {
+    ExerciseHelp: {
+      screen: ExerciseHelp
+    },
+    ViewWorkout: {
+      screen: ViewWorkout
+    },
+    ViewExercise: {
+      screen: ViewExercise
+    },
+    ExerciseList: {
+      screen: ExerciseList
+    }
+  },
+  {
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  }
+);
+
+const DrawerNavigation = TabNavigator(
+  {
+    DrawerStack: { screen: DrawerStack }
+  },
+  {
+    headerMode: 'float',
+    navigationOptions: ({ navigation }) => ({
+      headerStyle: { backgroundColor: 'green' },
+      tabBarVisible: false,
+      headerLeft: (
+        <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
+      )
+    })
+  }
+);
+
+// login stack
+const LoginStack = TabNavigator(
+  {
+    LoginUser: { screen: LoginUser },
+    CreateAccount: { screen: CreateAccount },
+    ForgotPassword: { screen: ForgotPassword }
+  },
+  {
+    navigationOptions: {
+      tabBarVisible: false
+    }
+  }
+);
+
+export default (AppNavigator = TabNavigator(
+  {
+    LoginStack: { screen: LoginStack },
+    DrawerStack: { screen: DrawerNavigation },
+    MiscStack: { screen: MiscStack }
+  },
+  {
+    // Default config for all screens
+    headerMode: 'none',
+    initialRouteName: 'LoginStack',
+    tabBarVisible: false
+  }
+));

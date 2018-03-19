@@ -85,38 +85,11 @@ class ProfileHeader extends React.Component {
             }}
           >
             <TouchableOpacity
-              style={{
-                marginLeft: 10
-              }}
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Settings'
-                  })
-                );
-              }}
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
             >
               <Image
-                source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 20 }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginRight: 10
-              }}
-              onPress={() => {
-                this.props.logout(this.props.user.id);
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginUser'
-                  })
-                );
-              }}
-            >
-              <Image
-                source={require('../../../assets/exit.png')}
-                style={{ width: 35, height: 35, marginTop: 20 }}
+                source={require('../../../assets/menu-lines.png')}
+                style={{ width: 40, height: 40 }}
               />
             </TouchableOpacity>
           </View>
@@ -127,12 +100,6 @@ class ProfileHeader extends React.Component {
               backgroundColor: '#7ad9c6'
             }}
           >
-            {/*
-              <Image
-                source={require('../../../assets/avatar_default.png')}
-                style={{ width: 45, height: 45, alignSelf: 'center' }}
-              />
-            */}
             <Text style={styles.userWelcome}>
               Welcome back {this.props.user.name}!
             </Text>

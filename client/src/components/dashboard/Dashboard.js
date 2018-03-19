@@ -93,46 +93,6 @@ class Dashboard extends React.Component {
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
-
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'WorkoutHistory'
-                  })
-                )
-              }
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>History</Text>
-              <Text style={styles.menuItemText}>></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'WorkoutSchedules'
-                  })
-                );
-              }}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>Workouts</Text>
-              <Text style={styles.menuItemText}>></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Achievements'
-                  })
-                );
-              }}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>Achievements</Text>
-              <Text style={styles.menuItemText}>></Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
         <View style={styles.buttonContainer}>

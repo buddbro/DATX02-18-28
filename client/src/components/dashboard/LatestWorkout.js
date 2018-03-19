@@ -137,8 +137,10 @@ class LatestWorkout extends React.Component {
                 source={require('../../../assets/time.png')}
                 style={styles.icons}
               />
-              <Text style={styles.timeStamp}>{this.convertTimeStamp()}</Text>
-              <Text>minutes</Text>
+              <View style={styles.innerRectangle}>
+                <Text style={styles.timeStamp}>{this.convertTimeStamp()}</Text>
+                <Text style={styles.smallText}>minutes</Text>
+              </View>
             </View>
             <View style={styles.rectangle}>{this.translateDifficulty()}</View>
           </View>
@@ -165,16 +167,26 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  innerRectangle: {
+    flexDirection: 'column',
+    marginLeft: 20
+  },
   icons: {
-    width: 30,
-    height: 30
+    marginLeft: -30,
+    width: 25,
+    height: 25
+  },
+  smallText: {
+    fontSize: 12,
+    fontWeight: '200',
+    color: 'gray'
   },
   rectangleParent: {
     flexDirection: 'row',
     marginBottom: 15
   },
   rectangle: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
