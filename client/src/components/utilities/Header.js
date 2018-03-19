@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-export default (Header = ({ children }) =>
-  <View style={styles.header}>
-    {children}
-  </View>);
+export default (Header = ({ children, backgroundColor }) => (
+  <View style={[styles.header, { backgroundColor }]}>{children}</View>
+));
 
 const styles = StyleSheet.create({
   header: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 35,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    justifyContent: 'space-between'
+    paddingTop: 35,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });

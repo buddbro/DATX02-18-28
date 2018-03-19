@@ -142,7 +142,13 @@ class LatestWorkout extends React.Component {
                 <Text style={styles.smallText}>minutes</Text>
               </View>
             </View>
-            <View style={styles.rectangle}>{this.translateDifficulty()}</View>
+            <View style={styles.rectangle}>
+              <Image
+                source={require('../../../assets/flash.png')}
+                style={styles.iconsSpecial}
+              />
+              {this.translateDifficulty()}
+            </View>
           </View>
 
           <View style={styles.difficultyStyle}>
@@ -170,6 +176,12 @@ const styles = StyleSheet.create({
   innerRectangle: {
     flexDirection: 'column',
     marginLeft: 20
+  },
+  iconsSpecial: {
+    width: 35,
+    height: 35,
+    zIndex: 999,
+    position: 'absolute'
   },
   icons: {
     marginLeft: -30,
