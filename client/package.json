@@ -26,6 +26,7 @@
     "bcrypt": "^1.0.3",
     "expo": "^25.0.0",
     "md5": "^2.2.1",
+    "npm": "^5.7.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-camera-roll-picker": "^1.2.3",
