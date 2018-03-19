@@ -27,6 +27,11 @@ class Achievements extends React.Component {
         <View style={styles.achievementsContainer}>
           <AchievementCell
             image={require('../../../assets/achievements/time.png')}
+            title="Stronger by the minute"
+          />
+          <AchievementCell
+            image={require('../../../assets/achievements/nightowl.png')}
+            title="Night Owl"
           />
         </View>
       </View>
@@ -49,6 +54,7 @@ const styles = StyleSheet.create({
   achievementsContainer: {
     flex: 1,
     alignItems: 'flex-start',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });
