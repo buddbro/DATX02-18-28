@@ -49,8 +49,8 @@ class LoggedInMenu extends React.Component {
                 active={this.state.activeItem === 'pushapp'}
                 onClick={this.handleItemClick}
               >
-                <Icon name="home" inverted />
-                PushApp
+                <Icon name="tasks" inverted />
+                Dashboard
               </Menu.Item>
             </Link>
             <Link to="/app/exercises">

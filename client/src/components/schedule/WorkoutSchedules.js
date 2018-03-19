@@ -21,6 +21,15 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/schedules.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
+
   constructor(props) {
     super(props);
 
@@ -40,15 +49,7 @@ class WorkoutSchedules extends React.Component {
         scrollEnabled={false}
         enableOnAndroid={true}
       >
-        <Header>
-          <BackArrow
-            callback={() =>
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              )}
-          />
+        <Header backgroundColor="#b9baf1">
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -56,18 +57,26 @@ class WorkoutSchedules extends React.Component {
           >
             <Text
               style={{
-                marginTop: -24,
                 fontSize: 56,
-                fontWeight: '100',
-                color: '#000'
+                color: '#fff',
+                fontWeight: '200'
               }}
             >
               +
             </Text>
           </TouchableOpacity>
+          <Text style={styles.headerTitle}>Schedules</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={{ width: 30, height: 30 }}
+            />
+          </TouchableOpacity>
         </Header>
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) =>
+          {Object.keys(this.props.list).map((id, index) => (
             <ScheduleCard
               key={`schedule${index}`}
               title={this.props.list[id].title}
@@ -75,7 +84,7 @@ class WorkoutSchedules extends React.Component {
               exercises={this.props.list[id].exercises}
               navigation={this.props.navigation}
             />
-          )}
+          ))}
         </ScrollView>
       </KeyboardAwareScrollView>
     );
@@ -96,12 +105,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff'
   },
+  headerTitle: {
+    fontSize: 32,
+    color: 'white'
+  },
+  headline: {
+    fontSize: 32,
+    color: '#b9baf1'
+  },
   header: {
     display: 'flex',
     flexDirection: 'row',
     marginLeft: 10,
     marginRight: 10,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   modalContainer: {
     flex: 1,

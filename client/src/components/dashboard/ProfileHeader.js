@@ -81,69 +81,36 @@ class ProfileHeader extends React.Component {
             style={{
               backgroundColor: '#7ad9c6',
               flexDirection: 'row',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginRight: 10,
+              marginLeft: 70,
+              paddingTop: 10,
+              paddingBottom: 10
             }}
           >
-            <TouchableOpacity
+            <View
               style={{
-                marginLeft: 10
-              }}
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Settings'
-                  })
-                );
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#7ad9c6'
               }}
             >
-              <Image
-                source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 20 }}
-              />
-            </TouchableOpacity>
+              <Text style={styles.userWelcome}>
+                Welcome back {this.props.user.name}!
+              </Text>
+              <Text style={styles.tagline}>Ready to rock?</Text>
+            </View>
             <TouchableOpacity
-              style={{
-                marginRight: 10
-              }}
-              onPress={() => {
-                this.props.logout(this.props.user.id);
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginUser'
-                  })
-                );
-              }}
+              onPress={() => this.props.navigation.navigate('DrawerOpen')}
             >
               <Image
-                source={require('../../../assets/exit.png')}
-                style={{ width: 35, height: 35, marginTop: 20 }}
+                source={require('../../../assets/menu.png')}
+                style={{ width: 30, height: 30 }}
               />
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            {/*
-              <Image
-                source={require('../../../assets/avatar_default.png')}
-                style={{ width: 45, height: 45, alignSelf: 'center' }}
-              />
-            */}
-            <Text style={styles.userWelcome}>
-              Welcome back {this.props.user.name}!
-            </Text>
-          </View>
-          <View
-            style={{
-              backgroundColor: '#7ad9c6'
-            }}
-          >
-            <Text style={styles.tagline}>Ready to rock?</Text>
-          </View>
+
           {/* <Svg height="50" width={width}>
             <Svg.Ellipse
               cx={width / 2}

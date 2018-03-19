@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
-  Button
+  Button,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -17,6 +18,14 @@ import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/dashboard.png')}
+        style={{ width: 30, height: 30, borderRadius: 10 }}
+      />
+    )
+  };
   constructor(props) {
     super(props);
 
@@ -95,42 +104,6 @@ class Dashboard extends React.Component {
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
-
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'WorkoutHistory'
-                  })
-                )}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>History</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'WorkoutSchedules'
-                  })
-                );
-              }}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>Workouts</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Achievements'
-                  })
-                );
-              }}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>Achievements</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
         <View style={styles.buttonContainer}>
@@ -213,7 +186,9 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
+    borderColor: 'gray',
+    paddingBottom: 20
   },
   todayText: {
     fontSize: 26,
@@ -221,7 +196,7 @@ const styles = StyleSheet.create({
     fontWeight: '200'
   },
   latestWorkout: {
-    marginTop: 30,
+    marginTop: 10,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -230,17 +205,17 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    borderWidth: 1,
-    borderColor: '#b9baf1',
-    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    height: 60,
+    backgroundColor: '#b9baf1',
     marginBottom: 10
   },
   menuItemText: {
-    color: '#b9baf1',
-    fontSize: 32,
+    color: 'white',
+    fontSize: 26,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'left',
+    marginLeft: 15,
+    marginRight: 15
   }
 });

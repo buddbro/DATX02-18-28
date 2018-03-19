@@ -6,20 +6,94 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
 import ExerciseCard from '../exercise/ExerciseCard';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { chooseWorkout } from '../../actions';
-import LatestExercise from './LatestExercise';
+import Categories from './Categories';
 import RatingWrapper from '../utilities/RatingWrapper';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 class LatestWorkout extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { toggled: false, loading: true };
+  }
+
+  translateDifficulty() {
+    if (this.props.latestWorkout.difficulty == 1) {
+      return (
+        <AnimatedCircularProgress
+          size={60}
+          width={15}
+          fill={20}
+          tintColor="#94F5E2"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"
+        />
+      );
+    } else if (this.props.latestWorkout.difficulty == 2) {
+      return (
+        <AnimatedCircularProgress
+          size={60}
+          width={15}
+          fill={40}
+          tintColor="#00EFC0"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"
+        />
+      );
+    } else if (this.props.latestWorkout.difficulty == 3) {
+      return (
+        <AnimatedCircularProgress
+          size={60}
+          width={15}
+          fill={60}
+          tintColor="#51C1AB"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"
+        />
+      );
+    } else if (this.props.latestWorkout.difficulty == 4) {
+      return (
+        <AnimatedCircularProgress
+          size={60}
+          width={15}
+          fill={80}
+          tintColor="#FFE319"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"
+        />
+      );
+    } else if (this.props.latestWorkout.difficulty == 5) {
+      return (
+        <AnimatedCircularProgress
+          size={60}
+          width={15}
+          fill={100}
+          tintColor="#FF5858"
+          onAnimationComplete={() => console.log('onAnimationComplete')}
+          backgroundColor="#3d5875"
+        />
+      );
+    }
+  }
+
+  convertTimeStamp() {
+    if (!this.props.latestWorkout.stop || !this.props.latestWorkout.start) {
+      return null;
+    }
+    var hours =
+      parseInt(this.props.latestWorkout.stop.slice(0, 2)) -
+      parseInt(this.props.latestWorkout.start.slice(0, 2));
+    var minutes =
+      parseInt(this.props.latestWorkout.stop.slice(3, 5)) -
+      parseInt(this.props.latestWorkout.start.slice(3, 5));
+    return hours * 60 + minutes;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,14 +107,22 @@ class LatestWorkout extends React.Component {
     }
   }
 
-  toggleAccordion() {
+  render() {
     if (!this.props.latestWorkout) {
       return null;
-    }
-
-    if (this.state.toggled) {
+    } else {
       return (
-        <View style={styles.accordionBody}>
+        <TouchableOpacity
+          style={styles.accordionBody}
+          onPress={() => {
+            this.props.chooseWorkout(this.props.latestWorkout.id);
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'ViewWorkout'
+              })
+            );
+          }}
+        >
           <View style={styles.workoutHeader}>
             <Text style={styles.workoutTitle}>
               {this.props.latestWorkout.title}
@@ -49,63 +131,35 @@ class LatestWorkout extends React.Component {
               {this.props.latestWorkout.date.substring(0, 10)}
             </Text>
           </View>
-          <FlatList
-            style={styles.exercises}
-            data={this.props.exercises}
-            keyExtractor={(item, index) => `exercise${item.id}`}
-            renderItem={({ item }) => {
-              return (
-                <LatestExercise
-                  id={item.id}
-                  title={item.title}
-                  exerciseTypeId={item.exercise_type_id}
-                />
-              );
-            }}
-          />
-
-          {this.props.latestWorkout.difficulty
-            ? <View style={styles.difficultyStyle}>
-                <Text style={styles.workoutTraitText}>Difficulty</Text>
-                <RatingWrapper
-                  rating={this.props.latestWorkout.difficulty}
-                  editable={false}
-                />
+          <View style={styles.rectangleParent}>
+            <View style={styles.rectangle}>
+              <Image
+                source={require('../../../assets/time.png')}
+                style={styles.icons}
+              />
+              <View style={styles.innerRectangle}>
+                <Text style={styles.timeStamp}>
+                  {this.convertTimeStamp()}
+                </Text>
+                <Text style={styles.smallText}>minutes</Text>
               </View>
-            : null}
+            </View>
+            <View style={styles.rectangle}>
+              <Image
+                source={require('../../../assets/flash.png')}
+                style={styles.iconsSpecial}
+              />
+              {this.translateDifficulty()}
+            </View>
+          </View>
 
-          <TouchableOpacity
-            style={styles.continueButton}
-            onPress={() => {
-              this.props.chooseWorkout(this.props.latestWorkout.id);
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
-                })
-              );
-            }}
-          >
-            <Text style={styles.continueText}>Continue workout</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.difficultyStyle}>
+            <Categories workoutId={this.props.latestWorkout.id} />
+          </View>
+          <Text style={styles.continueText}>Press to continue workout</Text>
+        </TouchableOpacity>
       );
     }
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.addWorkout}
-          onPress={() => {
-            this.setState({ toggled: !this.state.toggled });
-          }}
-        >
-          <Text style={styles.menuItem}>Latest workout</Text>
-        </TouchableOpacity>
-        {this.toggleAccordion()}
-      </View>
-    );
   }
 }
 const mapStateToProps = ({ workout }) => {
@@ -120,6 +174,59 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  innerRectangle: {
+    flexDirection: 'column',
+    marginLeft: 20
+  },
+  iconsSpecial: {
+    width: 25,
+    height: 25,
+    zIndex: 999,
+    marginRight: 10
+  },
+  icons: {
+    marginLeft: -30,
+    width: 25,
+    height: 25
+  },
+  smallText: {
+    fontSize: 12,
+    fontWeight: '200',
+    color: 'gray'
+  },
+  rectangleParent: {
+    flexDirection: 'row',
+    marginBottom: 15
+  },
+  rectangle: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: '#98e0d2',
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  timeStamp: {
+    color: 'gray',
+    fontSize: 24,
+    fontWeight: '200',
+    marginLeft: 5,
+    marginRight: 5
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 20
+  },
   addWorkout: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -148,36 +255,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 15,
     width: '100%',
     height: 80,
-    borderRadius: 5,
-    backgroundColor: '#b9baf1'
-  },
-  accordionBody: {
-    marginTop: -6,
-    flexDirection: 'column',
-    width: '100%',
-    backgroundColor: '#B9BAF1',
     borderRadius: 5
   },
+  accordionBody: {
+    flexDirection: 'column',
+    width: '100%',
+    borderColor: '#b9baf1',
+    marginBottom: 20,
+    backgroundColor: '#E2FBF6'
+  },
   accordionTitle: {
-    paddingTop: 12,
     fontWeight: 'bold',
     fontSize: 42,
     color: 'white',
     textAlign: 'center'
   },
   workoutHeader: {
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: '#A6A8E5',
-    marginRight: 5,
-    marginLeft: 5
+    backgroundColor: '#98E0D2',
+    paddingBottom: 5,
+    paddingTop: 5
   },
   workoutTitle: {
     fontWeight: 'bold',
-    fontSize: 32,
+    fontSize: 36,
     textAlign: 'center',
     color: 'white'
   },
@@ -197,23 +299,24 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginBottom: 10,
     marginTop: 5,
-    borderRadius: 5,
-    backgroundColor: '#A6A8E5'
+    backgroundColor: '#53F2D3'
   },
   continueText: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: 16,
+    color: 'gray',
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: '200',
+    paddingBottom: 10
   },
   workoutTraitText: {
     fontSize: 18,
-    color: 'white'
+    color: 'gray'
   },
   difficultyStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    marginBottom: 20
   }
 });
