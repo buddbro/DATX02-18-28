@@ -74,9 +74,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
@@ -89,9 +89,7 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>
-              {this.renderToday()}
-            </Text>
+            <Text style={styles.todayText}>{this.renderToday()}</Text>
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
@@ -102,10 +100,12 @@ class Dashboard extends React.Component {
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'WorkoutHistory'
                   })
-                )}
+                )
+              }
               style={styles.menuItem}
             >
               <Text style={styles.menuItemText}>History</Text>
+              <Text style={styles.menuItemText}>></Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -118,6 +118,7 @@ class Dashboard extends React.Component {
               style={styles.menuItem}
             >
               <Text style={styles.menuItemText}>Workouts</Text>
+              <Text style={styles.menuItemText}>></Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -130,6 +131,7 @@ class Dashboard extends React.Component {
               style={styles.menuItem}
             >
               <Text style={styles.menuItemText}>Achievements</Text>
+              <Text style={styles.menuItemText}>></Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -213,7 +215,9 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
+    borderColor: 'gray',
+    paddingBottom: 20
   },
   todayText: {
     fontSize: 26,
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
     fontWeight: '200'
   },
   latestWorkout: {
-    marginTop: 30,
+    marginTop: 10,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -230,17 +234,17 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    borderWidth: 1,
-    borderColor: '#b9baf1',
-    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    height: 60,
+    backgroundColor: '#b9baf1',
     marginBottom: 10
   },
   menuItemText: {
-    color: '#b9baf1',
-    fontSize: 32,
+    color: 'white',
+    fontSize: 26,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'left',
+    marginLeft: 15,
+    marginRight: 15
   }
 });
