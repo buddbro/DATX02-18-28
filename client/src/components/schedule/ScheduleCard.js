@@ -58,26 +58,9 @@ class ScheduleCard extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between'
-          }}
-        >
+        <View style={styles.titleView}>
           <TextInput
-            style={{
-              height: 40,
-              fontSize: 24,
-              borderColor: '#eee',
-              backgroundColor: '#fff',
-              borderWidth: 1,
-              borderRadius: 5,
-              marginBottom: 10,
-              padding: 3,
-              textAlign: 'center',
-              flex: 9
-            }}
+            style={styles.titleTextInput}
             onChangeText={title => this.setState({ title })}
             onEndEditing={() =>
               this.props.editSchedule(this.props.id, this.state.title)}
@@ -86,6 +69,7 @@ class ScheduleCard extends React.Component {
             clearButtonMode="while-editing"
             spellCheck={false}
             value={this.state.title}
+            autoCorrect={false}
           />
           <TouchableOpacity
             style={{ flex: 3 }}
@@ -121,11 +105,7 @@ class ScheduleCard extends React.Component {
                 >
                   <Image
                     source={require('../../../assets/delete.png')}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      margin: 5
-                    }}
+                    style={styles.deleteButton}
                   />
                 </TouchableOpacity>
               </View>
@@ -180,6 +160,28 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
     borderBottomWidth: 1,
     borderRadius: 3
+  },
+  titleView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  titleTextInput: {
+    height: 40,
+    fontSize: 24,
+    borderColor: '#eee',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    padding: 3,
+    textAlign: 'center',
+    flex: 9
+  },
+  deleteButton: {
+    width: 20,
+    height: 20,
+    margin: 5
   },
   listItemContainer: {
     backgroundColor: '#7ad9c6',

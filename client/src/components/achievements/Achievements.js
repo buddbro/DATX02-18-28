@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native';
 import NavigationActions from 'react-navigation';
 
+import AchievementCell from './AchievementCell';
+
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
@@ -22,7 +24,11 @@ class Achievements extends React.Component {
             <Text style={styles.info}>Info</Text>
           </TouchableOpacity>
         </Header>
-        <Text>Achievements</Text>
+        <View style={styles.achievementsContainer}>
+          <AchievementCell
+            image={require('../../../assets/achievements/time.png')}
+          />
+        </View>
       </View>
     );
   }
@@ -39,5 +45,10 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 20,
     color: '#000'
+  },
+  achievementsContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    flexDirection: 'row'
   }
 });

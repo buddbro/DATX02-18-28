@@ -74,6 +74,7 @@ class LoginUser extends React.Component {
             underlineColorAndroid="transparent"
             autoCapitalize="none"
             returnKeyType="go"
+            autoCorrect={false}
           />
           <TextInput
             style={styles.textInput}
@@ -84,6 +85,7 @@ class LoginUser extends React.Component {
             underlineColorAndroid="transparent"
             autoCapitalize="none"
             returnKeyType="go"
+            autoCorrect={false}
           />
 
           {this.renderError()}

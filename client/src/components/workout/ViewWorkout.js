@@ -257,7 +257,7 @@ class ViewWorkout extends React.Component {
               underlineColorAndroid="transparent"
               returnKeyLabel="Save"
               clearButtonMode="while-editing"
-              spellCheck={false}
+              autoCorrect={false}
               value={this.state.title}
             />
             <View>
