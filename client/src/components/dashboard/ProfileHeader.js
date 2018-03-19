@@ -89,7 +89,7 @@ class ProfileHeader extends React.Component {
                 marginLeft: 10
               }}
               onPress={() => {
-                return;
+                //return;
                 this.props.navigation.dispatch(
                   NavigationActions.NavigationActions.navigate({
                     routeName: 'Settings'
@@ -99,7 +99,7 @@ class ProfileHeader extends React.Component {
             >
               <Image
                 source={require('../../../assets/settings.png')}
-                style={{ width: 35, height: 35, marginTop: 20, opacity: 0 }}
+                style={{ width: 35, height: 35, marginTop: 20}}
               />
             </TouchableOpacity>
             <TouchableOpacity
