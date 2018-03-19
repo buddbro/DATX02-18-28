@@ -31,12 +31,12 @@ class WorkoutSchedules extends React.Component {
   render() {
     return (
       <KeyboardAwareScrollView
-      style={{ backgroundColor: '#fff' }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      enableOnAndroid={true}
-    >
+        style={{ backgroundColor: '#fff' }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+        enableOnAndroid={true}
+      >
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => {
@@ -52,6 +52,7 @@ class WorkoutSchedules extends React.Component {
               style={{ width: 35, height: 35 }}
             />
           </TouchableOpacity>
+          <Text style={styles.headline}>Workouts</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -70,7 +71,7 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) =>
+          {Object.keys(this.props.list).map((id, index) => (
             <ScheduleCard
               key={`schedule${index}`}
               title={this.props.list[id].title}
@@ -78,7 +79,7 @@ class WorkoutSchedules extends React.Component {
               exercises={this.props.list[id].exercises}
               navigation={this.props.navigation}
             />
-          )}
+          ))}
         </ScrollView>
       </KeyboardAwareScrollView>
     );
@@ -101,12 +102,17 @@ const styles = StyleSheet.create({
     // backgroundColor: '#51c1ab',
     paddingTop: 50
   },
+  headline: {
+    fontSize: 32,
+    color: '#b9baf1'
+  },
   header: {
     display: 'flex',
     flexDirection: 'row',
     marginLeft: 10,
     marginRight: 10,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   modalContainer: {
     flex: 1,

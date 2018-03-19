@@ -23,8 +23,11 @@ class WorkoutHistory extends React.Component {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            marginLeft: 10,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            borderBottomWidth: 0,
+            borderColor: 'gray',
+            paddingBottom: 30,
+            alignItems: 'center'
           }}
         >
           <TouchableOpacity
@@ -38,11 +41,13 @@ class WorkoutHistory extends React.Component {
           >
             <Image
               source={require('../../../assets/back_arrow_black.png')}
-              style={{ width: 35, height: 35 }}
+              style={{ width: 35, height: 35, marginLeft: 10 }}
             />
           </TouchableOpacity>
+          <Text style={styles.headline}>History</Text>
+          <Text style={styles.headlineSmall}>Filter</Text>
         </View>
-        <ScrollView style={{ paddingTop: 50, backgroundColor: '#fff' }}>
+        <ScrollView style={{ paddingTop: 10, backgroundColor: '#fff' }}>
           {this.props.workouts.map((workout, index) => (
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
@@ -72,6 +77,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 50
+  },
+  headline: {
+    fontSize: 32,
+    color: '#b9baf1'
+  },
+  headlineSmall: {
+    fontSize: 24,
+    color: '#b9baf1',
+    fontWeight: '200',
+    marginRight: 10
   },
   item: { marginBottom: 20 },
   text: {},

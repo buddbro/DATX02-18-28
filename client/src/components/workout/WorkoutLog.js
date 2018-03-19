@@ -55,10 +55,8 @@ class WorkoutLog extends React.Component {
         }}
         style={styles.workoutItem}
       >
-        <View>
+        <View style={styles.textContainer}>
           <Text style={styles.title}>{this.props.workout.title}</Text>
-        </View>
-        <View>
           <Text style={styles.date}>{this.renderDate()}</Text>
         </View>
         <Image
@@ -73,6 +71,9 @@ class WorkoutLog extends React.Component {
 export default connect(null, { chooseWorkout })(WorkoutLog);
 
 const styles = StyleSheet.create({
+  textContainer: {
+    flexDirection: 'column'
+  },
   workoutItem: {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -87,11 +88,13 @@ const styles = StyleSheet.create({
     color: '#b9baf1',
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'left'
   },
   date: {
-    color: '#fff',
-    fontSize: 18
+    color: '#b9baf1',
+    fontSize: 16,
+    fontWeight: '200',
+    marginLeft: 35
   },
   arrow: {
     opacity: 0.5,
