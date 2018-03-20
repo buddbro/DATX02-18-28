@@ -16,14 +16,16 @@ import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
+import CalendarStrip from 'react-native-calendar-strip';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/dashboard.png')}
         style={{ width: 26, height: 26, borderRadius: 10 }}
       />
+    )
   };
   constructor(props) {
     super(props);
@@ -82,9 +84,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
@@ -97,9 +99,27 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>
-              {this.renderToday()}
-            </Text>
+            <Text style={styles.todayText}>{this.renderToday()}</Text>
+          </View>
+          <View>
+            <CalendarStrip
+              calendarAnimation={{ type: 'sequence', duration: 100 }}
+              calendarHeaderStyle={{ color: 'white' }}
+              calendarColor={'#A6A8E5'}
+              dateNumberStyle={{ color: 'white' }}
+              dateNameStyle={{ color: 'white' }}
+              highlightDateNumberStyle={{ color: '#17F2C7' }}
+              highlightDateNameStyle={{ color: '#17F2C7' }}
+              disabledDateNameStyle={{ color: '#6669CB' }}
+              disabledDateNumberStyle={{ color: '#6669CB' }}
+              style={{ paddingBottom: 10, marginBottom: 15, paddingTop: 5 }}
+              daySelectionAnimation={{
+                type: 'border',
+                duration: 200,
+                borderWidth: 1,
+                borderHighlightColor: '#17F2C7'
+              }}
+            />
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
