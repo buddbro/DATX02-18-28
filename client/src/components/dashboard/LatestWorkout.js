@@ -87,12 +87,10 @@ class LatestWorkout extends React.Component {
     if (!this.props.latestWorkout.stop || !this.props.latestWorkout.start) {
       return null;
     }
-    var hours =
-      parseInt(this.props.latestWorkout.stop.slice(0, 2)) -
-      parseInt(this.props.latestWorkout.start.slice(0, 2));
-    var minutes =
-      parseInt(this.props.latestWorkout.stop.slice(3, 5)) -
-      parseInt(this.props.latestWorkout.start.slice(3, 5));
+    const stop = this.props.latestWorkout.stop;
+    const start = this.props.latestWorkout.start;
+    const hours = parseInt(stop.slice(0, 2)) - parseInt(start.slice(0, 2));
+    const minutes = parseInt(stop.slice(3, 5)) - parseInt(start.slice(3, 5));
     return hours * 60 + minutes;
   }
 
@@ -123,13 +121,19 @@ class LatestWorkout extends React.Component {
             );
           }}
         >
-          <View style={styles.workoutHeader}>
-            <Text style={styles.workoutTitle}>
-              {this.props.latestWorkout.title}
-            </Text>
-            <Text style={styles.tinder}>
-              {this.props.latestWorkout.date.substring(0, 10)}
-            </Text>
+          <View style={styles.workoutOuter}>
+            <View style={styles.workoutHeader}>
+              <Text style={styles.workoutTitle}>
+                {this.props.latestWorkout.title}
+              </Text>
+              <Text style={styles.tinder}>
+                {this.props.latestWorkout.date.substring(0, 10)}
+              </Text>
+            </View>
+            <Image
+              source={require('../../../assets/arrow-right-green.png')}
+              style={(styles.icons, { flex: 1, width: 20, height: 20 })}
+            />
           </View>
           <View style={styles.rectangleParent}>
             <View style={styles.rectangle}>
@@ -138,9 +142,7 @@ class LatestWorkout extends React.Component {
                 style={styles.icons}
               />
               <View style={styles.innerRectangle}>
-                <Text style={styles.timeStamp}>
-                  {this.convertTimeStamp()}
-                </Text>
+                <Text style={styles.timeStamp}>{this.convertTimeStamp()}</Text>
                 <Text style={styles.smallText}>minutes</Text>
               </View>
             </View>
@@ -153,10 +155,9 @@ class LatestWorkout extends React.Component {
             </View>
           </View>
 
-          <View style={styles.difficultyStyle}>
+          <View style={styles.rectangle}>
             <Categories workoutId={this.props.latestWorkout.id} />
           </View>
-          <Text style={styles.continueText}>Press to continue workout</Text>
         </TouchableOpacity>
       );
     }
@@ -174,6 +175,12 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  workoutOuter: {
+    backgroundColor: '#98E0D2',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   innerRectangle: {
     flexDirection: 'column',
     marginLeft: 20
@@ -273,9 +280,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   workoutHeader: {
-    backgroundColor: '#98E0D2',
     paddingBottom: 5,
-    paddingTop: 5
+    paddingTop: 5,
+    flex: 7,
+    marginRight: -30
   },
   workoutTitle: {
     fontWeight: 'bold',

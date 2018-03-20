@@ -1,6 +1,6 @@
 import React from 'react';
 import { AsyncStorage, View, StyleSheet, Text, Dimensions } from 'react-native';
-import { Radar } from 'react-native-pathjs-charts';
+import { Radar } from '../utilities/charts/';
 import axios from 'axios';
 
 const { height, width } = Dimensions.get('window');
@@ -22,7 +22,9 @@ class Categories extends React.Component {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
         .get(
-          `https://getpushapp.com/api/workouts/${nextProps.workoutId}/categories`,
+          `https://getpushapp.com/api/workouts/${
+            nextProps.workoutId
+          }/categories`,
           {
             headers: { Authorization: `Bearer ${jwt}` }
           }
@@ -42,22 +44,22 @@ class Categories extends React.Component {
 
     let options = {
       width,
-      height: 300,
+      height: 250,
       // margin: {
       //   top: 10,
       //   left: 20,
       //   right: 20,
       //   bottom: 10
       // },
-      r: 120,
+      r: 100,
       rings: 1,
       max: max + 1,
       fill: '#b9baf1',
       stroke: '#baf2d4',
       label: {
         fontFamily: 'Arial',
-        fontSize: 14,
-        fill: '#34495E'
+        fontSize: 12,
+        fill: 'gray'
       }
     };
 
@@ -67,7 +69,11 @@ class Categories extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Radar data={this.state.data} options={options} />
+        <Radar
+          data={this.state.data}
+          options={options}
+          backgroundColor="#E2FBF6"
+        />
       </View>
     );
   }
