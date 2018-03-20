@@ -121,13 +121,19 @@ class LatestWorkout extends React.Component {
             );
           }}
         >
-          <View style={styles.workoutHeader}>
-            <Text style={styles.workoutTitle}>
-              {this.props.latestWorkout.title}
-            </Text>
-            <Text style={styles.tinder}>
-              {this.props.latestWorkout.date.substring(0, 10)}
-            </Text>
+          <View style={styles.workoutOuter}>
+            <View style={styles.workoutHeader}>
+              <Text style={styles.workoutTitle}>
+                {this.props.latestWorkout.title}
+              </Text>
+              <Text style={styles.tinder}>
+                {this.props.latestWorkout.date.substring(0, 10)}
+              </Text>
+            </View>
+            <Image
+              source={require('../../../assets/arrow-right-green.png')}
+              style={(styles.icons, { flex: 1, width: 20, height: 20 })}
+            />
           </View>
           <View style={styles.rectangleParent}>
             <View style={styles.rectangle}>
@@ -149,10 +155,9 @@ class LatestWorkout extends React.Component {
             </View>
           </View>
 
-          <View style={styles.difficultyStyle}>
+          <View style={styles.rectangle}>
             <Categories workoutId={this.props.latestWorkout.id} />
           </View>
-          <Text style={styles.continueText}>Press to continue workout</Text>
         </TouchableOpacity>
       );
     }
@@ -170,6 +175,12 @@ const mapStateToProps = ({ workout }) => {
 export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
 
 const styles = StyleSheet.create({
+  workoutOuter: {
+    backgroundColor: '#98E0D2',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   innerRectangle: {
     flexDirection: 'column',
     marginLeft: 20
@@ -269,9 +280,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   workoutHeader: {
-    backgroundColor: '#98E0D2',
     paddingBottom: 5,
-    paddingTop: 5
+    paddingTop: 5,
+    flex: 7,
+    marginRight: -30
   },
   workoutTitle: {
     fontWeight: 'bold',
