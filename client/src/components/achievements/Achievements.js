@@ -14,22 +14,38 @@ import AchievementCell from './AchievementCell';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
-import {
-  fetchAchievements
-} from '../../actions';
+import { fetchAchievements } from '../../actions';
+
+const images = {
+  time: require('../../../assets/achievements/time.png'),
+  owl: require('../../../assets/achievements/owl.png')
+};
 
 class Achievements extends React.Component {
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/achievements.png')}
         style={{ width: 30, height: 30, borderRadius: 10 }}
       />
-    )
   };
 
-  componentDidMount(){
-    this.props.fetchAchievements
+  componentDidMount() {
+    this.props.fetchAchievements();
+  }
+
+  renderAchivements() {
+    return this.props.achievements.map(achievement => {
+      return (
+        <AchievementCell
+          key={achievement.id}
+          image={images[achievement.image]}
+          title={achievement.name}
+          date={achievement.obtained_date}
+          obtained={achievement.obtained_times}
+        />
+      );
+    });
   }
 
   render() {
@@ -49,16 +65,7 @@ class Achievements extends React.Component {
         </Header>
         <ScrollView>
           <View style={styles.achievementsContainer}>
-            <AchievementCell
-              image={require('../../../assets/achievements/time.png')}
-              title="Badge"
-              date="Datum"
-            />
-            <AchievementCell
-              image={require('../../../assets/achievements/nightowl.png')}
-              title="Night Owl"
-              date="19th March 2018"
-            />
+            {this.renderAchivements()}
           </View>
         </ScrollView>
       </View>
@@ -66,11 +73,16 @@ class Achievements extends React.Component {
   }
 }
 
-export default connect(null, {
+const mapStateToProps = ({ user }) => {
+  console.log(user);
+  return {
+    achievements: user.achievements
+  };
+};
+
+export default connect(mapStateToProps, {
   fetchAchievements
 })(Achievements);
-
-
 
 const styles = StyleSheet.create({
   container: {
