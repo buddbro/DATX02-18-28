@@ -13,8 +13,9 @@ import {
   Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
-import { logout } from '../../actions';
+import { getQuote } from '../../actions';
 import { Svg } from 'expo';
+import axios from 'axios';
 
 import avatar from '../../../assets/avatar_default.svg';
 import profile_bottom from '../../../assets/profile_bottom.svg';
@@ -45,6 +46,10 @@ class ProfileHeader extends React.Component {
     this.state = { panResponder, position };
   }
 
+  componentDidMount() {
+    this.props.getQuote();
+  }
+
   componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -71,6 +76,7 @@ class ProfileHeader extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Animated.View
         style={[this.getProfileStyle(), { zIndex: 10 }]}
@@ -84,7 +90,7 @@ class ProfileHeader extends React.Component {
               justifyContent: 'space-between',
               alignItems: 'center',
               marginRight: 10,
-              marginLeft: 70,
+              marginLeft: 10,
               paddingTop: 10,
               paddingBottom: 10
             }}
@@ -99,7 +105,9 @@ class ProfileHeader extends React.Component {
               <Text style={styles.userWelcome}>
                 Welcome back {this.props.user.name}!
               </Text>
-              <Text style={styles.tagline}>Ready to rock?</Text>
+              <Text style={styles.tagline}>
+                {this.props.quote} -{this.props.author}
+              </Text>
             </View>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('DrawerOpen')}
@@ -152,11 +160,16 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   tagline: {
+    width: 300,
     marginTop: 5,
     fontSize: 14,
     color: '#fff',
-    textAlign: 'center'
+    textAlign: 'left'
   }
 });
 
-export default connect(null, { logout })(ProfileHeader);
+const mapStateToProps = ({ app }) => {
+  return { quote: app.quote, author: app.author };
+};
+
+export default connect(mapStateToProps, { getQuote })(ProfileHeader);

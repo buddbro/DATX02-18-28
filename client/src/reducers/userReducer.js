@@ -3,7 +3,8 @@ import {
   LOGIN_ERROR,
   LOGOUT,
   LOADING_FALSE,
-  SEND_FORGOT_PASSWORD
+  SEND_FORGOT_PASSWORD,
+  FETCH_ACHIEVEMENTS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
   name: '',
   error: '',
   resetStatus: '',
-  sent: false
+  sent: false,
+  achievements: []
 };
 
 export default function userReducer(state = INITIAL_STATE, action) {
@@ -33,6 +35,10 @@ export default function userReducer(state = INITIAL_STATE, action) {
       return { ...state, email, name, error: '', loading: false };
     case LOGOUT:
       return { ...INITIAL_STATE, loading: false };
+    case FETCH_ACHIEVEMENTS:
+      console.log(action.payload);
+      const achievements = action.payload;
+      return { ...state, achievements };
     default:
       return state;
   }

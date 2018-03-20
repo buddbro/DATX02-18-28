@@ -25,6 +25,7 @@ export const VIEW_SET = 'view_set';
 
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 export const SET_EXERCISE_LIST_TYPE = 'set_exercise_list_type';
+export const GET_QUOTE = 'get_quote';
 
 // Schedules
 export const SET_ACTIVE_SCHEDULE = 'set_active_schedule';
@@ -37,3 +38,6 @@ export const DELETE_EXERCISE_FROM_SCHEDULE = 'delete_exercise_from_schedule';
 
 export const INCREASE = 'increase';
 export const DECREASE = 'decrease';
+
+// Achievements
+export const FETCH_ACHIEVEMENTS = 'fetch_achievements';

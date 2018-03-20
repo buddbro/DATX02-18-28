@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 export default (BackArrow = ({ callback }) =>
   <TouchableOpacity onPress={callback}>
     <Image
-      source={require('../../../assets/back_arrow_black.png')}
+      source={require('../../../assets/back_arrow.png')}
       style={styles.back}
     />
   </TouchableOpacity>);

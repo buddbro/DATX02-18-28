@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 class AchievementCell extends React.PureComponent {
   render() {
@@ -12,6 +12,9 @@ class AchievementCell extends React.PureComponent {
         <Text style={styles.date}>
           {this.props.date}
         </Text>
+        <Text style={styles.date}>
+          Obtained: {this.props.obtained} times
+        </Text>
       </View>
     );
   }
@@ -21,20 +24,26 @@ export default AchievementCell;
 
 const styles = StyleSheet.create({
   achievementItem: {
-    backgroundColor: '#ffdfef',
+    backgroundColor: '#7ad9c7',
     width: '50%',
     justifyContent: 'center',
-    borderWidth: 4,
+    borderWidth: 6,
     borderColor: '#fff',
     paddingTop: 10,
     paddingBottom: 10,
-    borderRadius: 35,
+    borderRadius: 20,
     alignItems: 'center'
   },
   achievementItemImage: {
     width: 50,
     height: 50
   },
-  header: { fontWeight: '600' },
-  date: {}
+  header: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: '#fff'
+  },
+  date: {
+    color: '#fff'
+  }
 });

@@ -10,6 +10,7 @@ const workout = require('./queries/workout');
 const schedule = require('./queries/schedule');
 const feedback = require('./queries/feedback');
 const exercise = require('./queries/exercise');
+const achievement = require('./queries/achievement');
 
 const sendMail = (email, name) => {
   const data = {
@@ -60,6 +61,8 @@ const sendResetPasswordEmail = (req, res, next) =>
 const getWorkouts = (req, res, next) => workout.getWorkouts(req, res, next, db);
 const getWorkoutsForUser = (req, res, next) =>
   workout.getWorkoutsForUser(req, res, next, db);
+const getCategoriesForWorkout = (req, res, next) =>
+  workout.getCategoriesForWorkout(req, res, next, db);
 const getWorkoutWithId = (req, res, next) =>
   workout.getWorkoutWithId(req, res, next, db);
 const getSetsForExercise = (req, res, next) =>
@@ -109,6 +112,13 @@ const editExercise = (req, res, next) =>
 const deleteExerciseType = (req, res, next) =>
   exercise.deleteExerciseType(req, res, next, db);
 
+const getAllAchievements = (req, res, next) =>
+  achievement.getAllAchievements(req, res, next, db);
+const getAchievementsForUser = (req, res, next) =>
+  achievement.getAchievementsForUser(req, res, next, db);
+const calculateAchievements = (req, res, next) =>
+  achievement.calculateAchievements(req, res, next, db);
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -129,6 +139,7 @@ module.exports = {
   saveNotes,
   getFeedback,
   getWorkoutsForUser,
+  getCategoriesForWorkout,
   fetchExerciseList,
   fetchExerciseDescription,
   addExerciseType,
@@ -145,5 +156,8 @@ module.exports = {
   addSchedule,
   deleteSchedule,
   editSchedule,
-  addExeciseToSchedule
+  addExeciseToSchedule,
+  getAllAchievements,
+  getAchievementsForUser,
+  calculateAchievements
 };
