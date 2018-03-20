@@ -29,7 +29,7 @@ class Settings extends React.Component {
     drawerIcon: () =>
       <Image
         source={require('../../../assets/settings.png')}
-        style={{ width: 30, height: 30, borderRadius: 10 }}
+        style={{ width: 24, height: 24, borderRadius: 10 }}
       />
   };
 
@@ -53,7 +53,7 @@ class Settings extends React.Component {
     console.log('nextProps', nextProps);
     this.setState({
       nameText: nextProps.name,
-      emailText: nextProps.email//,
+      emailText: nextProps.email //,
       //ej klara
       // ageText: nextProps.age,
       // weightText: nextProps.weight,

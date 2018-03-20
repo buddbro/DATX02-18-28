@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, View, Text } from 'react-native';
 import {
   StackNavigator,
   addNavigationHelpers,

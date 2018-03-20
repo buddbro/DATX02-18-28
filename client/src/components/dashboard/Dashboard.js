@@ -19,12 +19,11 @@ import AddWorkout from './AddWorkout';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/dashboard.png')}
-        style={{ width: 30, height: 30, borderRadius: 10 }}
+        style={{ width: 26, height: 26, borderRadius: 10 }}
       />
-    )
   };
   constructor(props) {
     super(props);
@@ -134,13 +133,8 @@ const mapStateToProps = ({ workout, user }) => {
 export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
-  scrollView: {
-    // marginTop: 200,
-    // bottom: 100
-  },
+  scrollView: {},
   buttonContainer: {
-    // position: 'absolute',
-    // marginTop: 10,
     bottom: 0,
     marginBottom: 10,
     width: '100%',
