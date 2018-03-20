@@ -8,7 +8,6 @@ import React from 'react';
 
 export default class CustomDrawerNavigation extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <ScrollView>
         <SafeAreaView

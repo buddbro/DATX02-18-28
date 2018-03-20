@@ -29,7 +29,7 @@ class Settings extends React.Component {
     drawerIcon: () =>
       <Image
         source={require('../../../assets/settings.png')}
-        style={{ width: 30, height: 30, borderRadius: 10 }}
+        style={{ width: 24, height: 24, borderRadius: 10 }}
       />
   };
 
@@ -49,16 +49,15 @@ class Settings extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
+  componentDidMount() {
     this.setState({
-      nameText: nextProps.name,
-      emailText: nextProps.email//,
+      nameText: this.props.name,
+      emailText: this.props.email //,
       //ej klara
-      // ageText: nextProps.age,
-      // weightText: nextProps.weight,
-      // heightText: nextProps.height,
-      // notifications: nextProps.notifications
+      // ageText: this.props.age,
+      // weightText: this.props.weight,
+      // heightText: this.props.height,
+      // notifications: this.props.notifications
     });
   }
 

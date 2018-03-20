@@ -19,7 +19,6 @@ import NavigationActions from 'react-navigation';
 class LoginUser extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = { email: '', password: '' };
   }
 

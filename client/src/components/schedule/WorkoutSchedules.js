@@ -22,12 +22,11 @@ import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/schedules.png')}
-        style={{ width: 30, height: 30, borderRadius: 10 }}
+        style={{ width: 24, height: 24 }}
       />
-    )
   };
 
   constructor(props) {
@@ -76,7 +75,7 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) => (
+          {Object.keys(this.props.list).map((id, index) =>
             <ScheduleCard
               key={`schedule${index}`}
               title={this.props.list[id].title}
@@ -84,7 +83,7 @@ class WorkoutSchedules extends React.Component {
               exercises={this.props.list[id].exercises}
               navigation={this.props.navigation}
             />
-          ))}
+          )}
         </ScrollView>
       </KeyboardAwareScrollView>
     );
