@@ -17,6 +17,7 @@ import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 import CalendarStrip from 'react-native-calendar-strip';
+import CustomCalendarStrip from '../utilities/calendar/CalendarStrip';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
@@ -90,6 +91,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(new Date().getDate());
     return (
       <View style={styles.container}>
         <ProfileHeader
@@ -102,6 +104,7 @@ class Dashboard extends React.Component {
             <Text style={styles.todayText}>{this.renderToday()}</Text>
           </View>
           <View>
+            <CustomCalendarStrip />
             <CalendarStrip
               calendarAnimation={{ type: 'sequence', duration: 100 }}
               calendarHeaderStyle={{ color: 'white' }}
