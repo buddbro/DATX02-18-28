@@ -4,15 +4,18 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 class AchievementCell extends React.PureComponent {
   render() {
     return (
-        <View style={styles.achievementItem}>
-          <Image style={styles.achievementItemImage} source={this.props.image} />
-          <Text style={styles.header}>
-            {this.props.title}
-          </Text>
-          <Text style={styles.date}>
-            {this.props.date}
-          </Text>
-        </View>
+      <View style={styles.achievementItem}>
+        <Image style={styles.achievementItemImage} source={this.props.image} />
+        <Text style={styles.header}>
+          {this.props.title}
+        </Text>
+        <Text style={styles.date}>
+          {this.props.date}
+        </Text>
+        <Text style={styles.date}>
+          Obtained: {this.props.obtained} times
+        </Text>
+      </View>
     );
   }
 }
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 20,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   achievementItemImage: {
     width: 50,
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 17,
     fontWeight: '500',
-    color: '#fff',
+    color: '#fff'
   },
   date: {
     color: '#fff'

@@ -42,6 +42,7 @@ class Achievements extends React.Component {
           image={images[achievement.image]}
           title={achievement.name}
           date={achievement.obtained_date}
+          obtained={achievement.obtained_times}
         />
       );
     });
