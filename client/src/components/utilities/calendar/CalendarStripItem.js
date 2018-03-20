@@ -37,9 +37,7 @@ export default class CalendarStripItem extends React.Component {
 
 const styles = StyleSheet.create({
   highlightCircle: {
-    borderWidth: 1,
-    width: 60,
-    height: 60
+    borderWidth: 1
   },
   highlightText: {
     color: '#383DF4',

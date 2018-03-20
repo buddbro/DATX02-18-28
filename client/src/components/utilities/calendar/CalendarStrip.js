@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, ScrollView, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  Text,
+  Dimensions
+} from 'react-native';
 import CalendarStripItem from './CalendarStripItem';
 
 export default class CalendarStrip extends React.Component {
@@ -9,10 +16,10 @@ export default class CalendarStrip extends React.Component {
       week[i] = new Date();
     }
 
-    for (i = 4; i > -1; i--) {
+    for (i = 3; i > -1; i--) {
       week[i].setDate(week[i + 1].getDate() - 1);
     }
-    for (i = 6; i < 9; i++) {
+    for (i = 5; i < 9; i++) {
       week[i].setDate(week[i - 1].getDate() + 1);
     }
     return week;
@@ -95,15 +102,23 @@ export default class CalendarStrip extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.calendarTitle}>
-          {this.transformMonthText(this.getAWeek()[5])}
+          {this.transformMonthText(this.getAWeek()[4])}
         </Text>
         <FlatList
           contentContainerStyle={styles.flatList}
           data={this.getAWeek()}
+          scrollenabled
+          snapToAlignment={'center'}
           keyExtractor={item => item.getTime()}
+          snapToInterval={Dimensions.get('window').width / 7}
+          getItemLayout={(data, index) => ({
+            length: Dimensions.get('window').width / 7,
+            offset: Dimensions.get('window').width / 7 * index,
+            index
+          })}
           renderItem={({ item, index }) => {
             console.log('index: ', index);
-            const highlight = index === 5;
+            const highlight = index === 4;
             return (
               <CalendarStripItem
                 style={styles.stripItem}
@@ -125,7 +140,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    padding: 10,
     paddingBottom: 20
   },
   container: {
