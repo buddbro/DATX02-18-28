@@ -49,16 +49,15 @@ class Settings extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
+  componentDidMount() {
     this.setState({
-      nameText: nextProps.name,
-      emailText: nextProps.email //,
+      nameText: this.props.name,
+      emailText: this.props.email //,
       //ej klara
-      // ageText: nextProps.age,
-      // weightText: nextProps.weight,
-      // heightText: nextProps.height,
-      // notifications: nextProps.notifications
+      // ageText: this.props.age,
+      // weightText: this.props.weight,
+      // heightText: this.props.height,
+      // notifications: this.props.notifications
     });
   }
 
