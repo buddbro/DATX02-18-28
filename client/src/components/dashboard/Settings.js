@@ -19,7 +19,6 @@ import ToggleSwitch from 'toggle-switch-react-native';
 var { height, width } = Dimensions.get('window');
 
 //TODO in Settings
-//notifications togglebutton
 //Image
 //take age, height, weight from database
 //implement savebutton
@@ -40,24 +39,23 @@ class Settings extends React.Component {
       nameText: '',
       emailText: '',
       //ej klara
-      ageText: '23',
-      heightText: '190cm',
-      weightText: '90kg',
+      ageText: '',
+      heightText: '',
+      weightText: '',
       newPasswordText: '',
       confirmPasswordText: '',
-      notifications: true
+      notifications: false
     };
   }
 
   componentDidMount() {
     this.setState({
       nameText: this.props.name,
-      emailText: this.props.email //,
-      //ej klara
-      // ageText: this.props.age,
-      // weightText: this.props.weight,
-      // heightText: this.props.height,
-      // notifications: this.props.notifications
+      emailText: this.props.email,
+      ageText: this.props.age,
+      weightText: this.props.weight,
+      heightText: this.props.height,
+      notifications: this.props.notifications
     });
   }
 
@@ -123,9 +121,10 @@ class Settings extends React.Component {
                   value={this.state.nameText}
                 />
               </View>
-              <Text style={styles.biggerStandardText}>AGE</Text>
+              <Text style={styles.biggerStandardText}>AGE (yr)</Text>
               <View style={styles.innerTextContainer}>
                 <TextInput
+                  keyboardType='numeric'
                   style={styles.standardText}
                   onChangeText={ageText => this.setState({ ageText })}
                   value={this.state.ageText}
@@ -137,9 +136,10 @@ class Settings extends React.Component {
           {/*Height and weight*/}
           <View style={styles.twoColumnContainer}>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={styles.biggerStandardText}>HEIGHT</Text>
+              <Text style={styles.biggerStandardText}>HEIGHT (cm)</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
+                  keyboardType='numeric'
                   style={styles.standardTextCentered}
                   onChangeText={heightText => this.setState({ heightText })}
                   value={this.state.heightText}
@@ -147,9 +147,10 @@ class Settings extends React.Component {
               </View>
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={styles.biggerStandardText}>WEIGHT</Text>
+              <Text style={styles.biggerStandardText}>WEIGHT (kg)</Text>
               <View style={styles.smallInnerTextContainer}>
                 <TextInput
+                  keyboardType='numeric'
                   style={styles.standardTextCentered}
                   onChangeText={weightText => this.setState({ weightText })}
                   value={this.state.weightText}
@@ -168,6 +169,7 @@ class Settings extends React.Component {
           <Text style={styles.biggerStandardText}>EMAIL </Text>
           <View style={styles.innerTextContainer}>
             <TextInput
+              keyboardType='email-address'
               style={styles.standardText}
               onChangeText={emailText => this.setState({ emailText })}
               value={this.state.emailText}
@@ -248,10 +250,10 @@ const mapStateToProps = ({ settings, exercises, user }) => {
   return {
     name: user.name,
     email: user.email,
-    // age: user.age,
-    // weight: user.weight,
-    // height: user.height,
-    // notifications: user.notifications,
+    age: user.age,
+    weight: user.weight,
+    height: user.height,
+    notifications: user.notifications,
     counter: settings.counter,
     exercises: exercises.list
   };
