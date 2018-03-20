@@ -24,6 +24,12 @@ import ExerciseHelp from './ExerciseHelp';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
+//TODO
+//i for intstructions (uppe till höger)
+//vit backarrow
+//ta bort ett set
+//"start workout!"
+
 class ViewExercise extends React.Component {
   constructor(props) {
     super(props);
@@ -100,7 +106,7 @@ class ViewExercise extends React.Component {
     return (
       <View style={styles.container}>
         {this.viewInstructions()}
-        <Header>
+        <Header backgroundColor="#b9baf1">
           <BackArrow
             callback={() => {
               this.props.clearExercise();
@@ -112,11 +118,19 @@ class ViewExercise extends React.Component {
               );
             }}
           />
-          <View style={styles.titleContainer}>
-            <Text style={styles.exerciseTitle}>
-              {this.props.visibleExercise}
-            </Text>
-          </View>
+          <Text style={styles.exerciseTitle}>
+            {this.props.visibleExercise}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ instructionsToggled: true });
+            }}
+          >
+            <Image
+              source={require('../../../assets/info.png')}
+              style={{ width: 30, height: 30 }}
+            />
+          </TouchableOpacity>
         </Header>
         <ScrollView>
           <View style={styles.setsContainer}>
@@ -137,7 +151,7 @@ class ViewExercise extends React.Component {
                 <Text
                   style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
                 >
-                  Weight
+                  Weight (kg)
                 </Text>
               </View>
             </View>
@@ -186,41 +200,19 @@ class ViewExercise extends React.Component {
             />
           </View> */}
         </ScrollView>
-        <View style={{ bottom: 0 }}>
+        <View style={{ justifyContent: 'center',
+        alignItems: 'center', bottom: 40 }}>
           <TouchableOpacity
             onPress={() => this.addSetToExercise()}
-            style={styles.addSetButton}
+            style={styles.button}
           >
             <Text
               style={{
                 fontSize: 24,
-                color: '#6669cb'
+                color: '#fff'
               }}
             >
               Add set
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ bottom: 0 }}>
-          <TouchableOpacity
-            style={styles.addSetButton}
-            onPress={() => {
-              //this.props.getExerciseDescription(this.props.visibleExerciseId);
-              //this.props.navigation.dispatch(
-              //NavigationActions.NavigationActions.navigate({
-              //  routeName: 'ExerciseHelp'
-              //})
-              //);
-              this.setState({ instructionsToggled: true });
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                color: '#6669cb'
-              }}
-            >
-              Instructions
             </Text>
           </TouchableOpacity>
         </View>
@@ -266,8 +258,23 @@ const styles = StyleSheet.create({
     borderColor: '#8b8ddf',
     marginBottom: 15
   },
+  button: {
+    width: '70%',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    // marginLeft: 15,
+    // marginRight: 15,
+    backgroundColor: '#6669cb',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
   exerciseTitle: {
-    color: '#6669cb',
+    color: '#fff',
     fontSize: 26,
     fontWeight: 'bold'
   },
@@ -301,15 +308,6 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     fontSize: 18,
     color: '#7B7B7B'
-  },
-  titleContainer: {
-    marginLeft: -35,
-    zIndex: -5,
-    justifyContent: 'center',
-    flex: 7,
-    borderRadius: 3,
-    flexDirection: 'row',
-    alignItems: 'center'
   },
   popup: {
     position: 'absolute',
