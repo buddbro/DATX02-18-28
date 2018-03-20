@@ -96,7 +96,7 @@ export function loginWithToken() {
   };
 }
 
-export function logout(id) {
+export function logout() {
   return dispatch => {
     AsyncStorage.removeItem('jwt').then(() => {
       dispatch({
