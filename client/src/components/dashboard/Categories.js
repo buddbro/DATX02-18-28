@@ -18,19 +18,17 @@ class Categories extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillMount() {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
         .get(
-          `https://getpushapp.com/api/workouts/${
-            nextProps.workoutId
-          }/categories`,
+          `https://getpushapp.com/api/workouts/${this.props
+            .workoutId}/categories`,
           {
             headers: { Authorization: `Bearer ${jwt}` }
           }
         )
         .then(({ data }) => {
-          console.log(data);
           Object.keys(data).map(d => data[d]++);
           this.setState({ data: [data] });
         });
@@ -45,12 +43,6 @@ class Categories extends React.Component {
     let options = {
       width,
       height: 250,
-      // margin: {
-      //   top: 10,
-      //   left: 20,
-      //   right: 20,
-      //   bottom: 10
-      // },
       r: 100,
       rings: 1,
       max: max + 1,

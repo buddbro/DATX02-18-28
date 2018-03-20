@@ -71,6 +71,11 @@ app.post('/api/resetpassword/:id/:token', db.resetPasswordPost);
 app.post('/api/workouts/exercise/:id', db.addSetToExercise);
 app.delete('/api/workouts/:id', verifyToken, db.deleteWorkout);
 app.get('/api/workouts/:id', verifyToken, db.getWorkoutWithId);
+app.get(
+  '/api/workouts/:id/categories',
+  verifyToken,
+  db.getCategoriesForWorkout
+);
 app.get('/api/workouts', verifyToken, db.getWorkoutsForUser);
 app.post('/api/workouts', verifyToken, db.addWorkout);
 app.patch('/api/workouts/:id', verifyToken, db.editWorkout);
@@ -86,6 +91,11 @@ app.get('/api/exercises/description/:id', db.fetchExerciseDescription);
 app.get('/api/exercises/:id/count', db.countExercises);
 app.delete('/api/exercises/:id', db.deleteExerciseType);
 app.patch('/api/exercises/:id', verifyToken, db.editExercise);
+
+// Achievements
+app.get('/api/achievements', db.getAllAchievements);
+app.get('/api/user/achievements', verifyToken, db.getAchievementsForUser);
+app.post('/api/achievements/calculate', verifyToken, db.calculateAchievements);
 
 // Schedules
 app.get('/api/schedules', verifyToken, db.fetchSchedules);

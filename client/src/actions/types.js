@@ -37,3 +37,6 @@ export const DELETE_EXERCISE_FROM_SCHEDULE = 'delete_exercise_from_schedule';
 
 export const INCREASE = 'increase';
 export const DECREASE = 'decrease';
+
+// Achievements
+export const FETCH_ACHIEVEMENTS = 'fetch_achievements';
