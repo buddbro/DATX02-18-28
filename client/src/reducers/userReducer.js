@@ -36,8 +36,9 @@ export default function userReducer(state = INITIAL_STATE, action) {
     case LOGOUT:
       return { ...INITIAL_STATE, loading: false };
     case FETCH_ACHIEVEMENTS:
+      console.log(action.payload);
       const achievements = action.payload;
-      return {...state, achievements }
+      return { ...state, achievements };
     default:
       return state;
   }
