@@ -43,8 +43,8 @@ class Achievements extends React.Component {
           <View style={styles.achievementsContainer}>
             <AchievementCell
               image={require('../../../assets/achievements/time.png')}
-              title="Stronger by the minute"
-              date="19th March 2018"
+              title="Badge"
+              date="Datum"
             />
             <AchievementCell
               image={require('../../../assets/achievements/nightowl.png')}
