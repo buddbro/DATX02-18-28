@@ -111,9 +111,10 @@ export default (AppNavigator = TabNavigator(
     MiscStack: { screen: MiscStack }
   },
   {
-    // Default config for all screens
     headerMode: 'none',
     initialRouteName: 'LoginStack',
-    tabBarVisible: false
+    tabBarVisible: false,
+    swipeEnabled: false,
+    animationEnabled: false
   }
 ));

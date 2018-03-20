@@ -20,12 +20,11 @@ const { height, width } = Dimensions.get('window');
 
 class WorkoutHistory extends React.Component {
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/time.png')}
-        style={{ width: 30, height: 30, borderRadius: 10 }}
+        style={{ width: 24, height: 24 }}
       />
-    )
   };
 
   render() {
@@ -44,7 +43,7 @@ class WorkoutHistory extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-          {this.props.workouts.map((workout, index) => (
+          {this.props.workouts.map((workout, index) =>
             <View key={workout.id} style={styles.item}>
               <WorkoutLog
                 workout={workout}
@@ -52,7 +51,7 @@ class WorkoutHistory extends React.Component {
               />
               <View style={styles.separator} />
             </View>
-          ))}
+          )}
         </ScrollView>
       </View>
     );
