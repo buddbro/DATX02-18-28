@@ -91,6 +91,18 @@ export default class CalendarStrip extends React.Component {
     return day;
   }
 
+  componentDidMount() {
+    if (this.refs.flatList && this.getAWeek().length) {
+      console.log('scrolladå');
+      this.refs.flatList.scrollToIndex({ index: 4, viewPosition: 0.5 });
+      // this.refs.flatList._listRef._scrollRef.scrollTo({
+      //   x: 100,
+      //   y: 0,
+      //   animated: true
+      // });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -98,9 +110,15 @@ export default class CalendarStrip extends React.Component {
           {this.transformMonthText(this.getAWeek()[5])}
         </Text>
         <FlatList
+          ref="flatList"
           contentContainerStyle={styles.flatList}
           data={this.getAWeek()}
           keyExtractor={item => item.getTime()}
+          getItemLayout={(data, index) => ({
+            length: this.getAWeek().length,
+            offset: this.getAWeek().length * index,
+            index
+          })}
           renderItem={({ item, index }) => {
             console.log('index: ', index);
             const highlight = index === 5;
