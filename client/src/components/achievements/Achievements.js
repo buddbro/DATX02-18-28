@@ -8,11 +8,15 @@ import {
   Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
-
+import { connect } from 'react-redux';
 import AchievementCell from './AchievementCell';
 
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
+
+import {
+  fetchAchievements
+} from '../../actions';
 
 class Achievements extends React.Component {
   static navigationOptions = {
@@ -23,6 +27,10 @@ class Achievements extends React.Component {
       />
     )
   };
+
+  componentDidMount(){
+    this.props.fetchAchievements
+  }
 
   render() {
     return (
@@ -58,7 +66,11 @@ class Achievements extends React.Component {
   }
 }
 
-export default Achievements;
+export default connect(null, {
+  fetchAchievements
+})(Achievements);
+
+
 
 const styles = StyleSheet.create({
   container: {
