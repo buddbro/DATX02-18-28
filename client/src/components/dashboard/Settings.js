@@ -68,7 +68,7 @@ class Settings extends React.Component {
       <View style={styles.container}>
         {/*Header (back, settings, edit)*/}
         {/*back icon*/}
-        <Header>
+        <Header backgroundColor = "#b9baf1">
           <BackArrow
             callback={() => {
               this.props.navigation.dispatch(
@@ -272,14 +272,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  headerContainer: {
-    backgroundColor: '#8b8ddf',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15
-  },
   subHeaderContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -302,36 +294,37 @@ const styles = StyleSheet.create({
   outerTextContainer: {
     alignItems: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#8b8ddf',
+    backgroundColor: '#d3d4f7',
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
+    paddingBottom: 13
   },
   innerTextContainer: {
     justifyContent: 'center',
-    backgroundColor: '#b9baf1',
+    backgroundColor: '#fff',
     marginTop: 3,
     marginBottom: 5,
     paddingLeft: 5,
     paddingTop: 5,
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: '#b9baf1',
+    borderColor: '#fff',
     marginLeft: 8,
     marginRight: 8,
     height: 30
   },
   smallInnerTextContainer: {
     justifyContent: 'center',
-    backgroundColor: '#b9baf1',
+    backgroundColor: '#fff',
     marginTop: 3,
     marginBottom: 5,
     paddingLeft: 5,
     paddingTop: 5,
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: '#b9baf1',
+    borderColor: '#fff',
     width: 85,
     height: 30
   },
@@ -340,7 +333,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 15,
     marginLeft: 15,
     marginRight: 15,
     backgroundColor: '#6669cb',
@@ -349,21 +342,22 @@ const styles = StyleSheet.create({
     borderColor: '#6669cb'
   },
   buttontext: {
-    color: '#ffffff',
+    color: '#fff',
     fontSize: 23
   },
   heading: {
-    fontSize: 22
+    fontSize: 30,
+    color: '#fff'
   },
   subHeading: {
-    color: '#ffffff',
+    color: '#fff',
     fontSize: 20,
     fontWeight: 'bold'
   },
   biggerStandardText: {
     marginLeft: 8,
     marginRight: 8,
-    color: '#ffffff',
+    color: '#6669cb',
     fontSize: 15,
     marginTop: 8
   },
