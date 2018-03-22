@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Image,
   View,
   StyleSheet,
   Text,
@@ -30,7 +31,7 @@ class ExerciseSet extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor }]}>
         <View style={{ width: '20%' }}>
-          <Text style={{ textAlign: 'center' }}>
+          <Text style={{ textAlign: 'center', color: '#6669cb' }}>
             SET {this.props.index + 1}
           </Text>
         </View>
@@ -50,6 +51,16 @@ class ExerciseSet extends React.Component {
           editable={this.props.id === -1}
           keyboardType="numeric"
         />
+      {/*  <TouchableOpacity
+          onPress={() => {
+
+          }}
+        >
+          <Image
+            source={require('../../../assets/delete.png')}
+            style={{ width: 20, height: 20, marginRight: 10}}
+          />
+        </TouchableOpacity>*/}
       </View>
     );
   }

@@ -290,6 +290,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6669cb',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
+    paddingRight: 25,
     marginLeft: 8,
     marginRight: 8
   },

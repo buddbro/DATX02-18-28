@@ -69,35 +69,21 @@ class Settings extends React.Component {
         {/*Header (back, settings, edit)*/}
         {/*back icon*/}
         <Header backgroundColor = "#b9baf1">
-          <BackArrow
-            callback={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              );
-            }}
-          />
+          <View style={{width: 30}}>
+          </View>
           <Text style={styles.heading}>Settings</Text>
           <TouchableOpacity
-            onPress={() => {
-              this.props.logout();
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
-                })
-              );
-            }}
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
             <Image
-              source={require('../../../assets/exit.png')}
+              source={require('../../../assets/menu.png')}
               style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </Header>
         <ScrollView>
           {/*Profile*/}
-          <View style={styles.subHeaderContainer}>
+          <View style={styles.subHeaderContainerOne}>
             <Text style={styles.subHeading}>PROFILE</Text>
           </View>
 
@@ -169,8 +155,24 @@ class Settings extends React.Component {
 
           {/*Account and down*/}
           <View style={{ height: 25 }} />
-          <View style={styles.subHeaderContainer}>
+          <View style={styles.subHeaderContainerTwo}>
+            <View style={{ width: 25 }} />
             <Text style={styles.subHeading}>ACCOUNT</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.logout();
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginUser'
+                  })
+                );
+              }}
+            >
+              <Image
+                source={require('../../../assets/exit.png')}
+                style={{ width: 25, height: 25}}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.outerTextContainer}>
             <Text style={styles.biggerStandardText}>EMAIL </Text>
@@ -272,9 +274,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  subHeaderContainer: {
+  subHeaderContainerOne: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#6669cb',
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    marginTop: 5,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
+  subHeaderContainerTwo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: '#6669cb',
     borderBottomEndRadius: 0,
     borderBottomStartRadius: 0,
