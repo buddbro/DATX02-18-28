@@ -3,6 +3,7 @@ export const LOGIN_ERROR = 'login_error';
 export const LOGOUT = 'logout';
 export const LOADING_FALSE = 'loading_false';
 export const SEND_FORGOT_PASSWORD = 'send_forgot_password';
+export const EDIT_USER = 'edit_user';
 
 export const ADD_WORKOUT = 'add_workout';
 export const DELETE_WORKOUT = 'delete_workout';

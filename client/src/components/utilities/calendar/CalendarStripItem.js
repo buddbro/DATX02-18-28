@@ -9,7 +9,7 @@ import {
 
 export default class CalendarStripItem extends React.Component {
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   render() {

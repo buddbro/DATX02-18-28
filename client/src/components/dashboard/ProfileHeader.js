@@ -76,7 +76,6 @@ class ProfileHeader extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Animated.View
         style={[this.getProfileStyle(), { zIndex: 10 }]}
