@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions
+} from 'react-native';
 
 export default class CalendarStripItem extends React.Component {
   componentDidMount() {
@@ -50,8 +56,8 @@ const styles = StyleSheet.create({
   },
   dateComponent: {
     borderRadius: 150,
-    width: 60,
-    height: 60,
+    width: Dimensions.get('window').width / 7,
+    height: Dimensions.get('window').width / 7,
     borderWidth: 0,
     borderColor: '#383DF4',
     backgroundColor: '#B1EBE0',

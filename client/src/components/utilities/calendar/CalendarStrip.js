@@ -10,19 +10,28 @@ import {
 import CalendarStripItem from './CalendarStripItem';
 
 export default class CalendarStrip extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentOffset: 59,
+      currentIndex: 4
+    };
+  }
+
   getAWeek() {
-    var week = [];
+    var weektmp = [];
     for (i = 0; i < 9; i++) {
-      week[i] = new Date();
+      weektmp[i] = new Date();
     }
 
     for (i = 3; i > -1; i--) {
-      week[i].setDate(week[i + 1].getDate() - 1);
+      weektmp[i].setDate(weektmp[i + 1].getDate() - 1);
     }
     for (i = 5; i < 9; i++) {
-      week[i].setDate(week[i - 1].getDate() + 1);
+      weektmp[i].setDate(weektmp[i - 1].getDate() + 1);
     }
-    return week;
+    return weektmp;
   }
 
   transformMonthText(date) {
@@ -66,7 +75,7 @@ export default class CalendarStrip extends React.Component {
         month = 'December';
         break;
     }
-    return month;
+    return month + ', ' + date.getFullYear();
   }
 
   transformDateText(date) {
@@ -98,18 +107,6 @@ export default class CalendarStrip extends React.Component {
     return day;
   }
 
-  componentDidMount() {
-    if (this.refs.flatList && this.getAWeek().length === 9) {
-      console.log('scrolladå');
-      this.refs.flatList.scrollToIndex({ index: 3, viewPosition: 0.5 });
-      // this.refs.flatList._listRef._scrollRef.scrollTo({
-      //   x: 100,
-      //   y: 0,
-      //   animated: true
-      // });
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -117,12 +114,27 @@ export default class CalendarStrip extends React.Component {
           {this.transformMonthText(this.getAWeek()[4])}
         </Text>
         <FlatList
-          ref="flatList"
-          contentContainerStyle={styles.flatList}
+          onScroll={event => {
+            if (
+              event.nativeEvent.contentOffset.x - this.state.currentOffset >
+              30
+            ) {
+              this.setState({ currentOffset: this.state.currentOffset + 59 });
+              this.setState({ currentIndex: this.state.currentIndex + 1 });
+            } else if (
+              event.nativeEvent.contentOffset.x - this.state.currentOffset <
+              -30
+            ) {
+              this.setState({ currentOffset: this.state.currentOffset - 59 });
+              this.setState({ currentIndex: this.state.currentIndex - 1 });
+            }
+          }}
+          scrollEventThrottle={20}
+          horizontal={true}
           data={this.getAWeek()}
-          scrollenabled
-          snapToAlignment={'center'}
+          contentContainerStyle={styles.flatList}
           keyExtractor={item => item.getTime()}
+          initialScrollIndex={1}
           snapToInterval={Dimensions.get('window').width / 7}
           getItemLayout={(data, index) => ({
             length: Dimensions.get('window').width / 7,
@@ -130,8 +142,7 @@ export default class CalendarStrip extends React.Component {
             index
           })}
           renderItem={({ item, index }) => {
-            console.log('index: ', index);
-            const highlight = index === 4;
+            const highlight = index === this.state.currentIndex;
             return (
               <CalendarStripItem
                 style={styles.stripItem}
@@ -141,7 +152,6 @@ export default class CalendarStrip extends React.Component {
               />
             );
           }}
-          horizontal={true}
         />
       </View>
     );
@@ -150,10 +160,7 @@ export default class CalendarStrip extends React.Component {
 
 const styles = StyleSheet.create({
   flatList: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingBottom: 20
+    paddingBottom: 10
   },
   container: {
     flex: 1,
