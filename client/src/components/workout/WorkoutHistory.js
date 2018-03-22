@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
 import Header from '../utilities/Header';
-import BackArrow from '../utilities/BackArrow';
 
 const { height, width } = Dimensions.get('window');
 

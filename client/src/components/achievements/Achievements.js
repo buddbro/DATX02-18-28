@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import AchievementCell from './AchievementCell';
 
 import Header from '../utilities/Header';
-import BackArrow from '../utilities/BackArrow';
 
 import { fetchAchievements } from '../../actions';
 
@@ -74,7 +73,6 @@ class Achievements extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  console.log(user);
   return {
     achievements: user.achievements
   };

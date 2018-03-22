@@ -18,7 +18,6 @@ import { addSchedule } from '../../actions';
 
 import ScheduleCard from './ScheduleCard';
 import Header from '../utilities/Header';
-import BackArrow from '../utilities/BackArrow';
 
 class WorkoutSchedules extends React.Component {
   static navigationOptions = {

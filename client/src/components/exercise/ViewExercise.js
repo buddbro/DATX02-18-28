@@ -108,6 +108,7 @@ class ViewExercise extends React.Component {
         {this.viewInstructions()}
         <Header backgroundColor="#b9baf1">
           <BackArrow
+            color="white"
             callback={() => {
               this.props.clearExercise();
               this.setState({ reps: '', sets: '' });
@@ -200,8 +201,13 @@ class ViewExercise extends React.Component {
             />
           </View> */}
         </ScrollView>
-        <View style={{ justifyContent: 'center',
-        alignItems: 'center', bottom: 40 }}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            bottom: 40
+          }}
+        >
           <TouchableOpacity
             onPress={() => this.addSetToExercise()}
             style={styles.button}
