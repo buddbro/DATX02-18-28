@@ -24,7 +24,7 @@ const getAchievementsForUser = (req, res, next, db) => {
 
 const calculateAchievements = (req, res, next, db) => {
   db
-    .any('SELECT * FROM workouts WHERE ORDER BY id', [req.user.id])
+    .any('SELECT * FROM achievements WHERE ORDER BY id', [req.user.id])
     .then(function(data) {
       console.log(data);
       res.status(200).json(data);
