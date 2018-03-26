@@ -41,7 +41,7 @@ class CalendarStripNew extends React.Component {
 
     this.state = {
       currentOffset: 0,
-      currentIndex: 3,
+      currentIndex: 5,
       dates: [],
       loading: false,
       offset: 0,
@@ -59,9 +59,9 @@ class CalendarStripNew extends React.Component {
   getInitialDates() {
     const dates = [];
     var currentDay = moment();
-    currentDay.subtract(4, 'days');
+    currentDay.subtract(5, 'days');
 
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < 9; i++) {
       dates[i] = moment(currentDay);
       dates[i].add(i, 'days');
     }
@@ -92,6 +92,10 @@ class CalendarStripNew extends React.Component {
         }),
       100
     );
+    this._calendar.scrollTo({
+      x: Dimensions.get('window') * 2 / 7,
+      animated: false
+    });
   }
 
   incrementDates() {
@@ -102,7 +106,7 @@ class CalendarStripNew extends React.Component {
     this.setState({ loading: true });
 
     const tempDates = this.state.dates;
-    var tmp = moment(tempDates[6]).add(1, 'days');
+    var tmp = moment(tempDates[8]).add(1, 'days');
     tempDates.push(tmp);
     tempDates.shift();
     this.setState({ dates: tempDates });
@@ -114,24 +118,33 @@ class CalendarStripNew extends React.Component {
         }),
       100
     );
+    this._calendar.scrollTo({
+      x: Dimensions.get('window') * 2 / 7,
+      animated: false
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.calendarTitle}>
-          {/* {this.transformMonthText(this.getAWeek()[4])} */}
-          {this.state.dates && this.state.dates[3]
-            ? `${this.state.dates[3].format('MMMM[,] YYYY')}`
+          {this.state.dates && this.state.dates[4]
+            ? `${this.state.dates[4].format('MMMM[,] YYYY')}`
             : ''}
         </Text>
 
         <ScrollView
+          ref={calendar => (this._calendar = calendar)}
           horizontal={true}
           pagingEnabled
-          scrollEventThrottle={50}
+          scrollEventThrottle={300}
           showsHorizontalScrollIndicator={false}
+          decelerationRate={0}
+          snapToInterval={Dimensions.get('window') / 7}
+          snapToAlignment={'center'}
+          bounces={true}
           onScroll={event => {
+            console.log(event.nativeEvent);
             this.setState({ currentOffset: event.nativeEvent.contentOffset.x });
             this.setState({
               offset: Math.abs(event.nativeEvent.contentOffset.x)
@@ -139,11 +152,11 @@ class CalendarStripNew extends React.Component {
 
             if (event.nativeEvent.contentOffset.x >= 3) {
               this.incrementDates();
-              this.setState({ selectedDate: this.state.dates[3] });
+              this.setState({ selectedDate: this.state.dates[4] });
               this.props.getSelectedDate(this.state.selectedDate);
             } else if (event.nativeEvent.contentOffset.x < 0 - 10) {
               this.decrementDates();
-              this.setState({ selectedDate: this.state.dates[3] });
+              this.setState({ selectedDate: this.state.dates[4] });
               this.props.getSelectedDate(this.state.selectedDate);
             }
           }}
@@ -151,7 +164,7 @@ class CalendarStripNew extends React.Component {
           <CalendarItemHighlight offset={this.state.offset} />
 
           {this.state.dates.map((item, index) => {
-            const fade = item.month() !== this.state.dates[3].month();
+            const fade = item.month() !== this.state.dates[4].month();
             if (!item) {
               return null;
             }
