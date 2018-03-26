@@ -113,6 +113,7 @@ export default class CalendarStrip extends React.Component {
         <Text style={styles.calendarTitle}>
           {this.transformMonthText(this.getAWeek()[4])}
         </Text>
+
         <FlatList
           onScroll={event => {
             if (
