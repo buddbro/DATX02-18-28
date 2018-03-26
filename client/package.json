@@ -34,6 +34,7 @@
     "react-native-camera-roll-picker": "^1.2.3",
     "react-native-circular-progress": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.4.4",
+    "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-keyboard-aware-view": "0.0.14",
     "react-native-pathjs-charts": "0.0.34",
     "react-native-rating": "^2.0.4",

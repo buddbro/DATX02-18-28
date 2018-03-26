@@ -87,11 +87,11 @@ class LatestWorkout extends React.Component {
     if (!this.props.latestWorkout.stop || !this.props.latestWorkout.start) {
       return null;
     }
-    const stop = this.props.latestWorkout.stop;
-    const start = this.props.latestWorkout.start;
-    const hours = parseInt(stop.slice(0, 2)) - parseInt(start.slice(0, 2));
-    const minutes = parseInt(stop.slice(3, 5)) - parseInt(start.slice(3, 5));
-    return hours * 60 + minutes;
+
+    const start = new Date(`2000-01-01T${this.props.latestWorkout.start}:00`);
+    const stop = new Date(`2000-01-01T${this.props.latestWorkout.stop}:00`);
+
+    return (stop.getTime() - start.getTime()) / 1000 / 60;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -142,7 +142,9 @@ class LatestWorkout extends React.Component {
                 style={styles.icons}
               />
               <View style={styles.innerRectangle}>
-                <Text style={styles.timeStamp}>{this.convertTimeStamp()}</Text>
+                <Text style={styles.timeStamp}>
+                  {this.convertTimeStamp()}
+                </Text>
                 <Text style={styles.smallText}>minutes</Text>
               </View>
             </View>

@@ -91,6 +91,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(new Date().getDate());
     return (
       <View style={styles.container}>
         <ProfileHeader
