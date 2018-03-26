@@ -15,10 +15,19 @@ import Header from '../utilities/Header';
 
 import { fetchAchievements } from '../../actions';
 
-const images = {
-  time: require('../../../assets/achievements/time.png'),
-  owl: require('../../../assets/achievements/owl.png')
+const owl = {
+  gold: require('../../../assets/achievements/owl_gold.png'),
+  silver: require('../../../assets/achievements/owl_silver.png'),
+  bronze: require('../../../assets/achievements/owl_bronze.png')
 };
+
+const time = {
+  gold: require('../../../assets/achievements/time.png'),
+  silver: require('../../../assets/achievements/time.png'),
+  bronze: require('../../../assets/achievements/time.png')
+};
+
+const images = { owl, time };
 
 class Achievements extends React.Component {
   static navigationOptions = {
@@ -35,10 +44,19 @@ class Achievements extends React.Component {
 
   renderAchivements() {
     return this.props.achievements.map(achievement => {
+      let level;
+      if (achievement.obtained_times < 3) {
+        level = 'bronze';
+      } else if (achievement.obtained_times < 10) {
+        level = 'silver';
+      } else {
+        level = 'gold';
+      }
+
       return (
         <AchievementCell
           key={achievement.id}
-          image={images[achievement.image]}
+          image={images[achievement.image][level]}
           title={achievement.name}
           date={achievement.obtained_date}
           obtained={achievement.obtained_times}
