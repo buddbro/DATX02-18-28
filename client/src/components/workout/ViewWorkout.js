@@ -118,11 +118,7 @@ class ViewWorkout extends React.Component {
   }
 
   createDate(date) {
-    const returnDate = new Date(`2000-01-01T${date}:00`);
-    returnDate.setTime(
-      returnDate.getTime() + returnDate.getTimezoneOffset() * 60 * 1000
-    );
-    return returnDate;
+    return new Date(`2000-01-01T${date}:00`);
   }
 
   renderAddExercise() {
