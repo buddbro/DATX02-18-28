@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Animated
 } from 'react-native';
 
 export default class CalendarStripItem extends React.Component {
@@ -21,17 +22,14 @@ export default class CalendarStripItem extends React.Component {
         ]}
       >
         <Text
-          style={[
-            styles.dateText,
-            this.props.highlighted ? styles.highlightText : {}
-          ]}
+          style={[styles.dateText, this.props.faded ? styles.fadedText : {}]}
         >
           {this.props.dateText}
         </Text>
         <Text
           style={[
             styles.dateNumber,
-            this.props.highlighted ? styles.highlightNumber : {}
+            this.props.faded ? styles.fadedNumber : {}
           ]}
         >
           {this.props.dateNumber}
@@ -43,16 +41,13 @@ export default class CalendarStripItem extends React.Component {
 
 const styles = StyleSheet.create({
   highlightCircle: {
-    borderWidth: 1
+    backgroundColor: '#CAF4EC'
   },
-  highlightText: {
-    color: '#383DF4',
-    fontSize: 14
+  fadedText: {
+    color: '#7F8785'
   },
-  highlightNumber: {
-    color: '#383DF4',
-    fontSize: 18,
-    fontWeight: 'bold'
+  fadedNumber: {
+    color: '#7F8785'
   },
   dateComponent: {
     borderRadius: 150,
@@ -60,10 +55,10 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').width / 7,
     borderWidth: 0,
     borderColor: '#383DF4',
-    backgroundColor: '#B1EBE0',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5
+    padding: 5,
+    marginBottom: 5
   },
   dateNumber: {
     color: 'black',
