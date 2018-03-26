@@ -20,27 +20,33 @@ class ExerciseHelp extends React.Component {
       return null;
     }
 
-    return this.props.description.description
-      .split('|')
-      .map((string, index) => (
-        <View style={styles.descrList} key={`description${index}`}>
-          <Text style={{ fontWeight: 'bold' }}>{index + 1}: </Text>
-          <Text>{string}</Text>
-        </View>
-      ));
+    return this.props.description.description.split('|').map((string, index) =>
+      <View style={styles.descrList} key={`description${index}`}>
+        <Text style={{ fontWeight: 'bold' }}>
+          {index + 1}:{' '}
+        </Text>
+        <Text>
+          {string}
+        </Text>
+      </View>
+    );
   }
   render() {
     return (
       <View style={styles.background}>
         <View style={styles.header}>
-          <Text style={styles.title}>{this.props.description.name}</Text>
+          <Text style={styles.title}>
+            {this.props.description.name}
+          </Text>
         </View>
         <View style={styles.body}>
           <View style={styles.menu}>
             <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
           </View>
           <ScrollView>
-            <View>{this.renderDescription()}</View>
+            <View>
+              {this.renderDescription()}
+            </View>
           </ScrollView>
         </View>
       </View>
@@ -74,14 +80,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
-  backarrow: {
-    color: '#fff',
-    marginLeft: 5
-  },
   title: {
     marginTop: 10,
     color: '#fff',
-    //fontWeight: 'bold',
     fontSize: 32,
     textAlign: 'center'
   },

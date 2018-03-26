@@ -221,6 +221,7 @@ class ViewWorkout extends React.Component {
       >
         <Header>
           <BackArrow
+            color="black"
             callback={() => {
               this.saveWorkout();
               this.setState({
@@ -290,11 +291,12 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'start'
-                    })
-                  }
+                    })}
                 >
                   <Text style={styles.workoutTimeTitle}>Start Time</Text>
-                  <Text style={styles.workoutTime}>{this.state.start}</Text>
+                  <Text style={styles.workoutTime}>
+                    {this.state.start}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -302,11 +304,12 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'stop'
-                    })
-                  }
+                    })}
                 >
                   <Text style={styles.workoutTimeTitle}>End Time</Text>
-                  <Text style={styles.workoutTime}>{this.state.stop}</Text>
+                  <Text style={styles.workoutTime}>
+                    {this.state.stop}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -358,8 +361,7 @@ class ViewWorkout extends React.Component {
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
-                this.props.saveNotes(this.props.id, this.state.notes)
-              }
+                this.props.saveNotes(this.props.id, this.state.notes)}
               value={this.state.notes}
               multiline={true}
               underlineColorAndroid="transparent"

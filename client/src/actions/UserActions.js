@@ -3,7 +3,8 @@ import {
   LOGIN_ERROR,
   LOGOUT,
   LOADING_FALSE,
-  SEND_FORGOT_PASSWORD
+  SEND_FORGOT_PASSWORD,
+  EDIT_USER
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -49,7 +50,10 @@ export function loginWithPassword(email, password) {
               payload: {
                 id: data.id,
                 name: data.name,
-                email
+                email,
+                age: data.age,
+                height: data.height,
+                weight: data.weight
               }
             });
           });
@@ -71,11 +75,15 @@ export function loginWithToken() {
           })
           .then(({ data }) => {
             if (!data.error) {
+              console.log(data);
               dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {
                   name: data.name,
-                  email: data.email
+                  email: data.email,
+                  age: data.age,
+                  height: data.height,
+                  weight: data.weight
                 }
               });
             } else {
@@ -102,6 +110,33 @@ export function logout() {
       dispatch({
         type: LOGOUT
       });
+    });
+  };
+}
+
+export function editUser(user) {
+  user.age = Number(user.age);
+  user.height = Number(user.height);
+  user.weight = Number(user.weight);
+  if (user.password) {
+    user.password = sha256(user.password);
+  }
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/user`,
+          { ...user },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          dispatch({
+            type: EDIT_USER,
+            payload: user
+          });
+        });
     });
   };
 }

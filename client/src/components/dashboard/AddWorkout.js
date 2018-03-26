@@ -58,8 +58,8 @@ class AddWorkout extends React.Component {
               this.props.addWorkout(0);
             }}
           >
-            <View style={styles.body}>
-              <Text style={styles.text}>Quick Start</Text>
+            <View style={styles.bodySpecial}>
+              <Text style={styles.textSpecial}>Quick Start</Text>
             </View>
           </TouchableOpacity>
           {this.renderSchedules()}
@@ -86,11 +86,13 @@ const styles = StyleSheet.create({
   container: {
     top: 0,
     width: '80%',
-    backgroundColor: '#A6A8E5',
+    backgroundColor: '#d3d4f7',
     paddingBottom: 10,
     marginTop: 50,
     marginBottom: 50,
-    zIndex: 999
+    zIndex: 999,
+    borderRadius: 4,
+    borderColor: '#d3d4f7'
   },
   scrollcontainer: {
     paddingBottom: 10,
@@ -101,14 +103,36 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'stretch',
     backgroundColor: '#fff',
-    marginTop: 12,
+    marginTop: 8,
     marginLeft: 20,
     marginRight: 20,
-    borderRadius: 3
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#6669cb'
   },
   text: {
     fontSize: 18,
-    color: '#333',
+    color: '#6669cb',
+    paddingTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center'
+  },
+  bodySpecial: {
+    flex: 1,
+    flexDirection: 'column',
+    alignSelf: 'stretch',
+    backgroundColor: '#E2FBF6',
+    marginTop: 12,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 20,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#6669cb'
+  },
+  textSpecial: {
+    fontSize: 18,
+    color: '#6669cb',
     paddingTop: 10,
     paddingBottom: 10,
     textAlign: 'center'

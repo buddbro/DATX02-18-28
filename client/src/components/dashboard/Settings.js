@@ -10,12 +10,12 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  AppRegistry
+  AppRegistry,
+  Switch
 } from 'react-native';
 import { connect } from 'react-redux';
-import { logout } from '../../actions';
+import { logout, editUser } from '../../actions';
 import NavigationActions from 'react-navigation';
-import ToggleSwitch from 'toggle-switch-react-native';
 
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
@@ -56,48 +56,57 @@ class Settings extends React.Component {
     this.setState({
       nameText: this.props.name,
       emailText: this.props.email,
-      ageText: this.props.age,
-      weightText: this.props.weight,
-      heightText: this.props.height,
+      ageText: String(this.props.age),
+      weightText: String(this.props.weight),
+      heightText: String(this.props.height),
       notifications: this.props.notifications
     });
+  }
+
+  save() {
+    const user = {
+      name: this.state.nameText,
+      email: this.state.emailText,
+      age: this.state.ageText,
+      height: this.state.heightText,
+      weight: this.state.weightText,
+      notifications: this.state.notifications
+    };
+    if (
+      this.state.newPasswordText.length >= 6 &&
+      this.state.newPasswordText === this.state.confirmPasswordText
+    ) {
+      user.password = this.state.newPasswordText;
+    }
+
+    this.props.editUser(user);
+    this.props.navigation.dispatch(
+      NavigationActions.NavigationActions.navigate({
+        routeName: 'Dashboard'
+      })
+    );
   }
 
   render() {
     return (
       <View style={styles.container}>
-        {/*Header (back, settings, edit)*/}
-        {/*back icon*/}
+        {/*Header (settings, edit)*/}
         <Header backgroundColor = "#b9baf1">
-          <BackArrow
-            callback={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              );
-            }}
-          />
+          <View style={{width: 30}}>
+          </View>
           <Text style={styles.heading}>Settings</Text>
           <TouchableOpacity
-            onPress={() => {
-              this.props.logout();
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
-                })
-              );
-            }}
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
             <Image
-              source={require('../../../assets/exit.png')}
+              source={require('../../../assets/menu.png')}
               style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </Header>
         <ScrollView>
           {/*Profile*/}
-          <View style={styles.subHeaderContainer}>
+          <View style={styles.subHeaderContainerOne}>
             <Text style={styles.subHeading}>PROFILE</Text>
           </View>
 
@@ -126,6 +135,7 @@ class Settings extends React.Component {
                     style={styles.standardText}
                     onChangeText={nameText => this.setState({ nameText })}
                     value={this.state.nameText}
+                    autoCorrect={false}
                   />
                 </View>
                 <Text style={styles.biggerStandardText}>AGE (yr)</Text>
@@ -169,8 +179,24 @@ class Settings extends React.Component {
 
           {/*Account and down*/}
           <View style={{ height: 25 }} />
-          <View style={styles.subHeaderContainer}>
+          <View style={styles.subHeaderContainerTwo}>
+            <View style={{ width: 25 }} />
             <Text style={styles.subHeading}>ACCOUNT</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.logout();
+                this.props.navigation.dispatch(
+                  NavigationActions.NavigationActions.navigate({
+                    routeName: 'LoginUser'
+                  })
+                );
+              }}
+            >
+              <Image
+                source={require('../../../assets/exit.png')}
+                style={{ width: 25, height: 25}}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.outerTextContainer}>
             <Text style={styles.biggerStandardText}>EMAIL </Text>
@@ -180,6 +206,8 @@ class Settings extends React.Component {
                 style={styles.standardText}
                 onChangeText={emailText => this.setState({ emailText })}
                 value={this.state.emailText}
+                autoCapitalize="none"
+                autoCorrect={false}
               />
             </View>
             <Text style={styles.biggerStandardText}>NEW PASSWORD</Text>
@@ -214,12 +242,11 @@ class Settings extends React.Component {
               }}
             >
               <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
-              <ToggleSwitch
-                isOn={this.state.notifications}
-                onColor="#6669cb"
-                offColor="#b9baf1"
-                size="medium"
-                onToggle={isOn => console.log('changed to : ', isOn)}
+              <Switch
+                value={this.state.notifications}
+                onTintColor="#6669cb"
+                onValueChange={notifications =>
+                  this.setState({ notifications })}
               />
             </View>
           </View>
@@ -233,13 +260,7 @@ class Settings extends React.Component {
           >
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'Dashboard'
-                  })
-                );
-              }}
+              onPress={this.save.bind(this)}
             >
               <Text style={styles.buttontext}>SAVE</Text>
             </TouchableOpacity>
@@ -264,7 +285,7 @@ const mapStateToProps = ({ settings, exercises, user }) => {
 };
 
 //(ta in,skicka ut)
-export default connect(mapStateToProps, { logout })(Settings);
+export default connect(mapStateToProps, { logout, editUser })(Settings);
 
 //Design
 const styles = StyleSheet.create({
@@ -272,9 +293,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  subHeaderContainer: {
+  subHeaderContainerOne: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#6669cb',
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    marginTop: 5,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
+  subHeaderContainerTwo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: '#6669cb',
     borderBottomEndRadius: 0,
     borderBottomStartRadius: 0,

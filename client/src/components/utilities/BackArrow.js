@@ -1,17 +1,20 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image } from 'react-native';
 
-export default (BackArrow = ({ callback }) =>
+const backWhite = require('../../../assets/back_white.png');
+const backBlack = require('../../../assets/back_black.png');
+
+export default (BackArrow = ({ callback, color }) =>
   <TouchableOpacity onPress={callback}>
     <Image
-      source={require('../../../assets/back_arrow.png')}
+      source={color === 'black' ? backBlack : backWhite}
       style={styles.back}
     />
   </TouchableOpacity>);
 
 const styles = StyleSheet.create({
   back: {
-    width: 35,
-    height: 35
+    width: 30,
+    height: 30
   }
 });
