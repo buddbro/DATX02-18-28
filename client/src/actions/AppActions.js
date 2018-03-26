@@ -1,9 +1,17 @@
 import {
   GET_EXERCISE_DESCRIPTION,
   SET_EXERCISE_LIST_TYPE,
-  GET_QUOTE
+  GET_QUOTE,
+  GET_SELECTED_DATE
 } from './types.js';
 import axios from 'axios';
+
+export function getSelectedDate(date) {
+  return {
+    type: GET_SELECTED_DATE,
+    payload: date
+  };
+}
 
 export function getExerciseDescription(id) {
   return dispatch => {

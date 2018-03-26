@@ -42,3 +42,5 @@ export const DECREASE = 'decrease';
 
 // Achievements
 export const FETCH_ACHIEVEMENTS = 'fetch_achievements';
+
+export const GET_SELECTED_DATE = 'get_selected_date';

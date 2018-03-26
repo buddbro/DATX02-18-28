@@ -12,6 +12,9 @@ import {
 import CalendarStripItem from './CalendarStripItem';
 import CalendarItemHighlight from './CalendarItemHighlight';
 
+import { connect } from 'react-redux';
+import { getSelectedDate } from '../../../actions';
+
 import moment from 'moment';
 
 const months = [
@@ -31,17 +34,18 @@ const months = [
 
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default class CalendarStripNew extends React.Component {
+class CalendarStripNew extends React.Component {
   constructor(props) {
     super(props);
     this.opacityValue = new Animated.Value(0);
 
     this.state = {
-      currentOffset: 59,
+      currentOffset: 0,
       currentIndex: 3,
       dates: [],
       loading: false,
-      offset: 0
+      offset: 0,
+      selectedDate: moment()
     };
   }
 
@@ -55,12 +59,14 @@ export default class CalendarStripNew extends React.Component {
   getInitialDates() {
     const dates = [];
     var currentDay = moment();
-    currentDay.subtract(3, 'days');
+    currentDay.subtract(4, 'days');
 
     for (i = 0; i < 7; i++) {
       dates[i] = moment(currentDay);
       dates[i].add(i, 'days');
     }
+
+    this.props.getSelectedDate(dates[3]);
 
     return dates;
   }
@@ -111,7 +117,6 @@ export default class CalendarStripNew extends React.Component {
   }
 
   render() {
-    console.log(this.opacityValue);
     return (
       <View style={styles.container}>
         <Text style={styles.calendarTitle}>
@@ -127,18 +132,19 @@ export default class CalendarStripNew extends React.Component {
           scrollEventThrottle={50}
           showsHorizontalScrollIndicator={false}
           onScroll={event => {
+            this.setState({ currentOffset: event.nativeEvent.contentOffset.x });
             this.setState({
               offset: Math.abs(event.nativeEvent.contentOffset.x)
             });
 
-            console.log(
-              'event.nativeEvent.contentOffset.x',
-              event.nativeEvent.contentOffset.x
-            );
             if (event.nativeEvent.contentOffset.x >= 3) {
               this.incrementDates();
+              this.setState({ selectedDate: this.state.dates[3] });
+              this.props.getSelectedDate(this.state.selectedDate);
             } else if (event.nativeEvent.contentOffset.x < 0 - 10) {
               this.decrementDates();
+              this.setState({ selectedDate: this.state.dates[3] });
+              this.props.getSelectedDate(this.state.selectedDate);
             }
           }}
         >
@@ -164,6 +170,8 @@ export default class CalendarStripNew extends React.Component {
     );
   }
 }
+
+export default connect(null, { getSelectedDate })(CalendarStripNew);
 
 const styles = StyleSheet.create({
   stripItem: {

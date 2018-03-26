@@ -93,7 +93,8 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    console.log(new Date().getDate());
+    console.log('datebro', this.props);
+
     return (
       <View style={styles.container}>
         <ProfileHeader
@@ -142,6 +143,7 @@ const mapStateToProps = ({ workout, user, app }) => {
   return {
     workout,
     user,
+    selectedDate: app.selectedDate,
     quote: app.quote,
     author: app.author
   };
