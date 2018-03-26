@@ -12,6 +12,8 @@ import {
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
+import { getQuote } from '../../actions';
+
 import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
@@ -101,7 +103,15 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>{this.renderToday()}</Text>
+            <Text style={styles.todayText}>{this.props.quote}</Text>
+            <Text
+              style={
+                (styles.todayText,
+                { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 })
+              }
+            >
+              -{this.props.author}
+            </Text>
           </View>
           <View>
             <CustomCalendarStrip />
@@ -128,14 +138,16 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user }) => {
+const mapStateToProps = ({ workout, user, app }) => {
   return {
     workout,
-    user
+    user,
+    quote: app.quote,
+    author: app.author
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getQuote })(Dashboard);
 
 const styles = StyleSheet.create({
   scrollView: {},
@@ -190,9 +202,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   todayText: {
-    fontSize: 26,
+    fontSize: 14,
     color: '#444',
-    fontWeight: '200'
+    fontWeight: '200',
+    marginLeft: '10%',
+    marginRight: '10%'
   },
   latestWorkout: {
     marginTop: 10,
