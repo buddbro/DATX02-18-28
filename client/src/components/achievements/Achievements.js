@@ -17,7 +17,9 @@ import { fetchAchievements } from '../../actions';
 
 const images = {
   time: require('../../../assets/achievements/time.png'),
-  owl: require('../../../assets/achievements/owl.png')
+  owl_gold: require('../../../assets/achievements/owl_gold.png')
+  owl_silver: require('../../../assets/achievements/owl_silver.png')
+  owl_bronze: require('../../../assets/achievements/owl_bronze.png')
 };
 
 class Achievements extends React.Component {
