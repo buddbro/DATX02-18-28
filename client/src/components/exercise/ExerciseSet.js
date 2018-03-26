@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -36,6 +37,8 @@ class ExerciseSet extends React.Component {
           </Text>
         </View>
         <TextInput
+          //onFocus={{focus()}}
+          onSubmitEditing={Keyboard.dismiss}
           placeholder="Reps"
           onChangeText={reps => this.props.setReps(String(reps))}
           style={styles.textbox}
@@ -44,6 +47,7 @@ class ExerciseSet extends React.Component {
           keyboardType="numeric"
         />
         <TextInput
+        onSubmitEditing={Keyboard.dismiss}
           placeholder="Weight"
           onChangeText={weight => this.props.setWeight(String(weight))}
           style={styles.textbox}
