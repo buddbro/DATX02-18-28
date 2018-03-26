@@ -24,7 +24,8 @@ export default AchievementCell;
 
 const styles = StyleSheet.create({
   achievementItem: {
-    backgroundColor: '#fff',
+    borderColor: '#7ad9c7',
+    borderWidth: 1,
     width: '50%',
     justifyContent: 'center',
     borderWidth: 6,
@@ -35,15 +36,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   achievementItemImage: {
-    width: 70,
-    height: 70
+    width: 80,
+    height: 80
   },
   header: {
     fontSize: 17,
     fontWeight: '500',
-    color: '#2e31a3'
+    color: '#000'
   },
   date: {
-    color: '#484bb4'
+    color: '#000'
   }
 });
