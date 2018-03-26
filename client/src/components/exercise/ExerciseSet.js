@@ -27,6 +27,10 @@ class ExerciseSet extends React.Component {
     });
   }
 
+  focus(component) {
+    this.refs[component].focus();
+  }
+
   render() {
     const backgroundColor = this.props.index % 2 === 0 ? '#d3d4f7' : '#c6c6f4';
     return (
@@ -37,7 +41,8 @@ class ExerciseSet extends React.Component {
           </Text>
         </View>
         <TextInput
-          //onFocus={{focus()}}
+          ref="reps"
+          onFocus={() => this.focus('reps')}
           onSubmitEditing={Keyboard.dismiss}
           placeholder="Reps"
           onChangeText={reps => this.props.setReps(String(reps))}
@@ -47,7 +52,9 @@ class ExerciseSet extends React.Component {
           keyboardType="numeric"
         />
         <TextInput
-        onSubmitEditing={Keyboard.dismiss}
+          ref="weight"
+          onFocus={() => this.focus('weight')}
+          onSubmitEditing={Keyboard.dismiss}
           placeholder="Weight"
           onChangeText={weight => this.props.setWeight(String(weight))}
           style={styles.textbox}
@@ -55,7 +62,7 @@ class ExerciseSet extends React.Component {
           editable={this.props.id === -1}
           keyboardType="numeric"
         />
-      {/*  <TouchableOpacity
+        {/*  <TouchableOpacity
           onPress={() => {
 
           }}

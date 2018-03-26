@@ -99,12 +99,19 @@ class ViewWorkout extends React.Component {
     const start = new Date(
       `${this.props.workout.date.substring(0, 10)}T${this.state.start}:00`
     );
+
+    start.setTime(start.getTime() + 60 * 60 * 1000);
+
     const stop =
       this.state.stop !== '--:--'
         ? new Date(
             `${this.props.workout.date.substring(0, 10)}T${this.state.stop}:00`
           )
         : null;
+
+    if (stop) {
+      stop.setTime(stop.getTime() + 60 * 60 * 1000);
+    }
 
     this.props.editWorkout(this.props.id, { title, start, stop });
   }
