@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { logout, editUser } from '../../actions';
 import NavigationActions from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';

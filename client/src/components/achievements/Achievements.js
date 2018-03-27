@@ -97,13 +97,13 @@ class Achievements extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-
         <ScrollView>
-          <View style={styles.achievementsContainer}>
             <TouchableOpacity onPress={() => {this.popupDialog.show();}}>
-              {this.renderAchievements()}
+              <View style={styles.achievementsContainer}>
+                {this.renderAchievements()}
+              </View>
             </TouchableOpacity>
-          </View>
+
         </ScrollView>
         <PopupDialog
           ref={(popupDialog) => {this.popupDialog = popupDialog; }}
