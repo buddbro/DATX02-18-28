@@ -18,7 +18,8 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
