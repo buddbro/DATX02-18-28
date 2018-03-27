@@ -12,20 +12,23 @@ import {
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 
+import { getQuote } from '../../actions';
+
 import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
 import CalendarStrip from 'react-native-calendar-strip';
-import CustomCalendarStrip from '../utilities/calendar/CalendarStrip';
+import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/dashboard.png')}
         style={{ width: 26, height: 26, borderRadius: 10 }}
       />
+    )
   };
   constructor(props) {
     super(props);
@@ -84,12 +87,14 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
+    console.log('datebro', this.props);
+
     return (
       <View style={styles.container}>
         <ProfileHeader
@@ -99,30 +104,18 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>
-              {this.renderToday()}
+            <Text style={styles.todayText}>{this.props.quote}</Text>
+            <Text
+              style={
+                (styles.todayText,
+                { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 })
+              }
+            >
+              -{this.props.author}
             </Text>
           </View>
           <View>
             <CustomCalendarStrip />
-            <CalendarStrip
-              calendarAnimation={{ type: 'sequence', duration: 100 }}
-              calendarHeaderStyle={{ color: 'white' }}
-              calendarColor={'#A6A8E5'}
-              dateNumberStyle={{ color: 'white' }}
-              dateNameStyle={{ color: 'white' }}
-              highlightDateNumberStyle={{ color: '#17F2C7' }}
-              highlightDateNameStyle={{ color: '#17F2C7' }}
-              disabledDateNameStyle={{ color: '#6669CB' }}
-              disabledDateNumberStyle={{ color: '#6669CB' }}
-              style={{ paddingBottom: 10, marginBottom: 15, paddingTop: 5 }}
-              daySelectionAnimation={{
-                type: 'border',
-                duration: 200,
-                borderWidth: 1,
-                borderHighlightColor: '#17F2C7'
-              }}
-            />
           </View>
           <View style={styles.latestWorkout}>
             <LatestWorkout navigation={this.props.navigation} />
@@ -146,14 +139,17 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user }) => {
+const mapStateToProps = ({ workout, user, app }) => {
   return {
     workout,
-    user
+    user,
+    selectedDate: app.selectedDate,
+    quote: app.quote,
+    author: app.author
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getQuote })(Dashboard);
 
 const styles = StyleSheet.create({
   scrollView: {},
@@ -208,9 +204,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   todayText: {
-    fontSize: 26,
+    fontSize: 14,
     color: '#444',
-    fontWeight: '200'
+    fontWeight: '200',
+    marginLeft: '10%',
+    marginRight: '10%'
   },
   latestWorkout: {
     marginTop: 10,

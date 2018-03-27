@@ -1,14 +1,16 @@
 import {
   GET_EXERCISE_DESCRIPTION,
   SET_EXERCISE_LIST_TYPE,
-  GET_QUOTE
+  GET_QUOTE,
+  GET_SELECTED_DATE
 } from '../actions/types';
 
 const INITIAL_STATE = {
   exerciseHelp: { title: '' },
   exerciseListType: '',
   quote: '',
-  author: ''
+  author: '',
+  selectedDate: ''
 };
 
 export default function appReducer(state = INITIAL_STATE, action) {
@@ -28,6 +30,11 @@ export default function appReducer(state = INITIAL_STATE, action) {
         ...state,
         quote: action.payload.text,
         author: action.payload.author
+      };
+    case GET_SELECTED_DATE:
+      return {
+        ...state,
+        selectedDate: action.payload
       };
     default:
       return state;

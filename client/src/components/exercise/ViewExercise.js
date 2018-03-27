@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  Image
+  Image,
+  keyboard
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -17,6 +18,7 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
@@ -133,7 +135,9 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <ScrollView>
+        <KeyboardAwareScrollView
+          enableAutomaticScroll={true}
+        >
           <View style={styles.setsContainer}>
             <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
@@ -200,12 +204,13 @@ class ViewExercise extends React.Component {
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
           </View> */}
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            bottom: 40
+            bottom: 40,
+            paddingTop: 55
           }}
         >
           <TouchableOpacity

@@ -37,7 +37,9 @@ export default class CalendarStrip extends React.Component {
       weeksBeforeToday: 1,
       weeksAfterToday: 1,
       loadingDatesBefore: false,
-      loadingDatesAfter: false
+      loadingDatesAfter: false,
+      dayOffset: 0,
+      loading: false
     };
   }
 
@@ -46,6 +48,34 @@ export default class CalendarStrip extends React.Component {
       dates: this.getInitialDates()
       // currentIndex: this.state.weeksBeforeToday * 7
     });
+  }
+
+  loadDates(day) {
+    if (this.state.loading) {
+      return;
+    }
+
+    this.setState({
+      loading: true
+    });
+    const dates = [];
+    const currentDay = new Date();
+    currentDay.setDate(currentDay.getDate() - 4 + day);
+    for (i = 0; i < 9; i++) {
+      dates[i] = new Date();
+      dates[i].setDate(currentDay.getDate() + i);
+    }
+    this.setState({
+      dates: dates
+    });
+
+    setTimeout(
+      () =>
+        this.setState({
+          loadingDatesBefore: false
+        }),
+      10
+    );
   }
 
   loadMoreDatesBefore() {
@@ -74,7 +104,7 @@ export default class CalendarStrip extends React.Component {
     setTimeout(
       () =>
         this.setState({
-          loadingDatesBefore: false
+          loading: false
         }),
       2000
     );
@@ -117,16 +147,11 @@ export default class CalendarStrip extends React.Component {
   getInitialDates() {
     const dates = [];
     const currentDay = new Date();
-    currentDay.setDate(currentDay.getDate() - 5);
+    currentDay.setDate(currentDay.getDate() - 4);
 
-    for (
-      i = 0;
-      i < 7 * (this.state.weeksBeforeToday + this.state.weeksAfterToday);
-      i++
-    ) {
+    for (i = 0; i < 9; i++) {
       dates[i] = new Date();
-      dates[i].setDate(currentDay.getDate() + 1);
-      currentDay.setDate(currentDay.getDate() + 1);
+      dates[i].setDate(currentDay.getDate() + i);
     }
 
     return dates;
@@ -160,39 +185,88 @@ export default class CalendarStrip extends React.Component {
     return weektmp;
   }
 
+  decrementDates() {
+    if (this.state.loading) {
+      return;
+    }
+    this.setState({ loading: true });
+
+    const tempDates = this.state.dates;
+    const tmp = tempDates[0];
+    tempDates.shift(tmp.getDate() - 1);
+
+    tempDates.pop();
+    this.setState({ dates: tempDates });
+
+    setTimeout(
+      () =>
+        this.setState({
+          loading: false
+        }),
+      1000
+    );
+  }
+
+  incrementDates() {
+    if (this.state.loading) {
+      return;
+    }
+    this.setState({ loading: true });
+
+    const tempDates = this.state.dates;
+    const tmp = tempDates[8];
+    tempDates.push(tmp.getDate() + 1);
+    tempDates.unshift();
+    this.setState({ dates: tempDates });
+
+    setTimeout(
+      () =>
+        this.setState({
+          loading: false
+        }),
+      1000
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.calendarTitle}>
           {/* {this.transformMonthText(this.getAWeek()[4])} */}
           {this.state.dates && this.state.dates[4]
-            ? `${months[
-                this.state.dates[4].getMonth()
-              ]}, ${this.state.dates[4].getFullYear()}`
+            ? `${
+                months[this.state.dates[4].getMonth()]
+              }, ${this.state.dates[4].getFullYear()}`
             : ''}
         </Text>
+
         <FlatList
           ref={ref => {
             this.flatList = ref;
           }}
-          onEndReached={this.loadMoreDatesAfter.bind(this)}
+          onEndReachedThreshold={0}
+          onEndReached={this.decrementDates.bind(this)}
           onScroll={event => {
             if (event.nativeEvent.contentOffset.x <= 0) {
-              this.loadMoreDatesBefore();
+              //this.setState({ dayOffset: this.state.dayOffset - 1 });
+              this.decrementDates();
+              //this.loadMoreDatesBefore();
             }
-            if (
+            /*  if (
               event.nativeEvent.contentOffset.x - this.state.currentOffset >
               30
             ) {
               this.setState({ currentOffset: this.state.currentOffset + 53 });
               this.setState({ currentIndex: this.state.currentIndex + 1 });
+              this.incrementDates();
             } else if (
               event.nativeEvent.contentOffset.x - this.state.currentOffset <
               -30
             ) {
               this.setState({ currentOffset: this.state.currentOffset - 53 });
               this.setState({ currentIndex: this.state.currentIndex - 1 });
-            }
+              this.decrementDates();
+            }*/
           }}
           scrollEventThrottle={20}
           horizontal={true}

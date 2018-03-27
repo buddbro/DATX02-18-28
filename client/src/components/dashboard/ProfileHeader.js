@@ -104,9 +104,6 @@ class ProfileHeader extends React.Component {
               <Text style={styles.userWelcome}>
                 Welcome back {this.props.user.name}!
               </Text>
-              <Text style={styles.tagline}>
-                {this.props.quote} -{this.props.author}
-              </Text>
             </View>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('DrawerOpen')}
