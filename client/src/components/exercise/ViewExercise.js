@@ -18,7 +18,7 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
@@ -135,9 +135,7 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <KeyboardAwareScrollView
-          enableAutomaticScroll={true}
-        >
+        <KeyboardAwareScrollView enableAutomaticScroll={true}>
           <View style={styles.setsContainer}>
             <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
