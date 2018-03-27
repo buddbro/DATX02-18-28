@@ -27,7 +27,13 @@ const time = {
   bronze: require('../../../assets/achievements/time.png')
 };
 
-const images = { owl, time };
+const cheetah = {
+  gold: require('../../../assets/achievements/cheetah_gold.png'),
+  silver: require('../../../assets/achievements/cheetah_silver.png'),
+  bronze: require('../../../assets/achievements/cheetah_bronze.png')
+}
+
+const images = { owl, time, cheetah };
 
 class Achievements extends React.Component {
   static navigationOptions = {

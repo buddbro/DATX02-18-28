@@ -1,21 +1,39 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity
+} from 'react-native';
+import PopupDialog from 'react-native-popup-dialog';
 
 class AchievementCell extends React.PureComponent {
   render() {
     return (
-      <View style={styles.achievementItem}>
-        <Image style={styles.achievementItemImage} source={this.props.image} />
-        <Text style={styles.header}>
-          {this.props.title}
-        </Text>
-        <Text style={styles.date}>
-          {this.props.date}
-        </Text>
-        <Text style={styles.date}>
-          Obtained: {this.props.obtained} times
-        </Text>
-      </View>
+        <View style={styles.achievementItem}>
+          <TouchableOpacity onPress={() => {this.popupDialog.show();}}>
+            <Image style={styles.achievementItemImage} source={this.props.image} />
+          </TouchableOpacity>
+          <PopupDialog
+            ref={(popupDialog) => {this.popupDialog = popupDialog; }}
+            dismissOnHardwareBackPress={true}
+            width={0.9}
+            height={0.9}
+          >
+            <View style={styles.achievementDetails}>
+              <Text style={styles.header}>
+                {this.props.title}
+              </Text>
+              <Text style={styles.date}>
+                {this.props.date}
+              </Text>
+              <Text style={styles.date}>
+                Obtained: {this.props.obtained} times
+              </Text>
+            </View>
+          </PopupDialog>
+        </View>
     );
   }
 }
@@ -24,20 +42,20 @@ export default AchievementCell;
 
 const styles = StyleSheet.create({
   achievementItem: {
-    borderColor: '#7ad9c7',
-    borderWidth: 1,
     width: '50%',
     justifyContent: 'center',
-    borderWidth: 6,
-    borderColor: '#fff',
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 20,
     alignItems: 'center'
   },
   achievementItemImage: {
-    width: 80,
-    height: 80
+    width: 120,
+    height: 120
+  },
+  achievementDetails: {
+    backgroundColor: '#b9baf1',
+    justifyContent: 'center',
   },
   header: {
     fontSize: 17,
