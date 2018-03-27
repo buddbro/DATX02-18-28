@@ -69,6 +69,10 @@ class ViewWorkout extends React.Component {
     }
   }
 
+  focus(component) {
+    this.refs[component].focus();
+  }
+
   deleteWorkout() {
     Alert.alert(
       'Are you sure?',
@@ -269,6 +273,8 @@ class ViewWorkout extends React.Component {
               }}
             >
               <TextInput
+                ref="title"
+                onFocus={() => this.focus('title')}
                 style={styles.inputField}
                 onChangeText={title => this.setState({ title })}
                 onEndEditing={() => {
@@ -363,6 +369,8 @@ class ViewWorkout extends React.Component {
           <View>
             <Text style={styles.traitText}>Notes</Text>
             <TextInput
+              ref="notes"
+              onFocus={() => this.focus('notes')}
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
