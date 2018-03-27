@@ -34,6 +34,10 @@ class LoginUser extends React.Component {
     }
   }
 
+  focus(component) {
+    this.refs[component].focus();
+  }
+
   renderError() {
     if (!this.props.error) {
       return;
@@ -65,6 +69,8 @@ class LoginUser extends React.Component {
 
         <View style={styles.body}>
           <TextInput
+            ref="email"
+            onFocus={() => this.focus('email')}
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
@@ -76,6 +82,8 @@ class LoginUser extends React.Component {
             autoCorrect={false}
           />
           <TextInput
+            ref="password"
+            onFocus={() => this.focus('password')}
             style={styles.textInput}
             placeholder="Password"
             onChangeText={password =>

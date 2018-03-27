@@ -18,7 +18,8 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
@@ -135,54 +136,62 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <KeyboardAwareScrollView enableAutomaticScroll={true}>
-          <View style={styles.setsContainer}>
-            <View style={styles.singleSetContainer}>
-              <View style={{ width: '20%' }}>
-                <Text style={styles.setNumber}>#</Text>
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: '#fff' }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+          enableOnAndroid={true}
+        >
+          <View>
+            <View style={styles.setsContainer}>
+              <View style={styles.singleSetContainer}>
+                <View style={{ width: '20%' }}>
+                  <Text style={styles.setNumber}>#</Text>
+                </View>
+
+                <View style={styles.sets}>
+                  <Text
+                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  >
+                    Reps
+                  </Text>
+                </View>
+
+                <View style={styles.reps}>
+                  <Text
+                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  >
+                    Weight (kg)
+                  </Text>
+                </View>
               </View>
 
-              <View style={styles.sets}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  Reps
-                </Text>
-              </View>
-
-              <View style={styles.reps}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  Weight (kg)
-                </Text>
-              </View>
+              <FlatList
+                style={{ marginLeft: 8, marginRight: 8 }}
+                data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+                keyExtractor={(item, index) => `${item.id}${this.props.id}`}
+                renderItem={({ item, index }) => {
+                  const key = `${this.props.id}${item.id}`;
+                  return (
+                    <ExerciseSet
+                      id={item.id}
+                      index={index}
+                      reps={
+                        item.id === -1 ? this.state.reps : String(item.reps)
+                      }
+                      weight={
+                        item.id === -1 ? this.state.weight : String(item.weight)
+                      }
+                      exerciseId={this.props.id}
+                      setReps={this.setReps.bind(this)}
+                      setWeight={this.setWeight.bind(this)}
+                    />
+                  );
+                }}
+              />
             </View>
 
-            <FlatList
-              style={{ marginLeft: 8, marginRight: 8 }}
-              data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-              keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-              renderItem={({ item, index }) => {
-                const key = `${this.props.id}${item.id}`;
-                return (
-                  <ExerciseSet
-                    id={item.id}
-                    index={index}
-                    reps={item.id === -1 ? this.state.reps : String(item.reps)}
-                    weight={
-                      item.id === -1 ? this.state.weight : String(item.weight)
-                    }
-                    exerciseId={this.props.id}
-                    setReps={this.setReps.bind(this)}
-                    setWeight={this.setWeight.bind(this)}
-                  />
-                );
-              }}
-            />
-          </View>
-
-          {/*        <View
+            {/*        <View
             style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
           >
             <Text
@@ -202,6 +211,7 @@ class ViewExercise extends React.Component {
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
           </View> */}
+          </View>
         </KeyboardAwareScrollView>
         <View
           style={{
