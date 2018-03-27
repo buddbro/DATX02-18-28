@@ -60,6 +60,10 @@ class Settings extends React.Component {
     });
   }
 
+  focus(component) {
+    this.refs[component].focus();
+  }
+
   save() {
     const user = {
       name: this.state.nameText,
@@ -147,6 +151,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>NAME</Text>
                 <View style={styles.innerTextContainer}>
                   <TextInput
+                    ref="name"
+                    onFocus={() => this.focus('name')}
                     style={styles.standardText}
                     onChangeText={nameText => this.setState({ nameText })}
                     value={this.state.nameText}
@@ -156,6 +162,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>AGE (yr)</Text>
                 <View style={styles.innerTextContainer}>
                   <TextInput
+                    ref="age"
+                    onFocus={() => this.focus('age')}
                     keyboardType="numeric"
                     style={styles.standardText}
                     onChangeText={ageText => this.setState({ ageText })}
@@ -171,6 +179,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>HEIGHT (cm)</Text>
                 <View style={styles.smallInnerTextContainer}>
                   <TextInput
+                    ref="height"
+                    onFocus={() => this.focus('height')}
                     keyboardType="numeric"
                     style={styles.standardTextCentered}
                     onChangeText={heightText => this.setState({ heightText })}
@@ -182,6 +192,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>WEIGHT (kg)</Text>
                 <View style={styles.smallInnerTextContainer}>
                   <TextInput
+                    ref="weight"
+                    onFocus={() => this.focus('weight')}
                     keyboardType="numeric"
                     style={styles.standardTextCentered}
                     onChangeText={weightText => this.setState({ weightText })}
@@ -201,6 +213,8 @@ class Settings extends React.Component {
             <Text style={styles.biggerStandardText}>EMAIL </Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="email"
+                onFocus={() => this.focus('email')}
                 keyboardType="email-address"
                 style={styles.standardText}
                 onChangeText={emailText => this.setState({ emailText })}
@@ -212,6 +226,8 @@ class Settings extends React.Component {
             <Text style={styles.biggerStandardText}>NEW PASSWORD</Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="passwordOne"
+                onFocus={() => this.focus('passwordOne')}
                 style={styles.standardText}
                 secureTextEntry
                 onChangeText={newPasswordText =>
@@ -222,6 +238,8 @@ class Settings extends React.Component {
             <Text style={styles.biggerStandardText}>CONFIRM PASSWORD</Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="passwordTwo"
+                onFocus={() => this.focus('passwordTwo')}
                 style={styles.standardText}
                 secureTextEntry
                 onChangeText={confirmPasswordText =>
