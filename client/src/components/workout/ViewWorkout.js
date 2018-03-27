@@ -15,7 +15,8 @@ import {
   Image,
   TimePickerAndroid,
   DatePickerIOS,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
@@ -349,7 +350,8 @@ class ViewWorkout extends React.Component {
               />
               <View
                 style={{
-                  flexDirection: 'row'
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
                 }}
               >
                 <Text style={styles.difficultyText}>No Sweat</Text>

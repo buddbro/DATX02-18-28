@@ -136,8 +136,12 @@ class ViewExercise extends React.Component {
           </TouchableOpacity>
         </Header>
         <KeyboardAwareScrollView
-          enableAutomaticScroll={true}
+          style={{ backgroundColor: '#fff' }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+          enableOnAndroid={true}
         >
+        <View>
           <View style={styles.setsContainer}>
             <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
@@ -204,6 +208,7 @@ class ViewExercise extends React.Component {
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
           </View> */}
+          </View>
         </KeyboardAwareScrollView>
         <View
           style={{
