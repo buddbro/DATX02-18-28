@@ -193,7 +193,7 @@ export default class CalendarStrip extends React.Component {
 
     const tempDates = this.state.dates;
     const tmp = tempDates[0];
-    tempDates.shift(tmp.getDate() - 1);
+    tempDates.unshift(tmp.getDate() - 1);
 
     tempDates.pop();
     this.setState({ dates: tempDates });
@@ -216,7 +216,7 @@ export default class CalendarStrip extends React.Component {
     const tempDates = this.state.dates;
     const tmp = tempDates[8];
     tempDates.push(tmp.getDate() + 1);
-    tempDates.unshift();
+    tempDates.shift();
     this.setState({ dates: tempDates });
 
     setTimeout(
@@ -272,7 +272,7 @@ export default class CalendarStrip extends React.Component {
           horizontal={true}
           data={this.state.dates}
           contentContainerStyle={styles.flatList}
-          keyExtractor={item => item.getTime()}
+          keyExtractor={item => item.getDay() * item.getMonth()}
           initialScrollIndex={1}
           snapToInterval={Dimensions.get('window').width / 7}
           getItemLayout={(data, index) => ({
