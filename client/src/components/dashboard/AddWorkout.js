@@ -18,6 +18,7 @@ class AddWorkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (this.state.waitForWorkout && nextProps.id >= 0) {
       this.setState({ waitForWorkout: false });
       this.props.chooseWorkout(nextProps.id);
@@ -35,7 +36,7 @@ class AddWorkout extends React.Component {
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
-          this.props.addWorkout(schedule);
+          this.props.addWorkout(Number(schedule));
         }}
         key={`schedule${schedule}`}
       >

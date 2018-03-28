@@ -99,6 +99,7 @@ export function addWorkout(schedule) {
           }
         )
         .then(({ data }) => {
+          console.log(schedule);
           const { id, title, date, difficulty, notes, start } = data;
           dispatch({
             type: ADD_WORKOUT,

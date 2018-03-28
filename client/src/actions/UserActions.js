@@ -75,7 +75,6 @@ export function loginWithToken() {
           })
           .then(({ data }) => {
             if (!data.error) {
-              console.log(data);
               dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {
