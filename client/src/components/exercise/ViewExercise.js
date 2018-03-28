@@ -218,7 +218,7 @@ class ViewExercise extends React.Component {
         >
           <TouchableOpacity
             onPress={() => this.addSetToExercise()}
-            style={styles.button}
+            style={styles.addButton}
           >
             <Text
               style={{
@@ -226,7 +226,20 @@ class ViewExercise extends React.Component {
                 color: '#fff'
               }}
             >
-              Add set
+              Add Set
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.deleteExercise()}
+            style={styles.deleteButton}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                color: '#fff'
+              }}
+            >
+              Delete Exercise
             </Text>
           </TouchableOpacity>
         </View>
@@ -272,7 +285,7 @@ const styles = StyleSheet.create({
     borderColor: '#8b8ddf',
     marginBottom: 15
   },
-  button: {
+  addButton: {
     width: '70%',
     paddingLeft: 10,
     paddingRight: 10,
@@ -286,6 +299,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 5,
     borderColor: '#6669cb'
+  },
+  deleteButton: {
+    width: '70%',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    // marginLeft: 15,
+    // marginRight: 15,
+    backgroundColor: '#cb6669',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#cb6669'
   },
   exerciseTitle: {
     color: '#fff',
