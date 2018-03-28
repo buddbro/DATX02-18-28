@@ -4,22 +4,64 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 
-class AchievementPopup extends React.PureComponent {
+const owl = {
+  gold: require('../../../assets/achievements/owl_gold.png'),
+  silver: require('../../../assets/achievements/owl_silver.png'),
+  bronze: require('../../../assets/achievements/owl_bronze.png')
+};
+
+const time = {
+  gold: require('../../../assets/achievements/time.png'),
+  silver: require('../../../assets/achievements/time.png'),
+  bronze: require('../../../assets/achievements/time.png')
+};
+
+const cheetah = {
+  gold: require('../../../assets/achievements/cheetah_gold.png'),
+  silver: require('../../../assets/achievements/cheetah_silver.png'),
+  bronze: require('../../../assets/achievements/cheetah_bronze.png')
+};
+
+const chicken = {
+  gold: require('../../../assets/achievements/chicken_gold.png'),
+  silver: require('../../../assets/achievements/chicken_silver.png'),
+  bronze: require('../../../assets/achievements/chicken_bronze.png')
+};
+
+const images = { owl, time, cheetah, chicken };
+
+const { height, width } = Dimensions.get('window');
+
+class AchievementPopup extends React.Component {
   render() {
+    console.log(this.props.achievement);
+    const {
+      name,
+      image,
+      obtained_date,
+      obtained_times
+    } = this.props.achievement;
+
+    if (!name) {
+      return <View />;
+    }
+
     return (
       <View style={styles.achievementDetails}>
         <Text style={styles.header}>
-          {this.props.title}
+          {name}
+        </Text>
+        <Image style={styles.image} source={images[image][this.props.level]} />
+        <Text style={styles.date}>
+          {obtained_date ? obtained_date.substring(0, 10) : ''}
         </Text>
         <Text style={styles.date}>
-          {this.props.date}
-        </Text>
-        <Text style={styles.date}>
-          Obtained: {this.props.obtained} times
+          Obtained: {obtained_times} times
         </Text>
       </View>
     );
@@ -38,15 +80,22 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   achievementDetails: {
-    backgroundColor: '#b9baf1',
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center'
   },
   header: {
-    fontSize: 17,
-    fontWeight: '500',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 34,
+    fontWeight: '200',
     color: '#000'
   },
   date: {
-    color: '#000'
-  }
+    color: '#000',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 20
+  },
+  image: { width: width * 0.64, height: 240 }
 });

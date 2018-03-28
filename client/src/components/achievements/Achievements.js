@@ -34,13 +34,13 @@ const cheetah = {
   bronze: require('../../../assets/achievements/cheetah_bronze.png')
 };
 
-const chickenLegs = {
+const chicken = {
   gold: require('../../../assets/achievements/chicken_gold.png'),
   silver: require('../../../assets/achievements/chicken_silver.png'),
   bronze: require('../../../assets/achievements/chicken_bronze.png')
-}
+};
 
-const images = { owl, time, cheetah, chickenLegs };
+const images = { owl, time, cheetah, chicken };
 
 class Achievements extends React.Component {
   static navigationOptions = {
@@ -51,38 +51,43 @@ class Achievements extends React.Component {
       />
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = { active: {} };
+  }
+
   componentDidMount() {
     this.props.fetchAchievements();
   }
 
-  renderAchievements() {
-    return this.props.achievements.map(achievement => {
-      let level;
-      if (achievement.obtained_times < 3) {
-        level = 'bronze';
-      } else if (achievement.obtained_times < 10) {
-        level = 'silver';
-      } else {
-        level = 'gold';
-      }
-
-      return (
-        <AchievementCell
-          image={images[achievement.image][level]}
-          key={achievement.id}
-        />
-      );
-    });
+  showAchievement(achievement) {
+    this.setState({ active: achievement });
+    this.popupDialog.show();
   }
 
-  renderAchievementDetails() {
+  getLevel(obtained_times) {
+    let level;
+    if (obtained_times < 3) {
+      level = 'bronze';
+    } else if (obtained_times < 10) {
+      level = 'silver';
+    } else {
+      level = 'gold';
+    }
+    return level;
+  }
+
+  renderAchievements() {
     return this.props.achievements.map(achievement => {
       return (
-        <AchievementPopup
+        <AchievementCell
+          achievement={achievement}
+          showAchievement={this.showAchievement.bind(this)}
+          image={
+            images[achievement.image][this.getLevel(achievement.obtained_times)]
+          }
           key={achievement.id}
-          title={achievement.name}
-          date={achievement.obtained_date}
-          obtained={achievement.obtained_times}
         />
       );
     });
@@ -104,19 +109,30 @@ class Achievements extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-            <TouchableOpacity onPress={() => {this.popupDialog.show();}}>
-              <View style={styles.achievementsContainer}>
-                {this.renderAchievements()}
-              </View>
-            </TouchableOpacity>
-
+          <TouchableOpacity
+            onPress={() => {
+              this.popupDialog.show();
+            }}
+          >
+            <View style={styles.achievementsContainer}>
+              {this.renderAchievements()}
+            </View>
+          </TouchableOpacity>
         </ScrollView>
         <PopupDialog
-          ref={(popupDialog) => {this.popupDialog = popupDialog; }}
+          ref={popupDialog => {
+            this.popupDialog = popupDialog;
+          }}
           dismissOnHardwareBackPress={true}
-          width={0.7}
-          height={0.7}>
-          {this.renderAchievementDetails()}
+          width={0.8}
+          height={0.7}
+          overlayOpacity={0.8}
+          // dialogStyle={{ backgroundColor: '#000', opacity: 0.4 }}
+        >
+          <AchievementPopup
+            achievement={this.state.active}
+            level={this.getLevel(this.state.active.obtained_times)}
+          />
         </PopupDialog>
       </View>
     );
