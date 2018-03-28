@@ -35,6 +35,7 @@
     "react-native-circular-progress": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.4.4",
     "react-native-keyboard-aware-view": "0.0.14",
+    "react-native-modal": "^5.4.0",
     "react-native-pathjs-charts": "0.0.34",
     "react-native-popup": "^0.6.1",
     "react-native-popup-dialog": "^0.11.46",
