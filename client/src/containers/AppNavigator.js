@@ -15,7 +15,7 @@ import Dashboard from '../components/dashboard/Dashboard';
 
 import WorkoutSchedules from '../components/schedule/WorkoutSchedules';
 
-import WorkoutHistory from '../components/workout/WorkoutHistory';
+import WorkoutHistory from '../components/workout/WorkoutCalendar';
 import ViewWorkout from '../components/workout/ViewWorkout';
 import ViewExercise from '../components/exercise/ViewExercise';
 
