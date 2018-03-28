@@ -301,12 +301,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'start'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>Start Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.start}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.start}</Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -314,12 +313,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'stop'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>End Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.stop}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.stop}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -341,8 +339,55 @@ class ViewWorkout extends React.Component {
                 );
               }}
             />
-            <View style={styles.category}>
-              <Text style={styles.categoriesText}>Categories</Text>
+          </View>
+          <View style={(styles.difficulty, { flexDirection: 'row' })}>
+            <Text style={styles.traitText}>Color tag</Text>
+            <View style={styles.tagWrapper}>
+              <TouchableOpacity
+                style={[
+                  styles.colorTag,
+                  {
+                    backgroundColor: 'yellow',
+                    opacity: this.props.workout.color === 'yellow' ? 1 : 0.3
+                  }
+                ]}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.colorTag,
+                  {
+                    backgroundColor: 'red',
+                    opacity: this.props.workout.color === 'red' ? 1 : 0.3
+                  }
+                ]}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.colorTag,
+                  {
+                    backgroundColor: 'blue',
+                    opacity: this.props.workout.color === 'blue' ? 1 : 0.3
+                  }
+                ]}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.colorTag,
+                  {
+                    backgroundColor: 'green',
+                    opacity: this.props.workout.color === 'green' ? 1 : 0.3
+                  }
+                ]}
+              />
+              <TouchableOpacity
+                style={[
+                  styles.colorTag,
+                  {
+                    backgroundColor: 'purple',
+                    opacity: this.props.workout.color === 'purple' ? 1 : 0.3
+                  }
+                ]}
+              />
             </View>
           </View>
           <View style={styles.difficulty}>
@@ -374,7 +419,8 @@ class ViewWorkout extends React.Component {
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
-                this.props.saveNotes(this.props.id, this.state.notes)}
+                this.props.saveNotes(this.props.id, this.state.notes)
+              }
               value={this.state.notes}
               multiline={true}
               underlineColorAndroid="transparent"
@@ -412,6 +458,21 @@ export default connect(mapStateToProps, {
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
+  tagWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '30%'
+  },
+  colorTag: {
+    marginLeft: 10,
+    marginRight: 10,
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: 'gray'
+  },
   icons: {
     width: 25,
     height: 25,
