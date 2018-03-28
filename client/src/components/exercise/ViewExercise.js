@@ -27,12 +27,6 @@ import ExerciseHelp from './ExerciseHelp';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
-//TODO
-//i for intstructions (uppe till höger)
-//vit backarrow
-//ta bort ett set
-//"start workout!"
-
 class ViewExercise extends React.Component {
   constructor(props) {
     super(props);
@@ -140,6 +134,7 @@ class ViewExercise extends React.Component {
           style={{ backgroundColor: '#fff' }}
           contentContainerStyle={styles.container}
           scrollEnabled={true}
+          extraHeight={150}
           enableOnAndroid={true}
         >
           <View>

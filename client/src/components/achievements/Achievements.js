@@ -32,9 +32,15 @@ const cheetah = {
   gold: require('../../../assets/achievements/cheetah_gold.png'),
   silver: require('../../../assets/achievements/cheetah_silver.png'),
   bronze: require('../../../assets/achievements/cheetah_bronze.png')
+};
+
+const chickenLegs = {
+  gold: require('../../../assets/achievements/chicken_gold.png'),
+  silver: require('../../../assets/achievements/chicken_silver.png'),
+  bronze: require('../../../assets/achievements/chicken_bronze.png')
 }
 
-const images = { owl, time, cheetah };
+const images = { owl, time, cheetah, chickenLegs };
 
 class Achievements extends React.Component {
   static navigationOptions = {
@@ -97,13 +103,13 @@ class Achievements extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-
         <ScrollView>
-          <View style={styles.achievementsContainer}>
             <TouchableOpacity onPress={() => {this.popupDialog.show();}}>
-              {this.renderAchievements()}
+              <View style={styles.achievementsContainer}>
+                {this.renderAchievements()}
+              </View>
             </TouchableOpacity>
-          </View>
+
         </ScrollView>
         <PopupDialog
           ref={(popupDialog) => {this.popupDialog = popupDialog; }}
