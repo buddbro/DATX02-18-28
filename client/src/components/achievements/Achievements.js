@@ -10,7 +10,8 @@ import {
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
 import AchievementCell from './AchievementCell';
-
+import AchievementPopup from './AchievementPopup';
+import PopupDialog from 'react-native-popup-dialog';
 import Header from '../utilities/Header';
 
 import { fetchAchievements } from '../../actions';
@@ -27,7 +28,19 @@ const time = {
   bronze: require('../../../assets/achievements/time.png')
 };
 
-const images = { owl, time };
+const cheetah = {
+  gold: require('../../../assets/achievements/cheetah_gold.png'),
+  silver: require('../../../assets/achievements/cheetah_silver.png'),
+  bronze: require('../../../assets/achievements/cheetah_bronze.png')
+};
+
+const chickenLegs = {
+  gold: require('../../../assets/achievements/chicken_gold.png'),
+  silver: require('../../../assets/achievements/chicken_silver.png'),
+  bronze: require('../../../assets/achievements/chicken_bronze.png')
+}
+
+const images = { owl, time, cheetah, chickenLegs };
 
 class Achievements extends React.Component {
   static navigationOptions = {
@@ -42,7 +55,7 @@ class Achievements extends React.Component {
     this.props.fetchAchievements();
   }
 
-  renderAchivements() {
+  renderAchievements() {
     return this.props.achievements.map(achievement => {
       let level;
       if (achievement.obtained_times < 3) {
@@ -55,8 +68,18 @@ class Achievements extends React.Component {
 
       return (
         <AchievementCell
-          key={achievement.id}
           image={images[achievement.image][level]}
+          key={achievement.id}
+        />
+      );
+    });
+  }
+
+  renderAchievementDetails() {
+    return this.props.achievements.map(achievement => {
+      return (
+        <AchievementPopup
+          key={achievement.id}
           title={achievement.name}
           date={achievement.obtained_date}
           obtained={achievement.obtained_times}
@@ -81,10 +104,20 @@ class Achievements extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-          <View style={styles.achievementsContainer}>
-            {this.renderAchivements()}
-          </View>
+            <TouchableOpacity onPress={() => {this.popupDialog.show();}}>
+              <View style={styles.achievementsContainer}>
+                {this.renderAchievements()}
+              </View>
+            </TouchableOpacity>
+
         </ScrollView>
+        <PopupDialog
+          ref={(popupDialog) => {this.popupDialog = popupDialog; }}
+          dismissOnHardwareBackPress={true}
+          width={0.7}
+          height={0.7}>
+          {this.renderAchievementDetails()}
+        </PopupDialog>
       </View>
     );
   }

@@ -18,19 +18,14 @@ import {
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
-
-//TODO
-//i for intstructions (uppe till höger)
-//vit backarrow
-//ta bort ett set
-//"start workout!"
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -136,8 +131,13 @@ class ViewExercise extends React.Component {
           </TouchableOpacity>
         </Header>
         <KeyboardAwareScrollView
-          enableAutomaticScroll={true}
+          style={{ backgroundColor: '#fff' }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+          extraHeight={150}
+          enableOnAndroid={true}
         >
+        <View>
           <View style={styles.setsContainer}>
             <View style={styles.singleSetContainer}>
               <View style={{ width: '20%' }}>
@@ -204,6 +204,7 @@ class ViewExercise extends React.Component {
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
           </View> */}
+          </View>
         </KeyboardAwareScrollView>
         <View
           style={{

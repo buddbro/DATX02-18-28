@@ -43,7 +43,6 @@ class ExerciseSet extends React.Component {
         <TextInput
           ref="reps"
           onFocus={() => this.focus('reps')}
-          onSubmitEditing={Keyboard.dismiss}
           placeholder="Reps"
           onChangeText={reps => this.props.setReps(String(reps))}
           style={styles.textbox}
@@ -54,7 +53,6 @@ class ExerciseSet extends React.Component {
         <TextInput
           ref="weight"
           onFocus={() => this.focus('weight')}
-          onSubmitEditing={Keyboard.dismiss}
           placeholder="Weight"
           onChangeText={weight => this.props.setWeight(String(weight))}
           style={styles.textbox}

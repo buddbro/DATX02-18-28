@@ -15,7 +15,8 @@ import {
   Image,
   TimePickerAndroid,
   DatePickerIOS,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
@@ -66,6 +67,10 @@ class ViewWorkout extends React.Component {
         stop: nextProps.workout.stop || '--:--'
       });
     }
+  }
+
+  focus(component) {
+    this.refs[component].focus();
   }
 
   deleteWorkout() {
@@ -268,6 +273,8 @@ class ViewWorkout extends React.Component {
               }}
             >
               <TextInput
+                ref="title"
+                onFocus={() => this.focus('title')}
                 style={styles.inputField}
                 onChangeText={title => this.setState({ title })}
                 onEndEditing={() => {
@@ -349,7 +356,8 @@ class ViewWorkout extends React.Component {
               />
               <View
                 style={{
-                  flexDirection: 'row'
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
                 }}
               >
                 <Text style={styles.difficultyText}>No Sweat</Text>
@@ -361,6 +369,8 @@ class ViewWorkout extends React.Component {
           <View>
             <Text style={styles.traitText}>Notes</Text>
             <TextInput
+              ref="notes"
+              onFocus={() => this.focus('notes')}
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>

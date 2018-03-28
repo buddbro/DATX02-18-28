@@ -16,6 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { logout, editUser } from '../../actions';
 import NavigationActions from 'react-navigation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
@@ -24,8 +25,6 @@ var { height, width } = Dimensions.get('window');
 
 //TODO in Settings
 //Image
-//take age, height, weight from database
-//implement savebutton
 
 class Settings extends React.Component {
   static navigationOptions = {
@@ -39,10 +38,8 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //klara
       nameText: '',
       emailText: '',
-      //ej klara
       ageText: '',
       heightText: '',
       weightText: '',
@@ -61,6 +58,10 @@ class Settings extends React.Component {
       heightText: String(this.props.height),
       notifications: this.props.notifications
     });
+  }
+
+  focus(component) {
+    this.refs[component].focus();
   }
 
   save() {
@@ -92,8 +93,21 @@ class Settings extends React.Component {
       <View style={styles.container}>
         {/*Header (settings, edit)*/}
         <Header backgroundColor = "#b9baf1">
-          <View style={{width: 30}}>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.logout();
+              this.props.navigation.dispatch(
+                NavigationActions.NavigationActions.navigate({
+                  routeName: 'LoginUser'
+                })
+              );
+            }}
+          >
+            <Image
+              source={require('../../../assets/exit.png')}
+              style={{ width: 35, height: 35}}
+            />
+          </TouchableOpacity>
           <Text style={styles.heading}>Settings</Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
@@ -104,9 +118,14 @@ class Settings extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <ScrollView>
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: '#fff' }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+          enableOnAndroid={true}
+        >
           {/*Profile*/}
-          <View style={styles.subHeaderContainerOne}>
+          <View style={styles.subHeaderContainer}>
             <Text style={styles.subHeading}>PROFILE</Text>
           </View>
 
@@ -132,6 +151,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>NAME</Text>
                 <View style={styles.innerTextContainer}>
                   <TextInput
+                    ref="name"
+                    onFocus={() => this.focus('name')}
                     style={styles.standardText}
                     onChangeText={nameText => this.setState({ nameText })}
                     value={this.state.nameText}
@@ -141,6 +162,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>AGE (yr)</Text>
                 <View style={styles.innerTextContainer}>
                   <TextInput
+                    ref="age"
+                    onFocus={() => this.focus('age')}
                     keyboardType="numeric"
                     style={styles.standardText}
                     onChangeText={ageText => this.setState({ ageText })}
@@ -156,6 +179,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>HEIGHT (cm)</Text>
                 <View style={styles.smallInnerTextContainer}>
                   <TextInput
+                    ref="height"
+                    onFocus={() => this.focus('height')}
                     keyboardType="numeric"
                     style={styles.standardTextCentered}
                     onChangeText={heightText => this.setState({ heightText })}
@@ -167,6 +192,8 @@ class Settings extends React.Component {
                 <Text style={styles.biggerStandardText}>WEIGHT (kg)</Text>
                 <View style={styles.smallInnerTextContainer}>
                   <TextInput
+                    ref="weight"
+                    onFocus={() => this.focus('weight')}
                     keyboardType="numeric"
                     style={styles.standardTextCentered}
                     onChangeText={weightText => this.setState({ weightText })}
@@ -179,29 +206,15 @@ class Settings extends React.Component {
 
           {/*Account and down*/}
           <View style={{ height: 25 }} />
-          <View style={styles.subHeaderContainerTwo}>
-            <View style={{ width: 25 }} />
+          <View style={styles.subHeaderContainer}>
             <Text style={styles.subHeading}>ACCOUNT</Text>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.logout();
-                this.props.navigation.dispatch(
-                  NavigationActions.NavigationActions.navigate({
-                    routeName: 'LoginUser'
-                  })
-                );
-              }}
-            >
-              <Image
-                source={require('../../../assets/exit.png')}
-                style={{ width: 25, height: 25}}
-              />
-            </TouchableOpacity>
           </View>
           <View style={styles.outerTextContainer}>
             <Text style={styles.biggerStandardText}>EMAIL </Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="email"
+                onFocus={() => this.focus('email')}
                 keyboardType="email-address"
                 style={styles.standardText}
                 onChangeText={emailText => this.setState({ emailText })}
@@ -213,6 +226,8 @@ class Settings extends React.Component {
             <Text style={styles.biggerStandardText}>NEW PASSWORD</Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="passwordOne"
+                onFocus={() => this.focus('passwordOne')}
                 style={styles.standardText}
                 secureTextEntry
                 onChangeText={newPasswordText =>
@@ -223,6 +238,8 @@ class Settings extends React.Component {
             <Text style={styles.biggerStandardText}>CONFIRM PASSWORD</Text>
             <View style={styles.innerTextContainer}>
               <TextInput
+                ref="passwordTwo"
+                onFocus={() => this.focus('passwordTwo')}
                 style={styles.standardText}
                 secureTextEntry
                 onChangeText={confirmPasswordText =>
@@ -265,7 +282,7 @@ class Settings extends React.Component {
               <Text style={styles.buttontext}>SAVE</Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -293,22 +310,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  subHeaderContainerOne: {
+  subHeaderContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: '#6669cb',
-    borderBottomEndRadius: 0,
-    borderBottomStartRadius: 0,
-    marginTop: 5,
-    marginLeft: 15,
-    marginRight: 15,
-    borderRadius: 8,
-    borderWidth: 5,
-    borderColor: '#6669cb'
-  },
-  subHeaderContainerTwo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     backgroundColor: '#6669cb',
     borderBottomEndRadius: 0,
     borderBottomStartRadius: 0,
