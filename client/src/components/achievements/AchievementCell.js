@@ -4,7 +4,6 @@ import PopupDialog from 'react-native-popup-dialog';
 
 class AchievementCell extends React.PureComponent {
   render() {
-    console.log(this.props.achievement);
     return (
       <View>
         <TouchableOpacity

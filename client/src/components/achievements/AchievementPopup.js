@@ -39,7 +39,6 @@ const { height, width } = Dimensions.get('window');
 
 class AchievementPopup extends React.Component {
   render() {
-    console.log(this.props.achievement);
     const {
       name,
       image,

@@ -54,7 +54,7 @@ class ExerciseList extends React.Component {
           );
           this.props.navigation.dispatch(
             NavigationActions.NavigationActions.navigate({
-              routeName: 'WorkoutSchedules'
+              routeName: 'Schedule'
             })
           );
         };
@@ -79,8 +79,6 @@ class ExerciseList extends React.Component {
   render() {
     const previousRoute =
       this.props.type === 'workout' ? 'ViewWorkout' : 'Schedule';
-
-    console.log(previousRoute);
 
     return (
       <View style={styles.container}>

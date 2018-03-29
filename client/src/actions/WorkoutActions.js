@@ -70,7 +70,6 @@ export function fetchWorkouts() {
 }
 
 export function editWorkout(id, properties) {
-  console.log(properties);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -99,7 +98,6 @@ export function addWorkout(schedule) {
           }
         )
         .then(({ data }) => {
-          console.log(schedule);
           const { id, title, date, difficulty, notes, start } = data;
           dispatch({
             type: ADD_WORKOUT,

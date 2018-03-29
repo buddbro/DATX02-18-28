@@ -18,7 +18,6 @@ class AddWorkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (this.state.waitForWorkout && nextProps.id >= 0) {
       this.setState({ waitForWorkout: false });
       this.props.chooseWorkout(nextProps.id);

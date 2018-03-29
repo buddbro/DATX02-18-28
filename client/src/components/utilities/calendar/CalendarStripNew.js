@@ -144,7 +144,6 @@ class CalendarStripNew extends React.Component {
           snapToAlignment={'center'}
           bounces={true}
           onScroll={event => {
-            console.log(event.nativeEvent);
             this.setState({ currentOffset: event.nativeEvent.contentOffset.x });
             this.setState({
               offset: Math.abs(event.nativeEvent.contentOffset.x)
