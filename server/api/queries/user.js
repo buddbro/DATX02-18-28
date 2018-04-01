@@ -19,14 +19,14 @@ const getAllUsers = (req, res, next, db) => {
 const getUser = (req, res, next, db) => {
   db
     .any(
-      `SELECT id, email, name, created, lastlogin FROM users WHERE id = $1`,
+      `SELECT id, email, name, created, lastlogin, age, height, weight, notifications FROM users WHERE id = $1`,
       [req.user.id]
     )
     .then(function(data) {
       const user = data[0];
 
       db
-        .any(`SELECT id, title, date FROM workouts WHERE userid = $1`, [
+        .any(`SELECT id, title, date FROM workouts WHERE user_id = $1`, [
           req.user.id
         ])
         .then(function(data) {
@@ -41,16 +41,17 @@ const getUser = (req, res, next, db) => {
 
 const login = (req, res, next, db) => {
   db
-    .any('SELECT id, password, name FROM users WHERE email = $1', [
-      req.body.email
-    ])
+    .any(
+      'SELECT id, password, name, age, height, weight, notifications FROM users WHERE email = $1',
+      [req.body.email]
+    )
     .then(function(data) {
       if (!data.length) {
         res.json({ error: 'User not found' });
       }
 
       if (req.body.password === data[0].password) {
-        const { id, name } = data[0];
+        const { id, name, age, height, weight, notifications } = data[0];
         db
           .any('UPDATE users SET lastLogin = $1 WHERE email = $2', [
             getDate(),
@@ -58,7 +59,7 @@ const login = (req, res, next, db) => {
           ])
           .then(function(data) {
             jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, token) => {
-              res.json({ name, token });
+              res.json({ name, token, age, height, weight, notifications });
             });
           });
       } else {
@@ -72,10 +73,13 @@ const login = (req, res, next, db) => {
 
 const verifyToken = (req, res, next, db) => {
   db
-    .any('SELECT id, email, name FROM users WHERE id = $1', [req.user.id])
+    .any(
+      'SELECT id, email, name, age, height, weight, notifications FROM users WHERE id = $1',
+      [req.user.id]
+    )
     .then(function(data) {
-      const { name, email } = data[0];
-      res.json({ name, email });
+      const { name, email, age, height, weight, notifications } = data[0];
+      res.json({ name, email, age, height, weight, notifications });
     })
     .catch(function(err) {
       return next(err);
@@ -142,7 +146,7 @@ const registerUser = (req, res, next, db, sendMail) => {
       )
       .then(function(data) {
         jwt.sign({ id: data[0].id }, config.AUTH_SECRET_KEY, (err, token) => {
-          // sendMail(req.body.email, req.body.name);
+          sendMail(req.body.email, req.body.name);
           res.json({ token });
         });
       });
@@ -150,15 +154,37 @@ const registerUser = (req, res, next, db, sendMail) => {
 };
 
 const updateUser = (req, res, next, db) => {
+  console.log(req.body);
+  const {
+    name,
+    email,
+    age,
+    height,
+    weight,
+    notifications,
+    password
+  } = req.body;
   db
-    .any('UPDATE users SET name = $1 WHERE id = $2', [
-      req.body.name,
-      req.body.id
-    ])
-    .then(function(data) {
-      res
-        .status(200)
-        .json({ success: true, result: `Change name to ${req.body.name}` });
+    .any(
+      'UPDATE users SET name = $1, email = $2, age = $3, height = $4, weight = $5, notifications = $6 WHERE id = $7',
+      [name, email, age, height, weight, notifications, req.user.id]
+    )
+    .then(() => {
+      if (password) {
+        db
+          .any('UPDATE users SET password = $1 WHERE id = $2', [
+            password,
+            req.user.id
+          ])
+          .then(() => {
+            res.sendStatus(200);
+          })
+          .catch(function(err) {
+            return next(err);
+          });
+      } else {
+        res.sendStatus(200);
+      }
     })
     .catch(function(err) {
       return next(err);

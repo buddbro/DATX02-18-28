@@ -59,7 +59,7 @@ app.get('/api/getall', db.getAllUsers);
 app.get('/api/user', verifyToken, db.getUser);
 
 // User
-app.post('/api/users/update', db.updateUser);
+app.patch('/api/user', verifyToken, db.updateUser);
 app.post('/api/users/register', db.registerUser);
 app.post('/api/login', db.login);
 app.get('/api/verifytoken', verifyToken, db.verifyToken);
@@ -81,6 +81,7 @@ app.post('/api/workouts', verifyToken, db.addWorkout);
 app.patch('/api/workouts/:id', verifyToken, db.editWorkout);
 app.patch('/api/workouts/difficulty/:id', verifyToken, db.setDifficulty);
 app.patch('/api/workouts/notes/:id', verifyToken, db.saveNotes);
+app.patch('/api/workouts/color/:id', verifyToken, db.setColor);
 app.post('/api/workouts/exercise', verifyToken, db.addExerciseToWorkout);
 app.get('/api/workouts/exercise/:id/sets', verifyToken, db.getSetsForExercise);
 app.post('/api/workouts/exercise/:id', verifyToken, db.addSetToExercise);
@@ -96,6 +97,9 @@ app.patch('/api/exercises/:id', verifyToken, db.editExercise);
 app.get('/api/achievements', db.getAllAchievements);
 app.get('/api/user/achievements', verifyToken, db.getAchievementsForUser);
 app.post('/api/achievements/calculate', verifyToken, db.calculateAchievements);
+
+// Quotes
+app.get('/api/quote', db.getRandomQuote);
 
 // Schedules
 app.get('/api/schedules', verifyToken, db.fetchSchedules);
