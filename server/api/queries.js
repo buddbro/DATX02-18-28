@@ -78,6 +78,8 @@ const saveNotes = (req, res, next) => workout.saveNotes(req, res, next, db);
 const setColor = (req, res, next) => workout.setColor(req, res, next, db);
 const addExerciseToWorkout = (req, res, next) =>
   workout.addExerciseToWorkout(req, res, next, db);
+const deleteExerciseFromWorkout = (req, res, next) =>
+  workout.deleteExerciseFromWorkout(req, res, next, db);
 const addSetToExercise = (req, res, next) =>
   workout.addSetToExercise(req, res, next, db);
 
@@ -154,6 +156,7 @@ module.exports = {
   fetchExerciseTypes,
   editExercise,
   addExerciseToWorkout,
+  deleteExerciseFromWorkout,
   addSetToExercise,
   getSetsForExercise,
   updateUser,

@@ -83,6 +83,11 @@ app.patch('/api/workouts/difficulty/:id', verifyToken, db.setDifficulty);
 app.patch('/api/workouts/notes/:id', verifyToken, db.saveNotes);
 app.patch('/api/workouts/color/:id', verifyToken, db.setColor);
 app.post('/api/workouts/exercise', verifyToken, db.addExerciseToWorkout);
+app.delete(
+  '/api/workouts/exercise/:id',
+  verifyToken,
+  db.deleteExerciseFromWorkout
+);
 app.get('/api/workouts/exercise/:id/sets', verifyToken, db.getSetsForExercise);
 app.post('/api/workouts/exercise/:id', verifyToken, db.addSetToExercise);
 app.get('/api/exercises', db.fetchExerciseList);

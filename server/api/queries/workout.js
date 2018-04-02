@@ -312,6 +312,18 @@ const addExerciseToWorkout = (req, res, next, db) => {
     });
 };
 
+const deleteExerciseFromWorkout = (req, res, next, db) => {
+  const { id } = req.params;
+  db
+    .any('DELETE FROM exercises WHERE id = $1', [id])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
 const addSetToExercise = (req, res, next, db) => {
   const { reps, weight } = req.body;
   const { id } = req.params;
@@ -339,5 +351,6 @@ module.exports = {
   deleteWorkout,
   editWorkout,
   addExerciseToWorkout,
+  deleteExerciseFromWorkout,
   addSetToExercise
 };
