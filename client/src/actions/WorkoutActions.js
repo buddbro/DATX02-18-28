@@ -8,6 +8,7 @@ import {
   CLEAR_WORKOUT,
   CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_SET,
@@ -143,6 +144,23 @@ export function addExerciseToWorkout(workoutId, exerciseId) {
           dispatch({
             type: ADD_EXERCISE_TO_WORKOUT,
             payload: { id: data[0].id, title: data[0].title }
+          });
+        });
+    });
+  };
+}
+
+export function deleteExerciseFromWorkout(exerciseId) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .delete(`https://getpushapp.com/api/workouts/exercise/${exerciseId}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: DELETE_EXERCISE_FROM_WORKOUT,
+            payload: exerciseId
           });
         });
     });

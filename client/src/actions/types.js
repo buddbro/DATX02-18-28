@@ -18,6 +18,7 @@ export const SAVE_NOTES = 'save_notes';
 export const FETCH_EXERCISE_LIST = 'fetch_exercise_list';
 
 export const ADD_EXERCISE_TO_WORKOUT = 'add_exercise_to_workout';
+export const DELETE_EXERCISE_FROM_WORKOUT = 'delete_exercise_from_workout';
 
 export const ADD_SET_TO_EXERCISE = 'add_set_to_exercise';
 export const GET_SETS_FOR_EXERCISE = 'get_sets_for_exercise';

@@ -8,6 +8,7 @@ import {
   ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_EXERCISE,
@@ -67,6 +68,18 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           ...state.exercises,
           { id: action.payload.id, title: action.payload.title, sets: [] }
         ]
+      };
+    case DELETE_EXERCISE_FROM_WORKOUT:
+      const deleteExercises = state.exercises.reduce((acc, next) => {
+        if (next.id !== action.payload) {
+          return [...acc, next];
+        }
+        return acc;
+      }, []);
+
+      return {
+        ...state,
+        exercises: deleteExercises
       };
     case CHOOSE_WORKOUT:
       let exercises = action.payload.exercises.reduce((acc, next) => {
