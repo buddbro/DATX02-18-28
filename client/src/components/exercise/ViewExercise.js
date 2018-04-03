@@ -7,13 +7,15 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
+  deleteExerciseFromWorkout,
   getExerciseDescription,
   clearExercise
 } from '../../actions';
@@ -79,6 +81,34 @@ class ViewExercise extends React.Component {
       reps: '',
       weight: ''
     });
+  }
+
+  deleteExercise() {
+    Alert.alert(
+      'Are you sure?',
+      "This can't be undone",
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            this.props.deleteExerciseFromWorkout(this.props.visibleSet);
+            this.props.clearExercise();
+            this.setState({ reps: '', sets: '' });
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'ViewWorkout'
+              })
+            );
+          }
+        }
+      ],
+      { cancelable: true }
+    );
   }
 
   render() {
@@ -218,7 +248,7 @@ class ViewExercise extends React.Component {
         >
           <TouchableOpacity
             onPress={() => this.addSetToExercise()}
-            style={styles.button}
+            style={styles.addButton}
           >
             <Text
               style={{
@@ -226,7 +256,20 @@ class ViewExercise extends React.Component {
                 color: '#fff'
               }}
             >
-              Add set
+              Add Set
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.deleteExercise.bind(this)}
+            style={styles.deleteButton}
+          >
+            <Text
+              style={{
+                fontSize: 24,
+                color: '#fff'
+              }}
+            >
+              Delete Exercise
             </Text>
           </TouchableOpacity>
         </View>
@@ -241,6 +284,7 @@ const mapStateToProps = ({ user, workout, exercises }) => {
     id: user.id,
     token: user.token,
     sets: workout.sets,
+    workoutId: workout.id,
     visibleSet: workout.visibleSet,
     visibleExercise: workout.visibleExercise,
     visibleExerciseId: workout.visibleExerciseId,
@@ -253,7 +297,8 @@ export default connect(mapStateToProps, {
   viewSet,
   addSetToExercise,
   getExerciseDescription,
-  clearExercise
+  clearExercise,
+  deleteExerciseFromWorkout
 })(ViewExercise);
 
 const styles = StyleSheet.create({
@@ -272,7 +317,7 @@ const styles = StyleSheet.create({
     borderColor: '#8b8ddf',
     marginBottom: 15
   },
-  button: {
+  addButton: {
     width: '70%',
     paddingLeft: 10,
     paddingRight: 10,
@@ -286,6 +331,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 5,
     borderColor: '#6669cb'
+  },
+  deleteButton: {
+    width: '70%',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    // marginLeft: 15,
+    // marginRight: 15,
+    backgroundColor: '#cb6669',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#cb6669'
   },
   exerciseTitle: {
     color: '#fff',

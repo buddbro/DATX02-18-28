@@ -54,7 +54,7 @@ class ExerciseList extends React.Component {
           );
           this.props.navigation.dispatch(
             NavigationActions.NavigationActions.navigate({
-              routeName: 'WorkoutSchedules'
+              routeName: 'Schedule'
             })
           );
         };
@@ -77,14 +77,18 @@ class ExerciseList extends React.Component {
   }
 
   render() {
+    const previousRoute =
+      this.props.type === 'workout' ? 'ViewWorkout' : 'Schedule';
+
     return (
       <View style={styles.container}>
         <Header>
           <BackArrow
+            color="black"
             callback={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
+                  routeName: previousRoute
                 })
               );
             }}

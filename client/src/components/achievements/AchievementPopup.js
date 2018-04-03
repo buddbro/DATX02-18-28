@@ -39,7 +39,6 @@ const { height, width } = Dimensions.get('window');
 
 class AchievementPopup extends React.Component {
   render() {
-    console.log(this.props.achievement);
     const {
       name,
       image,
@@ -88,11 +87,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     fontSize: 34,
-    fontWeight: '200',
-    color: '#000'
+    fontWeight: '200'
   },
   date: {
-    color: '#000',
     marginTop: 20,
     marginBottom: 20,
     fontSize: 20

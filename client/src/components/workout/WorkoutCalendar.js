@@ -25,13 +25,25 @@ class WorkoutCalendar extends React.Component {
     this.state = { selectedDay: '' };
   }
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/time.png')}
         style={{ width: 24, height: 24 }}
       />
-    )
   };
+
+  getWorkoutDates() {
+    return this.props.workouts.reduce((acc, next) => {
+      const date = next.date.substring(0, 10);
+      return {
+        ...acc,
+        [date]: {
+          selected: true,
+          selectedColor: '#b9baf1'
+        }
+      };
+    }, {});
+  }
 
   render() {
     return (
@@ -84,6 +96,7 @@ class WorkoutCalendar extends React.Component {
             textMonthFontSize: 20,
             textDayHeaderFontSize: 12
           }}
+          markedDates={this.getWorkoutDates()}
         />
       </View>
     );

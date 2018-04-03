@@ -23,12 +23,11 @@ import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () => (
+    drawerIcon: () =>
       <Image
         source={require('../../../assets/dashboard.png')}
         style={{ width: 26, height: 26, borderRadius: 10 }}
       />
-    )
   };
   constructor(props) {
     super(props);
@@ -87,9 +86,9 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
-      months[date.getMonth()]
-    }`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
+      date.getMonth()
+    ]}`;
   }
 
   render() {
@@ -102,11 +101,15 @@ class Dashboard extends React.Component {
 
         <ScrollView style={styles.scrollView}>
           <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>{this.props.quote}</Text>
+            <Text style={styles.todayText}>
+              {this.props.quote}
+            </Text>
             <Text
               style={
-                (styles.todayText,
-                { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 })
+                (
+                  styles.todayText,
+                  { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 }
+                )
               }
             >
               -{this.props.author}

@@ -11,6 +11,7 @@ const schedule = require('./queries/schedule');
 const feedback = require('./queries/feedback');
 const exercise = require('./queries/exercise');
 const achievement = require('./queries/achievement');
+const quotes = require('./queries/quotes');
 
 const sendMail = (email, name) => {
   const data = {
@@ -74,8 +75,11 @@ const editWorkout = (req, res, next) => workout.editWorkout(req, res, next, db);
 const setDifficulty = (req, res, next) =>
   workout.setDifficulty(req, res, next, db);
 const saveNotes = (req, res, next) => workout.saveNotes(req, res, next, db);
+const setColor = (req, res, next) => workout.setColor(req, res, next, db);
 const addExerciseToWorkout = (req, res, next) =>
   workout.addExerciseToWorkout(req, res, next, db);
+const deleteExerciseFromWorkout = (req, res, next) =>
+  workout.deleteExerciseFromWorkout(req, res, next, db);
 const addSetToExercise = (req, res, next) =>
   workout.addSetToExercise(req, res, next, db);
 
@@ -119,6 +123,9 @@ const getAchievementsForUser = (req, res, next) =>
 const calculateAchievements = (req, res, next) =>
   achievement.calculateAchievements(req, res, next, db);
 
+const getRandomQuote = (req, res, next) =>
+  quotes.getRandomQuote(req, res, next, db);
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -137,6 +144,7 @@ module.exports = {
   postFeedback,
   setDifficulty,
   saveNotes,
+  setColor,
   getFeedback,
   getWorkoutsForUser,
   getCategoriesForWorkout,
@@ -148,6 +156,7 @@ module.exports = {
   fetchExerciseTypes,
   editExercise,
   addExerciseToWorkout,
+  deleteExerciseFromWorkout,
   addSetToExercise,
   getSetsForExercise,
   updateUser,
@@ -159,5 +168,6 @@ module.exports = {
   addExeciseToSchedule,
   getAllAchievements,
   getAchievementsForUser,
-  calculateAchievements
+  calculateAchievements,
+  getRandomQuote
 };

@@ -10,7 +10,6 @@ import {
 
 export default class CalendarItemHighlight extends React.Component {
   render() {
-    console.log(this.props.offset);
     return (
       <View
         style={[

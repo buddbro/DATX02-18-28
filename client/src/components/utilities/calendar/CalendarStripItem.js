@@ -9,10 +9,6 @@ import {
 } from 'react-native';
 
 export default class CalendarStripItem extends React.Component {
-  componentDidMount() {
-    // console.log(this.props);
-  }
-
   render() {
     return (
       <View

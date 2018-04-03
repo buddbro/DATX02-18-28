@@ -24,62 +24,14 @@ class LatestWorkout extends React.Component {
     this.state = { toggled: false, loading: true };
   }
 
-  translateDifficulty() {
-    if (this.props.latestWorkout.difficulty == 1) {
-      return (
-        <AnimatedCircularProgress
-          size={60}
-          width={15}
-          fill={20}
-          tintColor="#94F5E2"
-          onAnimationComplete={() => console.log('onAnimationComplete')}
-          backgroundColor="#3d5875"
-        />
-      );
-    } else if (this.props.latestWorkout.difficulty == 2) {
-      return (
-        <AnimatedCircularProgress
-          size={60}
-          width={15}
-          fill={40}
-          tintColor="#00EFC0"
-          onAnimationComplete={() => console.log('onAnimationComplete')}
-          backgroundColor="#3d5875"
-        />
-      );
-    } else if (this.props.latestWorkout.difficulty == 3) {
-      return (
-        <AnimatedCircularProgress
-          size={60}
-          width={15}
-          fill={60}
-          tintColor="#51C1AB"
-          onAnimationComplete={() => console.log('onAnimationComplete')}
-          backgroundColor="#3d5875"
-        />
-      );
-    } else if (this.props.latestWorkout.difficulty == 4) {
-      return (
-        <AnimatedCircularProgress
-          size={60}
-          width={15}
-          fill={80}
-          tintColor="#FFE319"
-          onAnimationComplete={() => console.log('onAnimationComplete')}
-          backgroundColor="#3d5875"
-        />
-      );
-    } else if (this.props.latestWorkout.difficulty == 5) {
-      return (
-        <AnimatedCircularProgress
-          size={60}
-          width={15}
-          fill={100}
-          tintColor="#FF5858"
-          onAnimationComplete={() => console.log('onAnimationComplete')}
-          backgroundColor="#3d5875"
-        />
-      );
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.latestWorkout &&
+      nextProps.latestWorkout.id >= 0 &&
+      this.state.loading
+    ) {
+      this.props.chooseWorkout(nextProps.latestWorkout.id);
+      this.setState({ loading: false });
     }
   }
 
@@ -94,15 +46,44 @@ class LatestWorkout extends React.Component {
     return (stop.getTime() - start.getTime()) / 1000 / 60;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.latestWorkout &&
-      nextProps.latestWorkout.id >= 0 &&
-      this.state.loading
-    ) {
-      this.props.chooseWorkout(nextProps.latestWorkout.id);
-      this.setState({ loading: false });
+  renderTime() {
+    const duration = this.convertTimeStamp();
+
+    if (duration) {
+      return (
+        <View style={styles.rectangle}>
+          <Image
+            source={require('../../../assets/time.png')}
+            style={styles.icons}
+          />
+          <View style={styles.innerRectangle}>
+            <Text style={styles.timeStamp}>
+              {duration}
+            </Text>
+            <Text style={styles.smallText}>minutes</Text>
+          </View>
+        </View>
+      );
     }
+    return (
+      <View style={styles.rectangle}>
+        <Text style={styles.timeStamp}>In progress...</Text>
+      </View>
+    );
+  }
+
+  renderDifficulty() {
+    const tintColors = ['#94F5E2', '#00EFC0', '#51C1AB', '#FFE319', '#FF5858'];
+
+    return (
+      <AnimatedCircularProgress
+        size={60}
+        width={15}
+        fill={this.props.latestWorkout.difficulty * 20}
+        tintColor={tintColors[this.props.latestWorkout.difficulty - 1]}
+        backgroundColor="#3d5875"
+      />
+    );
   }
 
   render() {
@@ -136,24 +117,13 @@ class LatestWorkout extends React.Component {
             />
           </View>
           <View style={styles.rectangleParent}>
-            <View style={styles.rectangle}>
-              <Image
-                source={require('../../../assets/time.png')}
-                style={styles.icons}
-              />
-              <View style={styles.innerRectangle}>
-                <Text style={styles.timeStamp}>
-                  {this.convertTimeStamp()}
-                </Text>
-                <Text style={styles.smallText}>minutes</Text>
-              </View>
-            </View>
+            {this.renderTime()}
             <View style={styles.rectangle}>
               <Image
                 source={require('../../../assets/flash.png')}
                 style={styles.iconsSpecial}
               />
-              {this.translateDifficulty()}
+              {this.renderDifficulty()}
             </View>
           </View>
 
