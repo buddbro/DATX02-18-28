@@ -66,27 +66,13 @@ class Achievements extends React.Component {
     this.popupDialog.show();
   }
 
-  getLevel(obtained_times) {
-    let level;
-    if (obtained_times < 3) {
-      level = 'bronze';
-    } else if (obtained_times < 10) {
-      level = 'silver';
-    } else {
-      level = 'gold';
-    }
-    return level;
-  }
-
   renderAchievements() {
     return this.props.achievements.map(achievement => {
       return (
         <AchievementCell
           achievement={achievement}
           showAchievement={this.showAchievement.bind(this)}
-          image={
-            images[achievement.image][this.getLevel(achievement.obtained_times)]
-          }
+          image={images[achievement.image][achievement.level]}
           key={achievement.id}
         />
       );
@@ -131,7 +117,7 @@ class Achievements extends React.Component {
         >
           <AchievementPopup
             achievement={this.state.active}
-            level={this.getLevel(this.state.active.obtained_times)}
+            level={this.state.active.level}
           />
         </PopupDialog>
       </View>
