@@ -62,13 +62,15 @@ class ExerciseList extends React.Component {
 
     return (
       <SectionList
-        renderItem={({ item }) =>
+        renderItem={({ item }) => (
           <ExerciseListItem
             name={item.name}
             callback={callback.bind(this, item)}
-          />}
-        renderSectionHeader={({ section }) =>
-          <ExerciseListHeader title={section.title} />}
+          />
+        )}
+        renderSectionHeader={({ section }) => (
+          <ExerciseListHeader title={section.title} />
+        )}
         sections={sections}
         keyExtractor={(item, index) => index}
         style={styles.list}
@@ -84,7 +86,7 @@ class ExerciseList extends React.Component {
       <View style={styles.container}>
         <Header>
           <BackArrow
-            color="black"
+            color="white"
             callback={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({

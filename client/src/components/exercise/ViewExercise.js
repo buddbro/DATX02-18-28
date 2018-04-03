@@ -28,6 +28,7 @@ import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
+import globalStyles from '../../styles/global-styles';
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -146,7 +147,7 @@ class ViewExercise extends React.Component {
               );
             }}
           />
-          <Text style={styles.exerciseTitle}>
+          <Text style={globalStyles.headerTitle}>
             {this.props.visibleExercise}
           </Text>
           <TouchableOpacity

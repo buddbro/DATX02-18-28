@@ -44,11 +44,12 @@ const images = { owl, time, cheetah, chicken };
 
 class Achievements extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/achievements.png')}
         style={{ width: 30, height: 30, borderRadius: 10 }}
       />
+    )
   };
 
   constructor(props) {
@@ -95,18 +96,18 @@ class Achievements extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Header backgroundColor="#b9baf1">
-          <View />
-          <Text style={styles.headerTitle}>Achievements</Text>
+      <View style={globalStyles.root}>
+        <Header>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
             <Image
               source={require('../../../assets/menu.png')}
-              style={{ width: 30, height: 30 }}
+              style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Achievements</Text>
+          <View style={globalStyles.headerFillerItem} />
         </Header>
         <ScrollView>
           <TouchableOpacity
@@ -114,7 +115,7 @@ class Achievements extends React.Component {
               this.popupDialog.show();
             }}
           >
-            <View style={styles.achievementsContainer}>
+            <View style={globalStyles.achievementsContainer}>
               {this.renderAchievements()}
             </View>
           </TouchableOpacity>
@@ -148,25 +149,3 @@ const mapStateToProps = ({ user }) => {
 export default connect(mapStateToProps, {
   fetchAchievements
 })(Achievements);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff'
-  },
-  headerTitle: {
-    fontSize: 32,
-    color: 'white'
-  },
-  info: {
-    fontSize: 20,
-    color: '#000'
-  },
-  achievementsContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  }
-});

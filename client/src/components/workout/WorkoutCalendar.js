@@ -17,6 +17,7 @@ import PopupDialog from 'react-native-popup-dialog';
 
 import Header from '../utilities/Header';
 import LatestWorkout from '../dashboard/LatestWorkout';
+import globalStyles, { colors } from '../../styles/global-styles';
 
 class WorkoutCalendar extends React.Component {
   constructor(props) {
@@ -25,21 +26,41 @@ class WorkoutCalendar extends React.Component {
     this.state = { selectedDay: '' };
   }
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/time.png')}
         style={{ width: 24, height: 24 }}
       />
+    )
   };
 
   getWorkoutDates() {
+    console.log(this.props.workouts);
+
+    const translateColor = color => {
+      switch (color) {
+        case 'yellow':
+          return colors.yellow;
+        case 'red':
+          return colors.red;
+        case 'green':
+          return colors.green;
+        case 'blue':
+          return colors.blue;
+        case 'purple':
+          return colors.purple;
+        default:
+          return '#00ff00';
+      }
+    };
+
     return this.props.workouts.reduce((acc, next) => {
       const date = next.date.substring(0, 10);
       return {
         ...acc,
         [date]: {
           selected: true,
-          selectedColor: '#b9baf1'
+          selectedColor: translateColor(next.color)
         }
       };
     }, {});
@@ -47,18 +68,18 @@ class WorkoutCalendar extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Header backgroundColor="#b9baf1">
-          <View />
-          <Text style={styles.headerTitle}>History</Text>
+      <View style={globalStyles.root}>
+        <Header>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >
             <Image
               source={require('../../../assets/menu.png')}
-              style={{ width: 30, height: 30 }}
+              style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Calendar</Text>
+          <View style={globalStyles.headerFillerItem} />
         </Header>
         <PopupDialog
           height={445}
@@ -67,7 +88,7 @@ class WorkoutCalendar extends React.Component {
             this.popupDialog = popupDialog;
           }}
         >
-          <ScrollView style={{ height: '100%', padding: 0 }}>
+          <ScrollView>
             <LatestWorkout
               style={{ marginBottom: 0 }}
               navigation={this.props.navigation}
@@ -79,9 +100,10 @@ class WorkoutCalendar extends React.Component {
             this.setState({ selectedDay: day });
             this.popupDialog.show();
           }}
+          firstDay={1}
           theme={{
             backgroundColor: '#ffffff',
-            calendarBackground: '#F2FEFC',
+            calendarBackground: '#fff',
             textSectionTitleColor: '#b6c1cd',
             selectedDayBackgroundColor: '#00EFC0',
             selectedDayTextColor: '#000',
@@ -91,7 +113,7 @@ class WorkoutCalendar extends React.Component {
             dotColor: '#00adf5',
             selectedDotColor: '#ffffff',
             arrowColor: 'orange',
-            monthTextColor: 'blue',
+            monthTextColor: colors.themeMainColor,
             textDayFontSize: 16,
             textMonthFontSize: 20,
             textDayHeaderFontSize: 12
@@ -110,26 +132,3 @@ const mapStateToProps = ({ workout }) => {
 };
 
 export default connect(mapStateToProps)(WorkoutCalendar);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  headerTitle: {
-    fontSize: 32,
-    color: 'white'
-  },
-  headline: {
-    fontSize: 32,
-    color: 'gray'
-  },
-  headlineSmall: {
-    fontSize: 24,
-    color: '#b9baf1',
-    fontWeight: '200',
-    marginRight: 10
-  },
-  item: { marginBottom: 20 },
-  text: {},
-  separator: {}
-});

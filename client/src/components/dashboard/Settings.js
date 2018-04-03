@@ -16,7 +16,7 @@ import {
 import { connect } from 'react-redux';
 import { logout, editUser } from '../../actions';
 import NavigationActions from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
@@ -28,11 +28,12 @@ var { height, width } = Dimensions.get('window');
 
 class Settings extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/settings.png')}
         style={{ width: 24, height: 24, borderRadius: 10 }}
       />
+    )
   };
 
   constructor(props) {
@@ -91,8 +92,16 @@ class Settings extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/*Header (settings, edit)*/}
-        <Header backgroundColor = "#b9baf1">
+        <Header>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={globalStyles.iconSmall}
+            />
+          </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Settings</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.logout();
@@ -105,151 +114,127 @@ class Settings extends React.Component {
           >
             <Image
               source={require('../../../assets/exit.png')}
-              style={{ width: 35, height: 35}}
-            />
-          </TouchableOpacity>
-          <Text style={styles.heading}>Settings</Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          >
-            <Image
-              source={require('../../../assets/menu.png')}
-              style={{ width: 30, height: 30 }}
+              style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
         </Header>
         <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
+          style={{ paddingTop: 20 }}
           contentContainerStyle={styles.container}
           scrollEnabled={true}
           enableOnAndroid={true}
         >
           {/*Profile*/}
-          <View style={styles.subHeaderContainer}>
-            <Text style={styles.subHeading}>PROFILE</Text>
-          </View>
+
+          <Text style={globalStyles.pageTitle}>Profile</Text>
 
           {/*Picture, name, age*/}
-          <View style={styles.outerTextContainer}>
-            <View style={{ flexDirection: 'row' }}>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingRight: 20,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap'
-                }}
-              >
-                <Image
-                  source={require('../../../assets/avatar_default.png')}
-                  style={{ width: 110, height: 110 }}
+          <View
+            style={
+              (globalStyles.contentContainer,
+              globalStyles.columnContentContainer,
+              globalStyles.traitContainer)
+            }
+          >
+            {/*Name and age*/}
+            <Text style={globalStyles.traitTitle}>Name</Text>
+            <TextInput
+              ref="name"
+              onFocus={() => this.focus('name')}
+              onChangeText={nameText => this.setState({ nameText })}
+              value={this.state.nameText}
+              autoCorrect={false}
+              style={globalStyles.textInput}
+            />
+            <View style={globalStyles.threeColumnContainer}>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={globalStyles.traitTitle}>Age</Text>
+                <TextInput
+                  ref="age"
+                  onFocus={() => this.focus('age')}
+                  keyboardType="numeric"
+                  onChangeText={ageText => this.setState({ ageText })}
+                  value={this.state.ageText}
+                  style={globalStyles.numberInput}
                 />
               </View>
-              {/*Name and age*/}
-              <View style={{ flex: 1 }}>
-                <Text style={styles.biggerStandardText}>NAME</Text>
-                <View style={styles.innerTextContainer}>
-                  <TextInput
-                    ref="name"
-                    onFocus={() => this.focus('name')}
-                    style={styles.standardText}
-                    onChangeText={nameText => this.setState({ nameText })}
-                    value={this.state.nameText}
-                    autoCorrect={false}
-                  />
-                </View>
-                <Text style={styles.biggerStandardText}>AGE (yr)</Text>
-                <View style={styles.innerTextContainer}>
-                  <TextInput
-                    ref="age"
-                    onFocus={() => this.focus('age')}
-                    keyboardType="numeric"
-                    style={styles.standardText}
-                    onChangeText={ageText => this.setState({ ageText })}
-                    value={this.state.ageText}
-                  />
-                </View>
-              </View>
-            </View>
-
-            {/*Height and weight*/}
-            <View style={styles.twoColumnContainer}>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.biggerStandardText}>HEIGHT (cm)</Text>
-                <View style={styles.smallInnerTextContainer}>
-                  <TextInput
-                    ref="height"
-                    onFocus={() => this.focus('height')}
-                    keyboardType="numeric"
-                    style={styles.standardTextCentered}
-                    onChangeText={heightText => this.setState({ heightText })}
-                    value={this.state.heightText}
-                  />
-                </View>
+                <Text style={globalStyles.traitTitle}>Height</Text>
+                <TextInput
+                  ref="height"
+                  onFocus={() => this.focus('height')}
+                  keyboardType="numeric"
+                  onChangeText={heightText => this.setState({ heightText })}
+                  value={this.state.heightText}
+                  style={globalStyles.numberInput}
+                />
               </View>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.biggerStandardText}>WEIGHT (kg)</Text>
-                <View style={styles.smallInnerTextContainer}>
-                  <TextInput
-                    ref="weight"
-                    onFocus={() => this.focus('weight')}
-                    keyboardType="numeric"
-                    style={styles.standardTextCentered}
-                    onChangeText={weightText => this.setState({ weightText })}
-                    value={this.state.weightText}
-                  />
-                </View>
+                <Text style={globalStyles.traitTitle}>Weight</Text>
+                <TextInput
+                  ref="weight"
+                  onFocus={() => this.focus('weight')}
+                  keyboardType="numeric"
+                  onChangeText={weightText => this.setState({ weightText })}
+                  value={this.state.weightText}
+                  style={globalStyles.numberInput}
+                />
               </View>
             </View>
           </View>
+
+          {/*Height and weight*/}
+          <View style={styles.twoColumnContainer} />
 
           {/*Account and down*/}
-          <View style={{ height: 25 }} />
-          <View style={styles.subHeaderContainer}>
-            <Text style={styles.subHeading}>ACCOUNT</Text>
+          <View
+            style={
+              (globalStyles.contentContainer,
+              globalStyles.columnContentContainer)
+            }
+          >
+            <Text style={globalStyles.pageTitle}>Account</Text>
           </View>
           <View style={styles.outerTextContainer}>
-            <Text style={styles.biggerStandardText}>EMAIL </Text>
-            <View style={styles.innerTextContainer}>
-              <TextInput
-                ref="email"
-                onFocus={() => this.focus('email')}
-                keyboardType="email-address"
-                style={styles.standardText}
-                onChangeText={emailText => this.setState({ emailText })}
-                value={this.state.emailText}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </View>
-            <Text style={styles.biggerStandardText}>NEW PASSWORD</Text>
-            <View style={styles.innerTextContainer}>
-              <TextInput
-                ref="passwordOne"
-                onFocus={() => this.focus('passwordOne')}
-                style={styles.standardText}
-                secureTextEntry
-                onChangeText={newPasswordText =>
-                  this.setState({ newPasswordText })}
-                value={this.state.newPasswordText}
-              />
-            </View>
-            <Text style={styles.biggerStandardText}>CONFIRM PASSWORD</Text>
-            <View style={styles.innerTextContainer}>
-              <TextInput
-                ref="passwordTwo"
-                onFocus={() => this.focus('passwordTwo')}
-                style={styles.standardText}
-                secureTextEntry
-                onChangeText={confirmPasswordText =>
-                  this.setState({ confirmPasswordText })}
-                value={this.state.confirmPasswordText}
-              />
-            </View>
+            <Text style={globalStyles.traitTitle}>Email</Text>
+            <TextInput
+              ref="email"
+              onFocus={() => this.focus('email')}
+              keyboardType="email-address"
+              style={styles.standardText}
+              onChangeText={emailText => this.setState({ emailText })}
+              value={this.state.emailText}
+              autoCapitalize="none"
+              autoCorrect={false}
+              style={globalStyles.textInput}
+            />
+            <Text style={globalStyles.traitTitle}>New password</Text>
+            <TextInput
+              ref="passwordOne"
+              onFocus={() => this.focus('passwordOne')}
+              style={styles.standardText}
+              secureTextEntry
+              onChangeText={newPasswordText =>
+                this.setState({ newPasswordText })
+              }
+              value={this.state.newPasswordText}
+              style={globalStyles.textInput}
+            />
+            <Text style={globalStyles.traitTitle}>Confirm password</Text>
+            <TextInput
+              ref="passwordTwo"
+              onFocus={() => this.focus('passwordTwo')}
+              style={styles.standardText}
+              secureTextEntry
+              onChangeText={confirmPasswordText =>
+                this.setState({ confirmPasswordText })
+              }
+              value={this.state.confirmPasswordText}
+              style={globalStyles.textInput}
+            />
 
             {/*Notifications and togglebutton*/}
-            <View
+            {/*<View
               style={{
                 paddingTop: 10,
                 flexDirection: 'row',
@@ -258,14 +243,15 @@ class Settings extends React.Component {
                 paddingRight: 10
               }}
             >
-              <Text style={styles.biggerStandardText}>NOTIFICATIONS</Text>
+              <Text style={styles.biggerStandardText}>Notifications</Text>
               <Switch
                 value={this.state.notifications}
                 onTintColor="#6669cb"
                 onValueChange={notifications =>
-                  this.setState({ notifications })}
+                  this.setState({ notifications })
+                }
               />
-            </View>
+          </View> */}
           </View>
           {/*Save button*/}
           <View
@@ -276,7 +262,7 @@ class Settings extends React.Component {
             }}
           >
             <TouchableOpacity
-              style={styles.button}
+              style={globalStyles.saveButton}
               onPress={this.save.bind(this)}
             >
               <Text style={styles.buttontext}>SAVE</Text>
@@ -332,7 +318,6 @@ const styles = StyleSheet.create({
   outerTextContainer: {
     alignItems: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#d3d4f7',
     marginLeft: 15,
     marginRight: 15,
     paddingLeft: 5,

@@ -21,18 +21,25 @@ import AddWorkout from './AddWorkout';
 import CalendarStrip from 'react-native-calendar-strip';
 import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
 
+import globalStyles from '../../styles/global-styles';
+
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/dashboard.png')}
         style={{ width: 26, height: 26, borderRadius: 10 }}
       />
+    )
   };
   constructor(props) {
     super(props);
 
     this.state = { addWorkoutVisible: false };
+  }
+
+  componentDidMount() {
+    this.props.getQuote();
   }
 
   hideModal() {
@@ -86,43 +93,52 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <ProfileHeader
-          user={this.props.user}
-          navigation={this.props.navigation}
-        />
+      <View style={globalStyles.root}>
+        <Header>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={globalStyles.iconSmall}
+            />
+          </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Dashboard</Text>
+          <View style={globalStyles.headerFillerItem} />
+        </Header>
 
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>
-              {this.props.quote}
-            </Text>
-            <Text
-              style={
-                (
-                  styles.todayText,
-                  { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 }
-                )
-              }
-            >
-              -{this.props.author}
+        <ScrollView>
+          <View
+            style={
+              (globalStyles.centerContentContainer,
+              globalStyles.contentContainer)
+            }
+          >
+            <Text style={globalStyles.quoteText}>{this.props.quote}</Text>
+            <Text style={(globalStyles.quoteText, globalStyles.authorText)}>
+              - {this.props.author}
             </Text>
           </View>
           <View>
             <CustomCalendarStrip />
           </View>
-          <View style={styles.latestWorkout}>
+          <View
+            style={
+              (globalStyles.columnContentContainer,
+              globalStyles.contentContainer)
+            }
+          >
             <LatestWorkout navigation={this.props.navigation} />
           </View>
         </ScrollView>
-        <View style={styles.buttonContainer}>
+        <View style={globalStyles.bigAbsoluteButton}>
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -153,13 +169,6 @@ const mapStateToProps = ({ workout, user, app }) => {
 export default connect(mapStateToProps, { getQuote })(Dashboard);
 
 const styles = StyleSheet.create({
-  scrollView: {},
-  buttonContainer: {
-    bottom: 0,
-    marginBottom: 10,
-    width: '100%',
-    zIndex: 100
-  },
   menuItemClean: {
     color: '#fff',
     fontSize: 32,
@@ -190,33 +199,6 @@ const styles = StyleSheet.create({
     height: '150%',
     zIndex: 200,
     alignSelf: 'stretch'
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column'
-  },
-  todayContainer: {
-    marginBottom: 5,
-    borderRadius: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-    borderColor: 'gray',
-    paddingBottom: 20
-  },
-  todayText: {
-    fontSize: 14,
-    color: '#444',
-    fontWeight: '200',
-    marginLeft: '10%',
-    marginRight: '10%'
-  },
-  latestWorkout: {
-    marginTop: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around'
   },
   menuItem: {
     flexDirection: 'row',

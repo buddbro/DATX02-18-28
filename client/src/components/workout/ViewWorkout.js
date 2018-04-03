@@ -278,7 +278,7 @@ class ViewWorkout extends React.Component {
       >
         <Header>
           <BackArrow
-            color="black"
+            color="white"
             callback={() => {
               this.saveWorkout();
               this.setState({
@@ -350,12 +350,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'start'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>Start Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.start}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.start}</Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -363,12 +362,11 @@ class ViewWorkout extends React.Component {
                   onPress={() =>
                     this.setState({
                       timePicker: 'stop'
-                    })}
+                    })
+                  }
                 >
                   <Text style={styles.workoutTimeTitle}>End Time</Text>
-                  <Text style={styles.workoutTime}>
-                    {this.state.stop}
-                  </Text>
+                  <Text style={styles.workoutTime}>{this.state.stop}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -392,11 +390,11 @@ class ViewWorkout extends React.Component {
             />
           </View>
           <View style={(styles.difficulty, { flexDirection: 'row' })}>
-            <Text style={styles.traitText}>Color tag</Text>
+            <Text style={globalStyles.traitTitle}>Color tag</Text>
             <View style={styles.tagWrapper}>{this.renderColors()}</View>
           </View>
           <View style={styles.difficulty}>
-            <Text style={styles.traitText}>Difficulty</Text>
+            <Text style={globalStyles.traitTitle}>Difficulty</Text>
             <View style={styles.ratingStyle}>
               <RatingWrapper
                 rating={this.props.workout.difficulty}
@@ -424,7 +422,8 @@ class ViewWorkout extends React.Component {
               style={styles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
-                this.props.saveNotes(this.props.id, this.state.notes)}
+                this.props.saveNotes(this.props.id, this.state.notes)
+              }
               value={this.state.notes}
               multiline={true}
               underlineColorAndroid="transparent"
@@ -591,11 +590,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 15
   },
-  traitText: {
-    color: '#7ad9c6',
-    fontSize: 20,
-    padding: 15
-  },
+
   difficulty: {
     flexDirection: 'row'
   },

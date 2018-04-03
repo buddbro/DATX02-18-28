@@ -21,11 +21,12 @@ import Header from '../utilities/Header';
 
 class WorkoutSchedules extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/schedules.png')}
         style={{ width: 24, height: 24 }}
       />
+    )
   };
 
   constructor(props) {
@@ -47,7 +48,16 @@ class WorkoutSchedules extends React.Component {
         scrollEnabled={false}
         enableOnAndroid={true}
       >
-        <Header backgroundColor="#b9baf1">
+        <Header>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={globalStyles.iconSmall}
+            />
+          </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Schedule</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -63,18 +73,9 @@ class WorkoutSchedules extends React.Component {
               +
             </Text>
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Schedules</Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          >
-            <Image
-              source={require('../../../assets/menu.png')}
-              style={{ width: 30, height: 30 }}
-            />
-          </TouchableOpacity>
         </Header>
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) =>
+          {Object.keys(this.props.list).map((id, index) => (
             <ScheduleCard
               key={`schedule${index}`}
               title={this.props.list[id].title}
@@ -82,7 +83,7 @@ class WorkoutSchedules extends React.Component {
               exercises={this.props.list[id].exercises}
               navigation={this.props.navigation}
             />
-          )}
+          ))}
         </ScrollView>
       </KeyboardAwareScrollView>
     );
