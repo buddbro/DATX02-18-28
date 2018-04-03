@@ -13,7 +13,8 @@ import {
   VIEW_SET,
   VIEW_EXERCISE,
   SET_DIFFICULTY,
-  SAVE_NOTES
+  SAVE_NOTES,
+  SET_COLOR
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -240,6 +241,27 @@ export function saveNotes(id, notes) {
         .then(() => {
           dispatch({
             type: SAVE_NOTES
+          });
+        });
+    });
+  };
+}
+
+export function setColor(id, color) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/color/${id}`,
+          { color },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(() => {
+          dispatch({
+            type: SET_COLOR,
+            payload: color
           });
         });
     });

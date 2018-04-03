@@ -93,8 +93,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    console.log('datebro', this.props);
-
     return (
       <View style={styles.container}>
         <ProfileHeader

@@ -30,7 +30,8 @@ import {
   deleteWorkout,
   setDifficulty,
   saveNotes,
-  setExerciseListType
+  setExerciseListType,
+  setColor
 } from '../../actions';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
@@ -53,7 +54,8 @@ class ViewWorkout extends React.Component {
       notes: '',
       start: '--:--',
       stop: '--;--',
-      timePicker: ''
+      timePicker: '',
+      color: ''
     };
   }
 
@@ -67,6 +69,8 @@ class ViewWorkout extends React.Component {
         stop: nextProps.workout.stop || '--:--'
       });
     }
+
+    this.setState({ color: nextProps.color });
   }
 
   focus(component) {
@@ -131,6 +135,10 @@ class ViewWorkout extends React.Component {
 
   createDate(date) {
     return new Date(`2000-01-01T${date}:00`);
+  }
+
+  setActiveColor(color) {
+    return color === this.state.color ? 1 : 0.3;
   }
 
   renderAddExercise() {
@@ -214,10 +222,51 @@ class ViewWorkout extends React.Component {
     }
   }
 
+  renderColors() {
+    const inactiveColors = [
+      '#FAFDA7',
+      '#FFA8A8',
+      '#BAC3EE',
+      '#8AD18A',
+      '#A078B2'
+    ];
+    const colors = {
+      yellow: '#F5FF00',
+      red: '#FF0000',
+      blue: '#1F47FF',
+      green: '#00FF00',
+      purple: '#650090'
+    };
+    return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
+      return (
+        <TouchableOpacity
+          key={color}
+          onPress={() => {
+            this.setState({
+              color
+            });
+            this.props.setColor(this.props.id, color);
+          }}
+          style={[
+            styles.colorTag,
+            {
+              backgroundColor:
+                color !== this.state.color
+                  ? inactiveColors[index]
+                  : colors[color]
+            }
+          ]}
+        />
+      );
+    });
+  }
+
   render() {
     if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
+
+    console.log('active state color: ', this.state.color);
 
     return (
       <KeyboardAwareScrollView
@@ -342,53 +391,7 @@ class ViewWorkout extends React.Component {
           </View>
           <View style={(styles.difficulty, { flexDirection: 'row' })}>
             <Text style={styles.traitText}>Color tag</Text>
-            <View style={styles.tagWrapper}>
-              <TouchableOpacity
-                style={[
-                  styles.colorTag,
-                  {
-                    backgroundColor: 'yellow',
-                    opacity: this.props.workout.color === 'yellow' ? 1 : 0.3
-                  }
-                ]}
-              />
-              <TouchableOpacity
-                style={[
-                  styles.colorTag,
-                  {
-                    backgroundColor: 'red',
-                    opacity: this.props.workout.color === 'red' ? 1 : 0.3
-                  }
-                ]}
-              />
-              <TouchableOpacity
-                style={[
-                  styles.colorTag,
-                  {
-                    backgroundColor: 'blue',
-                    opacity: this.props.workout.color === 'blue' ? 1 : 0.3
-                  }
-                ]}
-              />
-              <TouchableOpacity
-                style={[
-                  styles.colorTag,
-                  {
-                    backgroundColor: 'green',
-                    opacity: this.props.workout.color === 'green' ? 1 : 0.3
-                  }
-                ]}
-              />
-              <TouchableOpacity
-                style={[
-                  styles.colorTag,
-                  {
-                    backgroundColor: 'purple',
-                    opacity: this.props.workout.color === 'purple' ? 1 : 0.3
-                  }
-                ]}
-              />
-            </View>
+            <View style={styles.tagWrapper}>{this.renderColors()}</View>
           </View>
           <View style={styles.difficulty}>
             <Text style={styles.traitText}>Difficulty</Text>
@@ -439,9 +442,15 @@ const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
   const workout = workouts.filter(w => w.id === id)[0];
 
+  console.log(workout);
+  if (!workout) {
+    return {};
+  }
+
   return {
     id,
     workout,
+    color: workout.color,
     exercises
   };
 };
@@ -454,7 +463,8 @@ export default connect(mapStateToProps, {
   deleteWorkout,
   setDifficulty,
   saveNotes,
-  setExerciseListType
+  setExerciseListType,
+  setColor
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
@@ -467,10 +477,10 @@ const styles = StyleSheet.create({
   colorTag: {
     marginLeft: 10,
     marginRight: 10,
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     borderRadius: 25,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'gray'
   },
   icons: {
