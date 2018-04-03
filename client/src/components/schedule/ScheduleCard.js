@@ -63,8 +63,7 @@ class ScheduleCard extends React.Component {
             style={styles.titleTextInput}
             onChangeText={title => this.setState({ title })}
             onEndEditing={() =>
-              this.props.editSchedule(this.props.id, this.state.title)
-            }
+              this.props.editSchedule(this.props.id, this.state.title)}
             returnKeyLabel="Save"
             underlineColorAndroid="transparent"
             clearButtonMode="while-editing"
@@ -96,7 +95,9 @@ class ScheduleCard extends React.Component {
           renderItem={({ item }) => {
             return (
               <View style={styles.listItemContainer}>
-                <Text style={styles.nameText}>{item.name}</Text>
+                <Text style={styles.nameText}>
+                  {item.name}
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
                     this.props.deleteExerciseFromSchedule(item.id);
