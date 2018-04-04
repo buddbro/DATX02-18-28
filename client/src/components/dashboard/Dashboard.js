@@ -7,7 +7,9 @@ import {
   ScrollView,
   Modal,
   Button,
-  Image
+  Image,
+  Animated,
+  Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -34,12 +36,24 @@ class Dashboard extends React.Component {
   };
   constructor(props) {
     super(props);
-
     this.state = { addWorkoutVisible: false };
+    this.animatedValue = new Animated.Value(0)
   }
 
   componentDidMount() {
     this.props.getQuote();
+  }
+
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.ease
+      }
+    ).start()
   }
 
   hideModal() {
@@ -47,9 +61,36 @@ class Dashboard extends React.Component {
   }
 
   renderPopup() {
+    const marginTop = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-1300, 0]
+    })
+    const opacity = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 1, 0]
+    })
+    const movingMargin = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 300, 0]
+    })
+    const textSize = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [18, 32, 18]
+    })
+    const rotateX = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: ['0deg', '180deg', '0deg']
+    })
     if (this.state.addWorkoutVisible) {
+      this.animate()
       return (
         <View style={styles.popupContainer}>
+          <Animated.View
+            style={{
+              marginTop,
+              height: 1,
+              width: 1}}>
+          </Animated.View>
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -113,7 +154,6 @@ class Dashboard extends React.Component {
           <Text style={globalStyles.headerTitle}>Dashboard</Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
-
         <ScrollView>
           <View
             style={
