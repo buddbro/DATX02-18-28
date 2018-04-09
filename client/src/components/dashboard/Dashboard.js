@@ -65,22 +65,6 @@ class Dashboard extends React.Component {
       inputRange: [0, 1],
       outputRange: [-1300, 0]
     })
-    const opacity = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 1, 0]
-    })
-    const movingMargin = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 300, 0]
-    })
-    const textSize = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [18, 32, 18]
-    })
-    const rotateX = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: ['0deg', '180deg', '0deg']
-    })
     if (this.state.addWorkoutVisible) {
       this.animate()
       return (

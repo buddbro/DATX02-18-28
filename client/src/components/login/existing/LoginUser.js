@@ -5,7 +5,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Image,
+  Animated,
+  Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import {

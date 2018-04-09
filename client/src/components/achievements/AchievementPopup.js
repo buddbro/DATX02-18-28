@@ -5,7 +5,9 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Animated,
+  Easing
 } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 
@@ -70,6 +72,27 @@ const images = {
 const { height, width } = Dimensions.get('window');
 
 class AchievementPopup extends React.Component {
+  constructor () {
+    super()
+    this.animatedValue = new Animated.Value(0)
+  }
+
+  componentDidMount () {
+    this.animate()
+  }
+
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 4500,
+        easing: Easing.linear
+      }
+    ).start(() => this.animate())
+  }
+
   render() {
     const {
       name,
@@ -78,6 +101,11 @@ class AchievementPopup extends React.Component {
       obtained_times
     } = this.props.achievement;
 
+    const rotateY = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: ['0deg', '180deg', '0deg']
+    })
+
     if (!name) {
       return <View />;
     }
@@ -85,7 +113,12 @@ class AchievementPopup extends React.Component {
     return (
       <View style={styles.achievementDetails}>
         <Text style={styles.header}>{name}</Text>
-        <Image style={styles.image} source={images[image][this.props.level]} />
+        <Animated.View
+          style={{
+            transform: [{rotateY}],
+            }}>
+          <Image style={styles.image} source={images[image][this.props.level]} />
+        </Animated.View>
         <Text style={styles.date}>
           {obtained_date ? obtained_date.substring(0, 10) : ''}
         </Text>
