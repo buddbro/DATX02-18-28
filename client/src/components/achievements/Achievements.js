@@ -16,18 +16,11 @@ import Header from '../utilities/Header';
 
 import { fetchAchievements } from '../../actions';
 
-const owl = {
-  gold: require('../../../assets/achievements/owl_gold.png'),
-  silver: require('../../../assets/achievements/owl_silver.png'),
-  bronze: require('../../../assets/achievements/owl_bronze.png')
+const beast = {
+  gold: require('../../../assets/achievements/beast_gold.png'),
+  silver: require('../../../assets/achievements/beast_silver.png'),
+  bronze: require('../../../assets/achievements/beast_bronze.png')
 };
-
-const time = {
-  gold: require('../../../assets/achievements/time.png'),
-  silver: require('../../../assets/achievements/time.png'),
-  bronze: require('../../../assets/achievements/time.png')
-};
-
 const cheetah = {
   gold: require('../../../assets/achievements/cheetah_gold.png'),
   silver: require('../../../assets/achievements/cheetah_silver.png'),
@@ -40,7 +33,46 @@ const chicken = {
   bronze: require('../../../assets/achievements/chicken_bronze.png')
 };
 
-const images = { owl, time, cheetah, chicken };
+const magnet = {
+  gold: require('../../../assets/achievements/magnet_gold.png'),
+  silver: require('../../../assets/achievements/magnet_silver.png'),
+  bronze: require('../../../assets/achievements/magnet_bronze.png')
+};
+
+const owl = {
+  gold: require('../../../assets/achievements/owl_gold.png'),
+  silver: require('../../../assets/achievements/owl_silver.png'),
+  bronze: require('../../../assets/achievements/owl_bronze.png')
+};
+
+const scholar = {
+  gold: require('../../../assets/achievements/scholar_gold.png'),
+  silver: require('../../../assets/achievements/scholar_silver.png'),
+  bronze: require('../../../assets/achievements/scholar_bronze.png')
+};
+
+const spontaneous = {
+  gold: require('../../../assets/achievements/spontaneous_gold.png'),
+  silver: require('../../../assets/achievements/spontaneous_silver.png'),
+  bronze: require('../../../assets/achievements/spontaneous_bronze.png')
+};
+
+const yeti = {
+  gold: require('../../../assets/achievements/yeti_gold.png'),
+  silver: require('../../../assets/achievements/yeti_silver.png'),
+  bronze: require('../../../assets/achievements/yeti_bronze.png')
+};
+
+const images = {
+  beast,
+  cheetah,
+  chicken,
+  magnet,
+  owl,
+  scholar,
+  spontaneous,
+  yeti
+};
 
 class Achievements extends React.Component {
   static navigationOptions = {
