@@ -8,12 +8,14 @@ import {
   CLEAR_WORKOUT,
   CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_SET,
   VIEW_EXERCISE,
   SET_DIFFICULTY,
-  SAVE_NOTES
+  SAVE_NOTES,
+  SET_COLOR
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -149,6 +151,23 @@ export function addExerciseToWorkout(workoutId, exerciseId) {
   };
 }
 
+export function deleteExerciseFromWorkout(exerciseId) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .delete(`https://getpushapp.com/api/workouts/exercise/${exerciseId}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(({ data }) => {
+          dispatch({
+            type: DELETE_EXERCISE_FROM_WORKOUT,
+            payload: exerciseId
+          });
+        });
+    });
+  };
+}
+
 export function addSetToExercise(exerciseId, reps, weight) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
@@ -239,6 +258,27 @@ export function saveNotes(id, notes) {
         .then(() => {
           dispatch({
             type: SAVE_NOTES
+          });
+        });
+    });
+  };
+}
+
+export function setColor(id, color) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .patch(
+          `https://getpushapp.com/api/workouts/color/${id}`,
+          { color },
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(() => {
+          dispatch({
+            type: SET_COLOR,
+            payload: color
           });
         });
     });

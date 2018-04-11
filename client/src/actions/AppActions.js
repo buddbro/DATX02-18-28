@@ -1,5 +1,17 @@
-import { GET_EXERCISE_DESCRIPTION, SET_EXERCISE_LIST_TYPE } from './types.js';
+import {
+  GET_EXERCISE_DESCRIPTION,
+  SET_EXERCISE_LIST_TYPE,
+  GET_QUOTE,
+  GET_SELECTED_DATE
+} from './types.js';
 import axios from 'axios';
+
+export function getSelectedDate(date) {
+  return {
+    type: GET_SELECTED_DATE,
+    payload: date
+  };
+}
 
 export function getExerciseDescription(id) {
   return dispatch => {
@@ -11,6 +23,17 @@ export function getExerciseDescription(id) {
           payload: data[0]
         });
       });
+  };
+}
+
+export function getQuote() {
+  return dispatch => {
+    axios.get(`https://getpushapp.com/api/quote`).then(({ data }) => {
+      dispatch({
+        type: GET_QUOTE,
+        payload: data
+      });
+    });
   };
 }
 

@@ -14,19 +14,21 @@ const getWorkouts = (req, res, next, db) => {
 const getWorkoutsForUser = (req, res, next, db) => {
   db
     .any(
-      'SELECT id, title, date, difficulty, notes, start, stop FROM workouts WHERE userId = $1 ORDER BY date DESC',
+      'SELECT id, title, date, difficulty, notes, start, stop, color FROM workouts WHERE user_id = $1 ORDER BY date DESC',
       [req.user.id]
     )
     .then(function(data) {
       data.map(d => {
         if (d.start) {
-          const startTime = new Date(new Date(d.start).getTime())
+          const startTime = new Date(
+            new Date(d.start).getTime() + 60 * 60 * 1000
+          )
             .toString()
             .substring(16, 21);
           d.start = startTime;
         }
         if (d.stop) {
-          const stopTime = new Date(new Date(d.stop).getTime())
+          const stopTime = new Date(new Date(d.stop).getTime() + 60 * 60 * 1000)
             .toString()
             .substring(16, 21);
           d.stop = stopTime;
@@ -37,6 +39,38 @@ const getWorkoutsForUser = (req, res, next, db) => {
     .catch(function(err) {
       return next(err);
     });
+};
+
+const getCategoriesForWorkout = (req, res, next, db) => {
+  db.any(`SELECT title FROM exercise_sections`).then(allSections => {
+    db
+      .any(
+        `
+          SELECT
+            exercise_sections.title
+          FROM workouts, exercises, exercise_types, exercise_sections
+          WHERE workouts.id = $1
+            AND workouts.id = exercises.workout
+            AND exercises.exercise_type = exercise_types.id
+            AND exercise_types.section = exercise_sections.id
+          `,
+        [req.params.id]
+      )
+      .then(function(data) {
+        if (data.length) {
+        }
+        const sections = allSections.reduce((acc, next) => {
+          acc[next.title] = 0;
+          return acc;
+        }, {});
+        data.forEach(s => (sections[s.title] += 1));
+
+        res.status(200).json(sections);
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+  });
 };
 
 const setDifficulty = (req, res, next, db) => {
@@ -57,6 +91,20 @@ const saveNotes = (req, res, next, db) => {
   db
     .any('UPDATE workouts SET notes = $1 WHERE id = $2', [
       req.body.notes,
+      req.params.id
+    ])
+    .then(function() {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
+const setColor = (req, res, next, db) => {
+  db
+    .any('UPDATE workouts SET color = $1 WHERE id = $2', [
+      req.body.color,
       req.params.id
     ])
     .then(function() {
@@ -152,7 +200,10 @@ const addWorkout = (req, res, next, db) => {
       } else {
         db
           .any('SELECT title FROM schedules WHERE id = $1', [req.body.schedule])
-          .then(data => resolve(data[0].title));
+          .then(data => {
+            resolve(data[0].title);
+          })
+          .catch(error => reject(error));
       }
     });
   };
@@ -160,12 +211,11 @@ const addWorkout = (req, res, next, db) => {
   titleGenerator().then(title => {
     db
       .any(
-        "INSERT INTO workouts(title, date, userId, difficulty, notes, start) VALUES($1, $2, $3, 3, '', NOW()) RETURNING id, title, date, difficulty, notes, start",
+        "INSERT INTO workouts(title, date, user_id, difficulty, notes, start) VALUES($1, $2, $3, 3, '', NOW()) RETURNING id, title, date, difficulty, notes, start",
         [title, readableDate, req.user.id]
       )
       .then(function(data) {
         const { id, title, date, difficulty, notes, start } = data[0];
-        console.log(start);
         if (req.body.schedule === 0) {
           res.json({ id, title, date, difficulty, notes, start });
         } else {
@@ -213,7 +263,7 @@ const addWorkout = (req, res, next, db) => {
 
 const deleteWorkout = (req, res, next, db) => {
   db
-    .any('DELETE FROM workouts WHERE id = $1 AND userid = $2', [
+    .any('DELETE FROM workouts WHERE id = $1 AND user_id = $2', [
       req.params.id,
       req.user.id
     ])
@@ -262,6 +312,18 @@ const addExerciseToWorkout = (req, res, next, db) => {
     });
 };
 
+const deleteExerciseFromWorkout = (req, res, next, db) => {
+  const { id } = req.params;
+  db
+    .any('DELETE FROM exercises WHERE id = $1', [id])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+};
+
 const addSetToExercise = (req, res, next, db) => {
   const { reps, weight } = req.body;
   const { id } = req.params;
@@ -279,13 +341,16 @@ const addSetToExercise = (req, res, next, db) => {
 module.exports = {
   getWorkouts,
   getWorkoutsForUser,
+  getCategoriesForWorkout,
   getWorkoutWithId,
   setDifficulty,
   saveNotes,
+  setColor,
   getSetsForExercise,
   addWorkout,
   deleteWorkout,
   editWorkout,
   addExerciseToWorkout,
+  deleteExerciseFromWorkout,
   addSetToExercise
 };

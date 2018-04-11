@@ -15,7 +15,8 @@ import {
   Image,
   TimePickerAndroid,
   DatePickerIOS,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
@@ -29,7 +30,8 @@ import {
   deleteWorkout,
   setDifficulty,
   saveNotes,
-  setExerciseListType
+  setExerciseListType,
+  setColor
 } from '../../actions';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
@@ -52,7 +54,8 @@ class ViewWorkout extends React.Component {
       notes: '',
       start: '--:--',
       stop: '--;--',
-      timePicker: ''
+      timePicker: '',
+      color: ''
     };
   }
 
@@ -66,6 +69,12 @@ class ViewWorkout extends React.Component {
         stop: nextProps.workout.stop || '--:--'
       });
     }
+
+    this.setState({ color: nextProps.color });
+  }
+
+  focus(component) {
+    this.refs[component].focus();
   }
 
   deleteWorkout() {
@@ -99,12 +108,19 @@ class ViewWorkout extends React.Component {
     const start = new Date(
       `${this.props.workout.date.substring(0, 10)}T${this.state.start}:00`
     );
+
+    start.setTime(start.getTime() + 60 * 60 * 1000);
+
     const stop =
       this.state.stop !== '--:--'
         ? new Date(
             `${this.props.workout.date.substring(0, 10)}T${this.state.stop}:00`
           )
         : null;
+
+    if (stop) {
+      stop.setTime(stop.getTime() + 60 * 60 * 1000);
+    }
 
     this.props.editWorkout(this.props.id, { title, start, stop });
   }
@@ -118,11 +134,11 @@ class ViewWorkout extends React.Component {
   }
 
   createDate(date) {
-    const returnDate = new Date(`2000-01-01T${date}:00`);
-    returnDate.setTime(
-      returnDate.getTime() + returnDate.getTimezoneOffset() * 60 * 1000
-    );
-    return returnDate;
+    return new Date(`2000-01-01T${date}:00`);
+  }
+
+  setActiveColor(color) {
+    return color === this.state.color ? 1 : 0.3;
   }
 
   renderAddExercise() {
@@ -206,10 +222,51 @@ class ViewWorkout extends React.Component {
     }
   }
 
+  renderColors() {
+    const inactiveColors = [
+      '#FAFDA7',
+      '#FFA8A8',
+      '#BAC3EE',
+      '#8AD18A',
+      '#A078B2'
+    ];
+    const colors = {
+      yellow: '#FFFF57',
+      red: '#FE5763',
+      blue: '#6783F4',
+      green: '#54F590',
+      purple: '#BD5CF3'
+    };
+    return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
+      return (
+        <TouchableOpacity
+          key={color}
+          onPress={() => {
+            this.setState({
+              color
+            });
+            this.props.setColor(this.props.id, color);
+          }}
+          style={[
+            styles.colorTag,
+            {
+              backgroundColor:
+                color !== this.state.color
+                  ? inactiveColors[index]
+                  : colors[color]
+            }
+          ]}
+        />
+      );
+    });
+  }
+
   render() {
     if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
+
+    console.log('active state color: ', this.state.color);
 
     return (
       <KeyboardAwareScrollView
@@ -221,6 +278,7 @@ class ViewWorkout extends React.Component {
       >
         <Header>
           <BackArrow
+            color="white"
             callback={() => {
               this.saveWorkout();
               this.setState({
@@ -264,6 +322,8 @@ class ViewWorkout extends React.Component {
               }}
             >
               <TextInput
+                ref="title"
+                onFocus={() => this.focus('title')}
                 style={styles.inputField}
                 onChangeText={title => this.setState({ title })}
                 onEndEditing={() => {
@@ -328,12 +388,13 @@ class ViewWorkout extends React.Component {
                 );
               }}
             />
-            <View style={styles.category}>
-              <Text style={styles.categoriesText}>Categories</Text>
-            </View>
           </View>
-          <View style={styles.difficulty}>
-            <Text style={styles.traitText}>Difficulty</Text>
+          <View style={globalStyles.traitSubContainer}>
+            <Text style={globalStyles.traitTitle}>Color tag</Text>
+            <View style={styles.tagWrapper}>{this.renderColors()}</View>
+          </View>
+          <View style={globalStyles.traitSubContainer}>
+            <Text style={globalStyles.traitTitle}>Difficulty</Text>
             <View style={styles.ratingStyle}>
               <RatingWrapper
                 rating={this.props.workout.difficulty}
@@ -343,7 +404,8 @@ class ViewWorkout extends React.Component {
               />
               <View
                 style={{
-                  flexDirection: 'row'
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
                 }}
               >
                 <Text style={styles.difficultyText}>No Sweat</Text>
@@ -352,10 +414,12 @@ class ViewWorkout extends React.Component {
             </View>
           </View>
 
-          <View>
-            <Text style={styles.traitText}>Notes</Text>
+          <View style={globalStyles.traitSubContainer}>
+            <Text style={globalStyles.traitTitle}>Notes</Text>
             <TextInput
-              style={styles.notes}
+              ref="notes"
+              onFocus={() => this.focus('notes')}
+              style={globalStyles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
                 this.props.saveNotes(this.props.id, this.state.notes)
@@ -378,9 +442,15 @@ const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
   const workout = workouts.filter(w => w.id === id)[0];
 
+  console.log(workout);
+  if (!workout) {
+    return {};
+  }
+
   return {
     id,
     workout,
+    color: workout.color,
     exercises
   };
 };
@@ -393,10 +463,26 @@ export default connect(mapStateToProps, {
   deleteWorkout,
   setDifficulty,
   saveNotes,
-  setExerciseListType
+  setExerciseListType,
+  setColor
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
+  tagWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '30%'
+  },
+  colorTag: {
+    marginLeft: 10,
+    marginRight: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: 'gray'
+  },
   icons: {
     width: 25,
     height: 25,
@@ -504,11 +590,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 15
   },
-  traitText: {
-    color: '#7ad9c6',
-    fontSize: 20,
-    padding: 15
-  },
+
   difficulty: {
     flexDirection: 'row'
   },

@@ -7,28 +7,53 @@ import {
   ScrollView,
   Modal,
   Button,
-  Image
+  Image,
+  Animated,
+  Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
+
+import { getQuote } from '../../actions';
 
 import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
 import LatestWorkout from './LatestWorkout';
 import AddWorkout from './AddWorkout';
+import CalendarStrip from 'react-native-calendar-strip';
+import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
+
+import globalStyles from '../../styles/global-styles';
 
 class Dashboard extends React.Component {
   static navigationOptions = {
-    drawerIcon: () =>
+    drawerIcon: () => (
       <Image
         source={require('../../../assets/dashboard.png')}
         style={{ width: 26, height: 26, borderRadius: 10 }}
       />
+    )
   };
   constructor(props) {
     super(props);
-
     this.state = { addWorkoutVisible: false };
+    this.animatedValue = new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    this.props.getQuote();
+  }
+
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.ease
+      }
+    ).start()
   }
 
   hideModal() {
@@ -36,9 +61,20 @@ class Dashboard extends React.Component {
   }
 
   renderPopup() {
+    const marginTop = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-1300, 0]
+    })
     if (this.state.addWorkoutVisible) {
+      this.animate()
       return (
         <View style={styles.popupContainer}>
+          <Animated.View
+            style={{
+              marginTop,
+              height: 1,
+              width: 1}}>
+          </Animated.View>
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -82,30 +118,51 @@ class Dashboard extends React.Component {
     ];
 
     const date = new Date();
-    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${months[
-      date.getMonth()
-    ]}`;
+    return `${weekdays[date.getUTCDay()]}, ${date.getDate()} ${
+      months[date.getMonth()]
+    }`;
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <ProfileHeader
-          user={this.props.user}
-          navigation={this.props.navigation}
-        />
-
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.todayContainer}>
-            <Text style={styles.todayText}>
-              {this.renderToday()}
+      <View style={globalStyles.root}>
+        <Header>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('DrawerOpen')}
+          >
+            <Image
+              source={require('../../../assets/menu.png')}
+              style={globalStyles.iconSmall}
+            />
+          </TouchableOpacity>
+          <Text style={globalStyles.headerTitle}>Dashboard</Text>
+          <View style={globalStyles.headerFillerItem} />
+        </Header>
+        <ScrollView>
+          <View
+            style={
+              (globalStyles.centerContentContainer,
+              globalStyles.contentContainer)
+            }
+          >
+            <Text style={globalStyles.quoteText}>{this.props.quote}</Text>
+            <Text style={(globalStyles.quoteText, globalStyles.authorText)}>
+              - {this.props.author}
             </Text>
           </View>
-          <View style={styles.latestWorkout}>
+          <View>
+            <CustomCalendarStrip />
+          </View>
+          <View
+            style={
+              (globalStyles.columnContentContainer,
+              globalStyles.contentContainer)
+            }
+          >
             <LatestWorkout navigation={this.props.navigation} />
           </View>
         </ScrollView>
-        <View style={styles.buttonContainer}>
+        <View style={globalStyles.bigAbsoluteButton}>
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -123,23 +180,19 @@ class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ workout, user }) => {
+const mapStateToProps = ({ workout, user, app }) => {
   return {
     workout,
-    user
+    user,
+    selectedDate: app.selectedDate,
+    quote: app.quote,
+    author: app.author
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getQuote })(Dashboard);
 
 const styles = StyleSheet.create({
-  scrollView: {},
-  buttonContainer: {
-    bottom: 0,
-    marginBottom: 10,
-    width: '100%',
-    zIndex: 100
-  },
   menuItemClean: {
     color: '#fff',
     fontSize: 32,
@@ -170,31 +223,6 @@ const styles = StyleSheet.create({
     height: '150%',
     zIndex: 200,
     alignSelf: 'stretch'
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column'
-  },
-  todayContainer: {
-    marginBottom: 5,
-    borderRadius: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-    borderColor: 'gray',
-    paddingBottom: 20
-  },
-  todayText: {
-    fontSize: 26,
-    color: '#444',
-    fontWeight: '200'
-  },
-  latestWorkout: {
-    marginTop: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around'
   },
   menuItem: {
     flexDirection: 'row',

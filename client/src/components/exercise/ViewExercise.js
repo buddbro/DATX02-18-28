@@ -6,23 +6,29 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  Image
+  Image,
+  Keyboard,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
   getSetsForExercise,
   viewSet,
   addSetToExercise,
+  deleteExerciseFromWorkout,
   getExerciseDescription,
   clearExercise
 } from '../../actions';
 import NavigationActions from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 // import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
 import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
+import globalStyles from '../../styles/global-styles';
 
 class ViewExercise extends React.Component {
   constructor(props) {
@@ -78,6 +84,34 @@ class ViewExercise extends React.Component {
     });
   }
 
+  deleteExercise() {
+    Alert.alert(
+      'Are you sure?',
+      "This can't be undone",
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel'
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            this.props.deleteExerciseFromWorkout(this.props.visibleSet);
+            this.props.clearExercise();
+            this.setState({ reps: '', sets: '' });
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'ViewWorkout'
+              })
+            );
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  }
+
   render() {
     if (this.props.loading) {
       return <View style={styles.container} />;
@@ -100,8 +134,9 @@ class ViewExercise extends React.Component {
     return (
       <View style={styles.container}>
         {this.viewInstructions()}
-        <Header>
+        <Header backgroundColor="#b9baf1">
           <BackArrow
+            color="white"
             callback={() => {
               this.props.clearExercise();
               this.setState({ reps: '', sets: '' });
@@ -112,60 +147,77 @@ class ViewExercise extends React.Component {
               );
             }}
           />
-          <View style={styles.titleContainer}>
-            <Text style={styles.exerciseTitle}>
-              {this.props.visibleExercise}
-            </Text>
-          </View>
+          <Text style={globalStyles.headerTitle}>
+            {this.props.visibleExercise}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({ instructionsToggled: true });
+            }}
+          >
+            <Image
+              source={require('../../../assets/info.png')}
+              style={{ width: 30, height: 30 }}
+            />
+          </TouchableOpacity>
         </Header>
-        <ScrollView>
-          <View style={styles.setsContainer}>
-            <View style={styles.singleSetContainer}>
-              <View style={{ width: '20%' }}>
-                <Text style={styles.setNumber}>#</Text>
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: '#fff' }}
+          contentContainerStyle={styles.container}
+          scrollEnabled={true}
+          extraHeight={150}
+          enableOnAndroid={true}
+        >
+          <View>
+            <View style={styles.setsContainer}>
+              <View style={styles.singleSetContainer}>
+                <View style={{ width: '20%' }}>
+                  <Text style={styles.setNumber}>#</Text>
+                </View>
+
+                <View style={styles.sets}>
+                  <Text
+                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  >
+                    Reps
+                  </Text>
+                </View>
+
+                <View style={styles.reps}>
+                  <Text
+                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
+                  >
+                    Weight (kg)
+                  </Text>
+                </View>
               </View>
 
-              <View style={styles.sets}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  Reps
-                </Text>
-              </View>
-
-              <View style={styles.reps}>
-                <Text
-                  style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                >
-                  Weight
-                </Text>
-              </View>
+              <FlatList
+                style={{ marginLeft: 8, marginRight: 8 }}
+                data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+                keyExtractor={(item, index) => `${item.id}${this.props.id}`}
+                renderItem={({ item, index }) => {
+                  const key = `${this.props.id}${item.id}`;
+                  return (
+                    <ExerciseSet
+                      id={item.id}
+                      index={index}
+                      reps={
+                        item.id === -1 ? this.state.reps : String(item.reps)
+                      }
+                      weight={
+                        item.id === -1 ? this.state.weight : String(item.weight)
+                      }
+                      exerciseId={this.props.id}
+                      setReps={this.setReps.bind(this)}
+                      setWeight={this.setWeight.bind(this)}
+                    />
+                  );
+                }}
+              />
             </View>
 
-            <FlatList
-              style={{ marginLeft: 8, marginRight: 8 }}
-              data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-              keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-              renderItem={({ item, index }) => {
-                const key = `${this.props.id}${item.id}`;
-                return (
-                  <ExerciseSet
-                    id={item.id}
-                    index={index}
-                    reps={item.id === -1 ? this.state.reps : String(item.reps)}
-                    weight={
-                      item.id === -1 ? this.state.weight : String(item.weight)
-                    }
-                    exerciseId={this.props.id}
-                    setReps={this.setReps.bind(this)}
-                    setWeight={this.setWeight.bind(this)}
-                  />
-                );
-              }}
-            />
-          </View>
-
-          {/*        <View
+            {/*        <View
             style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
           >
             <Text
@@ -185,42 +237,40 @@ class ViewExercise extends React.Component {
               contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
             />
           </View> */}
-        </ScrollView>
-        <View style={{ bottom: 0 }}>
+          </View>
+        </KeyboardAwareScrollView>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            bottom: 40,
+            paddingTop: 55
+          }}
+        >
           <TouchableOpacity
             onPress={() => this.addSetToExercise()}
-            style={styles.addSetButton}
+            style={styles.addButton}
           >
             <Text
               style={{
                 fontSize: 24,
-                color: '#6669cb'
+                color: '#fff'
               }}
             >
-              Add set
+              Add Set
             </Text>
           </TouchableOpacity>
-        </View>
-        <View style={{ bottom: 0 }}>
           <TouchableOpacity
-            style={styles.addSetButton}
-            onPress={() => {
-              //this.props.getExerciseDescription(this.props.visibleExerciseId);
-              //this.props.navigation.dispatch(
-              //NavigationActions.NavigationActions.navigate({
-              //  routeName: 'ExerciseHelp'
-              //})
-              //);
-              this.setState({ instructionsToggled: true });
-            }}
+            onPress={this.deleteExercise.bind(this)}
+            style={styles.deleteButton}
           >
             <Text
               style={{
                 fontSize: 24,
-                color: '#6669cb'
+                color: '#fff'
               }}
             >
-              Instructions
+              Delete Exercise
             </Text>
           </TouchableOpacity>
         </View>
@@ -235,6 +285,7 @@ const mapStateToProps = ({ user, workout, exercises }) => {
     id: user.id,
     token: user.token,
     sets: workout.sets,
+    workoutId: workout.id,
     visibleSet: workout.visibleSet,
     visibleExercise: workout.visibleExercise,
     visibleExerciseId: workout.visibleExerciseId,
@@ -247,7 +298,8 @@ export default connect(mapStateToProps, {
   viewSet,
   addSetToExercise,
   getExerciseDescription,
-  clearExercise
+  clearExercise,
+  deleteExerciseFromWorkout
 })(ViewExercise);
 
 const styles = StyleSheet.create({
@@ -266,8 +318,38 @@ const styles = StyleSheet.create({
     borderColor: '#8b8ddf',
     marginBottom: 15
   },
+  addButton: {
+    width: '70%',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    // marginLeft: 15,
+    // marginRight: 15,
+    backgroundColor: '#6669cb',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#6669cb'
+  },
+  deleteButton: {
+    width: '70%',
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    // marginLeft: 15,
+    // marginRight: 15,
+    backgroundColor: '#cb6669',
+    borderRadius: 8,
+    borderWidth: 5,
+    borderColor: '#cb6669'
+  },
   exerciseTitle: {
-    color: '#6669cb',
+    color: '#fff',
     fontSize: 26,
     fontWeight: 'bold'
   },
@@ -283,6 +365,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6669cb',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
+    paddingRight: 25,
     marginLeft: 8,
     marginRight: 8
   },
@@ -301,15 +384,6 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     fontSize: 18,
     color: '#7B7B7B'
-  },
-  titleContainer: {
-    marginLeft: -35,
-    zIndex: -5,
-    justifyContent: 'center',
-    flex: 7,
-    borderRadius: 3,
-    flexDirection: 'row',
-    alignItems: 'center'
   },
   popup: {
     position: 'absolute',

@@ -54,7 +54,7 @@ class ExerciseList extends React.Component {
           );
           this.props.navigation.dispatch(
             NavigationActions.NavigationActions.navigate({
-              routeName: 'WorkoutSchedules'
+              routeName: 'Schedule'
             })
           );
         };
@@ -62,13 +62,15 @@ class ExerciseList extends React.Component {
 
     return (
       <SectionList
-        renderItem={({ item }) =>
+        renderItem={({ item }) => (
           <ExerciseListItem
             name={item.name}
             callback={callback.bind(this, item)}
-          />}
-        renderSectionHeader={({ section }) =>
-          <ExerciseListHeader title={section.title} />}
+          />
+        )}
+        renderSectionHeader={({ section }) => (
+          <ExerciseListHeader title={section.title} />
+        )}
         sections={sections}
         keyExtractor={(item, index) => index}
         style={styles.list}
@@ -77,14 +79,18 @@ class ExerciseList extends React.Component {
   }
 
   render() {
+    const previousRoute =
+      this.props.type === 'workout' ? 'ViewWorkout' : 'Schedule';
+
     return (
       <View style={styles.container}>
         <Header>
           <BackArrow
+            color="white"
             callback={() => {
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'ViewWorkout'
+                  routeName: previousRoute
                 })
               );
             }}

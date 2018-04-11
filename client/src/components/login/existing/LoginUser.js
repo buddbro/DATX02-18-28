@@ -5,7 +5,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Image,
+  Animated,
+  Easing
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -32,6 +35,10 @@ class LoginUser extends React.Component {
         })
       );
     }
+  }
+
+  focus(component) {
+    this.refs[component].focus();
   }
 
   renderError() {
@@ -65,6 +72,8 @@ class LoginUser extends React.Component {
 
         <View style={styles.body}>
           <TextInput
+            ref="email"
+            onFocus={() => this.focus('email')}
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
@@ -76,6 +85,8 @@ class LoginUser extends React.Component {
             autoCorrect={false}
           />
           <TextInput
+            ref="password"
+            onFocus={() => this.focus('password')}
             style={styles.textInput}
             placeholder="Password"
             onChangeText={password =>

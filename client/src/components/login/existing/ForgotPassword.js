@@ -4,7 +4,10 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
-  StyleSheet
+  StyleSheet,
+  Keyboard,
+  ScrollView,
+  Image
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
@@ -14,6 +17,10 @@ class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = { email: '' };
+  }
+
+  focus(component) {
+    this.refs[component].focus();
   }
 
   renderResponse() {
@@ -29,29 +36,37 @@ class ForgotPassword extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container} scrollEnabled={false}>
+        <TouchableOpacity
+          style={{ alignSelf: 'flex-start', marginLeft: 15, marginBottom: '20%' }}
+          onPress={() => {
+            this.props.navigation.dispatch(
+              NavigationActions.NavigationActions.navigate({
+                routeName: 'LoginUser'
+              })
+            );
+          }}
+        >
+          <Image
+            source={require('../../../../assets/006-back.png')}
+            style={{ width: 30, height: 30 }}
+          />
+        </TouchableOpacity>
         <View style={styles.head}>
-          <TouchableOpacity
-            style={{ alignSelf: 'flex-start', marginLeft: 15 }}
-            onPress={() => {
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'LoginUser'
-                })
-              );
-            }}
-          >
-            <Text style={{ fontSize: 20, color: '#000' }}>Back</Text>
-          </TouchableOpacity>
+
           <Text style={styles.headline}>Reset your password</Text>
           <Text style={styles.breadtext}>
-            An email will be sent to your email with a link to choose a new
+            A message will be sent to your email with a link to choose a new
             password.
           </Text>
         </View>
 
         <View style={styles.body}>
+
           <TextInput
+            onBlur={() => Keyboard.dismiss}
+            ref="email"
+            onFocus={() => this.focus('email')}
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
@@ -72,7 +87,8 @@ class ForgotPassword extends React.Component {
           </TouchableOpacity>
           {this.renderResponse()}
         </View>
-      </View>
+      </ScrollView>
+
     );
   }
 }
@@ -98,8 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    // justifyContent: 'center',
-    paddingTop: 35
+    paddingTop: 50
   },
   breadtext: {
     textAlign: 'center',
@@ -118,7 +133,8 @@ const styles = StyleSheet.create({
     margin: 25,
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#6669CB'
+    color: '#6669CB',
+    paddingBottom: 40
   },
   textInput: {
     height: 40,

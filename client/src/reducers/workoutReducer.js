@@ -8,11 +8,13 @@ import {
   ADD_WORKOUT_FROM_SCHEDULE,
   DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
   GET_SETS_FOR_EXERCISE,
   VIEW_EXERCISE,
   VIEW_SET,
-  SET_DIFFICULTY
+  SET_DIFFICULTY,
+  SET_COLOR
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -68,6 +70,18 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
           { id: action.payload.id, title: action.payload.title, sets: [] }
         ]
       };
+    case DELETE_EXERCISE_FROM_WORKOUT:
+      const deleteExercises = state.exercises.reduce((acc, next) => {
+        if (next.id !== action.payload) {
+          return [...acc, next];
+        }
+        return acc;
+      }, []);
+
+      return {
+        ...state,
+        exercises: deleteExercises
+      };
     case CHOOSE_WORKOUT:
       let exercises = action.payload.exercises.reduce((acc, next) => {
         return [
@@ -103,7 +117,8 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
             difficulty,
             notes: '',
             start,
-            stop: ''
+            stop: '',
+            color: ''
           },
           ...state.workouts
         ]
@@ -146,6 +161,31 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       };
     case FETCH_WORKOUTS:
       return { ...state, workouts: action.payload };
+
+    case SET_COLOR:
+      // console.log('paykoa', state.id, action.payload);
+      // const setColorWorkouts = [];
+      // state.workouts.forEach(workout => {
+      //   setColorWorkouts.push(workout);
+      //   if (state.id === workout.id) {
+      //     console.log('set');
+      //     workout.color = action.payload;
+      //   }
+      // });
+      // console.log(setColorWorkouts.filter(i => i.id === state.id)[0].color);
+
+      const setColorWorkouts = JSON.parse(JSON.stringify(state.workouts));
+      setColorWorkouts.map(workout => {
+        if (state.id === workout.id) {
+          console.log('set');
+          workout.color = action.payload;
+        }
+      });
+
+      return {
+        ...state,
+        workouts: setColorWorkouts
+      };
     case SET_DIFFICULTY:
       const setDifficultyWorkouts = [];
       state.workouts.forEach(workout => {

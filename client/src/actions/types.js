@@ -3,6 +3,7 @@ export const LOGIN_ERROR = 'login_error';
 export const LOGOUT = 'logout';
 export const LOADING_FALSE = 'loading_false';
 export const SEND_FORGOT_PASSWORD = 'send_forgot_password';
+export const EDIT_USER = 'edit_user';
 
 export const ADD_WORKOUT = 'add_workout';
 export const DELETE_WORKOUT = 'delete_workout';
@@ -17,6 +18,7 @@ export const SAVE_NOTES = 'save_notes';
 export const FETCH_EXERCISE_LIST = 'fetch_exercise_list';
 
 export const ADD_EXERCISE_TO_WORKOUT = 'add_exercise_to_workout';
+export const DELETE_EXERCISE_FROM_WORKOUT = 'delete_exercise_from_workout';
 
 export const ADD_SET_TO_EXERCISE = 'add_set_to_exercise';
 export const GET_SETS_FOR_EXERCISE = 'get_sets_for_exercise';
@@ -25,6 +27,7 @@ export const VIEW_SET = 'view_set';
 
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 export const SET_EXERCISE_LIST_TYPE = 'set_exercise_list_type';
+export const GET_QUOTE = 'get_quote';
 
 // Schedules
 export const SET_ACTIVE_SCHEDULE = 'set_active_schedule';
@@ -37,3 +40,10 @@ export const DELETE_EXERCISE_FROM_SCHEDULE = 'delete_exercise_from_schedule';
 
 export const INCREASE = 'increase';
 export const DECREASE = 'decrease';
+
+export const SET_COLOR = 'set_color';
+
+// Achievements
+export const FETCH_ACHIEVEMENTS = 'fetch_achievements';
+
+export const GET_SELECTED_DATE = 'get_selected_date';
