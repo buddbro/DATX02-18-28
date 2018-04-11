@@ -10,11 +10,11 @@ export const colors = {
   themeSecondaryColorLightest: '#DCB2F0',
   textColor: '#fff',
 
-  yellow: 'yellow',
-  red: 'red',
-  blue: 'blue',
-  green: 'green',
-  purple: 'purple'
+  yellow: '#FFFF57',
+  red: '#FE5763',
+  blue: '#6783F4',
+  green: '#54F590',
+  purple: '#BD5CF3'
 };
 
 export default (globalStyles = StyleSheet.create({
@@ -57,7 +57,9 @@ export default (globalStyles = StyleSheet.create({
   },
   traitSubContainer: {
     justifyContent: 'flex-start',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 20,
+    marginLeft: 15
   },
   achievementsContainer: {
     flex: 1,
@@ -119,7 +121,8 @@ export default (globalStyles = StyleSheet.create({
     color: colors.themeMainColorLight,
     fontSize: 20,
     marginTop: 10,
-    marginBottom: 5
+    marginBottom: 5,
+    marginRight: 15
   },
   traitText: {},
   quoteText: {
@@ -142,15 +145,27 @@ export default (globalStyles = StyleSheet.create({
     paddingRight: 10
   },
   textInput: {
-    width: 180,
-    height: 40,
+    width: '80%',
+    height: 60,
+    fontSize: 22,
     borderRadius: 1,
     borderColor: colors.themeMainColorLight,
     borderWidth: 1,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    backgroundColor: '#F2FEFC'
   },
   titleInput: {},
+  notes: {
+    height: 80,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    borderColor: '#aaa',
+    borderRadius: 3,
+    borderWidth: 1,
+    width: '75%'
+  },
 
   //images
   iconTiny: {},

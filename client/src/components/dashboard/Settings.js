@@ -27,15 +27,6 @@ var { height, width } = Dimensions.get('window');
 //Image
 
 class Settings extends React.Component {
-  static navigationOptions = {
-    drawerIcon: () => (
-      <Image
-        source={require('../../../assets/settings.png')}
-        style={{ width: 24, height: 24, borderRadius: 10 }}
-      />
-    )
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -124,11 +115,6 @@ class Settings extends React.Component {
           scrollEnabled={true}
           enableOnAndroid={true}
         >
-          {/*Profile*/}
-
-          <Text style={globalStyles.pageTitle}>Profile</Text>
-
-          {/*Picture, name, age*/}
           <View
             style={
               (globalStyles.contentContainer,
@@ -136,16 +122,19 @@ class Settings extends React.Component {
               globalStyles.traitContainer)
             }
           >
-            {/*Name and age*/}
-            <Text style={globalStyles.traitTitle}>Name</Text>
-            <TextInput
-              ref="name"
-              onFocus={() => this.focus('name')}
-              onChangeText={nameText => this.setState({ nameText })}
-              value={this.state.nameText}
-              autoCorrect={false}
-              style={globalStyles.textInput}
-            />
+            <Text style={globalStyles.pageTitle}>Profile</Text>
+
+            <View style={styles.outerTextContainer}>
+              <Text style={globalStyles.traitTitle}>Name</Text>
+              <TextInput
+                ref="name"
+                onFocus={() => this.focus('name')}
+                onChangeText={nameText => this.setState({ nameText })}
+                value={this.state.nameText}
+                autoCorrect={false}
+                style={globalStyles.textInput}
+              />
+              {/*
             <View style={globalStyles.threeColumnContainer}>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={globalStyles.traitTitle}>Age</Text>
@@ -183,58 +172,55 @@ class Settings extends React.Component {
             </View>
           </View>
 
-          {/*Height and weight*/}
-          <View style={styles.twoColumnContainer} />
-
-          {/*Account and down*/}
-          <View
-            style={
-              (globalStyles.contentContainer,
-              globalStyles.columnContentContainer)
-            }
-          >
-            <Text style={globalStyles.pageTitle}>Account</Text>
-          </View>
-          <View style={styles.outerTextContainer}>
-            <Text style={globalStyles.traitTitle}>Email</Text>
-            <TextInput
-              ref="email"
-              onFocus={() => this.focus('email')}
-              keyboardType="email-address"
-              style={styles.standardText}
-              onChangeText={emailText => this.setState({ emailText })}
-              value={this.state.emailText}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={globalStyles.textInput}
-            />
-            <Text style={globalStyles.traitTitle}>New password</Text>
-            <TextInput
-              ref="passwordOne"
-              onFocus={() => this.focus('passwordOne')}
-              style={styles.standardText}
-              secureTextEntry
-              onChangeText={newPasswordText =>
-                this.setState({ newPasswordText })
+            <View style={styles.twoColumnContainer} />*/}
+            </View>
+            <View
+              style={
+                (globalStyles.contentContainer,
+                globalStyles.columnContentContainer)
               }
-              value={this.state.newPasswordText}
-              style={globalStyles.textInput}
-            />
-            <Text style={globalStyles.traitTitle}>Confirm password</Text>
-            <TextInput
-              ref="passwordTwo"
-              onFocus={() => this.focus('passwordTwo')}
-              style={styles.standardText}
-              secureTextEntry
-              onChangeText={confirmPasswordText =>
-                this.setState({ confirmPasswordText })
-              }
-              value={this.state.confirmPasswordText}
-              style={globalStyles.textInput}
-            />
+            >
+              <Text style={globalStyles.pageTitle}>Account</Text>
+            </View>
+            <View style={styles.outerTextContainer}>
+              <Text style={globalStyles.traitTitle}>Email</Text>
+              <TextInput
+                ref="email"
+                onFocus={() => this.focus('email')}
+                keyboardType="email-address"
+                style={styles.standardText}
+                onChangeText={emailText => this.setState({ emailText })}
+                value={this.state.emailText}
+                autoCapitalize="none"
+                autoCorrect={false}
+                style={globalStyles.textInput}
+              />
+              <Text style={globalStyles.traitTitle}>New password</Text>
+              <TextInput
+                ref="passwordOne"
+                onFocus={() => this.focus('passwordOne')}
+                style={styles.standardText}
+                secureTextEntry
+                onChangeText={newPasswordText =>
+                  this.setState({ newPasswordText })
+                }
+                value={this.state.newPasswordText}
+                style={globalStyles.textInput}
+              />
+              <Text style={globalStyles.traitTitle}>Confirm password</Text>
+              <TextInput
+                ref="passwordTwo"
+                onFocus={() => this.focus('passwordTwo')}
+                style={styles.standardText}
+                secureTextEntry
+                onChangeText={confirmPasswordText =>
+                  this.setState({ confirmPasswordText })
+                }
+                value={this.state.confirmPasswordText}
+                style={globalStyles.textInput}
+              />
 
-            {/*Notifications and togglebutton*/}
-            {/*<View
+              {/*<View
               style={{
                 paddingTop: 10,
                 flexDirection: 'row',
@@ -250,10 +236,9 @@ class Settings extends React.Component {
                 onValueChange={notifications =>
                   this.setState({ notifications })
                 }
-              />
-          </View> */}
+              />*/}
+            </View>
           </View>
-          {/*Save button*/}
           <View
             style={{
               justifyContent: 'center',
