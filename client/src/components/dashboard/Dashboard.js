@@ -151,6 +151,14 @@ class Dashboard extends React.Component {
           <View>
             <CustomCalendarStrip />
           </View>
+          {this.props.workout.workouts.length === 0 ? (
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcomeHeader}>Welcome!</Text>
+              <Text style={styles.welcomeText}>
+                Start your first workout by tapping the button below.
+              </Text>
+            </View>
+          ) : null}
           <View
             style={
               (globalStyles.columnContentContainer,
@@ -237,5 +245,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginLeft: 15,
     marginRight: 15
-  }
+  },
+  welcomeContainer: { height: 300, justifyContent: 'center' },
+  welcomeHeader: { fontSize: 28, textAlign: 'center' },
+  welcomeText: { fontSize: 16, textAlign: 'center', padding: 60 }
 });
