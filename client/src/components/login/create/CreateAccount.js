@@ -22,13 +22,32 @@ class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { data: [], name: '', email: '', password: '', error: '' };
+    this.state = {
+      data: [],
+      name: '',
+      email: '',
+      passwordOne: '',
+      passwordTwo: '',
+      error: ''
+    };
   }
 
   registerUser() {
-    if (this.state.password.length < 6) {
+    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
+
+    if (!emailRegex.test(this.state.email)) {
+      this.setState({
+        error: 'Please enter a valid email'
+      });
+      return;
+    } else if (this.state.passwordOne.length < 6) {
       this.setState({
         error: 'Password has to be at least 6 characters'
+      });
+      return;
+    } else if (this.state.passwordOne !== this.state.passwordTwo) {
+      this.setState({
+        error: 'The passwords does not match'
       });
       return;
     } else if (this.state.name.length < 2) {
@@ -37,36 +56,34 @@ class CreateAccount extends React.Component {
       });
       return;
     }
+
     axios
       .post('https://getpushapp.com/api/users/register', {
         email: this.state.email,
-        password: sha256(this.state.password),
+        password: sha256(this.state.passwordOne),
         name: this.state.name
       })
       .then(({ data }) => {
-        if (!data.success) {
+        if (data.error) {
           this.setState({ error: data.error });
           return;
         }
-        try {
-          AsyncStorage.setItem(
-            'token',
-            data.token + this.state.email
-          ).then(() => {
-            AsyncStorage.getItem('token').then(value => {
-              this.props.loginWithToken();
-              this.props.navigation.dispatch(
-                NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
-                })
-              );
-            });
-          });
-        } catch (error) {
-          console.log(error);
-        }
 
-        this.setState({ name: '', email: '', password: '' });
+        AsyncStorage.setItem('jwt', data.token).then(() => {
+          this.props.loginWithToken();
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'Dashboard'
+            })
+          );
+        });
+
+        this.setState({
+          name: '',
+          email: '',
+          passwordOne: '',
+          passwordTwo: ''
+        });
       })
       .catch(error => {
         console.log(error);
@@ -93,7 +110,7 @@ class CreateAccount extends React.Component {
         scrollEnabled={false}
       >
         <View style={styles.head}>
-          <Text style={styles.headline}>Welcome</Text>
+          <Text style={styles.headline}>Create Account</Text>
         </View>
         <View style={styles.body}>
           <TextInput
@@ -109,7 +126,8 @@ class CreateAccount extends React.Component {
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
-              this.setState({ email: email.toLowerCase() })}
+              this.setState({ email: email.toLowerCase() })
+            }
             keyboardType="email-address"
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -118,8 +136,16 @@ class CreateAccount extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder="Password"
-            onChangeText={password =>
-              this.setState({ password: password.toLowerCase() })}
+            onChangeText={password => this.setState({ passwordOne: password })}
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Password, again"
+            onChangeText={password => this.setState({ passwordTwo: password })}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -140,7 +166,8 @@ class CreateAccount extends React.Component {
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'LoginUser'
                 })
-              )}
+              )
+            }
           >
             <Text style={{ color: '#858080' }}>
               Already have an account? Log in
@@ -163,8 +190,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    // justifyContent: 'center',
-    paddingTop: 50
+    paddingTop: 20
   },
   head: {
     flex: 1,
