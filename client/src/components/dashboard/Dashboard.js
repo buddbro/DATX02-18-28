@@ -37,23 +37,20 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = { addWorkoutVisible: false };
-    this.animatedValue = new Animated.Value(0)
+    this.animatedValue = new Animated.Value(0);
   }
 
   componentDidMount() {
     this.props.getQuote();
   }
 
-  animate () {
-    this.animatedValue.setValue(0)
-    Animated.timing(
-      this.animatedValue,
-      {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.ease
-      }
-    ).start()
+  animate() {
+    this.animatedValue.setValue(0);
+    Animated.timing(this.animatedValue, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.ease
+    }).start();
   }
 
   hideModal() {
@@ -64,17 +61,18 @@ class Dashboard extends React.Component {
     const marginTop = this.animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: [-1300, 0]
-    })
+    });
     if (this.state.addWorkoutVisible) {
-      this.animate()
+      this.animate();
       return (
         <View style={styles.popupContainer}>
           <Animated.View
             style={{
               marginTop,
               height: 1,
-              width: 1}}>
-          </Animated.View>
+              width: 1
+            }}
+          />
           <TouchableOpacity
             onPress={() => {
               this.setState({
