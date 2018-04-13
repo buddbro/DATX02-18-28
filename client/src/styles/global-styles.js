@@ -64,6 +64,7 @@ export default (globalStyles = StyleSheet.create({
   achievementsContainer: {
     flex: 1,
     alignItems: 'flex-start',
+    justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap'
   },

@@ -163,21 +163,9 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       return { ...state, workouts: action.payload };
 
     case SET_COLOR:
-      // console.log('paykoa', state.id, action.payload);
-      // const setColorWorkouts = [];
-      // state.workouts.forEach(workout => {
-      //   setColorWorkouts.push(workout);
-      //   if (state.id === workout.id) {
-      //     console.log('set');
-      //     workout.color = action.payload;
-      //   }
-      // });
-      // console.log(setColorWorkouts.filter(i => i.id === state.id)[0].color);
-
       const setColorWorkouts = JSON.parse(JSON.stringify(state.workouts));
       setColorWorkouts.map(workout => {
         if (state.id === workout.id) {
-          console.log('set');
           workout.color = action.payload;
         }
       });

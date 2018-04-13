@@ -30,8 +30,8 @@ export default function schedulesReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         list: {
-          ...state.list,
-          [action.payload.id]: { title: action.payload.title, exercises: [] }
+          [action.payload.id]: { title: action.payload.title, exercises: [] },
+          ...state.list
         }
       };
     case DELETE_SCHEDULE:

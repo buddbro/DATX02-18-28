@@ -188,7 +188,7 @@ class ViewWorkout extends React.Component {
             }}
             style={styles.saveDateButton}
           >
-            <Text style={styles.saveDateButtonText}>Save</Text>
+            <Text style={styles.saveDateButtonText}>OK</Text>
           </TouchableOpacity>
           <DatePickerIOS
             minimumDate={
@@ -237,6 +237,7 @@ class ViewWorkout extends React.Component {
       green: '#54F590',
       purple: '#BD5CF3'
     };
+
     return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
       return (
         <TouchableOpacity
@@ -265,8 +266,6 @@ class ViewWorkout extends React.Component {
     if (!(this.props.workout && this.props.workout.difficulty)) {
       return <View />;
     }
-
-    console.log('active state color: ', this.state.color);
 
     return (
       <KeyboardAwareScrollView
@@ -442,7 +441,6 @@ const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
   const workout = workouts.filter(w => w.id === id)[0];
 
-  console.log(workout);
   if (!workout) {
     return {};
   }

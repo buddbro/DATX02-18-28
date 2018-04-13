@@ -75,15 +75,17 @@ class WorkoutSchedules extends React.Component {
           </TouchableOpacity>
         </Header>
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) => (
-            <ScheduleCard
-              key={`schedule${index}`}
-              title={this.props.list[id].title}
-              id={id}
-              exercises={this.props.list[id].exercises}
-              navigation={this.props.navigation}
-            />
-          ))}
+          {Object.keys(this.props.list)
+            .reverse()
+            .map((id, index) => (
+              <ScheduleCard
+                key={`schedule${index}`}
+                title={this.props.list[id].title}
+                id={id}
+                exercises={this.props.list[id].exercises}
+                navigation={this.props.navigation}
+              />
+            ))}
         </ScrollView>
       </KeyboardAwareScrollView>
     );

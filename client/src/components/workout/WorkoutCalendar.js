@@ -35,8 +35,6 @@ class WorkoutCalendar extends React.Component {
   };
 
   getWorkoutDates() {
-    console.log(this.props.workouts);
-
     const translateColor = color => {
       switch (color) {
         case 'yellow':
@@ -98,6 +96,7 @@ class WorkoutCalendar extends React.Component {
         <CalendarList
           onDayPress={day => {
             this.setState({ selectedDay: day });
+            console.log(day);
             this.popupDialog.show();
           }}
           firstDay={1}
