@@ -129,14 +129,8 @@ class WorkoutCard extends React.Component {
     }
   }
 }
-const mapStateToProps = ({ workout }) => {
-  const { exercises } = workout;
-  return {
-    exercises
-  };
-};
 
-export default connect(mapStateToProps, { chooseWorkout })(WorkoutCard);
+export default connect(null, { chooseWorkout })(WorkoutCard);
 
 const styles = StyleSheet.create({
   workoutOuter: {

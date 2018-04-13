@@ -23,7 +23,7 @@ class WorkoutCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedDay: '' };
+    this.state = { workoutsThisDay: [] };
   }
   static navigationOptions = {
     drawerIcon: () => (
@@ -87,6 +87,14 @@ class WorkoutCalendar extends React.Component {
           }}
         >
           <ScrollView>
+            {this.state.workoutsThisDay.map(workout => (
+              <WorkoutCard
+                style={{ marginBottom: 0 }}
+                navigation={this.props.navigation}
+                key={`workoutcard${workout.id}`}
+                workout={workout}
+              />
+            ))}
             <WorkoutCard
               style={{ marginBottom: 0 }}
               navigation={this.props.navigation}
@@ -95,8 +103,10 @@ class WorkoutCalendar extends React.Component {
         </PopupDialog>
         <CalendarList
           onDayPress={day => {
-            this.setState({ selectedDay: day });
-            console.log(day);
+            const workoutsThisDay = this.props.workouts.filter(
+              workout => workout.date.substring(0, 10) === day.dateString
+            );
+            this.setState({ workoutsThisDay });
             this.popupDialog.show();
           }}
           firstDay={1}

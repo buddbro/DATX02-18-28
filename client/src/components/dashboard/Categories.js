@@ -22,8 +22,9 @@ class Categories extends React.Component {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
         .get(
-          `https://getpushapp.com/api/workouts/${this.props
-            .workoutId}/categories`,
+          `https://getpushapp.com/api/workouts/${
+            this.props.workoutId
+          }/categories`,
           {
             headers: { Authorization: `Bearer ${jwt}` }
           }
