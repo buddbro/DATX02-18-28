@@ -41,26 +41,45 @@ class WorkoutSchedules extends React.Component {
 
   renderScheadules() {
     console.log('the proppas ', this.props.list);
-    if (this.props.list.length < 1) {
+    if (Object.keys(this.props.list).length === 0) {
       return (
-        <Text>
-          {' '}
-          Press the plus sign above in order to create your first workout
-          template!
-        </Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '30%'
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              marginLeft: 30,
+              marginRight: 30,
+              fontSize: 20,
+              fontWeight: '200',
+              color: '#7B7B7B'
+            }}
+          >
+            {' '}
+            Press the plus sign above in order to create your first workout
+            template!
+          </Text>
+        </View>
       );
     } else {
       return (
         <ScrollView>
-          {Object.keys(this.props.list).map((id, index) => (
-            <ScheduleCard
-              key={`schedule${index}`}
-              title={this.props.list[id].title}
-              id={id}
-              exercises={this.props.list[id].exercises}
-              navigation={this.props.navigation}
-            />
-          ))}
+          {Object.keys(this.props.list)
+            .reverse()
+            .map((id, index) => (
+              <ScheduleCard
+                key={`schedule${index}`}
+                title={this.props.list[id].title}
+                id={id}
+                exercises={this.props.list[id].exercises}
+                navigation={this.props.navigation}
+              />
+            ))}
         </ScrollView>
       );
     }
