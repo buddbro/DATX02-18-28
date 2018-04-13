@@ -23,9 +23,6 @@ import BackArrow from '../utilities/BackArrow';
 
 var { height, width } = Dimensions.get('window');
 
-//TODO in Settings
-//Image
-
 class Settings extends React.Component {
   static navigationOptions = {
     drawerIcon: () => (
@@ -47,7 +44,7 @@ class Settings extends React.Component {
       newPasswordText: '',
       confirmPasswordText: '',
       notifications: false,
-      errorMessage: 'hej'
+      color: '#992314'
     };
   }
 
@@ -71,7 +68,7 @@ class Settings extends React.Component {
       return;
     }
     return (
-      <Text style={{ fontSize: 18, color: '#992314', textAlign: 'center' }}>
+      <Text style={{ fontSize: 18, color: this.state.color, textAlign: 'center' }}>
         {this.state.error}
       </Text>
     );
@@ -86,6 +83,10 @@ class Settings extends React.Component {
       //weight: this.state.weightText,
       //notifications: this.state.notifications
     };
+    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
+    this.setState({
+      color: '#992314'
+    });
     if (
       this.state.newPasswordText.length >= 6 &&
       this.state.newPasswordText === this.state.confirmPasswordText
@@ -96,9 +97,9 @@ class Settings extends React.Component {
       this.setState({
         error: 'Name is required'
       });
-    }else if(false){ //TODO Otillåten email
+    }else if(false){ //Otillåten email !emailRegex.test(this.state.emailText)
       this.setState({
-        error: 'Invalid email'
+        error: 'Please enter a valid email'
       });
     }else if(this.state.newPasswordText.length<6 &&
       this.state.newPasswordText.length != 0){ //För kort password
@@ -112,7 +113,10 @@ class Settings extends React.Component {
     }else{ //Spara ändringar
     this.props.editUser(user);
     this.setState({
-      error: 'Changes have been saved'
+      color: '#92D722'
+    });
+    this.setState({
+      error: 'Saved changes!'
     });
     }
 
