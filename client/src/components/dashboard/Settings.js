@@ -27,6 +27,15 @@ var { height, width } = Dimensions.get('window');
 //Image
 
 class Settings extends React.Component {
+  static navigationOptions = {
+    drawerIcon: () => (
+      <Image
+        source={require('../../../assets/settings.png')}
+        style={{ width: 26, height: 26, borderRadius: 10 }}
+      />
+    )
+  };
+
   constructor(props) {
     super(props);
     this.state = {

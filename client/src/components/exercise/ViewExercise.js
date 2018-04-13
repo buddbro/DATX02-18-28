@@ -17,7 +17,8 @@ import {
   addSetToExercise,
   deleteExerciseFromWorkout,
   getExerciseDescription,
-  clearExercise
+  clearExercise,
+  readInstruction
 } from '../../actions';
 import NavigationActions from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -50,6 +51,7 @@ class ViewExercise extends React.Component {
           <ExerciseHelp style={{ zIndex: 500 }} />
           <TouchableOpacity
             onPress={() => {
+              this.props.readInstruction(this.props.visibleExerciseId);
               this.setState({ instructionsToggled: false });
             }}
             style={styles.popupBackground}
@@ -299,7 +301,8 @@ export default connect(mapStateToProps, {
   addSetToExercise,
   getExerciseDescription,
   clearExercise,
-  deleteExerciseFromWorkout
+  deleteExerciseFromWorkout,
+  readInstruction
 })(ViewExercise);
 
 const styles = StyleSheet.create({
@@ -326,8 +329,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    // marginLeft: 15,
-    // marginRight: 15,
     backgroundColor: '#6669cb',
     borderRadius: 8,
     borderWidth: 5,
@@ -341,8 +342,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    // marginLeft: 15,
-    // marginRight: 15,
     backgroundColor: '#cb6669',
     borderRadius: 8,
     borderWidth: 5,
