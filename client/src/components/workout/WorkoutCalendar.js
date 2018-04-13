@@ -80,8 +80,8 @@ class WorkoutCalendar extends React.Component {
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <PopupDialog
-          height={445}
-          dialogStyle={{ borderRadius: 0 }}
+          height={450}
+          dialogStyle={{ borderRadius: 0, opacity: 0.5 }}
           ref={popupDialog => {
             this.popupDialog = popupDialog;
           }}
@@ -107,7 +107,9 @@ class WorkoutCalendar extends React.Component {
               workout => workout.date.substring(0, 10) === day.dateString
             );
             this.setState({ workoutsThisDay });
-            this.popupDialog.show();
+            if (workoutsThisDay.length !== 0) {
+              this.popupDialog.show();
+            }
           }}
           firstDay={1}
           theme={{
