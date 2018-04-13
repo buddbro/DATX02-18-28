@@ -39,7 +39,7 @@ class WorkoutSchedules extends React.Component {
     this.setState({ addWorkoutModalVisible: false });
   }
 
-  renderScheadules() {
+  renderSchedules() {
     if (Object.keys(this.props.list).length === 0) {
       return (
         <View
@@ -59,7 +59,6 @@ class WorkoutSchedules extends React.Component {
               color: '#7B7B7B'
             }}
           >
-            {' '}
             Press the plus sign above in order to create your first workout
             template!
           </Text>
@@ -102,7 +101,7 @@ class WorkoutSchedules extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>My Workouts</Text>
+          <Text style={globalStyles.headerTitle}>Schedules</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -119,7 +118,7 @@ class WorkoutSchedules extends React.Component {
             </Text>
           </TouchableOpacity>
         </Header>
-        {this.renderScheadules()}
+        {this.renderSchedules()}
       </KeyboardAwareScrollView>
     );
   }

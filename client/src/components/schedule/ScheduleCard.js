@@ -143,10 +143,10 @@ const mapStateToProps = ({ user }) => {
 };
 
 export default connect(mapStateToProps, {
-  setActiveSchedule,
-  deleteSchedule,
   deleteExerciseFromSchedule,
+  deleteSchedule,
   editSchedule,
+  setActiveSchedule,
   setExerciseListType
 })(ScheduleCard);
 
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 3,
     textAlign: 'center',
     flex: 9,
-    color: '#7B7B7B'
+    color: '#333'
   },
   deleteButton: {
     width: 20,
