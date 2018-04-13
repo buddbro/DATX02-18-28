@@ -91,6 +91,7 @@ class WorkoutCard extends React.Component {
             if (this.props.callback) {
               this.props.callback();
             }
+
             this.props.chooseWorkout(this.props.workout.id);
             this.props.setWorkoutParent(this.props.parent);
             this.props.navigation.dispatch(
@@ -134,7 +135,10 @@ class WorkoutCard extends React.Component {
   }
 }
 
-export default connect(null, { chooseWorkout, setWorkoutParent })(WorkoutCard);
+export default connect(null, {
+  chooseWorkout,
+  setWorkoutParent
+})(WorkoutCard);
 
 const styles = StyleSheet.create({
   workoutOuter: {

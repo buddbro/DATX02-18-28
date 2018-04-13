@@ -83,23 +83,27 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: deleteExercises
       };
     case CHOOSE_WORKOUT:
-      let exercises = action.payload.exercises.reduce((acc, next) => {
-        return [
-          ...acc,
-          {
-            id: next.exercise_id,
-            title: next.exercise_title,
-            exercise_type_id: next.exercise_type_id
-          }
-        ];
-      }, []);
-      const { workout_id } = action.payload.exercises[0];
+      if (!action.payload) {
+        return INITIAL_STATE;
+      } else {
+        let exercises = action.payload.exercises.reduce((acc, next) => {
+          return [
+            ...acc,
+            {
+              id: next.exercise_id,
+              title: next.exercise_title,
+              exercise_type_id: next.exercise_type_id
+            }
+          ];
+        }, []);
+        const { workout_id } = action.payload.exercises[0];
 
-      return {
-        ...state,
-        id: workout_id,
-        exercises: exercises[0].id ? exercises : []
-      };
+        return {
+          ...state,
+          id: workout_id,
+          exercises: exercises[0].id ? exercises : []
+        };
+      }
     case ADD_WORKOUT:
       const { id, title, date, difficulty, start } = action.payload;
 

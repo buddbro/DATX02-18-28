@@ -13,11 +13,15 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { Calendar, CalendarList } from 'react-native-calendars';
-import PopupDialog from 'react-native-popup-dialog';
+import PopupDialog, { SlideAnimation } from 'react-native-popup-dialog';
 
 import Header from '../utilities/Header';
 import WorkoutCard from '../dashboard/WorkoutCard';
 import globalStyles, { colors } from '../../styles/global-styles';
+
+const slideAnimation = new SlideAnimation({
+  slideFrom: 'bottom'
+});
 
 class WorkoutCalendar extends React.Component {
   constructor(props) {
@@ -81,7 +85,8 @@ class WorkoutCalendar extends React.Component {
         </Header>
         <PopupDialog
           height={450}
-          dialogStyle={{ borderRadius: 0, opacity: 0.5 }}
+          dialogStyle={{ borderRadius: 0 }}
+          dialogAnimation={slideAnimation}
           ref={popupDialog => {
             this.popupDialog = popupDialog;
           }}

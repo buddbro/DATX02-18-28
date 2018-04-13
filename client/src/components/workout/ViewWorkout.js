@@ -23,15 +23,16 @@ import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
+  chooseWorkout,
   clearWorkout,
+  deleteWorkout,
   editWorkout,
   fetchWorkouts,
-  viewExercise,
-  deleteWorkout,
-  setDifficulty,
   saveNotes,
+  setColor,
+  setDifficulty,
   setExerciseListType,
-  setColor
+  viewExercise
 } from '../../actions';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
@@ -264,7 +265,10 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    if (!(this.props.workout && this.props.workout.difficulty)) {
+    if (
+      !(this.props.workout && this.props.workout.difficulty) ||
+      this.props.loading
+    ) {
       return <View />;
     }
 
@@ -288,6 +292,7 @@ class ViewWorkout extends React.Component {
                 stop: ''
               });
               this.props.fetchWorkouts();
+              this.props.chooseWorkout(-1);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: this.props.parent
@@ -440,6 +445,7 @@ class ViewWorkout extends React.Component {
 
 const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
+
   const workout = workouts.filter(w => w.id === id)[0];
 
   if (!workout) {
@@ -457,6 +463,7 @@ const mapStateToProps = props => {
 
 export default connect(mapStateToProps, {
   clearWorkout,
+  chooseWorkout,
   editWorkout,
   fetchWorkouts,
   viewExercise,
