@@ -7,6 +7,9 @@ const resetQuery = `
   DROP TABLE IF EXISTS sets CASCADE;
   DROP TABLE IF EXISTS schedules CASCADE;
   DROP TABLE IF EXISTS schedules_exercises CASCADE;
+  DROP TABLE IF EXISTS achievements CASCADE;
+  DROP TABLE IF EXISTS achievements_user CASCADE;
+  DROP TABLE IF EXISTS instructions_read CASCADE;
 
   CREATE TABLE users(id SERIAL PRIMARY KEY, email VARCHAR(100) UNIQUE, password VARCHAR(100), name VARCHAR(100), token VARCHAR(100), created VARCHAR(20), lastLogin VARCHAR(20));
   CREATE TABLE workouts(id SERIAL PRIMARY KEY, title VARCHAR(60), date VARCHAR(20), user_id INT REFERENCES users(id) ON DELETE CASCADE);
@@ -17,7 +20,8 @@ const resetQuery = `
   CREATE TABLE schedules(id SERIAL PRIMARY KEY, user_id INT, title TEXT);
   CREATE TABLE schedules_exercises(id SERIAL PRIMARY KEY, schedule_id INT REFERENCES schedules(id) ON DELETE CASCADE, exercise_id INT REFERENCES exercise_types(id) ON DELETE CASCADE);
   CREATE TABLE achievements(id SERIAL PRIMARY KEY, name TEXT, image TEXT, description TEXT);
-  CREATE TABLE achievements_user(id serial primary key, user_id INT REFERENCES users(id), achievement INT REFERENCES achievements(id), obtained_date TIMESTAMP WITHOUT TIME ZONE, obtained_times INT);
+  CREATE TABLE achievements_user(id SERIAL PRIMARY KEY, user_id INT REFERENCES users(id), achievement INT REFERENCES achievements(id), obtained_date TIMESTAMP WITHOUT TIME ZONE, obtained_times INT);
+  CREATE TABLE instructions_read(user_id INT REFERENCES users(id), exercise_type INT REFERENCES exercise_types(id), date TIMESTAMP WITHOUT TIME ZONE, PRIMARY KEY(user_id, exercise_type));
 
   INSERT INTO users(email, password, name, created) VALUES('test', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Test User', '2018-02-04 19:03:42');
   INSERT INTO users(email, password, name, created) VALUES('fest', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Fest User', '2018-02-05 10:13:22');
