@@ -31,10 +31,10 @@ export default (globalStyles = StyleSheet.create({
     height: 80,
     backgroundColor: colors.themeMainColor,
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 20
+    paddingTop: 50
   },
   headerFillerItem: {
     width: 30,
@@ -145,7 +145,7 @@ export default (globalStyles = StyleSheet.create({
     paddingRight: 10
   },
   textInput: {
-    width: '80%',
+    width: '100%',
     height: 60,
     fontSize: 22,
     borderRadius: 1,
@@ -153,7 +153,8 @@ export default (globalStyles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#F2FEFC'
+    backgroundColor: '#F2FEFC',
+    color: '#7B7B7B'
   },
   titleInput: {},
   notes: {

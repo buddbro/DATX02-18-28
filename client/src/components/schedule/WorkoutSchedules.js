@@ -39,6 +39,33 @@ class WorkoutSchedules extends React.Component {
     this.setState({ addWorkoutModalVisible: false });
   }
 
+  renderScheadules() {
+    console.log('the proppas ', this.props.list);
+    if (this.props.list.length < 1) {
+      return (
+        <Text>
+          {' '}
+          Press the plus sign above in order to create your first workout
+          template!
+        </Text>
+      );
+    } else {
+      return (
+        <ScrollView>
+          {Object.keys(this.props.list).map((id, index) => (
+            <ScheduleCard
+              key={`schedule${index}`}
+              title={this.props.list[id].title}
+              id={id}
+              exercises={this.props.list[id].exercises}
+              navigation={this.props.navigation}
+            />
+          ))}
+        </ScrollView>
+      );
+    }
+  }
+
   render() {
     return (
       <KeyboardAwareScrollView
@@ -57,7 +84,7 @@ class WorkoutSchedules extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Schedule</Text>
+          <Text style={globalStyles.headerTitle}>My Workouts</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -74,17 +101,7 @@ class WorkoutSchedules extends React.Component {
             </Text>
           </TouchableOpacity>
         </Header>
-        <ScrollView>
-          {Object.keys(this.props.list).map((id, index) => (
-            <ScheduleCard
-              key={`schedule${index}`}
-              title={this.props.list[id].title}
-              id={id}
-              exercises={this.props.list[id].exercises}
-              navigation={this.props.navigation}
-            />
-          ))}
-        </ScrollView>
+        {this.renderScheadules()}
       </KeyboardAwareScrollView>
     );
   }
@@ -137,6 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     padding: 3,
-    margin: 5
+    margin: 5,
+    color: '#7B7B7B'
   }
 });
