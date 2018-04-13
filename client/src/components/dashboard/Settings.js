@@ -97,7 +97,7 @@ class Settings extends React.Component {
       this.setState({
         error: 'Name is required'
       });
-    }else if(false){ //Otillåten email !emailRegex.test(this.state.emailText)
+    }else if(!emailRegex.test(this.state.emailText)){ //Otillåten email !emailRegex.test(this.state.emailText)
       this.setState({
         error: 'Please enter a valid email'
       });
