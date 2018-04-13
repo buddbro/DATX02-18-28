@@ -18,7 +18,7 @@ import { getQuote } from '../../actions';
 
 import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
-import LatestWorkout from './LatestWorkout';
+import WorkoutCard from './WorkoutCard';
 import AddWorkout from './AddWorkout';
 import CalendarStrip from 'react-native-calendar-strip';
 import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
               globalStyles.contentContainer)
             }
           >
-            <LatestWorkout
+            <WorkoutCard
               workout={this.props.workout.workouts[0]}
               navigation={this.props.navigation}
             />

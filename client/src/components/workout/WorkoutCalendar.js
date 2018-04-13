@@ -16,7 +16,7 @@ import { Calendar, CalendarList } from 'react-native-calendars';
 import PopupDialog from 'react-native-popup-dialog';
 
 import Header from '../utilities/Header';
-import LatestWorkout from '../dashboard/LatestWorkout';
+import WorkoutCard from '../dashboard/WorkoutCard';
 import globalStyles, { colors } from '../../styles/global-styles';
 
 class WorkoutCalendar extends React.Component {
@@ -87,7 +87,7 @@ class WorkoutCalendar extends React.Component {
           }}
         >
           <ScrollView>
-            <LatestWorkout
+            <WorkoutCard
               style={{ marginBottom: 0 }}
               navigation={this.props.navigation}
             />

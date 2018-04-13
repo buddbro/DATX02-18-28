@@ -17,7 +17,7 @@ import Categories from './Categories';
 import RatingWrapper from '../utilities/RatingWrapper';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-class LatestWorkout extends React.Component {
+class WorkoutCard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -136,7 +136,7 @@ const mapStateToProps = ({ workout }) => {
   };
 };
 
-export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
+export default connect(mapStateToProps, { chooseWorkout })(WorkoutCard);
 
 const styles = StyleSheet.create({
   workoutOuter: {
