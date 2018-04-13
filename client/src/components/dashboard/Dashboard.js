@@ -176,6 +176,7 @@ class Dashboard extends React.Component {
             <WorkoutCard
               workout={this.props.workout.workouts[0]}
               navigation={this.props.navigation}
+              parent="Dashboard"
             />
           </View>
         </ScrollView>

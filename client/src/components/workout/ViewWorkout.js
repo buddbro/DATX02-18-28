@@ -93,7 +93,7 @@ class ViewWorkout extends React.Component {
             this.props.deleteWorkout(this.props.id);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Dashboard'
+                routeName: this.props.parent
               })
             );
           }
@@ -290,7 +290,7 @@ class ViewWorkout extends React.Component {
               this.props.fetchWorkouts();
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
+                  routeName: this.props.parent
                 })
               );
             }}
@@ -450,7 +450,8 @@ const mapStateToProps = props => {
     id,
     workout,
     color: workout.color,
-    exercises
+    exercises,
+    parent: props.app.workoutParent
   };
 };
 

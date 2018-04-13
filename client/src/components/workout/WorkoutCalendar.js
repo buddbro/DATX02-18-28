@@ -93,12 +93,10 @@ class WorkoutCalendar extends React.Component {
                 navigation={this.props.navigation}
                 key={`workoutcard${workout.id}`}
                 workout={workout}
+                parent="Calendar"
+                callback={() => this.popupDialog.dismiss()}
               />
             ))}
-            <WorkoutCard
-              style={{ marginBottom: 0 }}
-              navigation={this.props.navigation}
-            />
           </ScrollView>
         </PopupDialog>
         <CalendarList

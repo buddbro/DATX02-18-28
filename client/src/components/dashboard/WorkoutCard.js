@@ -12,7 +12,7 @@ import {
 import ExerciseCard from '../exercise/ExerciseCard';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
-import { chooseWorkout } from '../../actions';
+import { chooseWorkout, setWorkoutParent } from '../../actions';
 import Categories from './Categories';
 import RatingWrapper from '../utilities/RatingWrapper';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -88,7 +88,11 @@ class WorkoutCard extends React.Component {
         <TouchableOpacity
           style={styles.accordionBody}
           onPress={() => {
+            if (this.props.callback) {
+              this.props.callback();
+            }
             this.props.chooseWorkout(this.props.workout.id);
+            this.props.setWorkoutParent(this.props.parent);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
                 routeName: 'ViewWorkout'
@@ -130,7 +134,7 @@ class WorkoutCard extends React.Component {
   }
 }
 
-export default connect(null, { chooseWorkout })(WorkoutCard);
+export default connect(null, { chooseWorkout, setWorkoutParent })(WorkoutCard);
 
 const styles = StyleSheet.create({
   workoutOuter: {
