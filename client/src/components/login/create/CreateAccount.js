@@ -33,14 +33,15 @@ class CreateAccount extends React.Component {
   }
 
   registerUser() {
-    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
+    // const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
 
-    if (!emailRegex.test(this.state.email)) {
-      this.setState({
-        error: 'Please enter a valid email'
-      });
-      return;
-    } else if (this.state.passwordOne.length < 6) {
+    // if (!emailRegex.test(this.state.email)) {
+    //   this.setState({
+    //     error: 'Please enter a valid email'
+    //   });
+    //   return;
+
+    if (this.state.passwordOne.length < 6) {
       this.setState({
         error: 'Password has to be at least 6 characters'
       });
