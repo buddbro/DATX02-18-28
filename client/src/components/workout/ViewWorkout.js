@@ -251,6 +251,7 @@ class ViewWorkout extends React.Component {
           style={[
             styles.colorTag,
             {
+              borderWidth: color !== this.state.color ? 0 : 2,
               backgroundColor:
                 color !== this.state.color
                   ? inactiveColors[index]
