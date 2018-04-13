@@ -5,22 +5,17 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Animated,
+  Easing
 } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 
-const owl = {
-  gold: require('../../../assets/achievements/owl_gold.png'),
-  silver: require('../../../assets/achievements/owl_silver.png'),
-  bronze: require('../../../assets/achievements/owl_bronze.png')
+const beast = {
+  gold: require('../../../assets/achievements/beast_gold.png'),
+  silver: require('../../../assets/achievements/beast_silver.png'),
+  bronze: require('../../../assets/achievements/beast_bronze.png')
 };
-
-const time = {
-  gold: require('../../../assets/achievements/time.png'),
-  silver: require('../../../assets/achievements/time.png'),
-  bronze: require('../../../assets/achievements/time.png')
-};
-
 const cheetah = {
   gold: require('../../../assets/achievements/cheetah_gold.png'),
   silver: require('../../../assets/achievements/cheetah_silver.png'),
@@ -33,11 +28,71 @@ const chicken = {
   bronze: require('../../../assets/achievements/chicken_bronze.png')
 };
 
-const images = { owl, time, cheetah, chicken };
+const magnet = {
+  gold: require('../../../assets/achievements/magnet_gold.png'),
+  silver: require('../../../assets/achievements/magnet_silver.png'),
+  bronze: require('../../../assets/achievements/magnet_bronze.png')
+};
+
+const owl = {
+  gold: require('../../../assets/achievements/owl_gold.png'),
+  silver: require('../../../assets/achievements/owl_silver.png'),
+  bronze: require('../../../assets/achievements/owl_bronze.png')
+};
+
+const scholar = {
+  gold: require('../../../assets/achievements/scholar_gold.png'),
+  silver: require('../../../assets/achievements/scholar_silver.png'),
+  bronze: require('../../../assets/achievements/scholar_bronze.png')
+};
+
+const spontaneous = {
+  gold: require('../../../assets/achievements/spontaneous_gold.png'),
+  silver: require('../../../assets/achievements/spontaneous_silver.png'),
+  bronze: require('../../../assets/achievements/spontaneous_bronze.png')
+};
+
+const yeti = {
+  gold: require('../../../assets/achievements/yeti_gold.png'),
+  silver: require('../../../assets/achievements/yeti_silver.png'),
+  bronze: require('../../../assets/achievements/yeti_bronze.png')
+};
+
+const images = {
+  beast,
+  cheetah,
+  chicken,
+  magnet,
+  owl,
+  scholar,
+  spontaneous,
+  yeti
+};
 
 const { height, width } = Dimensions.get('window');
 
 class AchievementPopup extends React.Component {
+  constructor () {
+    super()
+    this.animatedValue = new Animated.Value(0)
+  }
+
+  componentDidMount () {
+    this.animate()
+  }
+
+  animate () {
+    this.animatedValue.setValue(0)
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 4500,
+        easing: Easing.linear
+      }
+    ).start(() => this.animate())
+  }
+
   render() {
     const {
       name,
@@ -46,22 +101,28 @@ class AchievementPopup extends React.Component {
       obtained_times
     } = this.props.achievement;
 
+    const rotateY = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: ['0deg', '180deg', '0deg']
+    })
+
     if (!name) {
       return <View />;
     }
 
     return (
       <View style={styles.achievementDetails}>
-        <Text style={styles.header}>
-          {name}
-        </Text>
-        <Image style={styles.image} source={images[image][this.props.level]} />
+        <Text style={styles.header}>{name}</Text>
+        <Animated.View
+          style={{
+            transform: [{rotateY}],
+            }}>
+          <Image style={styles.image} source={images[image][this.props.level]} />
+        </Animated.View>
         <Text style={styles.date}>
           {obtained_date ? obtained_date.substring(0, 10) : ''}
         </Text>
-        <Text style={styles.date}>
-          Obtained: {obtained_times} times
-        </Text>
+        <Text style={styles.date}>Obtained: {obtained_times} times</Text>
       </View>
     );
   }

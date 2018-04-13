@@ -66,6 +66,7 @@ app.get('/api/verifytoken', verifyToken, db.verifyToken);
 app.post('/api/users/resetpassword', db.sendResetPasswordEmail);
 app.get('/api/resetpassword/:id/:token', db.resetPasswordGet);
 app.post('/api/resetpassword/:id/:token', db.resetPasswordPost);
+app.get('/api/instructions/:exercise', verifyToken, db.readInstruction);
 
 // Workout
 app.post('/api/workouts/exercise/:id', db.addSetToExercise);

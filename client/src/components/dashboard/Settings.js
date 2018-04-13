@@ -23,15 +23,12 @@ import BackArrow from '../utilities/BackArrow';
 
 var { height, width } = Dimensions.get('window');
 
-//TODO in Settings
-//Image
-
 class Settings extends React.Component {
   static navigationOptions = {
     drawerIcon: () => (
       <Image
         source={require('../../../assets/settings.png')}
-        style={{ width: 24, height: 24, borderRadius: 10 }}
+        style={{ width: 26, height: 26, borderRadius: 10 }}
       />
     )
   };
@@ -46,7 +43,8 @@ class Settings extends React.Component {
       weightText: '',
       newPasswordText: '',
       confirmPasswordText: '',
-      notifications: false
+      notifications: false,
+      color: '#992314'
     };
   }
 
@@ -65,28 +63,68 @@ class Settings extends React.Component {
     this.refs[component].focus();
   }
 
+  renderError() {
+    if (!this.state.error) {
+      return;
+    }
+    return (
+      <Text style={{ fontSize: 18, color: this.state.color, textAlign: 'center' }}>
+        {this.state.error}
+      </Text>
+    );
+  }
+
   save() {
     const user = {
-      name: this.state.nameText,
+      name: this.state.nameText.trim(),
       email: this.state.emailText,
       age: this.state.ageText,
-      height: this.state.heightText,
-      weight: this.state.weightText,
-      notifications: this.state.notifications
+      //height: this.state.heightText,
+      //weight: this.state.weightText,
+      //notifications: this.state.notifications
     };
+    const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
+    this.setState({
+      color: '#992314'
+    });
     if (
       this.state.newPasswordText.length >= 6 &&
       this.state.newPasswordText === this.state.confirmPasswordText
     ) {
       user.password = this.state.newPasswordText;
     }
-
+    if(this.state.nameText.trim() == ''){ //No name
+      this.setState({
+        error: 'Name is required'
+      });
+    }else if(!emailRegex.test(this.state.emailText)){ //Otillåten email !emailRegex.test(this.state.emailText)
+      this.setState({
+        error: 'Please enter a valid email'
+      });
+    }else if(this.state.newPasswordText.length<6 &&
+      this.state.newPasswordText.length != 0){ //För kort password
+      this.setState({
+        error: 'Password has to be at least 6 characters'
+      });
+    }else if(this.state.newPasswordText !== this.state.confirmPasswordText){ //Passwords matchar inte
+      this.setState({
+        error: 'The passwords need to match'
+      });
+    }else{ //Spara ändringar
     this.props.editUser(user);
-    this.props.navigation.dispatch(
+    this.setState({
+      color: '#92D722'
+    });
+    this.setState({
+      error: 'Saved changes!'
+    });
+    }
+
+    {/*this.props.navigation.dispatch(
       NavigationActions.NavigationActions.navigate({
         routeName: 'Dashboard'
       })
-    );
+    );*/}
   }
 
   render() {
@@ -124,11 +162,6 @@ class Settings extends React.Component {
           scrollEnabled={true}
           enableOnAndroid={true}
         >
-          {/*Profile*/}
-
-          <Text style={globalStyles.pageTitle}>Profile</Text>
-
-          {/*Picture, name, age*/}
           <View
             style={
               (globalStyles.contentContainer,
@@ -136,16 +169,19 @@ class Settings extends React.Component {
               globalStyles.traitContainer)
             }
           >
-            {/*Name and age*/}
-            <Text style={globalStyles.traitTitle}>Name</Text>
-            <TextInput
-              ref="name"
-              onFocus={() => this.focus('name')}
-              onChangeText={nameText => this.setState({ nameText })}
-              value={this.state.nameText}
-              autoCorrect={false}
-              style={globalStyles.textInput}
-            />
+            <Text style={globalStyles.pageTitle}>Profile</Text>
+
+            <View style={styles.outerTextContainer}>
+              <Text style={globalStyles.traitTitle}>Name</Text>
+              <TextInput
+                ref="name"
+                onFocus={() => this.focus('name')}
+                onChangeText={nameText => this.setState({ nameText })}
+                value={this.state.nameText}
+                autoCorrect={false}
+                style={globalStyles.textInput}
+              />
+              {/*
             <View style={globalStyles.threeColumnContainer}>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={globalStyles.traitTitle}>Age</Text>
@@ -183,58 +219,55 @@ class Settings extends React.Component {
             </View>
           </View>
 
-          {/*Height and weight*/}
-          <View style={styles.twoColumnContainer} />
-
-          {/*Account and down*/}
-          <View
-            style={
-              (globalStyles.contentContainer,
-              globalStyles.columnContentContainer)
-            }
-          >
-            <Text style={globalStyles.pageTitle}>Account</Text>
-          </View>
-          <View style={styles.outerTextContainer}>
-            <Text style={globalStyles.traitTitle}>Email</Text>
-            <TextInput
-              ref="email"
-              onFocus={() => this.focus('email')}
-              keyboardType="email-address"
-              style={styles.standardText}
-              onChangeText={emailText => this.setState({ emailText })}
-              value={this.state.emailText}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={globalStyles.textInput}
-            />
-            <Text style={globalStyles.traitTitle}>New password</Text>
-            <TextInput
-              ref="passwordOne"
-              onFocus={() => this.focus('passwordOne')}
-              style={styles.standardText}
-              secureTextEntry
-              onChangeText={newPasswordText =>
-                this.setState({ newPasswordText })
+            <View style={styles.twoColumnContainer} />*/}
+            </View>
+            <View
+              style={
+                (globalStyles.contentContainer,
+                globalStyles.columnContentContainer)
               }
-              value={this.state.newPasswordText}
-              style={globalStyles.textInput}
-            />
-            <Text style={globalStyles.traitTitle}>Confirm password</Text>
-            <TextInput
-              ref="passwordTwo"
-              onFocus={() => this.focus('passwordTwo')}
-              style={styles.standardText}
-              secureTextEntry
-              onChangeText={confirmPasswordText =>
-                this.setState({ confirmPasswordText })
-              }
-              value={this.state.confirmPasswordText}
-              style={globalStyles.textInput}
-            />
+            >
+              <Text style={globalStyles.pageTitle}>Account</Text>
+            </View>
+            <View style={styles.outerTextContainer}>
+              <Text style={globalStyles.traitTitle}>Email</Text>
+              <TextInput
+                ref="email"
+                onFocus={() => this.focus('email')}
+                keyboardType="email-address"
+                style={styles.standardText}
+                onChangeText={emailText => this.setState({ emailText })}
+                value={this.state.emailText}
+                autoCapitalize="none"
+                autoCorrect={false}
+                style={globalStyles.textInput}
+              />
+              <Text style={globalStyles.traitTitle}>New password</Text>
+              <TextInput
+                ref="passwordOne"
+                onFocus={() => this.focus('passwordOne')}
+                style={styles.standardText}
+                secureTextEntry
+                onChangeText={newPasswordText =>
+                  this.setState({ newPasswordText })
+                }
+                value={this.state.newPasswordText}
+                style={globalStyles.textInput}
+              />
+              <Text style={globalStyles.traitTitle}>Confirm password</Text>
+              <TextInput
+                ref="passwordTwo"
+                onFocus={() => this.focus('passwordTwo')}
+                style={styles.standardText}
+                secureTextEntry
+                onChangeText={confirmPasswordText =>
+                  this.setState({ confirmPasswordText })
+                }
+                value={this.state.confirmPasswordText}
+                style={globalStyles.textInput}
+              />
 
-            {/*Notifications and togglebutton*/}
-            {/*<View
+              {/*<View
               style={{
                 paddingTop: 10,
                 flexDirection: 'row',
@@ -250,10 +283,9 @@ class Settings extends React.Component {
                 onValueChange={notifications =>
                   this.setState({ notifications })
                 }
-              />
-          </View> */}
+              />*/}
+            </View>
           </View>
-          {/*Save button*/}
           <View
             style={{
               justifyContent: 'center',
@@ -261,6 +293,7 @@ class Settings extends React.Component {
               paddingTop: 10
             }}
           >
+            {this.renderError()}
             <TouchableOpacity
               style={globalStyles.saveButton}
               onPress={this.save.bind(this)}
@@ -392,5 +425,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#606060',
     fontSize: 15
+  },
+  errorMessage: {
+    fontSize: 18,
+    color: '#992314',
+    textAlign: 'center'
   }
 });

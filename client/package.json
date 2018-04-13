@@ -42,12 +42,11 @@
     "react-native-popup-dialog": "^0.11.46",
     "react-native-popup-master": "^1.0.1",
     "react-native-rating": "^2.0.4",
+
     "react-navigation": "^1.5.10",
     "react-rating": "^1.1.2",
     "react-redux": "^5.0.7",
-    "redux": "^3.7.2",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0",
-    "sha256": "^0.2.0"
+
+
   }
 }

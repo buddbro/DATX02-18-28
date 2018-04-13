@@ -2,8 +2,11 @@ import {
   GET_EXERCISE_DESCRIPTION,
   SET_EXERCISE_LIST_TYPE,
   GET_QUOTE,
-  GET_SELECTED_DATE
+  GET_SELECTED_DATE,
+  READ_INSTRUCTION
 } from './types.js';
+
+import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 
 export function getSelectedDate(date) {
@@ -33,6 +36,22 @@ export function getQuote() {
         type: GET_QUOTE,
         payload: data
       });
+    });
+  };
+}
+
+export function readInstruction(exercise) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .get(`https://getpushapp.com/api/instructions/${exercise}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(() => {
+          dispatch({
+            type: READ_INSTRUCTION
+          });
+        });
     });
   };
 }

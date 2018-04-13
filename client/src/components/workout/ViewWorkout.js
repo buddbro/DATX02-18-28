@@ -231,11 +231,11 @@ class ViewWorkout extends React.Component {
       '#A078B2'
     ];
     const colors = {
-      yellow: '#F5FF00',
-      red: '#FF0000',
-      blue: '#1F47FF',
-      green: '#00FF00',
-      purple: '#650090'
+      yellow: '#FFFF57',
+      red: '#FE5763',
+      blue: '#6783F4',
+      green: '#54F590',
+      purple: '#BD5CF3'
     };
     return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
       return (
@@ -250,6 +250,7 @@ class ViewWorkout extends React.Component {
           style={[
             styles.colorTag,
             {
+              borderWidth: color !== this.state.color ? 0 : 2,
               backgroundColor:
                 color !== this.state.color
                   ? inactiveColors[index]
@@ -389,11 +390,11 @@ class ViewWorkout extends React.Component {
               }}
             />
           </View>
-          <View style={(styles.difficulty, { flexDirection: 'row' })}>
+          <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Color tag</Text>
             <View style={styles.tagWrapper}>{this.renderColors()}</View>
           </View>
-          <View style={styles.difficulty}>
+          <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Difficulty</Text>
             <View style={styles.ratingStyle}>
               <RatingWrapper
@@ -414,12 +415,12 @@ class ViewWorkout extends React.Component {
             </View>
           </View>
 
-          <View>
-            <Text style={styles.traitText}>Notes</Text>
+          <View style={globalStyles.traitSubContainer}>
+            <Text style={globalStyles.traitTitle}>Notes</Text>
             <TextInput
               ref="notes"
               onFocus={() => this.focus('notes')}
-              style={styles.notes}
+              style={globalStyles.notes}
               onChangeText={notes => this.setState({ notes })}
               onEndEditing={() =>
                 this.props.saveNotes(this.props.id, this.state.notes)

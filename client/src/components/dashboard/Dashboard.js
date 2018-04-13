@@ -37,23 +37,20 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = { addWorkoutVisible: false };
-    this.animatedValue = new Animated.Value(0)
+    this.animatedValue = new Animated.Value(0);
   }
 
   componentDidMount() {
     this.props.getQuote();
   }
 
-  animate () {
-    this.animatedValue.setValue(0)
-    Animated.timing(
-      this.animatedValue,
-      {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.ease
-      }
-    ).start()
+  animate() {
+    this.animatedValue.setValue(0);
+    Animated.timing(this.animatedValue, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.ease
+    }).start();
   }
 
   hideModal() {
@@ -64,33 +61,18 @@ class Dashboard extends React.Component {
     const marginTop = this.animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: [-1300, 0]
-    })
-    const opacity = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 1, 0]
-    })
-    const movingMargin = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 300, 0]
-    })
-    const textSize = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [18, 32, 18]
-    })
-    const rotateX = this.animatedValue.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: ['0deg', '180deg', '0deg']
-    })
+    });
     if (this.state.addWorkoutVisible) {
-      this.animate()
+      this.animate();
       return (
         <View style={styles.popupContainer}>
           <Animated.View
             style={{
               marginTop,
               height: 1,
-              width: 1}}>
-          </Animated.View>
+              width: 1
+            }}
+          />
           <TouchableOpacity
             onPress={() => {
               this.setState({
@@ -169,6 +151,14 @@ class Dashboard extends React.Component {
           <View>
             <CustomCalendarStrip />
           </View>
+          {this.props.workout.workouts.length === 0 ? (
+            <View style={styles.welcomeContainer}>
+              <Text style={styles.welcomeHeader}>Welcome!</Text>
+              <Text style={styles.welcomeText}>
+                Start your first workout by tapping the button below.
+              </Text>
+            </View>
+          ) : null}
           <View
             style={
               (globalStyles.columnContentContainer,
@@ -255,5 +245,8 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginLeft: 15,
     marginRight: 15
-  }
+  },
+  welcomeContainer: { height: 300, justifyContent: 'center' },
+  welcomeHeader: { fontSize: 28, textAlign: 'center' },
+  welcomeText: { fontSize: 16, textAlign: 'center', padding: 60 }
 });
