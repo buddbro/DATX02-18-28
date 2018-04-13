@@ -37,7 +37,8 @@ class Settings extends React.Component {
       weightText: '',
       newPasswordText: '',
       confirmPasswordText: '',
-      notifications: false
+      notifications: false,
+      errorMessage: 'hej'
     };
   }
 
@@ -56,14 +57,25 @@ class Settings extends React.Component {
     this.refs[component].focus();
   }
 
+  renderError() {
+    if (!this.state.error) {
+      return;
+    }
+    return (
+      <Text style={{ fontSize: 18, color: '#992314', textAlign: 'center' }}>
+        {this.state.error}
+      </Text>
+    );
+  }
+
   save() {
     const user = {
-      name: this.state.nameText,
+      name: this.state.nameText.trim(),
       email: this.state.emailText,
       age: this.state.ageText,
-      height: this.state.heightText,
-      weight: this.state.weightText,
-      notifications: this.state.notifications
+      //height: this.state.heightText,
+      //weight: this.state.weightText,
+      //notifications: this.state.notifications
     };
     if (
       this.state.newPasswordText.length >= 6 &&
@@ -71,13 +83,35 @@ class Settings extends React.Component {
     ) {
       user.password = this.state.newPasswordText;
     }
-
+    if(this.state.nameText.trim() == ''){ //No name
+      this.setState({
+        error: 'Name is required'
+      });
+    }else if(false){ //TODO Otillåten email
+      this.setState({
+        error: 'Invalid email'
+      });
+    }else if(this.state.newPasswordText.length<6 &&
+      this.state.newPasswordText.length != 0){ //För kort password
+      this.setState({
+        error: 'Password has to be at least 6 characters'
+      });
+    }else if(this.state.newPasswordText !== this.state.confirmPasswordText){ //Passwords matchar inte
+      this.setState({
+        error: 'The passwords need to match'
+      });
+    }else{ //Spara ändringar
     this.props.editUser(user);
-    this.props.navigation.dispatch(
+    this.setState({
+      error: 'Changes have been saved'
+    });
+    }
+
+    {/*this.props.navigation.dispatch(
       NavigationActions.NavigationActions.navigate({
         routeName: 'Dashboard'
       })
-    );
+    );*/}
   }
 
   render() {
@@ -246,6 +280,7 @@ class Settings extends React.Component {
               paddingTop: 10
             }}
           >
+            {this.renderError()}
             <TouchableOpacity
               style={globalStyles.saveButton}
               onPress={this.save.bind(this)}
@@ -377,5 +412,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#606060',
     fontSize: 15
+  },
+  errorMessage: {
+    fontSize: 18,
+    color: '#992314',
+    textAlign: 'center'
   }
 });
