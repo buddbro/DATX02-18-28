@@ -23,6 +23,11 @@ import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 
 export function chooseWorkout(id) {
+  if (id === -1) {
+    return {
+      type: CHOOSE_WORKOUT
+    };
+  }
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -32,15 +37,10 @@ export function chooseWorkout(id) {
         .then(({ data }) => {
           const exercises = data;
           const sets = {};
-          // axios
-          //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
-          //   .then(({ data }) => {
-          //     const sets = data;
           dispatch({
             type: CHOOSE_WORKOUT,
             payload: { exercises, sets, difficulty: data[0].difficulty }
           });
-          // });
         });
     });
   };

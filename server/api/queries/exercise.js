@@ -110,11 +110,11 @@ const editExercise = (req, res, next, db) => {
 };
 
 module.exports = {
+  addExerciseType,
+  countExercises,
+  deleteExerciseType,
+  editExercise,
   fetchExerciseDescription,
   fetchExerciseList,
-  fetchExerciseTypes,
-  addExerciseType,
-  deleteExerciseType,
-  countExercises,
-  editExercise
+  fetchExerciseTypes
 };

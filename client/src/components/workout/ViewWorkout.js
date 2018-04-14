@@ -23,15 +23,16 @@ import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
+  chooseWorkout,
   clearWorkout,
+  deleteWorkout,
   editWorkout,
   fetchWorkouts,
-  viewExercise,
-  deleteWorkout,
-  setDifficulty,
   saveNotes,
+  setColor,
+  setDifficulty,
   setExerciseListType,
-  setColor
+  viewExercise
 } from '../../actions';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
@@ -93,7 +94,7 @@ class ViewWorkout extends React.Component {
             this.props.deleteWorkout(this.props.id);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Dashboard'
+                routeName: this.props.parent
               })
             );
           }
@@ -188,7 +189,7 @@ class ViewWorkout extends React.Component {
             }}
             style={styles.saveDateButton}
           >
-            <Text style={styles.saveDateButtonText}>Save</Text>
+            <Text style={styles.saveDateButtonText}>OK</Text>
           </TouchableOpacity>
           <DatePickerIOS
             minimumDate={
@@ -237,6 +238,7 @@ class ViewWorkout extends React.Component {
       green: '#54F590',
       purple: '#BD5CF3'
     };
+
     return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
       return (
         <TouchableOpacity
@@ -250,6 +252,7 @@ class ViewWorkout extends React.Component {
           style={[
             styles.colorTag,
             {
+              borderWidth: color !== this.state.color ? 0 : 2,
               backgroundColor:
                 color !== this.state.color
                   ? inactiveColors[index]
@@ -262,11 +265,12 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    if (!(this.props.workout && this.props.workout.difficulty)) {
+    if (
+      !(this.props.workout && this.props.workout.difficulty) ||
+      this.props.loading
+    ) {
       return <View />;
     }
-
-    console.log('active state color: ', this.state.color);
 
     return (
       <KeyboardAwareScrollView
@@ -288,9 +292,10 @@ class ViewWorkout extends React.Component {
                 stop: ''
               });
               this.props.fetchWorkouts();
+              this.props.chooseWorkout(-1);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
+                  routeName: this.props.parent
                 })
               );
             }}
@@ -440,9 +445,9 @@ class ViewWorkout extends React.Component {
 
 const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
+
   const workout = workouts.filter(w => w.id === id)[0];
 
-  console.log(workout);
   if (!workout) {
     return {};
   }
@@ -451,12 +456,14 @@ const mapStateToProps = props => {
     id,
     workout,
     color: workout.color,
-    exercises
+    exercises,
+    parent: props.app.workoutParent
   };
 };
 
 export default connect(mapStateToProps, {
   clearWorkout,
+  chooseWorkout,
   editWorkout,
   fetchWorkouts,
   viewExercise,

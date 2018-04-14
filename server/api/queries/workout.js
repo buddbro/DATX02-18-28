@@ -230,28 +230,32 @@ const addWorkout = (req, res, next, db) => {
                 []
               );
 
-              const workouts = data.reduce((acc, next) => [...acc, id], []);
+              if (exercises.length > 0) {
+                const workouts = data.reduce((acc, next) => [...acc, id], []);
 
-              const values = workouts
-                .reduce(
-                  (acc, next) => {
-                    return {
-                      q: `${acc.q}, ($${acc.i++},$${acc.i++})`,
-                      i: acc.i
-                    };
-                  },
-                  { q: '', i: 1 }
-                )
-                .q.substring(2);
+                const values = workouts
+                  .reduce(
+                    (acc, next) => {
+                      return {
+                        q: `${acc.q}, ($${acc.i++},$${acc.i++})`,
+                        i: acc.i
+                      };
+                    },
+                    { q: '', i: 1 }
+                  )
+                  .q.substring(2);
 
-              db
-                .any(
-                  `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
-                  exercises
-                )
-                .then(function(data) {
-                  res.json({ id, title, date, difficulty, notes, start });
-                });
+                db
+                  .any(
+                    `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
+                    exercises
+                  )
+                  .then(function(data) {
+                    res.json({ id, title, date, difficulty, notes, start });
+                  });
+              } else {
+                res.json({ id, title, date, difficulty, notes, start });
+              }
             });
         }
       })
@@ -339,18 +343,18 @@ const addSetToExercise = (req, res, next, db) => {
 };
 
 module.exports = {
-  getWorkouts,
-  getWorkoutsForUser,
-  getCategoriesForWorkout,
-  getWorkoutWithId,
-  setDifficulty,
-  saveNotes,
-  setColor,
-  getSetsForExercise,
+  addExerciseToWorkout,
+  addSetToExercise,
   addWorkout,
+  deleteExerciseFromWorkout,
   deleteWorkout,
   editWorkout,
-  addExerciseToWorkout,
-  deleteExerciseFromWorkout,
-  addSetToExercise
+  getCategoriesForWorkout,
+  getSetsForExercise,
+  getWorkouts,
+  getWorkoutsForUser,
+  getWorkoutWithId,
+  saveNotes,
+  setColor,
+  setDifficulty
 };

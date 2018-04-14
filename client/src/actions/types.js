@@ -28,6 +28,7 @@ export const VIEW_SET = 'view_set';
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 export const GET_QUOTE = 'get_quote';
 export const SET_EXERCISE_LIST_TYPE = 'set_exercise_list_type';
+export const SET_WORKOUT_PARENT = 'set_workout_parent';
 
 // Schedules
 export const ADD_EXERCISE_TO_SCHEDULE = 'add_exercise_to_schedule';

@@ -12,12 +12,12 @@ import {
 import ExerciseCard from '../exercise/ExerciseCard';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
-import { chooseWorkout } from '../../actions';
+import { chooseWorkout, setWorkoutParent } from '../../actions';
 import Categories from './Categories';
 import RatingWrapper from '../utilities/RatingWrapper';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-class LatestWorkout extends React.Component {
+class WorkoutCard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -25,23 +25,19 @@ class LatestWorkout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.latestWorkout &&
-      nextProps.latestWorkout.id >= 0 &&
-      this.state.loading
-    ) {
-      this.props.chooseWorkout(nextProps.latestWorkout.id);
+    if (nextProps.workout && nextProps.workout.id >= 0 && this.state.loading) {
+      this.props.chooseWorkout(nextProps.workout.id);
       this.setState({ loading: false });
     }
   }
 
   convertTimeStamp() {
-    if (!this.props.latestWorkout.stop || !this.props.latestWorkout.start) {
+    if (!this.props.workout.stop || !this.props.workout.start) {
       return null;
     }
 
-    const start = new Date(`2000-01-01T${this.props.latestWorkout.start}:00`);
-    const stop = new Date(`2000-01-01T${this.props.latestWorkout.stop}:00`);
+    const start = new Date(`2000-01-01T${this.props.workout.start}:00`);
+    const stop = new Date(`2000-01-01T${this.props.workout.stop}:00`);
 
     return (stop.getTime() - start.getTime()) / 1000 / 60;
   }
@@ -57,9 +53,7 @@ class LatestWorkout extends React.Component {
             style={styles.icons}
           />
           <View style={styles.innerRectangle}>
-            <Text style={styles.timeStamp}>
-              {duration}
-            </Text>
+            <Text style={styles.timeStamp}>{duration}</Text>
             <Text style={styles.smallText}>minutes</Text>
           </View>
         </View>
@@ -79,22 +73,27 @@ class LatestWorkout extends React.Component {
       <AnimatedCircularProgress
         size={60}
         width={15}
-        fill={this.props.latestWorkout.difficulty * 20}
-        tintColor={tintColors[this.props.latestWorkout.difficulty - 1]}
+        fill={this.props.workout.difficulty * 20}
+        tintColor={tintColors[this.props.workout.difficulty - 1]}
         backgroundColor="#3d5875"
       />
     );
   }
 
   render() {
-    if (!this.props.latestWorkout) {
+    if (!this.props.workout) {
       return null;
     } else {
       return (
         <TouchableOpacity
           style={styles.accordionBody}
           onPress={() => {
-            this.props.chooseWorkout(this.props.latestWorkout.id);
+            if (this.props.callback) {
+              this.props.callback();
+            }
+
+            this.props.chooseWorkout(this.props.workout.id);
+            this.props.setWorkoutParent(this.props.parent);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
                 routeName: 'ViewWorkout'
@@ -105,10 +104,10 @@ class LatestWorkout extends React.Component {
           <View style={styles.workoutOuter}>
             <View style={styles.workoutHeader}>
               <Text style={styles.workoutTitle}>
-                {this.props.latestWorkout.title}
+                {this.props.workout.title}
               </Text>
               <Text style={styles.tinder}>
-                {this.props.latestWorkout.date.substring(0, 10)}
+                {this.props.workout.date.substring(0, 10)}
               </Text>
             </View>
             <Image
@@ -128,23 +127,18 @@ class LatestWorkout extends React.Component {
           </View>
 
           <View style={styles.rectangle}>
-            <Categories workoutId={this.props.latestWorkout.id} />
+            <Categories workoutId={this.props.workout.id} />
           </View>
         </TouchableOpacity>
       );
     }
   }
 }
-const mapStateToProps = ({ workout }) => {
-  const latestWorkout = workout.workouts[0];
-  const { exercises } = workout;
-  return {
-    latestWorkout,
-    exercises
-  };
-};
 
-export default connect(mapStateToProps, { chooseWorkout })(LatestWorkout);
+export default connect(null, {
+  chooseWorkout,
+  setWorkoutParent
+})(WorkoutCard);
 
 const styles = StyleSheet.create({
   workoutOuter: {
