@@ -158,7 +158,7 @@ export default (globalStyles = StyleSheet.create({
     color: '#7B7B7B'
   },
   textInputError: {
-    width: '80%',
+    width: '100%',
     height: 60,
     fontSize: 22,
     borderRadius: 1,
@@ -166,7 +166,7 @@ export default (globalStyles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#FFC5BA'
+    backgroundColor: '#FFC5BA',
   },
   titleInput: {},
   notes: {
