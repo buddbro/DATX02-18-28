@@ -114,28 +114,6 @@ class ProfileHeader extends React.Component {
               />
             </TouchableOpacity>
           </View>
-
-          {/* <Svg height="50" width={width}>
-            <Svg.Ellipse
-              cx={width / 2}
-              cy="5"
-              rx={width / 1.5}
-              ry="30"
-              stroke="#7ad9c6"
-              strokeWidth="0"
-              fill="#7ad9c6"
-            /> */}
-
-          {/* <Image
-              source={require('../../../assets/down-arrow.png')}
-              style={{
-                marginTop: 5,
-                width: 22,
-                height: 22,
-                alignSelf: 'center'
-              }}
-            /> */}
-          {/* </Svg> */}
         </View>
       </Animated.View>
     );
@@ -154,13 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#fff',
     textAlign: 'center'
-  },
-  tagline: {
-    width: 300,
-    marginTop: 5,
-    fontSize: 14,
-    color: '#fff',
-    textAlign: 'left'
   }
 });
 

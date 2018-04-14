@@ -182,10 +182,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10
   },
-  innerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
   timeStamp: {
     color: 'gray',
     fontSize: 24,
@@ -193,57 +189,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5
   },
-  timeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 20
-  },
-  addWorkout: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#b9baf1',
-    backgroundColor: 'white'
-  },
-  menuItem: {
-    color: '#b9baf1',
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-  container: {
-    marginBottom: 10,
-    width: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5
-  },
-  accordionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: 80,
-    borderRadius: 5
-  },
   accordionBody: {
     flexDirection: 'column',
     width: '100%',
     borderColor: '#b9baf1',
     marginBottom: 20,
     backgroundColor: '#E2FBF6'
-  },
-  accordionTitle: {
-    fontWeight: 'bold',
-    fontSize: 42,
-    color: 'white',
-    textAlign: 'center'
   },
   workoutHeader: {
     paddingBottom: 5,
@@ -262,35 +213,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 20
-  },
-  exercises: {
-    padding: 5
-  },
-  continueButton: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 10,
-    marginTop: 5,
-    backgroundColor: '#53F2D3'
-  },
-  continueText: {
-    fontSize: 16,
-    color: 'gray',
-    textAlign: 'center',
-    fontWeight: '200',
-    paddingBottom: 10
-  },
-  workoutTraitText: {
-    fontSize: 18,
-    color: 'gray'
-  },
-  difficultyStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 20
   }
 });

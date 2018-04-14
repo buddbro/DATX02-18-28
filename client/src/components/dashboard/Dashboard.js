@@ -242,22 +242,6 @@ const styles = StyleSheet.create({
     zIndex: 200,
     alignSelf: 'stretch'
   },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 60,
-    backgroundColor: '#b9baf1',
-    marginBottom: 10
-  },
-  menuItemText: {
-    color: 'white',
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    marginLeft: 15,
-    marginRight: 15
-  },
   welcomeContainer: { height: 300, justifyContent: 'center' },
   welcomeHeader: { fontSize: 28, textAlign: 'center' },
   welcomeText: { fontSize: 16, textAlign: 'center', padding: 60 }
