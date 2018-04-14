@@ -44,7 +44,9 @@ class Settings extends React.Component {
       newPasswordText: '',
       confirmPasswordText: '',
       notifications: false,
-      color: '#992314'
+      errorColor: '#992314',
+      fieldStyles: {name:globalStyles.textInput, email:globalStyles.textInput,
+        newPassword:globalStyles.textInput, confPassword:globalStyles.textInput}
     };
   }
 
@@ -68,7 +70,7 @@ class Settings extends React.Component {
       return;
     }
     return (
-      <Text style={{ fontSize: 18, color: this.state.color, textAlign: 'center' }}>
+      <Text style={{ fontSize: 18, color: this.state.errorColor, textAlign: 'center' }}>
         {this.state.error}
       </Text>
     );
@@ -85,7 +87,7 @@ class Settings extends React.Component {
     };
     const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
     this.setState({
-      color: '#992314'
+      errorColor: '#992314',
     });
     if (
       this.state.newPasswordText.length >= 6 &&
@@ -95,36 +97,38 @@ class Settings extends React.Component {
     }
     if(this.state.nameText.trim() == ''){ //No name
       this.setState({
+        fieldStyles: {name:globalStyles.textInputError, email:globalStyles.textInput,
+          newPassword:globalStyles.textInput, confPassword:globalStyles.textInput},
         error: 'Name is required'
       });
-    }else if(!emailRegex.test(this.state.emailText)){ //Otillåten email !emailRegex.test(this.state.emailText)
+    }else if(!emailRegex.test(this.state.emailText)){ //Otillåten email
       this.setState({
+        fieldStyles: {name:globalStyles.textInput, email:globalStyles.textInputError,
+          newPassword:globalStyles.textInput, confPassword:globalStyles.textInput},
         error: 'Please enter a valid email'
       });
     }else if(this.state.newPasswordText.length<6 &&
       this.state.newPasswordText.length != 0){ //För kort password
       this.setState({
+        fieldStyles: {name:globalStyles.textInput, email:globalStyles.textInput,
+          newPassword:globalStyles.textInputError, confPassword:globalStyles.textInput},
         error: 'Password has to be at least 6 characters'
       });
     }else if(this.state.newPasswordText !== this.state.confirmPasswordText){ //Passwords matchar inte
       this.setState({
+        fieldStyles: {name:globalStyles.textInput, email:globalStyles.textInput,
+          newPassword:globalStyles.textInputError, confPassword:globalStyles.textInputError},
         error: 'The passwords need to match'
       });
     }else{ //Spara ändringar
     this.props.editUser(user);
     this.setState({
-      color: '#92D722'
-    });
-    this.setState({
+      fieldStyles: {name:globalStyles.textInput, email:globalStyles.textInput,
+        newPassword:globalStyles.textInput, confPassword:globalStyles.textInput},
+      errorColor: '#92D722',
       error: 'Saved changes!'
     });
     }
-
-    {/*this.props.navigation.dispatch(
-      NavigationActions.NavigationActions.navigate({
-        routeName: 'Dashboard'
-      })
-    );*/}
   }
 
   render() {
@@ -179,47 +183,8 @@ class Settings extends React.Component {
                 onChangeText={nameText => this.setState({ nameText })}
                 value={this.state.nameText}
                 autoCorrect={false}
-                style={globalStyles.textInput}
+                style={this.state.fieldStyles.name}
               />
-              {/*
-            <View style={globalStyles.threeColumnContainer}>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={globalStyles.traitTitle}>Age</Text>
-                <TextInput
-                  ref="age"
-                  onFocus={() => this.focus('age')}
-                  keyboardType="numeric"
-                  onChangeText={ageText => this.setState({ ageText })}
-                  value={this.state.ageText}
-                  style={globalStyles.numberInput}
-                />
-              </View>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={globalStyles.traitTitle}>Height</Text>
-                <TextInput
-                  ref="height"
-                  onFocus={() => this.focus('height')}
-                  keyboardType="numeric"
-                  onChangeText={heightText => this.setState({ heightText })}
-                  value={this.state.heightText}
-                  style={globalStyles.numberInput}
-                />
-              </View>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={globalStyles.traitTitle}>Weight</Text>
-                <TextInput
-                  ref="weight"
-                  onFocus={() => this.focus('weight')}
-                  keyboardType="numeric"
-                  onChangeText={weightText => this.setState({ weightText })}
-                  value={this.state.weightText}
-                  style={globalStyles.numberInput}
-                />
-              </View>
-            </View>
-          </View>
-
-            <View style={styles.twoColumnContainer} />*/}
             </View>
             <View
               style={
@@ -240,7 +205,7 @@ class Settings extends React.Component {
                 value={this.state.emailText}
                 autoCapitalize="none"
                 autoCorrect={false}
-                style={globalStyles.textInput}
+                style={this.state.fieldStyles.email}
               />
               <Text style={globalStyles.traitTitle}>New password</Text>
               <TextInput
@@ -252,7 +217,7 @@ class Settings extends React.Component {
                   this.setState({ newPasswordText })
                 }
                 value={this.state.newPasswordText}
-                style={globalStyles.textInput}
+                style={this.state.fieldStyles.newPassword}
               />
               <Text style={globalStyles.traitTitle}>Confirm password</Text>
               <TextInput
@@ -264,7 +229,7 @@ class Settings extends React.Component {
                   this.setState({ confirmPasswordText })
                 }
                 value={this.state.confirmPasswordText}
-                style={globalStyles.textInput}
+                style={this.state.fieldStyles.confPassword}
               />
 
               {/*<View
@@ -329,25 +294,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  subHeaderContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: '#6669cb',
-    borderBottomEndRadius: 0,
-    borderBottomStartRadius: 0,
-    marginTop: 5,
-    marginLeft: 15,
-    marginRight: 15,
-    borderRadius: 8,
-    borderWidth: 5,
-    borderColor: '#6669cb'
-  },
-  twoColumnContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: '15%',
-    marginRight: '15%'
-  },
   outerTextContainer: {
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -357,58 +303,9 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingBottom: 13
   },
-  innerTextContainer: {
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    marginTop: 3,
-    marginBottom: 5,
-    paddingLeft: 5,
-    paddingTop: 5,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#fff',
-    marginLeft: 8,
-    marginRight: 8,
-    height: 30
-  },
-  smallInnerTextContainer: {
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    marginTop: 3,
-    marginBottom: 5,
-    paddingLeft: 5,
-    paddingTop: 5,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#fff',
-    width: 85,
-    height: 30
-  },
-  button: {
-    width: 160,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15,
-    backgroundColor: '#6669cb',
-    borderRadius: 8,
-    borderWidth: 5,
-    borderColor: '#6669cb'
-  },
   buttontext: {
     color: '#fff',
     fontSize: 23
-  },
-  heading: {
-    fontSize: 30,
-    color: '#fff'
-  },
-  subHeading: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold'
   },
   biggerStandardText: {
     marginLeft: 8,
@@ -421,14 +318,4 @@ const styles = StyleSheet.create({
     color: '#606060',
     fontSize: 15
   },
-  standardTextCentered: {
-    textAlign: 'center',
-    color: '#606060',
-    fontSize: 15
-  },
-  errorMessage: {
-    fontSize: 18,
-    color: '#992314',
-    textAlign: 'center'
-  }
 });
