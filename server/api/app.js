@@ -89,6 +89,7 @@ app.delete(
   verifyToken,
   db.deleteExerciseFromWorkout
 );
+app.delete('/api/workouts/sets/:id', verifyToken, db.deleteSet);
 app.get('/api/workouts/exercise/:id/sets', verifyToken, db.getSetsForExercise);
 app.post('/api/workouts/exercise/:id', verifyToken, db.addSetToExercise);
 app.get('/api/exercises', db.fetchExerciseList);
