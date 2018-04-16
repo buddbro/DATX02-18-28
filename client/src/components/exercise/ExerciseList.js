@@ -10,7 +10,13 @@ import {
   Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addExerciseToWorkout, addExerciseToSchedule } from '../../actions';
+import {
+  addExerciseToSchedule,
+  addExerciseToWorkout,
+  getSetsForExercise,
+  viewExercise,
+  viewSet
+} from '../../actions';
 import NavigationActions from 'react-navigation';
 
 import ExerciseListItem from './ExerciseListItem';
@@ -23,6 +29,7 @@ class ExerciseList extends React.Component {
     super(props);
 
     this.state = {
+      exerciseTypeId: 0,
       exerciseAdded: false,
       workoutExercises: []
     };
@@ -36,12 +43,25 @@ class ExerciseList extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (
       this.props.workoutExercises.length > 0 &&
-      nextProps.workoutExercises.length > this.props.workoutExercises.length &&
-      !this.state.exerciseAdded
+      nextProps.workoutExercises.length > this.props.workoutExercises.length
     ) {
-      console.log('Exercise added');
+      if (this.props.type === 'workout') {
+        const newExercise =
+          nextProps.workoutExercises[nextProps.workoutExercises.length - 1];
 
-      this.setState({ exerciseAdded: true });
+        this.props.viewExercise(
+          newExercise.title,
+          newExercise.id,
+          newExercise.exercise_type_id
+        );
+        this.props.navigation.dispatch(
+          NavigationActions.NavigationActions.navigate({
+            routeName: 'ViewExercise'
+          })
+        );
+        this.props.getSetsForExercise(newExercise.id);
+        this.props.viewSet(newExercise.id);
+      }
     }
   }
 
@@ -59,22 +79,12 @@ class ExerciseList extends React.Component {
       return [...acc, { data: exerciseList[next], title: next }];
     }, []);
 
-    // if (this.state.exerciseAdded) {
-    //   console.log(
-    //     this.props.workoutExercises[this.props.workoutExercises.length - 1]
-    //   );
-    // }
-
     let callback = () => {};
     switch (this.props.type) {
       case 'workout':
         callback = item => {
           this.props.addExerciseToWorkout(this.props.workoutId, item.id);
-          this.props.navigation.dispatch(
-            NavigationActions.NavigationActions.navigate({
-              routeName: 'ViewWorkout'
-            })
-          );
+          this.setState({ exerciseTypeId: item.id });
         };
         break;
       case 'schedule':
@@ -145,8 +155,11 @@ const mapStateToProps = ({ exercises, workout, schedules, app }) => {
 };
 
 export default connect(mapStateToProps, {
+  addExerciseToSchedule,
   addExerciseToWorkout,
-  addExerciseToSchedule
+  getSetsForExercise,
+  viewExercise,
+  viewSet
 })(ExerciseList);
 
 const styles = StyleSheet.create({
