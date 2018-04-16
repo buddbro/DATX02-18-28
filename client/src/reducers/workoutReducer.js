@@ -1,20 +1,21 @@
 import {
-  CHOOSE_WORKOUT,
-  FETCH_WORKOUTS,
-  CLEAR_WORKOUT,
-  CLEAR_EXERCISE,
-  EDIT_WORKOUT,
-  ADD_WORKOUT,
-  ADD_WORKOUT_FROM_SCHEDULE,
-  DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
-  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
+  ADD_WORKOUT_FROM_SCHEDULE,
+  ADD_WORKOUT,
+  CHOOSE_WORKOUT,
+  CLEAR_EXERCISE,
+  CLEAR_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
+  DELETE_SET,
+  DELETE_WORKOUT,
+  EDIT_WORKOUT,
+  FETCH_WORKOUTS,
   GET_SETS_FOR_EXERCISE,
-  VIEW_EXERCISE,
-  VIEW_SET,
+  SET_COLOR,
   SET_DIFFICULTY,
-  SET_COLOR
+  VIEW_EXERCISE,
+  VIEW_SET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -133,6 +134,18 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         workouts: state.workouts.filter(
           workout => workout.id !== action.payload
         )
+      };
+    case DELETE_SET:
+      const setsWithoutDeleted = [];
+      state.sets.map(set => {
+        if (set.id !== action.payload) {
+          setsWithoutDeleted.push(set);
+        }
+      });
+
+      return {
+        ...state,
+        sets: setsWithoutDeleted
       };
     case CLEAR_WORKOUT:
       return {

@@ -1,21 +1,22 @@
 import {
-  ADD_WORKOUT,
-  DELETE_WORKOUT,
-  CHOOSE_WORKOUT,
-  FETCH_WORKOUTS,
-  EDIT_WORKOUT,
-  SAVE_WORKOUT,
-  CLEAR_WORKOUT,
-  CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
-  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
+  ADD_WORKOUT,
+  CHOOSE_WORKOUT,
+  CLEAR_EXERCISE,
+  CLEAR_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
+  DELETE_WORKOUT,
+  EDIT_WORKOUT,
+  DELETE_SET,
+  FETCH_WORKOUTS,
   GET_SETS_FOR_EXERCISE,
-  VIEW_SET,
-  VIEW_EXERCISE,
-  SET_DIFFICULTY,
   SAVE_NOTES,
-  SET_COLOR
+  SAVE_WORKOUT,
+  SET_COLOR,
+  SET_DIFFICULTY,
+  VIEW_EXERCISE,
+  VIEW_SET
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -121,6 +122,24 @@ export function deleteWorkout(workout) {
           dispatch({
             type: DELETE_WORKOUT,
             payload: workout
+          });
+        });
+    });
+  };
+}
+
+export function deleteSet(set) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .delete(`https://getpushapp.com/api/workouts/sets/${set}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(() => {
+          console.log(set);
+          dispatch({
+            type: DELETE_SET,
+            payload: set
           });
         });
     });

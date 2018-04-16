@@ -19,6 +19,32 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class ExerciseList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      exerciseAdded: false,
+      workoutExercises: []
+    };
+  }
+
+  componentDidMount() {
+    const { workoutExercises } = this.props;
+    this.setState({ workoutExercises });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.workoutExercises.length > 0 &&
+      nextProps.workoutExercises.length > this.props.workoutExercises.length &&
+      !this.state.exerciseAdded
+    ) {
+      console.log('Exercise added');
+
+      this.setState({ exerciseAdded: true });
+    }
+  }
+
   renderSectionList() {
     // Reduce exercises returned from database to build the datastructure
     // required for the SectionList component.
@@ -32,6 +58,12 @@ class ExerciseList extends React.Component {
     ).reduce((acc, next) => {
       return [...acc, { data: exerciseList[next], title: next }];
     }, []);
+
+    // if (this.state.exerciseAdded) {
+    //   console.log(
+    //     this.props.workoutExercises[this.props.workoutExercises.length - 1]
+    //   );
+    // }
 
     let callback = () => {};
     switch (this.props.type) {
@@ -106,6 +138,7 @@ const mapStateToProps = ({ exercises, workout, schedules, app }) => {
   return {
     exercises: exercises.list,
     workoutId: workout.id,
+    workoutExercises: workout.exercises,
     active: schedules.active,
     type: app.exerciseListType
   };

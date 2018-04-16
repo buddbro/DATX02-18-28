@@ -12,16 +12,18 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  getSetsForExercise,
-  viewSet,
   addSetToExercise,
-  deleteExerciseFromWorkout,
-  getExerciseDescription,
   clearExercise,
-  readInstruction
+  deleteExerciseFromWorkout,
+  deleteSet,
+  getExerciseDescription,
+  getSetsForExercise,
+  readInstruction,
+  viewSet
 } from '../../actions';
 import NavigationActions from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Swipeout from 'react-native-swipeout';
 
 // import { BarChart } from 'react-native-svg-charts';
 
@@ -201,20 +203,50 @@ class ViewExercise extends React.Component {
                 keyExtractor={(item, index) => `${item.id}${this.props.id}`}
                 renderItem={({ item, index }) => {
                   const key = `${this.props.id}${item.id}`;
+                  const button = [
+                    {
+                      text: 'Delete',
+                      backgroundColor: '#FD6A6E',
+                      onPress: () => {
+                        this.props.deleteSet(item.id);
+                      },
+                      component: (
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                          <Text
+                            style={{
+                              color: '#fff',
+                              fontSize: 16,
+                              textAlign: 'center'
+                            }}
+                          >
+                            Delete
+                          </Text>
+                        </View>
+                      )
+                    }
+                  ];
                   return (
-                    <ExerciseSet
-                      id={item.id}
-                      index={index}
-                      reps={
-                        item.id === -1 ? this.state.reps : String(item.reps)
-                      }
-                      weight={
-                        item.id === -1 ? this.state.weight : String(item.weight)
-                      }
-                      exerciseId={this.props.id}
-                      setReps={this.setReps.bind(this)}
-                      setWeight={this.setWeight.bind(this)}
-                    />
+                    <Swipeout
+                      right={button}
+                      backgroundColor="#FD6A6E"
+                      disabled={item.id === -1}
+                    >
+                      <ExerciseSet
+                        id={item.id}
+                        index={index}
+                        reps={
+                          item.id === -1 ? this.state.reps : String(item.reps)
+                        }
+                        weight={
+                          item.id === -1
+                            ? this.state.weight
+                            : String(item.weight)
+                        }
+                        exerciseId={this.props.id}
+                        setReps={this.setReps.bind(this)}
+                        setWeight={this.setWeight.bind(this)}
+                      />
+                    </Swipeout>
                   );
                 }}
               />
@@ -298,12 +330,13 @@ const mapStateToProps = ({ user, workout, exercises }) => {
 
 export default connect(mapStateToProps, {
   getSetsForExercise,
-  viewSet,
   addSetToExercise,
-  getExerciseDescription,
   clearExercise,
   deleteExerciseFromWorkout,
-  readInstruction
+  deleteSet,
+  getExerciseDescription,
+  readInstruction,
+  viewSet
 })(ViewExercise);
 
 const styles = StyleSheet.create({

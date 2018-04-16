@@ -40,26 +40,36 @@ class ExerciseSet extends React.Component {
             SET {this.props.index + 1}
           </Text>
         </View>
-        <TextInput
-          ref="reps"
-          onFocus={() => this.focus('reps')}
-          placeholder="Reps"
-          onChangeText={reps => this.props.setReps(String(reps))}
-          style={styles.textbox}
-          value={this.props.reps}
-          editable={this.props.id === -1}
-          keyboardType="numeric"
-        />
-        <TextInput
-          ref="weight"
-          onFocus={() => this.focus('weight')}
-          placeholder="Weight"
-          onChangeText={weight => this.props.setWeight(String(weight))}
-          style={styles.textbox}
-          value={this.props.weight}
-          editable={this.props.id === -1}
-          keyboardType="numeric"
-        />
+        {this.props.id !== -1 ? (
+          <View style={styles.inputContainer}>
+            <Text style={styles.textbox}>{this.props.reps}</Text>
+            <Text style={styles.textbox}>{this.props.weight}</Text>
+          </View>
+        ) : (
+          <View style={styles.inputContainer}>
+            <TextInput
+              ref="reps"
+              onFocus={() => this.focus('reps')}
+              placeholder="Reps"
+              onChangeText={reps => this.props.setReps(String(reps))}
+              style={styles.textbox}
+              value={this.props.reps}
+              editable={this.props.id === -1}
+              keyboardType="numeric"
+            />
+            <TextInput
+              ref="weight"
+              onFocus={() => this.focus('weight')}
+              placeholder="Weight"
+              onChangeText={weight => this.props.setWeight(String(weight))}
+              style={styles.textbox}
+              value={this.props.weight}
+              editable={this.props.id === -1}
+              keyboardType="numeric"
+            />
+          </View>
+        )}
+
         {/*  <TouchableOpacity
           onPress={() => {
 
@@ -89,6 +99,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row'
   },
   textbox: {
     color: '#505050',
