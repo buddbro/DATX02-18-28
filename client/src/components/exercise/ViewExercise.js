@@ -140,8 +140,9 @@ class ViewExercise extends React.Component {
           <BackArrow
             color="white"
             callback={() => {
+              this.addSetToExercise();
               this.props.clearExercise();
-              this.setState({ reps: '', sets: '' });
+              this.setState({ reps: '', weight: '' });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
