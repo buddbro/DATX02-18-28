@@ -320,10 +320,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#6669cb'
+    borderColor: '#51C1AB'
   },
   deleteButton: {
     width: '70%',
@@ -333,10 +333,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: '#cb6669',
+    backgroundColor: '#FD6A6E',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#cb6669'
+    borderColor: '#FD6A6E'
   },
   setsContainer: {
     backgroundColor: '#fff',
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     paddingRight: 25,

@@ -32,11 +32,11 @@ class ExerciseSet extends React.Component {
   }
 
   render() {
-    const backgroundColor = this.props.index % 2 === 0 ? '#d3d4f7' : '#c6c6f4';
+    const backgroundColor = this.props.index % 2 === 0 ? '#AEEEE1' : '#98e0d2';
     return (
       <View style={[styles.container, { backgroundColor }]}>
         <View style={{ width: '20%' }}>
-          <Text style={{ textAlign: 'center', color: '#6669cb' }}>
+          <Text style={{ textAlign: 'center', color: '#505050' }}>
             SET {this.props.index + 1}
           </Text>
         </View>
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textbox: {
+    color: '#505050',
     flex: 1,
     margin: 10,
     padding: 10,
