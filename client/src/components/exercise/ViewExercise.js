@@ -311,16 +311,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%'
   },
-  addSetButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    width: '104%',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#8b8ddf',
-    marginBottom: 15
-  },
   addButton: {
     width: '70%',
     paddingLeft: 10,
@@ -346,11 +336,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 5,
     borderColor: '#cb6669'
-  },
-  exerciseTitle: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: 'bold'
   },
   setsContainer: {
     backgroundColor: '#fff',
@@ -378,11 +363,6 @@ const styles = StyleSheet.create({
   },
   reps: {
     width: '40%'
-  },
-  instructions: {
-    fontWeight: '200',
-    fontSize: 18,
-    color: '#7B7B7B'
   },
   popup: {
     position: 'absolute',

@@ -48,7 +48,7 @@ class WorkoutHistory extends React.Component {
                 workout={workout}
                 navigation={this.props.navigation}
               />
-              <View style={styles.separator} />
+              <View/>
             </View>
           )}
         </ScrollView>
@@ -73,17 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: 'white'
   },
-  headline: {
-    fontSize: 32,
-    color: 'gray'
-  },
-  headlineSmall: {
-    fontSize: 24,
-    color: '#b9baf1',
-    fontWeight: '200',
-    marginRight: 10
-  },
-  item: { marginBottom: 20 },
-  text: {},
-  separator: {}
+  item: {
+    marginBottom: 20
+  }
 });

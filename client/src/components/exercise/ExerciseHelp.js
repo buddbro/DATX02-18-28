@@ -76,19 +76,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5
   },
-  headertop: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
   title: {
     marginTop: 10,
     color: '#fff',
     fontSize: 32,
     textAlign: 'center'
-  },
-  headerMenu: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
   },
   body: {
     paddingTop: 15,

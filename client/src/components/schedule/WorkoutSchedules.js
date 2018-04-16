@@ -141,37 +141,5 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     color: 'white'
-  },
-  headline: {
-    fontSize: 32,
-    color: '#b9baf1'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    height: 200
-  },
-  innerContainer: {
-    alignItems: 'center',
-    backgroundColor: '#81c1ab'
-  },
-  textInput: {
-    height: 40,
-    width: 200,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 3,
-    margin: 5,
-    color: '#7B7B7B'
   }
 });

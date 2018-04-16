@@ -379,7 +379,6 @@ class ViewWorkout extends React.Component {
           <View style={styles.exercisesContainer}>
             <Text style={styles.exercisesTitle}>Exercises</Text>
             <FlatList
-              style={styles.exerciseListStyle}
               data={this.props.exercises}
               keyExtractor={(item, index) => `exercise${item.id}`}
               renderItem={({ item }) => {
@@ -400,7 +399,7 @@ class ViewWorkout extends React.Component {
           </View>
           <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Difficulty</Text>
-            <View style={styles.ratingStyle}>
+            <View>
               <RatingWrapper
                 rating={this.props.workout.difficulty}
                 editable
@@ -504,23 +503,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#d33'
   },
-  nameTextStyle: {
-    margin: 25,
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6669CB'
-  },
-  category: {},
   addExerciseTitle: {
     color: '#8b8ddf',
     fontSize: 24,
     fontWeight: 'bold'
-  },
-  categoriesText: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 15,
-    marginLeft: 10
   },
   addExerciseItem: {
     alignItems: 'center',
@@ -545,7 +531,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
-  exerciseListStyle: {},
   inputField: {
     height: 70,
     fontSize: 32,
@@ -597,22 +582,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 15
   },
-
-  difficulty: {
-    flexDirection: 'row'
-  },
-  ratingStyle: {},
   difficultyText: {
     color: '#8b8ddf'
-  },
-  notes: {
-    height: 80,
-    padding: 3,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    borderColor: '#aaa',
-    borderRadius: 3,
-    borderWidth: 1
   }
 });

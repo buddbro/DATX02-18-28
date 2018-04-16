@@ -99,9 +99,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: '#fff',
     width: '40%'
-  },
-  multiple: {
-    flex: 1,
-    fontWeight: 'bold'
   }
 });

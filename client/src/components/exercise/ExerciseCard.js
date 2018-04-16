@@ -104,14 +104,6 @@ export default connect(mapStateToProps, {
 })(ExerciseCard);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 3,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    backgroundColor: '#aeeee1'
-  },
   accordionHeader: {
     display: 'flex',
     flex: 1
@@ -134,17 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#aeeee1',
     paddingBottom: 5,
     marginBottom: 5
-  },
-  addSetButton: {
-    backgroundColor: '#484bb4',
-    margin: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 40,
-    borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10
   },
   backarrow: {
     width: 10,
