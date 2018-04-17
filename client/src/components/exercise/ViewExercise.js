@@ -166,8 +166,9 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
+
+        <KeyboardAwareScrollView //TODO
+          style={{ backgroundColor: '#fff', paddingBottom: 35 }}
           contentContainerStyle={styles.container}
           scrollEnabled={true}
           extraHeight={150}
@@ -251,29 +252,9 @@ class ViewExercise extends React.Component {
                 }}
               />
             </View>
-
-            {/*        <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
-          >
-            <Text
-              style={{
-                marginLeft: 15,
-                marginTop: 6,
-                marginBottom: 15,
-                color: '#444',
-                fontSize: 18
-              }}
-            >
-              Statistics
-            </Text>
-            <BarChart
-              style={{ height: 200 }}
-              data={statisticsData}
-              contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
-            />
-          </View> */}
           </View>
         </KeyboardAwareScrollView>
+
         <View
           style={{
             justifyContent: 'center',
@@ -340,6 +321,10 @@ export default connect(mapStateToProps, {
 })(ViewExercise);
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    //paddingBottom: 500
+    // height: '100%'
+  },
   container: {
     flexDirection: 'column',
     backgroundColor: '#fff',
