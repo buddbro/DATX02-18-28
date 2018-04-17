@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
     color: '#d33'
   },
   addExerciseTitle: {
-    color: '#8b8ddf',
+    color: '#fff',
     fontSize: 24,
     fontWeight: 'bold'
   },
@@ -550,9 +550,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 60,
     width: '100%',
+    backgroundColor: '#8b8ddf',
     borderWidth: 1,
-    borderColor: '#8b8ddf',
-    marginBottom: 15
+    borderColor: '#2E31A3',
+    marginBottom: 0,
   },
   saveDateButton: {
     alignItems: 'center',
