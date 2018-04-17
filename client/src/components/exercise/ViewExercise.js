@@ -181,21 +181,9 @@ class ViewExercise extends React.Component {
                   <Text style={styles.setNumber}>#</Text>
                 </View>
 
-                <View style={styles.sets}>
-                  <Text
-                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                  >
-                    Reps
-                  </Text>
-                </View>
+                <View style={styles.sets} />
 
-                <View style={styles.reps}>
-                  <Text
-                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                  >
-                    Weight (kg)
-                  </Text>
-                </View>
+                <View style={styles.reps} />
               </View>
 
               <FlatList
@@ -358,7 +346,7 @@ const styles = StyleSheet.create({
   },
   setsContainer: {
     backgroundColor: '#fff',
-    margin: 10,
+    marginTop: 10,
     borderRadius: 3
   },
   singleSetContainer: {

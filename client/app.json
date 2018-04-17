@@ -10,7 +10,8 @@
       "bundleIdentifier": "com.carlssonfoto.mcp.getpushapp"
     },
     "android": {
-      "package": "com.getpushapp.v2"
+      "package": "com.getpushapp.v2",
+      "versionCode": 2
     }
   }
 }

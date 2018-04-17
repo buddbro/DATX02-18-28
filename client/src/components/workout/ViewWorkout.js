@@ -551,9 +551,9 @@ const styles = StyleSheet.create({
     height: 60,
     width: '100%',
     backgroundColor: '#8b8ddf',
-    borderWidth: 1,
+    borderTopWidth: 1,
     borderColor: '#2E31A3',
-    marginBottom: 0,
+    marginBottom: 0
   },
   saveDateButton: {
     alignItems: 'center',

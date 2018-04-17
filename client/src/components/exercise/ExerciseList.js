@@ -42,26 +42,24 @@ class ExerciseList extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.workoutExercises.length > 0 &&
+      this.props.type === 'workout' &&
       nextProps.workoutExercises.length > this.props.workoutExercises.length
     ) {
-      if (this.props.type === 'workout') {
-        const newExercise =
-          nextProps.workoutExercises[nextProps.workoutExercises.length - 1];
+      const newExercise =
+        nextProps.workoutExercises[nextProps.workoutExercises.length - 1];
 
-        this.props.viewExercise(
-          newExercise.title,
-          newExercise.id,
-          newExercise.exercise_type_id
-        );
-        this.props.navigation.dispatch(
-          NavigationActions.NavigationActions.navigate({
-            routeName: 'ViewExercise'
-          })
-        );
-        this.props.getSetsForExercise(newExercise.id);
-        this.props.viewSet(newExercise.id);
-      }
+      this.props.viewExercise(
+        newExercise.title,
+        newExercise.id,
+        newExercise.exercise_type_id
+      );
+      this.props.navigation.dispatch(
+        NavigationActions.NavigationActions.navigate({
+          routeName: 'ViewExercise'
+        })
+      );
+      this.props.getSetsForExercise(newExercise.id);
+      this.props.viewSet(newExercise.id);
     }
   }
 
