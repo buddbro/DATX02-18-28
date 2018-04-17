@@ -105,8 +105,9 @@ class Achievements extends React.Component {
         <AchievementCell
           achievement={achievement}
           showAchievement={this.showAchievement.bind(this)}
-          image={images[achievement.image][achievement.level]}
           key={achievement.id}
+          achievements={this.props.achievements}
+
         />
       );
     });
@@ -127,6 +128,7 @@ class Achievements extends React.Component {
           <Text style={globalStyles.headerTitle}>Achievements</Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
+        <Text>{images[0]}</Text>
         <ScrollView>
           <TouchableOpacity
             onPress={() => {
