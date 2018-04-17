@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
   workoutDate: {
     marginLeft: 15,
     marginTop: 8,
-    color: '#7B7B7B',
+    color: '#505050',
     fontSize: 32,
     fontWeight: '200',
     alignSelf: 'center'
@@ -560,14 +560,14 @@ const styles = StyleSheet.create({
   },
   workoutTimeTitle: {
     marginTop: 8,
-    color: '#7B7B7B',
+    color: '#505050',
     fontSize: 18,
     fontWeight: '200',
     alignSelf: 'center'
   },
   workoutTime: {
     marginTop: 8,
-    color: '#7B7B7B',
+    color: '#505050',
     fontSize: 24,
     fontWeight: '600',
     alignSelf: 'center'
