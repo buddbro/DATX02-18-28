@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { months, getDate } = require('../utilities');
 
 const getWorkouts = (req, res, next, db) => {
@@ -20,18 +21,24 @@ const getWorkoutsForUser = (req, res, next, db) => {
     .then(function(data) {
       data.map(d => {
         if (d.start) {
-          const startTime = new Date(
-            new Date(d.start).getTime() + 60 * 60 * 1000
-          )
-            .toString()
-            .substring(16, 21);
-          d.start = startTime;
+          // const startTime = new Date(
+          //   new Date(d.start).getTime() + 60 * 60 * 1000
+          // )
+          //   .toString()
+          //   .substring(16, 21);
+          // d.start = startTime;
+          d.start = moment(d.start)
+            .add(1, 'h')
+            .format('HH:mm');
         }
         if (d.stop) {
-          const stopTime = new Date(new Date(d.stop).getTime() + 60 * 60 * 1000)
-            .toString()
-            .substring(16, 21);
-          d.stop = stopTime;
+          // const stopTime = new Date(new Date(d.stop).getTime() + 60 * 60 * 1000)
+          //   .toString()
+          //   .substring(16, 21);
+          // d.stop = stopTime;
+          d.stop = moment(d.stop)
+            .add(1, 'h')
+            .format('HH:mm');
         }
       });
       res.json(data);
@@ -209,15 +216,23 @@ const addWorkout = (req, res, next, db) => {
   };
 
   titleGenerator().then(title => {
+    const start = new Date();
     db
       .any(
-        "INSERT INTO workouts(title, date, user_id, difficulty, notes, start) VALUES($1, $2, $3, 3, '', NOW()) RETURNING id, title, date, difficulty, notes, start",
-        [title, readableDate, req.user.id]
+        "INSERT INTO workouts(title, date, user_id, difficulty, notes, start) VALUES($1, $2, $3, 3, '', $4) RETURNING id, title, date, difficulty, notes, start",
+        [title, readableDate, req.user.id, start]
       )
       .then(function(data) {
         const { id, title, date, difficulty, notes, start } = data[0];
         if (req.body.schedule === 0) {
-          res.json({ id, title, date, difficulty, notes, start });
+          res.json({
+            id,
+            title,
+            date,
+            difficulty,
+            notes,
+            start: moment(start).format('HH:mm')
+          });
         } else {
           db
             .any(
@@ -251,10 +266,24 @@ const addWorkout = (req, res, next, db) => {
                     exercises
                   )
                   .then(function(data) {
-                    res.json({ id, title, date, difficulty, notes, start });
+                    res.json({
+                      id,
+                      title,
+                      date,
+                      difficulty,
+                      notes,
+                      start: moment(start).format('HH:mm')
+                    });
                   });
               } else {
-                res.json({ id, title, date, difficulty, notes, start });
+                res.json({
+                  id,
+                  title,
+                  date,
+                  difficulty,
+                  notes,
+                  start: moment(start).format('HH:mm')
+                });
               }
             });
         }
