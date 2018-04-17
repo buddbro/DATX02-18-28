@@ -496,17 +496,17 @@ const mapStateToProps = props => {
 };
 
 export default connect(mapStateToProps, {
-  clearWorkout,
   chooseWorkout,
+  clearWorkout,
+  deleteExerciseFromWorkout,
+  deleteWorkout,
   editWorkout,
   fetchWorkouts,
-  viewExercise,
-  deleteWorkout,
-  deleteExerciseFromWorkout,
-  setDifficulty,
   saveNotes,
+  setColor,
+  setDifficulty,
   setExerciseListType,
-  setColor
+  viewExercise
 })(ViewWorkout);
 
 const styles = StyleSheet.create({
