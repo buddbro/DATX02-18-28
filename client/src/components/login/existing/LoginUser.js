@@ -77,7 +77,8 @@ class LoginUser extends React.Component {
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
-              this.setState({ email: email.toLowerCase() })}
+              this.setState({ email: email.toLowerCase() })
+            }
             keyboardType="email-address"
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -90,7 +91,8 @@ class LoginUser extends React.Component {
             style={styles.textInput}
             placeholder="Password"
             onChangeText={password =>
-              this.setState({ password: password.toLowerCase() })}
+              this.setState({ password: password.toLowerCase() })
+            }
             secureTextEntry={true}
             underlineColorAndroid="transparent"
             autoCapitalize="none"
@@ -105,7 +107,8 @@ class LoginUser extends React.Component {
               this.props.loginWithPassword(
                 this.state.email,
                 this.state.password
-              )}
+              )
+            }
             style={styles.loginButton}
           >
             <Text style={styles.buttonText}>LOG IN</Text>

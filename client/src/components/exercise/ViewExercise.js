@@ -166,117 +166,112 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-
-        <KeyboardAwareScrollView //TODO
-          style={{ backgroundColor: '#fff', paddingBottom: 35 }}
-          contentContainerStyle={styles.container}
-          scrollEnabled={true}
-          extraHeight={150}
-          enableOnAndroid={true}
-        >
-          <View>
-            <View style={styles.setsContainer}>
-              <View style={styles.singleSetContainer}>
-                <View style={{ width: '20%' }}>
-                  <Text style={styles.setNumber}>#</Text>
-                </View>
-
-                <View style={styles.sets} />
-
-                <View style={styles.reps} />
-              </View>
-
-              <FlatList
-                style={{ marginLeft: 8, marginRight: 8 }}
-                data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-                keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-                renderItem={({ item, index }) => {
-                  const key = `${this.props.id}${item.id}`;
-                  const button = [
-                    {
-                      text: 'Delete',
-                      backgroundColor: '#FD6A6E',
-                      onPress: () => {
-                        this.props.deleteSet(item.id);
-                      },
-                      component: (
-                        <View style={{ flex: 1, justifyContent: 'center' }}>
-                          <Text
-                            style={{
-                              color: '#fff',
-                              fontSize: 16,
-                              textAlign: 'center'
-                            }}
-                          >
-                            Delete
-                          </Text>
-                        </View>
-                      )
-                    }
-                  ];
-                  return (
-                    <Swipeout
-                      right={button}
-                      backgroundColor="#FD6A6E"
-                      disabled={item.id === -1}
-                    >
-                      <ExerciseSet
-                        id={item.id}
-                        index={index}
-                        reps={
-                          item.id === -1 ? this.state.reps : String(item.reps)
-                        }
-                        weight={
-                          item.id === -1
-                            ? this.state.weight
-                            : String(item.weight)
-                        }
-                        exerciseId={this.props.id}
-                        setReps={this.setReps.bind(this)}
-                        setWeight={this.setWeight.bind(this)}
-                      />
-                    </Swipeout>
-                  );
-                }}
-              />
+        <View style={styles.setsContainer}>
+          <View style={styles.singleSetContainer}>
+            <View style={{ width: '20%' }}>
+              <Text style={styles.setNumber}>#</Text>
             </View>
-          </View>
-        </KeyboardAwareScrollView>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            bottom: 40,
-            paddingTop: 55
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => this.addSetToExercise()}
-            style={styles.addButton}
+            <View style={styles.sets} />
+
+            <View style={styles.reps} />
+          </View>
+
+          <FlatList
+            style={{ marginLeft: 8, marginRight: 8 }}
+            data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+            keyExtractor={(item, index) => `${item.id}${this.props.id}`}
+            renderItem={({ item, index }) => {
+              const key = `${this.props.id}${item.id}`;
+              const button = [
+                {
+                  text: 'Delete',
+                  backgroundColor: '#FD6A6E',
+                  onPress: () => {
+                    this.props.deleteSet(item.id);
+                  },
+                  component: (
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontSize: 16,
+                          textAlign: 'center'
+                        }}
+                      >
+                        Delete
+                      </Text>
+                    </View>
+                  )
+                }
+              ];
+              return (
+                <Swipeout
+                  right={button}
+                  backgroundColor="#FD6A6E"
+                  disabled={item.id === -1}
+                >
+                  <ExerciseSet
+                    id={item.id}
+                    index={index}
+                    reps={item.id === -1 ? this.state.reps : String(item.reps)}
+                    weight={
+                      item.id === -1 ? this.state.weight : String(item.weight)
+                    }
+                    exerciseId={this.props.id}
+                    setReps={this.setReps.bind(this)}
+                    setWeight={this.setWeight.bind(this)}
+                  />
+                </Swipeout>
+              );
+            }}
+          />
+        </View>
+        <View>
+          <KeyboardAwareScrollView //TODO
+            style={{ backgroundColor: '#fff', paddingBottom: 35 }}
+            contentContainerStyle={styles.container}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={false}
+            extraHeight={150}
+            enableOnAndroid={true}
           >
-            <Text
+            <View
               style={{
-                fontSize: 24,
-                color: '#fff'
+                justifyContent: 'center',
+                alignItems: 'center',
+                bottom: 40,
+                paddingTop: 55
               }}
             >
-              Add Set
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.deleteExercise.bind(this)}
-            style={styles.deleteButton}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                color: '#fff'
-              }}
-            >
-              Delete Exercise
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.addSetToExercise()}
+                style={styles.addButton}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    color: '#fff'
+                  }}
+                >
+                  Add Set
+                </Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity
+                onPress={this.deleteExercise.bind(this)}
+                style={styles.deleteButton}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    color: '#fff'
+                  }}
+                >
+                  Delete Exercise
+                </Text>
+              </TouchableOpacity> */}
+            </View>
+          </KeyboardAwareScrollView>
         </View>
       </View>
     );
