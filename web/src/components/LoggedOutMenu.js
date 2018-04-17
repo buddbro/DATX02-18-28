@@ -105,10 +105,10 @@ class LoggedOutMenu extends React.Component {
               name="update"
               active={this.state.activeItem === 'update'}
               onClick={this.handleItemClick}
-              href="#update"
+              href="#policy"
             >
               <Icon name="idea" inverted />
-              Update
+              Policy
             </Menu.Item>
             <Menu.Item
               header

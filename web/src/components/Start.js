@@ -78,7 +78,7 @@ class Start extends React.Component {
           </Container>
         </Segment>
         <a name="welcome" />
-        <Segment style={{ padding: '8em 0em' }} vertical>
+        <Container style={{ padding: '8em 0em' }} vertical>
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
@@ -110,191 +110,146 @@ class Start extends React.Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </Segment>
+        </Container>
 
         <a name="download" />
-        <Grid container stackable verticalAlign="middle">
-          <Grid.Row>
-            <Grid.Column>
-              <Header
-                as="h1"
-                style={{
-                  fontSize: '3em',
-                  textAlign: 'center',
-                  marginTop: '1em'
-                }}
-              >
-                Download
-              </Header>
-              <Segment basic vertical>
-                <Header.Subheader
+        <Container
+          inverted
+          textAlign="center"
+          style={{
+            minHeight: 600,
+            padding: '1em 0em',
+            backgroundImage: 'url(/banner.jpg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}
+          vertical
+        />
+        <Container style={{ display: 'flex', justifyContent: 'center' }}>
+          <a href="https://play.google.com/store/apps/details?id=com.getpushapp.v1" target="_blank"><Image src='/app-store.svg' style={{ width: '200px', paddingTop: '14px' }}/></a>
+          <a href="https://play.google.com/store/apps/details?id=com.getpushapp.v1" target="_blank"><Image src='/google-play.png' style={{ width: '250px' }}/></a>
+        </Container>
+
+        <a name="policy" />
+        <Container style={{ padding: '8em 0em' }} vertical>
+          <Grid container stackable verticalAlign="middle">
+            <Grid.Row>
+              <Grid.Column width={12} style={{ marginRight: 'auto', marginLeft: 'auto' }}>
+                <Header
                   as="h3"
                   style={{ fontSize: '2em', textAlign: 'center' }}
                 >
-                  iOS instructions
-                </Header.Subheader>
-                <Grid celled="internally" columns="equal" stackable>
-                  <Grid.Row
-                    textAlign="center"
-                    style={{
-                      justifyContent: 'space-around',
-                      alignItems: 'stretch',
-                      marginTop: 0
-                    }}
-                  >
-                    <Card
-                      image="/help1-ios.jpg"
-                      header="Step 1"
-                      style={{
-                        marginTop: '1em',
-                        fontSize: '1.33em',
-                        textAlign: 'center'
-                      }}
-                      meta="Download Expo"
-                      description="We are mirroring PushApp in another
-                      application called Expo during the developing in order
-                      not to publishing through AppStore and Google Play Store
-                      every iteration. The finalized version of the
-                      application will be available in the app stores later
-                      this spring. In the picture above you will see how Expo
-                      looks like in AppStore."
-                    />
+                  Privacy policy
+                </Header>
+                <p style={{ fontSize: '1.33em' }}>
+                  We at GetPushApp.com built the Get PushApp app as
+                  a free app. This service is provided by
+                  GetPushApp.com at no cost and is intended for use
+                  as is.
+                </p>{' '}
+                <p style={{ fontSize: '1.33em' }}>
+                  {' '}This page is used to inform website visitors
+                  regarding our policies with the collection, use,
+                  and disclosure of personal information if anyone
+                  decided to use our service.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                  {' '}If you choose to use our service, then you agree
+                  to the collection and use of information in relation
+                  to this policy. The personal Information that we
+                  collect is used for providing and improving the
+                  service. We will not use or share your information
+                  with anyone except as described in this privacy policy.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                  {' '}The terms used in this privacy policy have the same
+                  meanings as in our terms and conditions, which is
+                  accessible at Get PushApp unless otherwise defined in
+                  this privacy policy.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                  {' '}The terms used in this privacy policy have the same
+                  meanings as in our terms and conditions, which is
+                  accessible at Get PushApp unless otherwise defined in
+                  this privacy policy.
+                </p>
+                <Header as='h3' style={{ marginBottom: 0 }}>
+                  Information Collection and Use
+                </Header>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}For a better experience, while using our service,
+                we require you to provide us with certain personally
+                identifiable information, including but not limited
+                to email, first name and your logged workouts. The
+                information that we request will be retained by us
+                and used as following:
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}The email is used by the app as a means of
+                identifying the users and allow them to sign in to
+                their accounts. The email may also be used to send
+                information to you, such as if you have forgotten your
+                password etc.The first name is used to greet the user
+                upon signing in, and is in no way used otherwise.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}The collection of logged workouts is used to allow
+                you as a user to track your progress.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}The app does use third party services that may
+                collect information used to identify you.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}Link to privacy policy of third party service
+                providers used by the app:
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}<List bulleted>
+                      <List.Item>Currently no third parties involved</List.Item>
+                    </List>
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}The app does not share your personal information with
+                any other third parties.
+                </p>
+                <Header as="h3" style={{ marginBottom: 0 }}>Security</Header>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}We value your trust in providing us your personal information,
+                thus we are striving to use commercially acceptable means of
+                protecting it. But remember that no method of transmission over the
+                internet, or method of electronic storage is 100% secure and reliable,
+                and we cannot guarantee its absolute security.
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}All data is transferred securely to the server side by using SSL.
+                </p>
+                <Header as='h3' style={{ marginBottom: 0 }}>Changes to This Privacy Policy</Header>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}We may update our privacy policy from time to time. Thus, you are
+                advised to review this page periodically for any changes. We will notify
+                you of any changes by posting the new privacy policy on this page.
+                These changes are effective immediately after they are posted on this page.
+                </p>
+                <Header as='h3' style={{ marginBottom: 0 }}>Contact Us</Header>
+                <p style={{ fontSize: '1.33em' }}>
+                {' '}If you have any questions or suggestions about our privacy policy,
+                do not hesitate to contact us.
+                </p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
 
-                    <Card
-                      image="/help2-ios.jpg"
-                      header="Step 2"
-                      meta="Add a mirror"
-                      style={{ fontSize: '1.33em', textAlign: 'center' }}
-                      description="By pressing the plus-icon in the
-                      upperright corner you will add another mirror."
-                    />
-
-                    <Card
-                      image="/help3-ios.jpg"
-                      header="Step 3"
-                      meta="Go to PushApp"
-                      style={{
-                        marginBottom: '1em',
-                        fontSize: '1.33em',
-                        textAlign: 'center'
-                      }}
-                      description="In the input field you enter @PushApp/client in order to reach our server. Once you have pressed done you should be able to access the application! Welcome!"
-                    />
-                  </Grid.Row>
-                </Grid>
-                <Header.Subheader
-                  as="h3"
-                  style={{ fontSize: '2em', textAlign: 'center' }}
-                >
-                  Android instructions
-                </Header.Subheader>
-                <Grid celled="internally" columns="equal" stackable>
-                  <Grid.Row
-                    textAlign="center"
-                    style={{
-                      justifyContent: 'space-around',
-                      alignItems: 'stretch',
-                      marginTop: 0
-                    }}
-                  >
-                    <Card
-                      image="/help1-android.png"
-                      header="Step 1"
-                      style={{
-                        marginTop: '1em',
-                        fontSize: '1.33em',
-                        textAlign: 'center'
-                      }}
-                      meta="Download Expo"
-                      description="We are mirroring PushApp in another
-                      application called Expo during the developing in order
-                      not to publishing through AppStore and Google Play Store
-                      every iteration. The finalized version of the
-                      application will be available in the app stores later
-                      this spring. In the picture above you will see how Expo
-                      looks like in Google Play Store."
-                    />
-
-                    <Card
-                      image="/help2-android.png"
-                      header="Step 2"
-                      meta="Add a mirror"
-                      style={{ fontSize: '1.33em', textAlign: 'center' }}
-                      description="To add another mirror, navigate to
-                      &quot;Explore&quot; in the bottom-menu."
-                    />
-
-                    <Card
-                      image="/help3-android.png"
-                      header="Step 3"
-                      meta="Go to PushApp"
-                      style={{
-                        marginBottom: '1em',
-                        fontSize: '1.33em',
-                        textAlign: 'center'
-                      }}
-                      description="Press the search-icon. In the input field you enter @PushApp/client in order to reach our server. Tap the search result (as seen in the picture above). You should now be able to access the application. Welcome!"
-                    />
-                  </Grid.Row>
-                </Grid>
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-
-        <a name="update" />
-        <Grid container stackable verticalAlign="middle">
-          <Grid.Row>
-            <Grid.Column>
-              <Header
-                as="h1"
-                style={{
-                  fontSize: '3em',
-                  textAlign: 'center',
-                  marginTop: '1em'
-                }}
-              >
-                Update
-              </Header>
-              <Segment basic vertical>
-                <Grid celled="internally" columns="equal" stackable>
-                  <Grid.Row
-                    textAlign="center"
-                    style={{
-                      justifyContent: 'space-around',
-                      alignItems: 'stretch',
-                      marginTop: 0
-                    }}
-                  >
-                    <Card
-                      image="/update-ios.png"
-                      header="iOS"
-                      style={{ marginTop: '1em', fontSize: '1.33em' }}
-                      meta="Update"
-                      description="If you have an iOS phone, simply shake your device
-                      to navigate to the screen in the picture above. Once there, tap
-                      &quot;Refresh&quot;. Your app is now updated!"
-                    />
-
-                    <Card
-                      image="/update-android.png"
-                      header="Android"
-                      meta="Update"
-                      style={{ marginBottom: '1em', fontSize: '1.33em' }}
-                      description="If you have an android phone, navigate to the
-                        quick settings menu in android by swiping down from the top
-                        of your phone. Once there, tap the refresh-button. Your app
-                        is now updated!"
-                    />
-                  </Grid.Row>
-                </Grid>
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
 
         <a name="feedback" />
-        <Segment style={{ padding: '8em 0em' }} vertical>
+        <Container style={{ padding: '8em 0em' }} vertical>
           <Container text>
             <Header as="h3" style={{ fontSize: '2em' }}>
               Send us feedback
@@ -310,7 +265,7 @@ class Start extends React.Component {
               </a>
             </p> */}
           </Container>
-        </Segment>
+        </Container>
       </div>
     );
   }
