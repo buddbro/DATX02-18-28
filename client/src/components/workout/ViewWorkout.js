@@ -340,7 +340,7 @@ class ViewWorkout extends React.Component {
                 value={this.state.title}
               />
               <Image
-                source={require('../../../assets/edit-pen.png')}
+                source={require('../../../assets/edit.png')}
                 style={styles.icons}
               />
             </View>
@@ -422,6 +422,7 @@ class ViewWorkout extends React.Component {
             <Text style={globalStyles.traitTitle}>Notes</Text>
             <TextInput
               ref="notes"
+              placeholder='Short description of workout...'
               onFocus={() => this.focus('notes')}
               style={globalStyles.notes}
               onChangeText={notes => this.setState({ notes })}
@@ -492,7 +493,8 @@ const styles = StyleSheet.create({
   icons: {
     width: 25,
     height: 25,
-    marginLeft: -25
+    marginLeft: 25,
+    marginRight: -30
   },
   container: {
     flex: 1,
@@ -541,7 +543,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     padding: 3,
     textAlign: 'center',
-    width: '90%'
+    width: '80%'
   },
   workoutDate: {
     marginLeft: 15,

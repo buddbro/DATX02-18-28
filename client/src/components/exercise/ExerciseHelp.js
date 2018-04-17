@@ -22,10 +22,10 @@ class ExerciseHelp extends React.Component {
 
     return this.props.description.description.split('|').map((string, index) =>
       <View style={styles.descrList} key={`description${index}`}>
-        <Text style={{ fontWeight: 'bold' }}>
+        <Text style={{ color: '#505050', fontWeight: 'bold' }}>
           {index + 1}:{' '}
         </Text>
-        <Text>
+        <Text style={{color: '#505050'}}>
           {string}
         </Text>
       </View>
