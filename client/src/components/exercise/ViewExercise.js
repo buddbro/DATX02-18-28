@@ -166,8 +166,9 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
+
+        <KeyboardAwareScrollView //TODO
+          style={{ backgroundColor: '#fff', paddingBottom: 35 }}
           contentContainerStyle={styles.container}
           scrollEnabled={true}
           extraHeight={150}
@@ -274,6 +275,7 @@ class ViewExercise extends React.Component {
           </View> */}
           </View>
         </KeyboardAwareScrollView>
+
         <View
           style={{
             justifyContent: 'center',
@@ -340,6 +342,10 @@ export default connect(mapStateToProps, {
 })(ViewExercise);
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    //paddingBottom: 500
+    // height: '100%'
+  },
   container: {
     flexDirection: 'column',
     backgroundColor: '#fff',
