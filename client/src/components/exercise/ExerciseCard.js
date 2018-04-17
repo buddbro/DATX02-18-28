@@ -56,7 +56,6 @@ class ExerciseCard extends React.Component {
       <TouchableOpacity
         style={styles.accordionHeader}
         onPress={() => {
-          console.log(this.props);
           this.props.viewExercise(
             this.props.title,
             this.props.id,
@@ -75,11 +74,8 @@ class ExerciseCard extends React.Component {
           <Text style={styles.accordionHeaderTextStyle}>
             {this.props.title}
           </Text>
-          {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-            <Text style={{ marginLeft: 5, marginRight: 5 }}>123</Text>
-          </View> */}
           <Image
-            style={styles.backarrow}
+            style={styles.arrow}
             source={require('../../../assets/right_arrow.png')}
           />
         </View>
@@ -112,7 +108,7 @@ const styles = StyleSheet.create({
   accordionHeaderTextStyle: {
     fontSize: 18,
     color: '#7B7B7B',
-    paddingTop: 10,
+    paddingTop: 14,
     paddingBottom: 10,
     marginLeft: 30,
     textAlign: 'center',
@@ -126,12 +122,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     backgroundColor: '#aeeee1',
     paddingBottom: 5,
-    marginBottom: 5
+    borderBottomWidth: 8,
+    borderColor: '#7ad9c6'
   },
-  backarrow: {
+  arrow: {
     width: 10,
     height: 10,
     opacity: 0.5,
-    marginRight: 15
+    marginRight: 15,
+    marginTop: 8
   }
 });

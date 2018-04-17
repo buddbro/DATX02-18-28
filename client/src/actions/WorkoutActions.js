@@ -188,6 +188,7 @@ export function deleteExerciseFromWorkout(exerciseId) {
 }
 
 export function addSetToExercise(exerciseId, reps, weight) {
+  console.log(exerciseId, reps, weight);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

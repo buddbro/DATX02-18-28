@@ -1,30 +1,32 @@
 import React from 'react';
 import {
   Alert,
-  Text,
-  TextInput,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  SectionList,
   Animated,
-  ListItem,
+  DatePickerIOS,
+  Dimensions,
   FlatList,
   Image,
-  TimePickerAndroid,
-  DatePickerIOS,
+  Keyboard,
+  ListItem,
   Platform,
-  Keyboard
+  ScrollView,
+  SectionList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TimePickerAndroid,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Swipeout from 'react-native-swipeout';
 import {
   chooseWorkout,
   clearWorkout,
+  deleteExerciseFromWorkout,
   deleteWorkout,
   editWorkout,
   fetchWorkouts,
@@ -382,13 +384,45 @@ class ViewWorkout extends React.Component {
               data={this.props.exercises}
               keyExtractor={(item, index) => `exercise${item.id}`}
               renderItem={({ item }) => {
+                const button = [
+                  {
+                    text: 'Delete',
+                    backgroundColor: '#fd6a6e',
+                    onPress: () => {
+                      this.props.deleteExerciseFromWorkout(item.id);
+                    },
+                    component: (
+                      <View
+                        style={{
+                          flex: 1,
+                          justifyContent: 'center',
+                          borderBottomWidth: 8,
+                          borderColor: '#7ad9c6'
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: '#fff',
+                            fontSize: 16,
+                            textAlign: 'center'
+                          }}
+                        >
+                          Delete
+                        </Text>
+                      </View>
+                    )
+                  }
+                ];
+
                 return (
-                  <ExerciseCard
-                    id={item.id}
-                    title={item.title}
-                    exerciseTypeId={item.exercise_type_id}
-                    navigation={this.props.navigation}
-                  />
+                  <Swipeout right={button} backgroundColor="#7ad9c6">
+                    <ExerciseCard
+                      id={item.id}
+                      title={item.title}
+                      exerciseTypeId={item.exercise_type_id}
+                      navigation={this.props.navigation}
+                    />
+                  </Swipeout>
                 );
               }}
             />
@@ -422,7 +456,7 @@ class ViewWorkout extends React.Component {
             <Text style={globalStyles.traitTitle}>Notes</Text>
             <TextInput
               ref="notes"
-              placeholder='Short description of workout...'
+              placeholder="Short description of workout..."
               onFocus={() => this.focus('notes')}
               style={globalStyles.notes}
               onChangeText={notes => this.setState({ notes })}
@@ -468,6 +502,7 @@ export default connect(mapStateToProps, {
   fetchWorkouts,
   viewExercise,
   deleteWorkout,
+  deleteExerciseFromWorkout,
   setDifficulty,
   saveNotes,
   setExerciseListType,
