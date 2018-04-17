@@ -276,6 +276,28 @@ const deleteWorkout = (req, res, next, db) => {
     });
 };
 
+const deleteSet = (req, res, next, db) => {
+  db
+    .any(
+      `SELECT sets.id AS set
+      FROM sets, exercises, workouts
+      WHERE sets.id = $1
+        AND sets.exercise = exercises.id
+        AND exercises.workout = workouts.id
+        AND workouts.user_id = $2`,
+      [req.params.id, req.user.id]
+    )
+    .then(data => {
+      if (data.length === 1) {
+        db.any('DELETE FROM sets WHERE id = $1', [req.params.id]).then(() => {
+          res.sendStatus(200);
+        });
+      } else {
+        res.sendStatus(403);
+      }
+    });
+};
+
 const editWorkout = (req, res, next, db) => {
   db
     .any(
@@ -347,6 +369,7 @@ module.exports = {
   addSetToExercise,
   addWorkout,
   deleteExerciseFromWorkout,
+  deleteSet,
   deleteWorkout,
   editWorkout,
   getCategoriesForWorkout,

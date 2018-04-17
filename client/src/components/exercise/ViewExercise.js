@@ -12,16 +12,18 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  getSetsForExercise,
-  viewSet,
   addSetToExercise,
-  deleteExerciseFromWorkout,
-  getExerciseDescription,
   clearExercise,
-  readInstruction
+  deleteExerciseFromWorkout,
+  deleteSet,
+  getExerciseDescription,
+  getSetsForExercise,
+  readInstruction,
+  viewSet
 } from '../../actions';
 import NavigationActions from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Swipeout from 'react-native-swipeout';
 
 // import { BarChart } from 'react-native-svg-charts';
 
@@ -140,8 +142,9 @@ class ViewExercise extends React.Component {
           <BackArrow
             color="white"
             callback={() => {
+              this.addSetToExercise();
               this.props.clearExercise();
-              this.setState({ reps: '', sets: '' });
+              this.setState({ reps: '', weight: '' });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
@@ -200,20 +203,50 @@ class ViewExercise extends React.Component {
                 keyExtractor={(item, index) => `${item.id}${this.props.id}`}
                 renderItem={({ item, index }) => {
                   const key = `${this.props.id}${item.id}`;
+                  const button = [
+                    {
+                      text: 'Delete',
+                      backgroundColor: '#FD6A6E',
+                      onPress: () => {
+                        this.props.deleteSet(item.id);
+                      },
+                      component: (
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                          <Text
+                            style={{
+                              color: '#fff',
+                              fontSize: 16,
+                              textAlign: 'center'
+                            }}
+                          >
+                            Delete
+                          </Text>
+                        </View>
+                      )
+                    }
+                  ];
                   return (
-                    <ExerciseSet
-                      id={item.id}
-                      index={index}
-                      reps={
-                        item.id === -1 ? this.state.reps : String(item.reps)
-                      }
-                      weight={
-                        item.id === -1 ? this.state.weight : String(item.weight)
-                      }
-                      exerciseId={this.props.id}
-                      setReps={this.setReps.bind(this)}
-                      setWeight={this.setWeight.bind(this)}
-                    />
+                    <Swipeout
+                      right={button}
+                      backgroundColor="#FD6A6E"
+                      disabled={item.id === -1}
+                    >
+                      <ExerciseSet
+                        id={item.id}
+                        index={index}
+                        reps={
+                          item.id === -1 ? this.state.reps : String(item.reps)
+                        }
+                        weight={
+                          item.id === -1
+                            ? this.state.weight
+                            : String(item.weight)
+                        }
+                        exerciseId={this.props.id}
+                        setReps={this.setReps.bind(this)}
+                        setWeight={this.setWeight.bind(this)}
+                      />
+                    </Swipeout>
                   );
                 }}
               />
@@ -297,12 +330,13 @@ const mapStateToProps = ({ user, workout, exercises }) => {
 
 export default connect(mapStateToProps, {
   getSetsForExercise,
-  viewSet,
   addSetToExercise,
-  getExerciseDescription,
   clearExercise,
   deleteExerciseFromWorkout,
-  readInstruction
+  deleteSet,
+  getExerciseDescription,
+  readInstruction,
+  viewSet
 })(ViewExercise);
 
 const styles = StyleSheet.create({
@@ -310,16 +344,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     height: '100%'
-  },
-  addSetButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    width: '104%',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#8b8ddf',
-    marginBottom: 15
   },
   addButton: {
     width: '70%',
@@ -329,10 +353,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#6669cb'
+    borderColor: '#51C1AB'
   },
   deleteButton: {
     width: '70%',
@@ -342,15 +366,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: '#cb6669',
+    backgroundColor: '#FD6A6E',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#cb6669'
-  },
-  exerciseTitle: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: 'bold'
+    borderColor: '#FD6A6E'
   },
   setsContainer: {
     backgroundColor: '#fff',
@@ -361,7 +380,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     paddingRight: 25,
@@ -378,11 +397,6 @@ const styles = StyleSheet.create({
   },
   reps: {
     width: '40%'
-  },
-  instructions: {
-    fontWeight: '200',
-    fontSize: 18,
-    color: '#7B7B7B'
   },
   popup: {
     position: 'absolute',

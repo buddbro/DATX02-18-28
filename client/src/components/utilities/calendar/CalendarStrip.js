@@ -74,7 +74,6 @@ export default class CalendarStrip extends React.Component {
     this.setState({
       loadedDays: [...days]
     });
-    console.log('days', days);
     return days;
   }
 
@@ -115,7 +114,6 @@ export default class CalendarStrip extends React.Component {
   }
 
   scrollEnded(event) {
-    //console.log(event.nativeEvent.contentOffset.x);
     if (event.nativeEvent.contentOffset.x <= Dimensions.get('window').width) {
       this.loadPreviousWeek(this.state.loadedDays[0]);
     }

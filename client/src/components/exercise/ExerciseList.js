@@ -10,7 +10,13 @@ import {
   Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import { addExerciseToWorkout, addExerciseToSchedule } from '../../actions';
+import {
+  addExerciseToSchedule,
+  addExerciseToWorkout,
+  getSetsForExercise,
+  viewExercise,
+  viewSet
+} from '../../actions';
 import NavigationActions from 'react-navigation';
 
 import ExerciseListItem from './ExerciseListItem';
@@ -19,6 +25,46 @@ import Header from '../utilities/Header';
 import BackArrow from '../utilities/BackArrow';
 
 class ExerciseList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      exerciseTypeId: 0,
+      exerciseAdded: false,
+      workoutExercises: []
+    };
+  }
+
+  componentDidMount() {
+    const { workoutExercises } = this.props;
+    this.setState({ workoutExercises });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.workoutExercises.length > 0 &&
+      nextProps.workoutExercises.length > this.props.workoutExercises.length
+    ) {
+      if (this.props.type === 'workout') {
+        const newExercise =
+          nextProps.workoutExercises[nextProps.workoutExercises.length - 1];
+
+        this.props.viewExercise(
+          newExercise.title,
+          newExercise.id,
+          newExercise.exercise_type_id
+        );
+        this.props.navigation.dispatch(
+          NavigationActions.NavigationActions.navigate({
+            routeName: 'ViewExercise'
+          })
+        );
+        this.props.getSetsForExercise(newExercise.id);
+        this.props.viewSet(newExercise.id);
+      }
+    }
+  }
+
   renderSectionList() {
     // Reduce exercises returned from database to build the datastructure
     // required for the SectionList component.
@@ -38,11 +84,7 @@ class ExerciseList extends React.Component {
       case 'workout':
         callback = item => {
           this.props.addExerciseToWorkout(this.props.workoutId, item.id);
-          this.props.navigation.dispatch(
-            NavigationActions.NavigationActions.navigate({
-              routeName: 'ViewWorkout'
-            })
-          );
+          this.setState({ exerciseTypeId: item.id });
         };
         break;
       case 'schedule':
@@ -54,7 +96,7 @@ class ExerciseList extends React.Component {
           );
           this.props.navigation.dispatch(
             NavigationActions.NavigationActions.navigate({
-              routeName: 'Schedule'
+              routeName: 'Schedules'
             })
           );
         };
@@ -80,7 +122,7 @@ class ExerciseList extends React.Component {
 
   render() {
     const previousRoute =
-      this.props.type === 'workout' ? 'ViewWorkout' : 'Schedule';
+      this.props.type === 'workout' ? 'ViewWorkout' : 'Schedules';
 
     return (
       <View style={styles.container}>
@@ -106,14 +148,18 @@ const mapStateToProps = ({ exercises, workout, schedules, app }) => {
   return {
     exercises: exercises.list,
     workoutId: workout.id,
+    workoutExercises: workout.exercises,
     active: schedules.active,
     type: app.exerciseListType
   };
 };
 
 export default connect(mapStateToProps, {
+  addExerciseToSchedule,
   addExerciseToWorkout,
-  addExerciseToSchedule
+  getSetsForExercise,
+  viewExercise,
+  viewSet
 })(ExerciseList);
 
 const styles = StyleSheet.create({

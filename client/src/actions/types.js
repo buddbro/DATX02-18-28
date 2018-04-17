@@ -11,6 +11,7 @@ export const CHOOSE_WORKOUT = 'choose_workout';
 export const CLEAR_EXERCISE = 'clear_exercise';
 export const CLEAR_WORKOUT = 'clear_workout';
 export const DELETE_WORKOUT = 'delete_workout';
+export const DELETE_SET = 'delete_set';
 export const EDIT_WORKOUT = 'edit_workout';
 export const FETCH_WORKOUTS = 'fetch_workouts';
 export const SAVE_NOTES = 'save_notes';
@@ -28,6 +29,7 @@ export const VIEW_SET = 'view_set';
 export const GET_EXERCISE_DESCRIPTION = 'get_exercise_description';
 export const GET_QUOTE = 'get_quote';
 export const SET_EXERCISE_LIST_TYPE = 'set_exercise_list_type';
+export const SET_WORKOUT_PARENT = 'set_workout_parent';
 
 // Schedules
 export const ADD_EXERCISE_TO_SCHEDULE = 'add_exercise_to_schedule';

@@ -39,8 +39,7 @@ class WorkoutSchedules extends React.Component {
     this.setState({ addWorkoutModalVisible: false });
   }
 
-  renderScheadules() {
-    console.log('the proppas ', this.props.list);
+  renderSchedules() {
     if (Object.keys(this.props.list).length === 0) {
       return (
         <View
@@ -60,7 +59,6 @@ class WorkoutSchedules extends React.Component {
               color: '#7B7B7B'
             }}
           >
-            {' '}
             Press the plus sign above in order to create your first workout
             template!
           </Text>
@@ -103,7 +101,7 @@ class WorkoutSchedules extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>My Workouts</Text>
+          <Text style={globalStyles.headerTitle}>Schedules</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -120,7 +118,7 @@ class WorkoutSchedules extends React.Component {
             </Text>
           </TouchableOpacity>
         </Header>
-        {this.renderScheadules()}
+        {this.renderSchedules()}
       </KeyboardAwareScrollView>
     );
   }
@@ -143,37 +141,5 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     color: 'white'
-  },
-  headline: {
-    fontSize: 32,
-    color: '#b9baf1'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    height: 200
-  },
-  innerContainer: {
-    alignItems: 'center',
-    backgroundColor: '#81c1ab'
-  },
-  textInput: {
-    height: 40,
-    width: 200,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 3,
-    margin: 5,
-    color: '#7B7B7B'
   }
 });

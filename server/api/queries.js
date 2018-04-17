@@ -71,6 +71,7 @@ const getWorkoutWithId = (req, res, next) =>
 const getSetsForExercise = (req, res, next) =>
   workout.getSetsForExercise(req, res, next, db);
 const addWorkout = (req, res, next) => workout.addWorkout(req, res, next, db);
+const deleteSet = (req, res, next) => workout.deleteSet(req, res, next, db);
 const deleteWorkout = (req, res, next) =>
   workout.deleteWorkout(req, res, next, db);
 const editWorkout = (req, res, next) => workout.editWorkout(req, res, next, db);
@@ -142,6 +143,7 @@ module.exports = {
   deleteExerciseType,
   deleteSchedule,
   deleteWorkout,
+  deleteSet,
   editExercise,
   editSchedule,
   editWorkout,

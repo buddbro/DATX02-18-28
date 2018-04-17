@@ -23,15 +23,16 @@ import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
+  chooseWorkout,
   clearWorkout,
+  deleteWorkout,
   editWorkout,
   fetchWorkouts,
-  viewExercise,
-  deleteWorkout,
-  setDifficulty,
   saveNotes,
+  setColor,
+  setDifficulty,
   setExerciseListType,
-  setColor
+  viewExercise
 } from '../../actions';
 import ExerciseCard from '../exercise/ExerciseCard';
 import RatingWrapper from '../utilities/RatingWrapper';
@@ -93,7 +94,7 @@ class ViewWorkout extends React.Component {
             this.props.deleteWorkout(this.props.id);
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
-                routeName: 'Dashboard'
+                routeName: this.props.parent
               })
             );
           }
@@ -188,7 +189,7 @@ class ViewWorkout extends React.Component {
             }}
             style={styles.saveDateButton}
           >
-            <Text style={styles.saveDateButtonText}>Save</Text>
+            <Text style={styles.saveDateButtonText}>OK</Text>
           </TouchableOpacity>
           <DatePickerIOS
             minimumDate={
@@ -237,6 +238,7 @@ class ViewWorkout extends React.Component {
       green: '#54F590',
       purple: '#BD5CF3'
     };
+
     return ['yellow', 'red', 'blue', 'green', 'purple'].map((color, index) => {
       return (
         <TouchableOpacity
@@ -263,11 +265,12 @@ class ViewWorkout extends React.Component {
   }
 
   render() {
-    if (!(this.props.workout && this.props.workout.difficulty)) {
+    if (
+      !(this.props.workout && this.props.workout.difficulty) ||
+      this.props.loading
+    ) {
       return <View />;
     }
-
-    console.log('active state color: ', this.state.color);
 
     return (
       <KeyboardAwareScrollView
@@ -289,9 +292,10 @@ class ViewWorkout extends React.Component {
                 stop: ''
               });
               this.props.fetchWorkouts();
+              this.props.chooseWorkout(-1);
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
-                  routeName: 'Dashboard'
+                  routeName: this.props.parent
                 })
               );
             }}
@@ -336,7 +340,7 @@ class ViewWorkout extends React.Component {
                 value={this.state.title}
               />
               <Image
-                source={require('../../../assets/edit-pen.png')}
+                source={require('../../../assets/edit.png')}
                 style={styles.icons}
               />
             </View>
@@ -375,7 +379,6 @@ class ViewWorkout extends React.Component {
           <View style={styles.exercisesContainer}>
             <Text style={styles.exercisesTitle}>Exercises</Text>
             <FlatList
-              style={styles.exerciseListStyle}
               data={this.props.exercises}
               keyExtractor={(item, index) => `exercise${item.id}`}
               renderItem={({ item }) => {
@@ -396,7 +399,7 @@ class ViewWorkout extends React.Component {
           </View>
           <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Difficulty</Text>
-            <View style={styles.ratingStyle}>
+            <View>
               <RatingWrapper
                 rating={this.props.workout.difficulty}
                 editable
@@ -419,6 +422,7 @@ class ViewWorkout extends React.Component {
             <Text style={globalStyles.traitTitle}>Notes</Text>
             <TextInput
               ref="notes"
+              placeholder='Short description of workout...'
               onFocus={() => this.focus('notes')}
               style={globalStyles.notes}
               onChangeText={notes => this.setState({ notes })}
@@ -441,9 +445,9 @@ class ViewWorkout extends React.Component {
 
 const mapStateToProps = props => {
   const { id, workouts, exercises } = props.workout;
+
   const workout = workouts.filter(w => w.id === id)[0];
 
-  console.log(workout);
   if (!workout) {
     return {};
   }
@@ -452,12 +456,14 @@ const mapStateToProps = props => {
     id,
     workout,
     color: workout.color,
-    exercises
+    exercises,
+    parent: props.app.workoutParent
   };
 };
 
 export default connect(mapStateToProps, {
   clearWorkout,
+  chooseWorkout,
   editWorkout,
   fetchWorkouts,
   viewExercise,
@@ -487,7 +493,8 @@ const styles = StyleSheet.create({
   icons: {
     width: 25,
     height: 25,
-    marginLeft: -25
+    marginLeft: 25,
+    marginRight: -30
   },
   container: {
     flex: 1,
@@ -498,23 +505,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#d33'
   },
-  nameTextStyle: {
-    margin: 25,
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6669CB'
-  },
-  category: {},
   addExerciseTitle: {
     color: '#8b8ddf',
     fontSize: 24,
     fontWeight: 'bold'
-  },
-  categoriesText: {
-    fontSize: 18,
-    color: 'white',
-    marginBottom: 15,
-    marginLeft: 10
   },
   addExerciseItem: {
     alignItems: 'center',
@@ -539,7 +533,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
-  exerciseListStyle: {},
   inputField: {
     height: 70,
     fontSize: 32,
@@ -550,7 +543,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     padding: 3,
     textAlign: 'center',
-    width: '90%'
+    width: '80%'
   },
   workoutDate: {
     marginLeft: 15,
@@ -591,22 +584,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 15
   },
-
-  difficulty: {
-    flexDirection: 'row'
-  },
-  ratingStyle: {},
   difficultyText: {
     color: '#8b8ddf'
-  },
-  notes: {
-    height: 80,
-    padding: 3,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    borderColor: '#aaa',
-    borderRadius: 3,
-    borderWidth: 1
   }
 });

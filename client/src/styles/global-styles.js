@@ -64,6 +64,7 @@ export default (globalStyles = StyleSheet.create({
   achievementsContainer: {
     flex: 1,
     alignItems: 'flex-start',
+    justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
@@ -155,6 +156,17 @@ export default (globalStyles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#F2FEFC',
     color: '#7B7B7B'
+  },
+  textInputError: {
+    width: '100%',
+    height: 60,
+    fontSize: 22,
+    borderRadius: 1,
+    borderColor: '#E94325',
+    borderWidth: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#FFC5BA',
   },
   titleInput: {},
   notes: {

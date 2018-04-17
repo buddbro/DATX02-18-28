@@ -1,20 +1,21 @@
 import {
-  CHOOSE_WORKOUT,
-  FETCH_WORKOUTS,
-  CLEAR_WORKOUT,
-  CLEAR_EXERCISE,
-  EDIT_WORKOUT,
-  ADD_WORKOUT,
-  ADD_WORKOUT_FROM_SCHEDULE,
-  DELETE_WORKOUT,
   ADD_EXERCISE_TO_WORKOUT,
-  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
+  ADD_WORKOUT_FROM_SCHEDULE,
+  ADD_WORKOUT,
+  CHOOSE_WORKOUT,
+  CLEAR_EXERCISE,
+  CLEAR_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
+  DELETE_SET,
+  DELETE_WORKOUT,
+  EDIT_WORKOUT,
+  FETCH_WORKOUTS,
   GET_SETS_FOR_EXERCISE,
-  VIEW_EXERCISE,
-  VIEW_SET,
+  SET_COLOR,
   SET_DIFFICULTY,
-  SET_COLOR
+  VIEW_EXERCISE,
+  VIEW_SET
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -83,23 +84,27 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         exercises: deleteExercises
       };
     case CHOOSE_WORKOUT:
-      let exercises = action.payload.exercises.reduce((acc, next) => {
-        return [
-          ...acc,
-          {
-            id: next.exercise_id,
-            title: next.exercise_title,
-            exercise_type_id: next.exercise_type_id
-          }
-        ];
-      }, []);
-      const { workout_id } = action.payload.exercises[0];
+      if (!action.payload) {
+        return INITIAL_STATE;
+      } else {
+        let exercises = action.payload.exercises.reduce((acc, next) => {
+          return [
+            ...acc,
+            {
+              id: next.exercise_id,
+              title: next.exercise_title,
+              exercise_type_id: next.exercise_type_id
+            }
+          ];
+        }, []);
+        const { workout_id } = action.payload.exercises[0];
 
-      return {
-        ...state,
-        id: workout_id,
-        exercises: exercises[0].id ? exercises : []
-      };
+        return {
+          ...state,
+          id: workout_id,
+          exercises: exercises[0].id ? exercises : []
+        };
+      }
     case ADD_WORKOUT:
       const { id, title, date, difficulty, start } = action.payload;
 
@@ -129,6 +134,18 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
         workouts: state.workouts.filter(
           workout => workout.id !== action.payload
         )
+      };
+    case DELETE_SET:
+      const setsWithoutDeleted = [];
+      state.sets.map(set => {
+        if (set.id !== action.payload) {
+          setsWithoutDeleted.push(set);
+        }
+      });
+
+      return {
+        ...state,
+        sets: setsWithoutDeleted
       };
     case CLEAR_WORKOUT:
       return {
@@ -163,21 +180,9 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       return { ...state, workouts: action.payload };
 
     case SET_COLOR:
-      // console.log('paykoa', state.id, action.payload);
-      // const setColorWorkouts = [];
-      // state.workouts.forEach(workout => {
-      //   setColorWorkouts.push(workout);
-      //   if (state.id === workout.id) {
-      //     console.log('set');
-      //     workout.color = action.payload;
-      //   }
-      // });
-      // console.log(setColorWorkouts.filter(i => i.id === state.id)[0].color);
-
       const setColorWorkouts = JSON.parse(JSON.stringify(state.workouts));
       setColorWorkouts.map(workout => {
         if (state.id === workout.id) {
-          console.log('set');
           workout.color = action.payload;
         }
       });

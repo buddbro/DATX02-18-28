@@ -20,14 +20,6 @@ export default class LatestExercise extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 3,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    backgroundColor: '#aeeee1'
-  },
   accordionHeader: {
     display: 'flex',
     flex: 1
@@ -48,17 +40,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#D2D3F6',
     paddingBottom: 5,
     marginBottom: 5
-  },
-  setListStyle: {},
-  addSetButton: {
-    backgroundColor: '#484bb4',
-    margin: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 40,
-    borderRadius: 5,
-    paddingTop: 10,
-    paddingBottom: 10
   }
 });

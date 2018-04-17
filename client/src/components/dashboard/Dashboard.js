@@ -18,7 +18,7 @@ import { getQuote } from '../../actions';
 
 import ProfileHeader from './ProfileHeader';
 import WorkoutHistory from '../workout/WorkoutHistory';
-import LatestWorkout from './LatestWorkout';
+import WorkoutCard from './WorkoutCard';
 import AddWorkout from './AddWorkout';
 import CalendarStrip from 'react-native-calendar-strip';
 import CustomCalendarStrip from '../utilities/calendar/CalendarStripNew';
@@ -34,14 +34,26 @@ class Dashboard extends React.Component {
       />
     )
   };
+
   constructor(props) {
     super(props);
     this.state = { addWorkoutVisible: false };
+
     this.animatedValue = new Animated.Value(0);
+    this.marginTop = this.animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-1300, 0]
+    });
   }
 
   componentDidMount() {
     this.props.getQuote();
+  }
+
+  componentDidUpdate() {
+    if (this.state.addWorkoutVisible) {
+      this.animate();
+    }
   }
 
   animate() {
@@ -58,17 +70,12 @@ class Dashboard extends React.Component {
   }
 
   renderPopup() {
-    const marginTop = this.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-1300, 0]
-    });
     if (this.state.addWorkoutVisible) {
-      this.animate();
       return (
         <View style={styles.popupContainer}>
           <Animated.View
             style={{
-              marginTop,
+              marginTop: this.marginTop,
               height: 1,
               width: 1
             }}
@@ -89,6 +96,7 @@ class Dashboard extends React.Component {
       );
     }
   }
+
   renderToday() {
     const weekdays = [
       'Sunday',
@@ -165,7 +173,11 @@ class Dashboard extends React.Component {
               globalStyles.contentContainer)
             }
           >
-            <LatestWorkout navigation={this.props.navigation} />
+            <WorkoutCard
+              workout={this.props.workout.workouts[0]}
+              navigation={this.props.navigation}
+              parent="Dashboard"
+            />
           </View>
         </ScrollView>
         <View style={globalStyles.bigAbsoluteButton}>
@@ -229,22 +241,6 @@ const styles = StyleSheet.create({
     height: '150%',
     zIndex: 200,
     alignSelf: 'stretch'
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 60,
-    backgroundColor: '#b9baf1',
-    marginBottom: 10
-  },
-  menuItemText: {
-    color: 'white',
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    marginLeft: 15,
-    marginRight: 15
   },
   welcomeContainer: { height: 300, justifyContent: 'center' },
   welcomeHeader: { fontSize: 28, textAlign: 'center' },
