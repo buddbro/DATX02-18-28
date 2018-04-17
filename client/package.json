@@ -42,6 +42,8 @@
     "react-native-popup-dialog": "^0.11.46",
     "react-native-popup-master": "^1.0.1",
     "react-native-rating": "^2.0.4",
+    "react-native-swipeable-calendar-strip": "0.0.1",
+    "react-native-swipeout": "^2.3.3",
     "react-navigation": "^1.0.0-beta.27",
     "react-rating": "^1.0.6",
     "react-redux": "^5.0.6",

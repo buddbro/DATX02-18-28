@@ -5,9 +5,11 @@ import {
   FlatList,
   ScrollView,
   Text,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 import CalendarStripItem from './CalendarStripItem';
+import moment from 'moment';
 
 const months = [
   'January',
@@ -27,208 +29,114 @@ const months = [
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default class CalendarStrip extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      currentOffset: 59,
-      currentIndex: 4,
-      dates: [],
-      weeksBeforeToday: 1,
-      weeksAfterToday: 1,
-      loadingDatesBefore: false,
-      loadingDatesAfter: false,
-      dayOffset: 0,
-      loading: false
+      ds: { rowHasChanged: (r1, r2) => r1 !== r2 },
+      loadedDays: [],
+      firstVisibleDay: moment(),
+      daysInRow: 7
     };
   }
 
   componentDidMount() {
+    const ds = this.getInitialDates();
     this.setState({
-      dates: this.getInitialDates()
-      // currentIndex: this.state.weeksBeforeToday * 7
-    });
-  }
-
-  loadDates(day) {
-    if (this.state.loading) {
-      return;
-    }
-
-    this.setState({
-      loading: true
-    });
-    const dates = [];
-    const currentDay = new Date();
-    currentDay.setDate(currentDay.getDate() - 4 + day);
-    for (i = 0; i < 9; i++) {
-      dates[i] = new Date();
-      dates[i].setDate(currentDay.getDate() + i);
-    }
-    this.setState({
-      dates: dates
+      ds: [...this.state.ds, ds]
     });
 
-    setTimeout(
-      () =>
-        this.setState({
-          loadingDatesBefore: false
-        }),
-      10
-    );
-  }
-
-  loadMoreDatesBefore() {
-    if (this.state.loadingDatesBefore) {
-      return;
-    }
-
-    this.setState({ loadingDatesBefore: true });
-
-    const dates = [];
-    const currentDay = new Date();
-    currentDay.setDate(
-      currentDay.getDate() - this.state.weeksBeforeToday * 7 + 4
-    );
-
-    for (i = 0; i < 7; i++) {
-      dates[i] = new Date();
-      dates[i].setDate(currentDay.getDate() + i);
-    }
-
-    this.setState({
-      dates: [...dates, ...this.state.dates],
-      weeksBeforeToday: this.state.weeksBeforeToday + 1
-    });
-
-    setTimeout(
-      () =>
-        this.setState({
-          loading: false
-        }),
-      2000
-    );
-
-    this.flatList.scrollToIndex({ animated: false, index: 7, viewOffset: 0 });
-  }
-
-  loadMoreDatesAfter(info) {
-    if (this.state.loadingDatesAfter) {
-      return;
-    }
-
-    this.setState({ loadingDatesAfter: true });
-
-    const dates = [];
-    const currentDay = new Date();
-    currentDay.setDate(
-      currentDay.getDate() + this.state.weeksAfterToday * 7 + 3
-    );
-
-    for (i = 0; i < 7; i++) {
-      dates[i] = new Date();
-      dates[i].setDate(currentDay.getDate() + i);
-    }
-
-    this.setState({
-      dates: [...this.state.dates, ...dates],
-      weeksAfterToday: this.state.weeksAfterToday + 1
-    });
-
-    setTimeout(
-      () =>
-        this.setState({
-          loadingDatesAfter: false
-        }),
-      2000
-    );
+    Platform.OS === 'ios'
+      ? this._calendar.scrollToOffset({
+          x: Dimensions.get('window').width * 2,
+          y: 0,
+          animated: false
+        })
+      : setTimeout(() => {
+          this._calendar.scrollToOffset({
+            x: Dimensions.get('window').width * 2,
+            y: 0,
+            animated: false
+          });
+        }, 200);
   }
 
   getInitialDates() {
-    const dates = [];
-    const currentDay = new Date();
-    currentDay.setDate(currentDay.getDate() - 4);
-
-    for (i = 0; i < 9; i++) {
-      dates[i] = new Date();
-      dates[i].setDate(currentDay.getDate() + i);
+    const firstDay = moment().subtract(
+      Math.round(this.state.daysInRow * 2 + this.state.daysInRow / 2),
+      'd'
+    );
+    const days = [];
+    for (i = 1; i < this.state.daysInRow * 5; i++) {
+      days.push(moment(firstDay).add(i, 'days'));
     }
 
-    return dates;
+    this.setState({
+      loadedDays: [...days]
+    });
+    return days;
   }
 
-  getAWeek() {
-    const weektmp = [];
-    const currentDay = new Date();
-    currentDay.setDate(currentDay.getDate() - this.state.weeksBeforeToday * 7);
-
-    for (
-      i = 0;
-      i < 7 * (this.state.weeksBeforeToday + this.state.weeksAfterToday);
-      i++
-    ) {
-      weektmp[i] = new Date();
-      weektmp[i].setDate(currentDay.getDate() + 1);
-      currentDay.setDate(currentDay.getDate() + 1);
+  loadNextWeek(nextDay) {
+    const days = [];
+    for (i = 1; i <= this.state.daysInRow; i++) {
+      days.push(nextDay.clone().add(i, 'days'));
     }
-
-    // for (i = 0; i < 9; i++) {
-    //   weektmp[i] = new Date();
-    // }
-    //
-    // for (i = 3; i > -1; i--) {
-    //   weektmp[i].setDate(weektmp[i + 1].getDate() - 1);
-    // }
-    // for (i = 5; i < 9; i++) {
-    //   weektmp[i].setDate(weektmp[i - 1].getDate() + 1);
-    // }
-    return weektmp;
+    this.setState({
+      ds: [this.state.ds, ...this.state.loadedDays, ...days],
+      loadedDays: [...this.state.loadedDays, ...days]
+    });
   }
 
-  decrementDates() {
-    if (this.state.loading) {
-      return;
+  loadPreviousWeek(nextDay) {
+    const days = [];
+    for (i = this.state.daysInRow; i >= 1; i--) {
+      days.push(nextDay.clone().subtract(i, 'days'));
     }
-    this.setState({ loading: true });
 
-    const tempDates = this.state.dates;
-    const tmp = tempDates[0];
-    tempDates.unshift(tmp.getDate() - 1);
+    this.setState(
+      () => {
+        const ds = this.state.ds;
 
-    tempDates.pop();
-    this.setState({ dates: tempDates });
-
-    setTimeout(
-      () =>
-        this.setState({
-          loading: false
-        }),
-      1000
+        return {
+          ds: [...this.state.ds, ds],
+          loadedDays: [...days, ...this.state.loadedDays]
+        };
+      },
+      () => {
+        this._calendar.scrollToOffset({
+          x: Dimensions.get('window').width * 2,
+          y: 0,
+          animated: false
+        });
+      }
     );
   }
 
-  incrementDates() {
-    if (this.state.loading) {
-      return;
+  scrollEnded(event) {
+    if (event.nativeEvent.contentOffset.x <= Dimensions.get('window').width) {
+      this.loadPreviousWeek(this.state.loadedDays[0]);
     }
-    this.setState({ loading: true });
+  }
 
-    const tempDates = this.state.dates;
-    const tmp = tempDates[8];
-    tempDates.push(tmp.getDate() + 1);
-    tempDates.shift();
-    this.setState({ dates: tempDates });
+  onEndReached() {
+    const lastDayInList = this.state.loadedDays[
+      this.state.loadedDays.length - 1
+    ];
+    this.loadNextWeek(lastDayInList);
+  }
 
-    setTimeout(
-      () =>
-        this.setState({
-          loading: false
-        }),
-      1000
-    );
+  onChangeVisibleRows(event) {
+    const firstVisibleRowId = Number(Object.keys(event.s1)[0]) + 1;
+    this.setState({
+      firstVisibleDay: this.state.loadedDays[firstVisibleRowId].day
+    });
   }
 
   render() {
+    if (!this.state.loadedDays) {
+      return null;
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.calendarTitle}>
@@ -241,53 +149,30 @@ export default class CalendarStrip extends React.Component {
         </Text>
 
         <FlatList
-          ref={ref => {
-            this.flatList = ref;
+          ref={calendar => (this._calendar = calendar)}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          automaticallyAdjustContentInsets
+          onMomentumScrollEnd={event => this.scrollEnded(event)}
+          scrollEventThrottle={500}
+          onChangeVisibleRows={event => {
+            this.onChangeVisibleRows(event);
           }}
-          onEndReachedThreshold={0}
-          onEndReached={this.decrementDates.bind(this)}
-          onScroll={event => {
-            if (event.nativeEvent.contentOffset.x <= 0) {
-              //this.setState({ dayOffset: this.state.dayOffset - 1 });
-              this.decrementDates();
-              //this.loadMoreDatesBefore();
-            }
-            /*  if (
-              event.nativeEvent.contentOffset.x - this.state.currentOffset >
-              30
-            ) {
-              this.setState({ currentOffset: this.state.currentOffset + 53 });
-              this.setState({ currentIndex: this.state.currentIndex + 1 });
-              this.incrementDates();
-            } else if (
-              event.nativeEvent.contentOffset.x - this.state.currentOffset <
-              -30
-            ) {
-              this.setState({ currentOffset: this.state.currentOffset - 53 });
-              this.setState({ currentIndex: this.state.currentIndex - 1 });
-              this.decrementDates();
-            }*/
+          onEndReached={() => {
+            this.onEndReached();
           }}
-          scrollEventThrottle={20}
-          horizontal={true}
-          data={this.state.dates}
-          contentContainerStyle={styles.flatList}
-          keyExtractor={item => item.getDay() * item.getMonth()}
-          initialScrollIndex={1}
-          snapToInterval={Dimensions.get('window').width / 7}
-          getItemLayout={(data, index) => ({
-            length: Dimensions.get('window').width / 7,
-            offset: Dimensions.get('window').width / 7 * index,
-            index
-          })}
+          onEndReachedThreshold={Dimensions.get('window').width}
+          data={this.state.loadedDays}
+          keyExtractor={item => item.valueOf()}
           renderItem={({ item, index }) => {
             const highlight = index === this.state.currentIndex;
             return (
               <CalendarStripItem
                 style={styles.stripItem}
                 highlighted={highlight}
-                dateNumber={item.getDate()}
-                dateText={weekdays[item.getDay()]}
+                dateNumber={item.format('DD')}
+                dateText={weekdays[item.day()]}
               />
             );
           }}

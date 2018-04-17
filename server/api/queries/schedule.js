@@ -140,10 +140,10 @@ const addExeciseToSchedule = (req, res, next, db) => {
 };
 
 module.exports = {
-  fetchSchedules,
-  deleteExerciseFromSchedule,
+  addExeciseToSchedule,
   addSchedule,
+  deleteExerciseFromSchedule,
   deleteSchedule,
   editSchedule,
-  addExeciseToSchedule
+  fetchSchedules
 };

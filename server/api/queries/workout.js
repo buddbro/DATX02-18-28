@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { months, getDate } = require('../utilities');
 
 const getWorkouts = (req, res, next, db) => {
@@ -20,18 +21,24 @@ const getWorkoutsForUser = (req, res, next, db) => {
     .then(function(data) {
       data.map(d => {
         if (d.start) {
-          const startTime = new Date(
-            new Date(d.start).getTime() + 60 * 60 * 1000
-          )
-            .toString()
-            .substring(16, 21);
-          d.start = startTime;
+          // const startTime = new Date(
+          //   new Date(d.start).getTime() + 60 * 60 * 1000
+          // )
+          //   .toString()
+          //   .substring(16, 21);
+          // d.start = startTime;
+          d.start = moment(d.start)
+            .add(1, 'h')
+            .format('HH:mm');
         }
         if (d.stop) {
-          const stopTime = new Date(new Date(d.stop).getTime() + 60 * 60 * 1000)
-            .toString()
-            .substring(16, 21);
-          d.stop = stopTime;
+          // const stopTime = new Date(new Date(d.stop).getTime() + 60 * 60 * 1000)
+          //   .toString()
+          //   .substring(16, 21);
+          // d.stop = stopTime;
+          d.stop = moment(d.stop)
+            .add(1, 'h')
+            .format('HH:mm');
         }
       });
       res.json(data);
@@ -209,15 +216,23 @@ const addWorkout = (req, res, next, db) => {
   };
 
   titleGenerator().then(title => {
+    const start = new Date();
     db
       .any(
-        "INSERT INTO workouts(title, date, user_id, difficulty, notes, start) VALUES($1, $2, $3, 3, '', NOW()) RETURNING id, title, date, difficulty, notes, start",
-        [title, readableDate, req.user.id]
+        "INSERT INTO workouts(title, date, user_id, difficulty, notes, start) VALUES($1, $2, $3, 3, '', $4) RETURNING id, title, date, difficulty, notes, start",
+        [title, readableDate, req.user.id, start]
       )
       .then(function(data) {
         const { id, title, date, difficulty, notes, start } = data[0];
         if (req.body.schedule === 0) {
-          res.json({ id, title, date, difficulty, notes, start });
+          res.json({
+            id,
+            title,
+            date,
+            difficulty,
+            notes,
+            start: moment(start).format('HH:mm')
+          });
         } else {
           db
             .any(
@@ -230,28 +245,46 @@ const addWorkout = (req, res, next, db) => {
                 []
               );
 
-              const workouts = data.reduce((acc, next) => [...acc, id], []);
+              if (exercises.length > 0) {
+                const workouts = data.reduce((acc, next) => [...acc, id], []);
 
-              const values = workouts
-                .reduce(
-                  (acc, next) => {
-                    return {
-                      q: `${acc.q}, ($${acc.i++},$${acc.i++})`,
-                      i: acc.i
-                    };
-                  },
-                  { q: '', i: 1 }
-                )
-                .q.substring(2);
+                const values = workouts
+                  .reduce(
+                    (acc, next) => {
+                      return {
+                        q: `${acc.q}, ($${acc.i++},$${acc.i++})`,
+                        i: acc.i
+                      };
+                    },
+                    { q: '', i: 1 }
+                  )
+                  .q.substring(2);
 
-              db
-                .any(
-                  `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
-                  exercises
-                )
-                .then(function(data) {
-                  res.json({ id, title, date, difficulty, notes, start });
+                db
+                  .any(
+                    `INSERT INTO exercises(exercise_type, workout) VALUES ${values}`,
+                    exercises
+                  )
+                  .then(function(data) {
+                    res.json({
+                      id,
+                      title,
+                      date,
+                      difficulty,
+                      notes,
+                      start: moment(start).format('HH:mm')
+                    });
+                  });
+              } else {
+                res.json({
+                  id,
+                  title,
+                  date,
+                  difficulty,
+                  notes,
+                  start: moment(start).format('HH:mm')
                 });
+              }
             });
         }
       })
@@ -269,6 +302,28 @@ const deleteWorkout = (req, res, next, db) => {
     ])
     .then(function() {
       res.status(200).json({ success: true });
+    });
+};
+
+const deleteSet = (req, res, next, db) => {
+  db
+    .any(
+      `SELECT sets.id AS set
+      FROM sets, exercises, workouts
+      WHERE sets.id = $1
+        AND sets.exercise = exercises.id
+        AND exercises.workout = workouts.id
+        AND workouts.user_id = $2`,
+      [req.params.id, req.user.id]
+    )
+    .then(data => {
+      if (data.length === 1) {
+        db.any('DELETE FROM sets WHERE id = $1', [req.params.id]).then(() => {
+          res.sendStatus(200);
+        });
+      } else {
+        res.sendStatus(403);
+      }
     });
 };
 
@@ -339,18 +394,19 @@ const addSetToExercise = (req, res, next, db) => {
 };
 
 module.exports = {
-  getWorkouts,
-  getWorkoutsForUser,
-  getCategoriesForWorkout,
-  getWorkoutWithId,
-  setDifficulty,
-  saveNotes,
-  setColor,
-  getSetsForExercise,
+  addExerciseToWorkout,
+  addSetToExercise,
   addWorkout,
+  deleteExerciseFromWorkout,
+  deleteSet,
   deleteWorkout,
   editWorkout,
-  addExerciseToWorkout,
-  deleteExerciseFromWorkout,
-  addSetToExercise
+  getCategoriesForWorkout,
+  getSetsForExercise,
+  getWorkouts,
+  getWorkoutsForUser,
+  getWorkoutWithId,
+  saveNotes,
+  setColor,
+  setDifficulty
 };

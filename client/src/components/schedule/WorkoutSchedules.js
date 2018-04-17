@@ -39,6 +39,50 @@ class WorkoutSchedules extends React.Component {
     this.setState({ addWorkoutModalVisible: false });
   }
 
+  renderSchedules() {
+    if (Object.keys(this.props.list).length === 0) {
+      return (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '30%'
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              marginLeft: 30,
+              marginRight: 30,
+              fontSize: 20,
+              fontWeight: '200',
+              color: '#7B7B7B'
+            }}
+          >
+            Press the plus sign above in order to create your first workout
+            template!
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <ScrollView>
+          {Object.keys(this.props.list)
+            .reverse()
+            .map((id, index) => (
+              <ScheduleCard
+                key={`schedule${index}`}
+                title={this.props.list[id].title}
+                id={id}
+                exercises={this.props.list[id].exercises}
+                navigation={this.props.navigation}
+              />
+            ))}
+        </ScrollView>
+      );
+    }
+  }
+
   render() {
     return (
       <KeyboardAwareScrollView
@@ -57,7 +101,7 @@ class WorkoutSchedules extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Schedule</Text>
+          <Text style={globalStyles.headerTitle}>Schedules</Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();
@@ -74,17 +118,7 @@ class WorkoutSchedules extends React.Component {
             </Text>
           </TouchableOpacity>
         </Header>
-        <ScrollView>
-          {Object.keys(this.props.list).map((id, index) => (
-            <ScheduleCard
-              key={`schedule${index}`}
-              title={this.props.list[id].title}
-              id={id}
-              exercises={this.props.list[id].exercises}
-              navigation={this.props.navigation}
-            />
-          ))}
-        </ScrollView>
+        {this.renderSchedules()}
       </KeyboardAwareScrollView>
     );
   }
@@ -107,36 +141,5 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     color: 'white'
-  },
-  headline: {
-    fontSize: 32,
-    color: '#b9baf1'
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginRight: 10,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    height: 200
-  },
-  innerContainer: {
-    alignItems: 'center',
-    backgroundColor: '#81c1ab'
-  },
-  textInput: {
-    height: 40,
-    width: 200,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 3,
-    margin: 5
   }
 });

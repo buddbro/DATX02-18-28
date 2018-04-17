@@ -58,6 +58,8 @@ const verifyToken = (req, res, next) => user.verifyToken(req, res, next, db);
 const logout = (req, res, next) => user.logout(req, res, next, db);
 const sendResetPasswordEmail = (req, res, next) =>
   user.sendResetPasswordEmail(req, res, next, db);
+const readInstruction = (req, res, next) =>
+  user.readInstruction(req, res, next, db);
 
 const getWorkouts = (req, res, next) => workout.getWorkouts(req, res, next, db);
 const getWorkoutsForUser = (req, res, next) =>
@@ -69,6 +71,7 @@ const getWorkoutWithId = (req, res, next) =>
 const getSetsForExercise = (req, res, next) =>
   workout.getSetsForExercise(req, res, next, db);
 const addWorkout = (req, res, next) => workout.addWorkout(req, res, next, db);
+const deleteSet = (req, res, next) => workout.deleteSet(req, res, next, db);
 const deleteWorkout = (req, res, next) =>
   workout.deleteWorkout(req, res, next, db);
 const editWorkout = (req, res, next) => workout.editWorkout(req, res, next, db);
@@ -127,47 +130,49 @@ const getRandomQuote = (req, res, next) =>
   quotes.getRandomQuote(req, res, next, db);
 
 module.exports = {
+  addExeciseToSchedule,
+  addExerciseToWorkout,
+  addExerciseType,
+  addSchedule,
+  addSetToExercise,
+  addWorkout,
+  calculateAchievements,
+  countExercises,
+  deleteExerciseFromSchedule,
+  deleteExerciseFromWorkout,
+  deleteExerciseType,
+  deleteSchedule,
+  deleteWorkout,
+  deleteSet,
+  editExercise,
+  editSchedule,
+  editWorkout,
+  fetchExerciseDescription,
+  fetchExerciseList,
+  fetchExerciseTypes,
+  fetchSchedules,
+  getAchievementsForUser,
+  getAllAchievements,
   getAllUsers,
+  getCategoriesForWorkout,
+  getFeedback,
+  getRandomQuote,
+  getSetsForExercise,
   getUser,
-  registerUser,
   getUserByEmail,
+  getWorkouts,
+  getWorkoutsForUser,
+  getWorkoutWithId,
   login,
-  verifyToken,
-  sendResetPasswordEmail,
+  postFeedback,
+  readInstruction,
+  registerUser,
   resetPasswordGet,
   resetPasswordPost,
-  getWorkouts,
-  getWorkoutWithId,
-  addWorkout,
-  deleteWorkout,
-  editWorkout,
-  postFeedback,
-  setDifficulty,
   saveNotes,
+  sendResetPasswordEmail,
   setColor,
-  getFeedback,
-  getWorkoutsForUser,
-  getCategoriesForWorkout,
-  fetchExerciseList,
-  fetchExerciseDescription,
-  addExerciseType,
-  countExercises,
-  deleteExerciseType,
-  fetchExerciseTypes,
-  editExercise,
-  addExerciseToWorkout,
-  deleteExerciseFromWorkout,
-  addSetToExercise,
-  getSetsForExercise,
+  setDifficulty,
   updateUser,
-  fetchSchedules,
-  deleteExerciseFromSchedule,
-  addSchedule,
-  deleteSchedule,
-  editSchedule,
-  addExeciseToSchedule,
-  getAllAchievements,
-  getAchievementsForUser,
-  calculateAchievements,
-  getRandomQuote
+  verifyToken
 };

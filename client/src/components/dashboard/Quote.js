@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-redux';
-// import {}
 import { getQuote } from '../../actions';
 
 class Quote extends React.Component {

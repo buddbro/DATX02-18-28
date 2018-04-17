@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { addWorkout, chooseWorkout } from '../../actions';
 import NavigationActions from 'react-navigation';
+import globalStyles from '../../styles/global-styles';
 
 class AddWorkout extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class AddWorkout extends React.Component {
   }
 
   renderSchedules() {
-    return Object.keys(this.props.schedules.list).map(schedule =>
+    return Object.keys(this.props.schedules.list).map(schedule => (
       <TouchableOpacity
         onPress={() => {
           this.setState({ waitForWorkout: true });
@@ -45,7 +46,7 @@ class AddWorkout extends React.Component {
           </Text>
         </View>
       </TouchableOpacity>
-    );
+    ));
   }
 
   renderAddMenu() {
@@ -58,6 +59,14 @@ class AddWorkout extends React.Component {
               this.props.addWorkout(0);
             }}
           >
+            <Text
+              style={[
+                globalStyles.pageTitle,
+                { color: '#7B7B7B', textAlign: 'center', marginBottom: 30 }
+              ]}
+            >
+              Start a workout
+            </Text>
             <View style={styles.bodySpecial}>
               <Text style={styles.textSpecial}>Quick Start</Text>
             </View>
@@ -86,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     top: 0,
     width: '80%',
-    backgroundColor: '#d3d4f7',
+    backgroundColor: '#fff',
     paddingBottom: 10,
     marginTop: 50,
     marginBottom: 50,
@@ -102,17 +111,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignSelf: 'stretch',
-    backgroundColor: '#fff',
+    backgroundColor: '#AEEEE1',
     marginTop: 8,
     marginLeft: 20,
     marginRight: 20,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#6669cb'
+    borderWidth: 0,
+    borderColor: '#7B7B7B'
   },
   text: {
-    fontSize: 18,
-    color: '#6669cb',
+    fontSize: 22,
+    color: '#7B7B7B',
     paddingTop: 10,
     paddingBottom: 10,
     textAlign: 'center'
@@ -121,18 +130,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignSelf: 'stretch',
-    backgroundColor: '#E2FBF6',
+    backgroundColor: '#7AD9C6',
     marginTop: 12,
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#6669cb'
+    borderWidth: 0,
+    borderColor: '#7B7B7B'
   },
   textSpecial: {
-    fontSize: 18,
-    color: '#6669cb',
+    fontSize: 28,
+    color: '#fff',
     paddingTop: 10,
     paddingBottom: 10,
     textAlign: 'center'

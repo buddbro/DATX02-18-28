@@ -13,17 +13,21 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
 import { Calendar, CalendarList } from 'react-native-calendars';
-import PopupDialog from 'react-native-popup-dialog';
+import PopupDialog, { SlideAnimation } from 'react-native-popup-dialog';
 
 import Header from '../utilities/Header';
-import LatestWorkout from '../dashboard/LatestWorkout';
+import WorkoutCard from '../dashboard/WorkoutCard';
 import globalStyles, { colors } from '../../styles/global-styles';
+
+const slideAnimation = new SlideAnimation({
+  slideFrom: 'bottom'
+});
 
 class WorkoutCalendar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedDay: '' };
+    this.state = { workoutsThisDay: [] };
   }
   static navigationOptions = {
     drawerIcon: () => (
@@ -35,8 +39,6 @@ class WorkoutCalendar extends React.Component {
   };
 
   getWorkoutDates() {
-    console.log(this.props.workouts);
-
     const translateColor = color => {
       switch (color) {
         case 'yellow':
@@ -82,23 +84,35 @@ class WorkoutCalendar extends React.Component {
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <PopupDialog
-          height={445}
+          height={450}
           dialogStyle={{ borderRadius: 0 }}
+          dialogAnimation={slideAnimation}
           ref={popupDialog => {
             this.popupDialog = popupDialog;
           }}
         >
           <ScrollView>
-            <LatestWorkout
-              style={{ marginBottom: 0 }}
-              navigation={this.props.navigation}
-            />
+            {this.state.workoutsThisDay.map(workout => (
+              <WorkoutCard
+                style={{ marginBottom: 0 }}
+                navigation={this.props.navigation}
+                key={`workoutcard${workout.id}`}
+                workout={workout}
+                parent="Calendar"
+                callback={() => this.popupDialog.dismiss()}
+              />
+            ))}
           </ScrollView>
         </PopupDialog>
         <CalendarList
           onDayPress={day => {
-            this.setState({ selectedDay: day });
-            this.popupDialog.show();
+            const workoutsThisDay = this.props.workouts.filter(
+              workout => workout.date.substring(0, 10) === day.dateString
+            );
+            this.setState({ workoutsThisDay });
+            if (workoutsThisDay.length !== 0) {
+              this.popupDialog.show();
+            }
           }}
           firstDay={1}
           theme={{

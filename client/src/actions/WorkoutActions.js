@@ -1,21 +1,22 @@
 import {
-  ADD_WORKOUT,
-  DELETE_WORKOUT,
-  CHOOSE_WORKOUT,
-  FETCH_WORKOUTS,
-  EDIT_WORKOUT,
-  SAVE_WORKOUT,
-  CLEAR_WORKOUT,
-  CLEAR_EXERCISE,
   ADD_EXERCISE_TO_WORKOUT,
-  DELETE_EXERCISE_FROM_WORKOUT,
   ADD_SET_TO_EXERCISE,
+  ADD_WORKOUT,
+  CHOOSE_WORKOUT,
+  CLEAR_EXERCISE,
+  CLEAR_WORKOUT,
+  DELETE_EXERCISE_FROM_WORKOUT,
+  DELETE_WORKOUT,
+  EDIT_WORKOUT,
+  DELETE_SET,
+  FETCH_WORKOUTS,
   GET_SETS_FOR_EXERCISE,
-  VIEW_SET,
-  VIEW_EXERCISE,
-  SET_DIFFICULTY,
   SAVE_NOTES,
-  SET_COLOR
+  SAVE_WORKOUT,
+  SET_COLOR,
+  SET_DIFFICULTY,
+  VIEW_EXERCISE,
+  VIEW_SET
 } from './types';
 
 import { AsyncStorage } from 'react-native';
@@ -23,6 +24,11 @@ import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 
 export function chooseWorkout(id) {
+  if (id === -1) {
+    return {
+      type: CHOOSE_WORKOUT
+    };
+  }
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -32,15 +38,10 @@ export function chooseWorkout(id) {
         .then(({ data }) => {
           const exercises = data;
           const sets = {};
-          // axios
-          //   .get(`https://getpushapp.com/api/workouts/${id}/sets`)
-          //   .then(({ data }) => {
-          //     const sets = data;
           dispatch({
             type: CHOOSE_WORKOUT,
             payload: { exercises, sets, difficulty: data[0].difficulty }
           });
-          // });
         });
     });
   };
@@ -127,6 +128,24 @@ export function deleteWorkout(workout) {
   };
 }
 
+export function deleteSet(set) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .delete(`https://getpushapp.com/api/workouts/sets/${set}`, {
+          headers: { Authorization: `Bearer ${jwt}` }
+        })
+        .then(() => {
+          console.log(set);
+          dispatch({
+            type: DELETE_SET,
+            payload: set
+          });
+        });
+    });
+  };
+}
+
 export function addExerciseToWorkout(workoutId, exerciseId) {
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
@@ -169,6 +188,7 @@ export function deleteExerciseFromWorkout(exerciseId) {
 }
 
 export function addSetToExercise(exerciseId, reps, weight) {
+  console.log(exerciseId, reps, weight);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios

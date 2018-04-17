@@ -58,7 +58,7 @@ display: none!important;
               <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td height="70" style="padding: 0 20px 20px 0;">
-                    <img src="https://www.getpushapp.com/mail/assets/icon.gif" width="70" height="70" border="0" alt="" style="height: auto; opacity: 0;">
+                    <!--<img src="https://www.getpushapp.com/mail/assets/icon.gif" width="70" height="70" border="0" alt="" style="height: auto; opacity: 0;">-->
                   </td>
                 </tr>
               </table>
@@ -101,7 +101,7 @@ display: none!important;
               <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td height="115" style="padding: 0 20px 20px 0;">
-                    <img src="https://www.getpushapp.com/mail/assets/email-thumbnail.gif" width="115" height="115" border="0" alt="" style="height: auto;">
+                    <!--<img src="https://www.getpushapp.com/mail/assets/email-thumbnail.gif" width="115" height="115" border="0" alt="" style="height: auto;">-->
                   </td>
                 </tr>
               </table>

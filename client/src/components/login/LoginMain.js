@@ -43,12 +43,3 @@ export default class LoginMain extends React.Component {
     return <LoginWithNavigationState />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    paddingTop: 50
-  }
-});

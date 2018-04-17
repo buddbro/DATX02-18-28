@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const getAllUsers = (req, res, next, db) => {
   db
     .any('SELECT * FROM users ORDER BY id')
-    .then(function(data) {
+    .then(data => {
       res.status(200).json(data);
     })
     .catch(function(err) {
@@ -22,7 +22,7 @@ const getUser = (req, res, next, db) => {
       `SELECT id, email, name, created, lastlogin, age, height, weight, notifications FROM users WHERE id = $1`,
       [req.user.id]
     )
-    .then(function(data) {
+    .then(data => {
       const user = data[0];
 
       db
@@ -45,8 +45,8 @@ const login = (req, res, next, db) => {
       'SELECT id, password, name, age, height, weight, notifications FROM users WHERE email = $1',
       [req.body.email]
     )
-    .then(function(data) {
-      if (!data.length) {
+    .then(data => {
+      if (!data.length || !data[0].password) {
         res.json({ error: 'User not found' });
       }
 
@@ -57,7 +57,7 @@ const login = (req, res, next, db) => {
             getDate(),
             req.body.email
           ])
-          .then(function(data) {
+          .then(data => {
             jwt.sign({ id }, config.AUTH_SECRET_KEY, (err, token) => {
               res.json({ name, token, age, height, weight, notifications });
             });
@@ -77,7 +77,7 @@ const verifyToken = (req, res, next, db) => {
       'SELECT id, email, name, age, height, weight, notifications FROM users WHERE id = $1',
       [req.user.id]
     )
-    .then(function(data) {
+    .then(data => {
       const { name, email, age, height, weight, notifications } = data[0];
       res.json({ name, email, age, height, weight, notifications });
     })
@@ -91,7 +91,7 @@ const sendResetPasswordEmail = (req, res, next, db) => {
 
   db
     .any('SELECT id FROM users WHERE email = $1', [req.body.email])
-    .then(function(data) {
+    .then(data => {
       if (data.length) {
         const { id } = data[0];
         db
@@ -100,16 +100,19 @@ const sendResetPasswordEmail = (req, res, next, db) => {
             req.body.email
           ])
           .then(function(data) {
-            mailgun.messages().send({
-              from: 'PushApp <noreply@getpushapp.com>',
-              to: req.body.email,
-              subject: `Reset password for PushApp`,
-              html: mailTemplates.forgotPassword(id, token)
-            }, function(error, body) {
-              if (error) {
-                console.log(error);
+            mailgun.messages().send(
+              {
+                from: 'PushApp <noreply@getpushapp.com>',
+                to: req.body.email,
+                subject: `Reset password for PushApp`,
+                html: mailTemplates.forgotPassword(id, token)
+              },
+              function(error, body) {
+                if (error) {
+                  console.log(error);
+                }
               }
-            });
+            );
             res.status(200).json({ success: true });
           });
       } else {
@@ -130,31 +133,50 @@ const getUserByEmail = (req, res, next, db) => {
 };
 
 const registerUser = (req, res, next, db, sendMail) => {
-  {
-    const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!emailRegex.test(req.body.email)) {
-      res
-        .status(200)
-        .json({ success: false, error: 'Invalid email, please try again' });
-      return next();
-    }
+  // const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  // if (!emailRegex.test(req.body.email)) {
+  //   res
+  //     .status(200)
+  //     .json({ success: false, error: 'Invalid email, please try again' });
+  // }
 
-    db
-      .any(
-        'INSERT INTO users(email, password, name, created, lastlogin) VALUES($1, $2, $3, $4, $5) RETURNING id',
-        [req.body.email, req.body.password, req.body.name, getDate(), getDate()]
-      )
-      .then(function(data) {
-        jwt.sign({ id: data[0].id }, config.AUTH_SECRET_KEY, (err, token) => {
-          sendMail(req.body.email, req.body.name);
-          res.json({ token });
+  db
+    .any('SELECT COUNT(*) AS existing FROM users WHERE email = $1', [
+      req.body.email
+    ])
+    .then(data => {
+      if (Number(data[0].existing) !== 0) {
+        res.status(200).json({
+          success: false,
+          error: 'Email already exists, forgot your password?'
         });
-      });
-  }
+      } else {
+        db
+          .any(
+            'INSERT INTO users(email, password, name, created, lastlogin) VALUES($1, $2, $3, $4, $5) RETURNING id',
+            [
+              req.body.email,
+              req.body.password,
+              req.body.name,
+              getDate(),
+              getDate()
+            ]
+          )
+          .then(data => {
+            jwt.sign(
+              { id: data[0].id },
+              config.AUTH_SECRET_KEY,
+              (err, token) => {
+                sendMail(req.body.email, req.body.name);
+                res.json({ token });
+              }
+            );
+          });
+      }
+    });
 };
 
 const updateUser = (req, res, next, db) => {
-  console.log(req.body);
   const {
     name,
     email,
@@ -225,15 +247,41 @@ const resetPasswordGet = (req, res, next, db) => {
     });
 };
 
+const readInstruction = (req, res, next, db) => {
+  const exercise = Number(req.params.exercise);
+  db
+    .any(
+      'SELECT COUNT(*) AS read FROM instructions_read WHERE user_id = $1 AND exercise_type = $2',
+      [req.user.id, req.params.exercise]
+    )
+    .then(data => {
+      const read = Number(data[0].read);
+      console.log(read);
+      if (read === 0) {
+        db
+          .any(
+            'INSERT INTO instructions_read(user_id, exercise_type) VALUES($1, $2)',
+            [req.user.id, req.params.exercise]
+          )
+          .then(data => {
+            res.sendStatus(200);
+          });
+      } else {
+        res.sendStatus(200);
+      }
+    });
+};
+
 module.exports = {
-  getUser,
   getAllUsers,
-  login,
-  verifyToken,
-  resetPasswordPost,
-  resetPasswordGet,
-  updateUser,
-  registerUser,
+  getUser,
   getUserByEmail,
-  sendResetPasswordEmail
+  login,
+  readInstruction,
+  registerUser,
+  resetPasswordGet,
+  resetPasswordPost,
+  sendResetPasswordEmail,
+  updateUser,
+  verifyToken
 };

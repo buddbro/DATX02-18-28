@@ -35,8 +35,8 @@ const DrawerStack = DrawerNavigator(
     Dashboard: {
       screen: Dashboard
     },
-    History: { screen: WorkoutHistory },
-    Schedule: { screen: WorkoutSchedules },
+    Calendar: { screen: WorkoutHistory },
+    Schedules: { screen: WorkoutSchedules },
     Achievements: { screen: Achievements },
     Settings: { screen: Settings }
   },

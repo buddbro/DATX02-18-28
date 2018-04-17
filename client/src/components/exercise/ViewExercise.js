@@ -12,15 +12,18 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  getSetsForExercise,
-  viewSet,
   addSetToExercise,
+  clearExercise,
   deleteExerciseFromWorkout,
+  deleteSet,
   getExerciseDescription,
-  clearExercise
+  getSetsForExercise,
+  readInstruction,
+  viewSet
 } from '../../actions';
 import NavigationActions from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Swipeout from 'react-native-swipeout';
 
 // import { BarChart } from 'react-native-svg-charts';
 
@@ -50,6 +53,7 @@ class ViewExercise extends React.Component {
           <ExerciseHelp style={{ zIndex: 500 }} />
           <TouchableOpacity
             onPress={() => {
+              this.props.readInstruction(this.props.visibleExerciseId);
               this.setState({ instructionsToggled: false });
             }}
             style={styles.popupBackground}
@@ -138,8 +142,9 @@ class ViewExercise extends React.Component {
           <BackArrow
             color="white"
             callback={() => {
+              this.addSetToExercise();
               this.props.clearExercise();
-              this.setState({ reps: '', sets: '' });
+              this.setState({ reps: '', weight: '' });
               this.props.navigation.dispatch(
                 NavigationActions.NavigationActions.navigate({
                   routeName: 'ViewWorkout'
@@ -161,118 +166,112 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: '#fff' }}
-          contentContainerStyle={styles.container}
-          scrollEnabled={true}
-          extraHeight={150}
-          enableOnAndroid={true}
-        >
-          <View>
-            <View style={styles.setsContainer}>
-              <View style={styles.singleSetContainer}>
-                <View style={{ width: '20%' }}>
-                  <Text style={styles.setNumber}>#</Text>
-                </View>
-
-                <View style={styles.sets}>
-                  <Text
-                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                  >
-                    Reps
-                  </Text>
-                </View>
-
-                <View style={styles.reps}>
-                  <Text
-                    style={{ textAlign: 'center', fontSize: 18, color: '#fff' }}
-                  >
-                    Weight (kg)
-                  </Text>
-                </View>
-              </View>
-
-              <FlatList
-                style={{ marginLeft: 8, marginRight: 8 }}
-                data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-                keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-                renderItem={({ item, index }) => {
-                  const key = `${this.props.id}${item.id}`;
-                  return (
-                    <ExerciseSet
-                      id={item.id}
-                      index={index}
-                      reps={
-                        item.id === -1 ? this.state.reps : String(item.reps)
-                      }
-                      weight={
-                        item.id === -1 ? this.state.weight : String(item.weight)
-                      }
-                      exerciseId={this.props.id}
-                      setReps={this.setReps.bind(this)}
-                      setWeight={this.setWeight.bind(this)}
-                    />
-                  );
-                }}
-              />
+        <View style={styles.setsContainer}>
+          <View style={styles.singleSetContainer}>
+            <View style={{ width: '20%' }}>
+              <Text style={styles.setNumber}>#</Text>
             </View>
 
-            {/*        <View
-            style={{ backgroundColor: '#b9baf1', margin: 10, borderRadius: 3 }}
-          >
-            <Text
-              style={{
-                marginLeft: 15,
-                marginTop: 6,
-                marginBottom: 15,
-                color: '#444',
-                fontSize: 18
-              }}
-            >
-              Statistics
-            </Text>
-            <BarChart
-              style={{ height: 200 }}
-              data={statisticsData}
-              contentInset={{ top: 30, bottom: 30, left: 10, right: 10 }}
-            />
-          </View> */}
+            <View style={styles.sets} />
+
+            <View style={styles.reps} />
           </View>
-        </KeyboardAwareScrollView>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            bottom: 40,
-            paddingTop: 55
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => this.addSetToExercise()}
-            style={styles.addButton}
+
+          <FlatList
+            style={{ marginLeft: 8, marginRight: 8 }}
+            data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+            keyExtractor={(item, index) => `${item.id}${this.props.id}`}
+            renderItem={({ item, index }) => {
+              const key = `${this.props.id}${item.id}`;
+              const button = [
+                {
+                  text: 'Delete',
+                  backgroundColor: '#FD6A6E',
+                  onPress: () => {
+                    this.props.deleteSet(item.id);
+                  },
+                  component: (
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontSize: 16,
+                          textAlign: 'center'
+                        }}
+                      >
+                        Delete
+                      </Text>
+                    </View>
+                  )
+                }
+              ];
+              return (
+                <Swipeout
+                  right={button}
+                  backgroundColor="#FD6A6E"
+                  disabled={item.id === -1}
+                >
+                  <ExerciseSet
+                    id={item.id}
+                    index={index}
+                    reps={item.id === -1 ? this.state.reps : String(item.reps)}
+                    weight={
+                      item.id === -1 ? this.state.weight : String(item.weight)
+                    }
+                    exerciseId={this.props.id}
+                    setReps={this.setReps.bind(this)}
+                    setWeight={this.setWeight.bind(this)}
+                  />
+                </Swipeout>
+              );
+            }}
+          />
+        </View>
+        <View>
+          <KeyboardAwareScrollView //TODO
+            style={{ backgroundColor: '#fff', paddingBottom: 35 }}
+            contentContainerStyle={styles.container}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={false}
+            extraHeight={150}
+            enableOnAndroid={true}
           >
-            <Text
+            <View
               style={{
-                fontSize: 24,
-                color: '#fff'
+                justifyContent: 'center',
+                alignItems: 'center',
+                bottom: 40,
+                paddingTop: 55
               }}
             >
-              Add Set
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.deleteExercise.bind(this)}
-            style={styles.deleteButton}
-          >
-            <Text
-              style={{
-                fontSize: 24,
-                color: '#fff'
-              }}
-            >
-              Delete Exercise
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.addSetToExercise()}
+                style={styles.addButton}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    color: '#fff'
+                  }}
+                >
+                  Add Set
+                </Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity
+                onPress={this.deleteExercise.bind(this)}
+                style={styles.deleteButton}
+              >
+                <Text
+                  style={{
+                    fontSize: 24,
+                    color: '#fff'
+                  }}
+                >
+                  Delete Exercise
+                </Text>
+              </TouchableOpacity> */}
+            </View>
+          </KeyboardAwareScrollView>
         </View>
       </View>
     );
@@ -295,28 +294,24 @@ const mapStateToProps = ({ user, workout, exercises }) => {
 
 export default connect(mapStateToProps, {
   getSetsForExercise,
-  viewSet,
   addSetToExercise,
-  getExerciseDescription,
   clearExercise,
-  deleteExerciseFromWorkout
+  deleteExerciseFromWorkout,
+  deleteSet,
+  getExerciseDescription,
+  readInstruction,
+  viewSet
 })(ViewExercise);
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    //paddingBottom: 500
+    // height: '100%'
+  },
   container: {
     flexDirection: 'column',
     backgroundColor: '#fff',
     height: '100%'
-  },
-  addSetButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 60,
-    width: '104%',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#8b8ddf',
-    marginBottom: 15
   },
   addButton: {
     width: '70%',
@@ -326,12 +321,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    // marginLeft: 15,
-    // marginRight: 15,
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#6669cb'
+    borderColor: '#51C1AB'
   },
   deleteButton: {
     width: '70%',
@@ -341,28 +334,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    // marginLeft: 15,
-    // marginRight: 15,
-    backgroundColor: '#cb6669',
+    backgroundColor: '#FD6A6E',
     borderRadius: 8,
     borderWidth: 5,
-    borderColor: '#cb6669'
-  },
-  exerciseTitle: {
-    color: '#fff',
-    fontSize: 26,
-    fontWeight: 'bold'
+    borderColor: '#FD6A6E'
   },
   setsContainer: {
     backgroundColor: '#fff',
-    margin: 10,
+    marginTop: 10,
     borderRadius: 3
   },
   singleSetContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#6669cb',
+    backgroundColor: '#51C1AB',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     paddingRight: 25,
@@ -379,11 +365,6 @@ const styles = StyleSheet.create({
   },
   reps: {
     width: '40%'
-  },
-  instructions: {
-    fontWeight: '200',
-    fontSize: 18,
-    color: '#7B7B7B'
   },
   popup: {
     position: 'absolute',
