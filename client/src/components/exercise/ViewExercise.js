@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import {
   addSetToExercise,
   clearExercise,
+  copySet,
   deleteExerciseFromWorkout,
   deleteSet,
   getExerciseDescription,
@@ -24,8 +25,6 @@ import {
 import NavigationActions from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Swipeout from 'react-native-swipeout';
-
-// import { BarChart } from 'react-native-svg-charts';
 
 import ExerciseSet from './ExerciseSet';
 import ExerciseHelp from './ExerciseHelp';
@@ -41,7 +40,8 @@ class ViewExercise extends React.Component {
       accordionToggled: false,
       reps: '',
       weight: '',
-      instructionsToggled: false
+      instructionsToggled: false,
+      swipeOpen: -1
     };
   }
 
@@ -116,28 +116,96 @@ class ViewExercise extends React.Component {
     );
   }
 
+  renderSets() {
+    return this.props.sets.map((item, index) => {
+      const key = `${this.props.id}${item.id}`;
+      const cloneButton = [
+        {
+          text: 'Delete',
+          backgroundColor: '#6A6EFD',
+          onPress: () => {
+            this.setState({ swipeOpen: -1 });
+            this.props.copySet(item.id);
+          },
+          component: (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 16,
+                  textAlign: 'center'
+                }}
+              >
+                Copy
+              </Text>
+            </View>
+          )
+        }
+      ];
+
+      const deleteButton = [
+        {
+          text: 'Delete',
+          backgroundColor: '#fd6a6e',
+          onPress: () => {
+            this.props.deleteSet(item.id);
+          },
+          component: (
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 16,
+                  textAlign: 'center'
+                }}
+              >
+                Delete
+              </Text>
+            </View>
+          )
+        }
+      ];
+
+      return (
+        <Swipeout
+          key={item.id}
+          left={cloneButton}
+          right={deleteButton}
+          onOpen={(section, row, i) => {
+            this.setState({ swipeOpen: item.id });
+          }}
+          close={this.state.swipeOpen !== item.id}
+          backgroundColor={
+            (index % 2 === 0 && this.props.sets.length % 2 === 1) ||
+            (index % 2 === 1 && this.props.sets.length % 2 === 0)
+              ? '#aeeee1'
+              : '#98e0d2'
+          }
+          disabled={item.id === -1}
+        >
+          <ExerciseSet
+            id={item.id}
+            index={this.props.sets.length - index - 1}
+            reps={item.id === -1 ? this.state.reps : String(item.reps)}
+            weight={item.id === -1 ? this.state.weight : String(item.weight)}
+            exerciseId={this.props.id}
+            setReps={this.setReps.bind(this)}
+            setWeight={this.setWeight.bind(this)}
+          />
+        </Swipeout>
+      );
+    });
+  }
+
   render() {
     if (this.props.loading) {
       return <View style={styles.container} />;
     }
 
-    const statisticsData = [
-      {
-        values: this.props.sets.reduce((acc, next) => {
-          return [...acc, next.reps * next.weight];
-        }, []),
-        positive: {
-          fill: '#6669cb'
-        },
-        negative: {
-          fill: '#6669cb'
-        }
-      }
-    ];
-
     return (
       <View style={styles.container}>
         {this.viewInstructions()}
+
         <Header backgroundColor="#b9baf1">
           <BackArrow
             color="white"
@@ -166,113 +234,153 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <View style={styles.setsContainer}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          style={styles.setsContainer}
+        >
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              bottom: 10,
+              paddingTop: 10
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                Keyboard.dismiss();
+                this.addSetToExercise();
+              }}
+              style={[
+                styles.addButton,
+                {
+                  backgroundColor:
+                    this.state.reps !== '' && this.state.weight !== ''
+                      ? '#51c1ab'
+                      : '#d9d9d9'
+                }
+              ]}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  color: '#fff'
+                }}
+              >
+                Add Set
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <View style={styles.singleSetContainer}>
             <View style={{ width: '20%' }}>
               <Text style={styles.setNumber}>#</Text>
             </View>
 
-            <View style={styles.sets} />
+            <View style={styles.sets}>
+              <Text style={styles.setNumber}>Reps</Text>
+            </View>
 
-            <View style={styles.reps} />
+            <View style={styles.reps}>
+              <Text style={styles.setNumber}>Weight</Text>
+            </View>
           </View>
 
-          <FlatList
-            style={{ marginLeft: 8, marginRight: 8 }}
-            data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
-            keyExtractor={(item, index) => `${item.id}${this.props.id}`}
-            renderItem={({ item, index }) => {
-              const key = `${this.props.id}${item.id}`;
-              const button = [
-                {
-                  text: 'Delete',
-                  backgroundColor: '#FD6A6E',
-                  onPress: () => {
-                    this.props.deleteSet(item.id);
-                  },
-                  component: (
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                      <Text
-                        style={{
-                          color: '#fff',
-                          fontSize: 16,
-                          textAlign: 'center'
-                        }}
-                      >
-                        Delete
-                      </Text>
-                    </View>
-                  )
-                }
-              ];
-              return (
-                <Swipeout
-                  right={button}
-                  backgroundColor="#FD6A6E"
-                  disabled={item.id === -1}
-                >
-                  <ExerciseSet
-                    id={item.id}
-                    index={index}
-                    reps={item.id === -1 ? this.state.reps : String(item.reps)}
-                    weight={
-                      item.id === -1 ? this.state.weight : String(item.weight)
-                    }
-                    exerciseId={this.props.id}
-                    setReps={this.setReps.bind(this)}
-                    setWeight={this.setWeight.bind(this)}
-                  />
-                </Swipeout>
-              );
-            }}
-          />
-        </View>
-        <View>
-          <KeyboardAwareScrollView //TODO
-            style={{ backgroundColor: '#fff', paddingBottom: 35 }}
-            contentContainerStyle={styles.container}
-            resetScrollToCoords={{ x: 0, y: 0 }}
-            scrollEnabled={false}
-            extraHeight={150}
-            enableOnAndroid={true}
-          >
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                bottom: 40,
-                paddingTop: 55
+          <View style={{ marginLeft: 8, marginRight: 8 }}>
+            <ExerciseSet
+              id={-1}
+              index={this.props.sets.length}
+              reps={this.state.reps}
+              weight={this.state.weight}
+              exerciseId={this.props.id}
+              setReps={this.setReps.bind(this)}
+              setWeight={this.setWeight.bind(this)}
+            />
+            {this.renderSets()}
+          </View>
+
+          {/* <FlatList
+              style={{ marginLeft: 8, marginRight: 8 }}
+              data={[...this.props.sets, { id: -1, reps: '', weight: '' }]}
+              keyExtractor={(item, index) => `${item.id}${this.props.id}`}
+              renderItem={({ item, index }) => {
+                const key = `${this.props.id}${item.id}`;
+                const cloneButton = [
+                  {
+                    text: 'Delete',
+                    backgroundColor: '#6A6EFD',
+                    onPress: () => {
+                      this.setState({ swipeOpen: -1 });
+                      this.props.copySet(item.id);
+                    },
+                    component: (
+                      <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <Text
+                          style={{
+                            color: '#fff',
+                            fontSize: 16,
+                            textAlign: 'center'
+                          }}
+                        >
+                          Copy
+                        </Text>
+                      </View>
+                    )
+                  }
+                ];
+
+                const deleteButton = [
+                  {
+                    text: 'Delete',
+                    backgroundColor: '#fd6a6e',
+                    onPress: () => {
+                      this.props.deleteSet(item.id);
+                    },
+                    component: (
+                      <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <Text
+                          style={{
+                            color: '#fff',
+                            fontSize: 16,
+                            textAlign: 'center'
+                          }}
+                        >
+                          Delete
+                        </Text>
+                      </View>
+                    )
+                  }
+                ];
+
+                return (
+                  <Swipeout
+                    left={cloneButton}
+                    right={deleteButton}
+                    onOpen={(section, row, i) => {
+                      this.setState({ swipeOpen: index });
+                    }}
+                    close={this.state.swipeOpen !== index}
+                    backgroundColor={index % 2 === 0 ? '#aeeee1' : '#98e0d2'}
+                    disabled={item.id === -1}
+                  >
+                    <ExerciseSet
+                      id={item.id}
+                      index={index}
+                      reps={
+                        item.id === -1 ? this.state.reps : String(item.reps)
+                      }
+                      weight={
+                        item.id === -1 ? this.state.weight : String(item.weight)
+                      }
+                      exerciseId={this.props.id}
+                      setReps={this.setReps.bind(this)}
+                      setWeight={this.setWeight.bind(this)}
+                    />
+                  </Swipeout>
+                );
               }}
-            >
-              <TouchableOpacity
-                onPress={() => this.addSetToExercise()}
-                style={styles.addButton}
-              >
-                <Text
-                  style={{
-                    fontSize: 24,
-                    color: '#fff'
-                  }}
-                >
-                  Add Set
-                </Text>
-              </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={this.deleteExercise.bind(this)}
-                style={styles.deleteButton}
-              >
-                <Text
-                  style={{
-                    fontSize: 24,
-                    color: '#fff'
-                  }}
-                >
-                  Delete Exercise
-                </Text>
-              </TouchableOpacity> */}
-            </View>
-          </KeyboardAwareScrollView>
-        </View>
+            /> */}
+        </ScrollView>
       </View>
     );
   }
@@ -293,12 +401,13 @@ const mapStateToProps = ({ user, workout, exercises }) => {
 };
 
 export default connect(mapStateToProps, {
-  getSetsForExercise,
   addSetToExercise,
   clearExercise,
+  copySet,
   deleteExerciseFromWorkout,
   deleteSet,
   getExerciseDescription,
+  getSetsForExercise,
   readInstruction,
   viewSet
 })(ViewExercise);
@@ -314,34 +423,20 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   addButton: {
-    width: '70%',
-    paddingLeft: 10,
-    paddingRight: 10,
-    height: 50,
+    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 10,
+    borderColor: '#fff',
+    width: '100%',
     marginTop: 10,
-    backgroundColor: '#51C1AB',
-    borderRadius: 8,
-    borderWidth: 5,
-    borderColor: '#51C1AB'
-  },
-  deleteButton: {
-    width: '70%',
-    paddingLeft: 10,
-    paddingRight: 10,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-    backgroundColor: '#FD6A6E',
-    borderRadius: 8,
-    borderWidth: 5,
-    borderColor: '#FD6A6E'
+    marginLeft: 10,
+    marginRight: 10
   },
   setsContainer: {
     backgroundColor: '#fff',
-    marginTop: 10,
+    marginLeft: 2,
+    marginRight: 2,
     borderRadius: 3
   },
   singleSetContainer: {
@@ -351,7 +446,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#51C1AB',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    paddingRight: 25,
     marginLeft: 8,
     marginRight: 8
   },

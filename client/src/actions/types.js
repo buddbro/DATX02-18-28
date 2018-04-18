@@ -12,6 +12,7 @@ export const CLEAR_EXERCISE = 'clear_exercise';
 export const CLEAR_WORKOUT = 'clear_workout';
 export const DELETE_WORKOUT = 'delete_workout';
 export const DELETE_SET = 'delete_set';
+export const COPY_SET = 'copy_set';
 export const EDIT_WORKOUT = 'edit_workout';
 export const FETCH_WORKOUTS = 'fetch_workouts';
 export const SAVE_NOTES = 'save_notes';

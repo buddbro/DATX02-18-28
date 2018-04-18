@@ -31,7 +31,7 @@ export default (globalStyles = StyleSheet.create({
     height: 80,
     backgroundColor: colors.themeMainColor,
     alignItems: 'center',
-    padding: 20,
+    paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 50
@@ -166,7 +166,7 @@ export default (globalStyles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#FFC5BA',
+    backgroundColor: '#FFC5BA'
   },
   titleInput: {},
   notes: {

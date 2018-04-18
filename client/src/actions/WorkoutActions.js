@@ -5,6 +5,7 @@ import {
   CHOOSE_WORKOUT,
   CLEAR_EXERCISE,
   CLEAR_WORKOUT,
+  COPY_SET,
   DELETE_EXERCISE_FROM_WORKOUT,
   DELETE_WORKOUT,
   EDIT_WORKOUT,
@@ -136,7 +137,6 @@ export function deleteSet(set) {
           headers: { Authorization: `Bearer ${jwt}` }
         })
         .then(() => {
-          console.log(set);
           dispatch({
             type: DELETE_SET,
             payload: set
@@ -188,7 +188,6 @@ export function deleteExerciseFromWorkout(exerciseId) {
 }
 
 export function addSetToExercise(exerciseId, reps, weight) {
-  console.log(exerciseId, reps, weight);
   return dispatch => {
     AsyncStorage.getItem('jwt').then(jwt => {
       axios
@@ -206,6 +205,27 @@ export function addSetToExercise(exerciseId, reps, weight) {
           dispatch({
             type: ADD_SET_TO_EXERCISE,
             payload: { id: data[0].id, reps, weight }
+          });
+        });
+    });
+  };
+}
+
+export function copySet(setId) {
+  return dispatch => {
+    AsyncStorage.getItem('jwt').then(jwt => {
+      axios
+        .post(
+          `https://getpushapp.com/api/workouts/exercise/copyset/${setId}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${jwt}` }
+          }
+        )
+        .then(({ data }) => {
+          dispatch({
+            type: COPY_SET,
+            payload: data
           });
         });
     });

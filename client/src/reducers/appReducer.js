@@ -9,7 +9,7 @@ import {
 const INITIAL_STATE = {
   exerciseHelp: { title: '' },
   exerciseListType: '',
-  workoutParent: '',
+  workoutParent: 'Dashboard',
   quote: '',
   author: '',
   selectedDate: ''

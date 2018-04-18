@@ -4,14 +4,14 @@
     "assetBundlePatterns": ["assets/*"],
     "name": "Get PushApp",
     "icon": "./appicon.png",
-    "version": "2.0.0",
+    "version": "1.2.0",
     "slug": "getpushapp",
     "ios": {
       "bundleIdentifier": "com.carlssonfoto.mcp.getpushapp"
     },
     "android": {
-      "package": "com.getpushapp.v2",
-      "versionCode": 2
+      "package": "com.getpushapp.v1",
+      "versionCode": 3
     },
     "androidStatusBar": {
       "backgroundColor": "#000000"

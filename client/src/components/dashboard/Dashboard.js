@@ -1,18 +1,20 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Modal,
-  Button,
-  Image,
   Animated,
-  Easing
+  Button,
+  Easing,
+  Image,
+  Keyboard,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
+import moment from 'moment';
 
 import { getQuote } from '../../actions';
 
@@ -37,7 +39,13 @@ class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { addWorkoutVisible: false };
+    this.state = {
+      addWorkoutVisible: false,
+      selectedDay: moment(),
+      selectedWorkout: this.props.workout.workouts[0],
+      hasWorkout: this.props.workout.workouts.length === 0,
+      loaded: false
+    };
 
     this.animatedValue = new Animated.Value(0);
     this.marginTop = this.animatedValue.interpolate({
@@ -48,6 +56,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     this.props.getQuote();
+    this.setState({ loaded: true });
   }
 
   componentDidUpdate() {
@@ -95,6 +104,52 @@ class Dashboard extends React.Component {
         </View>
       );
     }
+  }
+
+  calculatePrecisionTimingDetailsAccordingToDateEtc(date) {
+    const tempArray = this.props.workout.workouts.filter(
+      workout =>
+        moment(workout.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD')
+    );
+
+    const selectedWorkout = tempArray[0];
+    if (selectedWorkout) {
+      this.setState({
+        selectedWorkout: tempArray[0],
+        hasWorkout: true
+      });
+    } else {
+      this.setState({
+        selectedWorkout: null,
+        hasWorkout: false
+      });
+    }
+  }
+
+  renderWorkoutcard() {
+    console.log(this.state.selectedWorkout);
+    if (this.state.selectedWorkout) {
+      return (
+        <WorkoutCard
+          workout={this.state.selectedWorkout}
+          navigation={this.props.navigation}
+          parent="Dashboard"
+        />
+      );
+    } else if (this.state.hasWorkout) {
+      return (
+        <WorkoutCard
+          workout={this.props.workout.workouts[0]}
+          navigation={this.props.navigation}
+          parent="Dashboard"
+        />
+      );
+    }
+    return (
+      <View>
+        <Text>No workouts for this day...</Text>
+      </View>
+    );
   }
 
   renderToday() {
@@ -157,7 +212,31 @@ class Dashboard extends React.Component {
             </Text>
           </View>
           <View>
-            <CustomCalendarStrip />
+            <CalendarStrip
+              ref={calendarStrip => (this._calendarStrip = calendarStrip)}
+              calendarAnimation={{ type: 'sequence', duration: 30 }}
+              daySelectionAnimation={{
+                type: 'border',
+                duration: 200,
+                borderWidth: 1,
+                borderHighlightColor: 'white'
+              }}
+              style={{ height: 100, paddingTop: 10, paddingBottom: 10 }}
+              calendarHeaderStyle={{ color: 'white' }}
+              calendarColor={'#51C1AB'}
+              dateNumberStyle={{ color: 'white' }}
+              dateNameStyle={{ color: 'white' }}
+              highlightDateNumberStyle={{ color: 'white' }}
+              highlightDateNameStyle={{ color: 'white' }}
+              disabledDateNameStyle={{ color: '#AEEEE1' }}
+              disabledDateNumberStyle={{ color: '#AEEEE1' }}
+              iconLeft={require('../../../assets/back_white.png')}
+              iconRight={require('../../../assets/forward_right.png')}
+              iconContainer={{ flex: 0.1 }}
+              onDateSelected={date => {
+                this.calculatePrecisionTimingDetailsAccordingToDateEtc(date);
+              }}
+            />
           </View>
           {this.props.workout.workouts.length === 0 ? (
             <View style={styles.welcomeContainer}>
@@ -173,11 +252,12 @@ class Dashboard extends React.Component {
               globalStyles.contentContainer)
             }
           >
-            <WorkoutCard
-              workout={this.props.workout.workouts[0]}
+            {this.renderWorkoutcard()}
+            {/* <WorkoutCard
+              workout={this.state.selectedWorkout}
               navigation={this.props.navigation}
               parent="Dashboard"
-            />
+            /> */}
           </View>
         </ScrollView>
         <View style={globalStyles.bigAbsoluteButton}>

@@ -18,6 +18,7 @@ import {
   setExerciseListType
 } from '../../actions';
 import NavigationActions from 'react-navigation';
+import Swipeout from 'react-native-swipeout';
 
 class ScheduleCard extends React.Component {
   constructor(props) {
@@ -94,20 +95,52 @@ class ScheduleCard extends React.Component {
           data={this.props.exercises}
           keyExtractor={(item, index) => `exercise${index}`}
           renderItem={({ item }) => {
+            const button = [
+              {
+                text: 'Delete',
+                backgroundColor: '#FD6A6E',
+                onPress: () => {
+                  this.props.deleteExerciseFromSchedule(item.id);
+                },
+                component: (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      borderBottomColor: '#caf4ec',
+                      borderBottomWidth: 10
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: '#fff',
+                        fontSize: 16,
+                        textAlign: 'center'
+                      }}
+                    >
+                      Delete
+                    </Text>
+                  </View>
+                )
+              }
+            ];
+
             return (
-              <View style={styles.listItemContainer}>
-                <Text style={styles.nameText}>{item.name}</Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.deleteExerciseFromSchedule(item.id);
-                  }}
-                >
-                  <Image
-                    source={require('../../../assets/delete.png')}
-                    style={styles.deleteButton}
-                  />
-                </TouchableOpacity>
-              </View>
+              <Swipeout right={button} backgroundColor="#caf4ec">
+                <View style={styles.listItemContainer}>
+                  <Text style={styles.nameText}>{item.name}</Text>
+                  {/* <TouchableOpacity
+                    onPress={() => {
+                      this.props.deleteExerciseFromSchedule(item.id);
+                    }}
+                  >
+                    <Image
+                      source={require('../../../assets/delete.png')}
+                      style={styles.deleteButton}
+                    />
+                  </TouchableOpacity> */}
+                </View>
+              </Swipeout>
             );
           }}
         />
@@ -154,11 +187,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#CAF4EC',
     justifyContent: 'center',
-    padding: 10,
-    margin: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-    borderRadius: 3
+    // padding: 10,
+    paddingTop: 10,
+    margin: 10
+    // borderBottomColor: '#ddd',
+    // borderBottomWidth: 1,
+    // borderRadius: 3
   },
   titleView: {
     display: 'flex',
@@ -172,6 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderRadius: 5,
+    marginLeft: 10,
     marginBottom: 10,
     padding: 3,
     textAlign: 'center',
@@ -187,10 +222,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#7ad9c6',
     justifyContent: 'center',
     padding: 10,
-    marginBottom: 10,
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-    borderRadius: 3,
+    borderBottomColor: '#CAF4EC',
+    borderBottomWidth: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'

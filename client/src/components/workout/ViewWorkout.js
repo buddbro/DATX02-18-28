@@ -286,6 +286,7 @@ class ViewWorkout extends React.Component {
           <BackArrow
             color="white"
             callback={() => {
+              console.log(this.props.parent);
               this.saveWorkout();
               this.setState({
                 initiated: false,
@@ -538,7 +539,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     fontSize: 20,
-    color: '#d33'
+    color: '#fd3a3e'
   },
   addExerciseTitle: {
     color: '#fff',
@@ -548,11 +549,11 @@ const styles = StyleSheet.create({
   addExerciseItem: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 60,
+    height: 80,
     width: '100%',
     backgroundColor: '#8b8ddf',
     borderTopWidth: 1,
-    borderColor: '#2E31A3',
+    borderColor: '#1E2193',
     marginBottom: 0
   },
   saveDateButton: {

@@ -27,18 +27,24 @@ class ForgotPassword extends React.Component {
     if (!this.props.sent) {
       return null;
     }
-    return this.props.resetStatus
-      ? <Text style={styles.accept}>
-          A link for resetting your password was sent, please check your email.
-        </Text>
-      : <Text style={styles.denied}>Email not registered.</Text>;
+    return this.props.resetStatus ? (
+      <Text style={styles.accept}>
+        A link for resetting your password was sent, please check your email.
+      </Text>
+    ) : (
+      <Text style={styles.denied}>Email not registered.</Text>
+    );
   }
 
   render() {
     return (
       <ScrollView style={styles.container} scrollEnabled={false}>
         <TouchableOpacity
-          style={{ alignSelf: 'flex-start', marginLeft: 15, marginBottom: '20%' }}
+          style={{
+            alignSelf: 'flex-start',
+            marginLeft: 15,
+            marginBottom: '20%'
+          }}
           onPress={() => {
             this.props.navigation.dispatch(
               NavigationActions.NavigationActions.navigate({
@@ -53,7 +59,6 @@ class ForgotPassword extends React.Component {
           />
         </TouchableOpacity>
         <View style={styles.head}>
-
           <Text style={styles.headline}>Reset your password</Text>
           <Text style={styles.breadtext}>
             A message will be sent to your email with a link to choose a new
@@ -62,7 +67,6 @@ class ForgotPassword extends React.Component {
         </View>
 
         <View style={styles.body}>
-
           <TextInput
             onBlur={() => Keyboard.dismiss}
             ref="email"
@@ -70,7 +74,8 @@ class ForgotPassword extends React.Component {
             style={styles.textInput}
             placeholder="Email"
             onChangeText={email =>
-              this.setState({ email: email.toLowerCase() })}
+              this.setState({ email: email.toLowerCase() })
+            }
             // value={this.state.email}
             keyboardType="email-address"
             autoCapitalize="none"
@@ -88,7 +93,6 @@ class ForgotPassword extends React.Component {
           {this.renderResponse()}
         </View>
       </ScrollView>
-
     );
   }
 }
