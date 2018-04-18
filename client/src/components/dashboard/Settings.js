@@ -160,9 +160,10 @@ class Settings extends React.Component {
             />
           </TouchableOpacity>
         </Header>
+
         <KeyboardAwareScrollView
           style={{ paddingTop: 20 }}
-          contentContainerStyle={styles.container}
+          contentContainerStyle={{ flexGrow: 1 }}
           scrollEnabled={true}
           enableOnAndroid={true}
         >
@@ -267,6 +268,7 @@ class Settings extends React.Component {
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
+
       </View>
     );
   }
