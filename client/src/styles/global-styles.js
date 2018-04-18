@@ -43,6 +43,8 @@ export default (globalStyles = StyleSheet.create({
   contentContainer: {
     marginTop: 20,
     marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -92,7 +94,6 @@ export default (globalStyles = StyleSheet.create({
   bigButton: {},
   bigAbsoluteButton: {
     bottom: 0,
-    marginBottom: 10,
     width: '100%',
     zIndex: 100
   },
@@ -177,7 +178,11 @@ export default (globalStyles = StyleSheet.create({
     borderColor: '#aaa',
     borderRadius: 3,
     borderWidth: 1,
-    width: '75%'
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
+    textAlignVertical: 'top',
+    color: '#7B7B7B'
   },
 
   //images

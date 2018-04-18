@@ -455,19 +455,26 @@ class ViewWorkout extends React.Component {
 
           <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Notes</Text>
-            <TextInput
-              ref="notes"
-              placeholder="Short description of workout..."
-              onFocus={() => this.focus('notes')}
-              style={globalStyles.notes}
-              onChangeText={notes => this.setState({ notes })}
-              onEndEditing={() =>
-                this.props.saveNotes(this.props.id, this.state.notes)
-              }
-              value={this.state.notes}
-              multiline={true}
-              underlineColorAndroid="transparent"
-            />
+            <KeyboardAwareScrollView
+
+              contentContainerStyle={{ flexGrow: 1 }}
+              scrollEnabled={true}
+              enableOnAndroid={true}
+            >
+              <TextInput
+                ref="notes"
+                placeholder="Short description of workout..."
+                onFocus={() => this.focus('notes')}
+                style={globalStyles.notes}
+                onChangeText={notes => this.setState({ notes })}
+                onEndEditing={() =>
+                  this.props.saveNotes(this.props.id, this.state.notes)
+                }
+                value={this.state.notes}
+                multiline={true}
+                underlineColorAndroid="transparent"
+              />
+            </KeyboardAwareScrollView>
           </View>
         </ScrollView>
 
@@ -551,9 +558,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 80,
     width: '100%',
-    backgroundColor: '#8b8ddf',
-    borderTopWidth: 1,
-    borderColor: '#1E2193',
+    backgroundColor: '#6669cb',
     marginBottom: 0
   },
   saveDateButton: {

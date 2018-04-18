@@ -221,7 +221,7 @@ class Dashboard extends React.Component {
                 borderWidth: 1,
                 borderHighlightColor: 'white'
               }}
-              style={{ height: 100, paddingTop: 10, paddingBottom: 10 }}
+              style={{ height: 100, paddingTop: 10, paddingBottom: 10, marginLeft: 10, marginRight: 10 }}
               calendarHeaderStyle={{ color: 'white' }}
               calendarColor={'#51C1AB'}
               dateNumberStyle={{ color: 'white' }}
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    backgroundColor: '#7ad9c6',
+    backgroundColor: '#6669cb',
     zIndex: 101
   },
   popupContainer: {
