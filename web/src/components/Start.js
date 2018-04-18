@@ -132,7 +132,7 @@ class Start extends React.Component {
           vertical
         />
         <Container style={{ display: 'flex', justifyContent: 'center' }}>
-          <a href="https://play.google.com/store/apps/details?id=com.getpushapp.v1" target="_blank"><Image src='/app-store.svg' style={{ width: '200px', paddingTop: '14px' }}/></a>
+          <a href="https://itunes.apple.com/mu/app/get-pushapp/id1370800482?mt=8" target="_blank"><Image src='/app-store.svg' style={{ width: '200px', paddingTop: '14px' }}/></a>
           <a href="https://play.google.com/store/apps/details?id=com.getpushapp.v1" target="_blank"><Image src='/google-play.png' style={{ width: '250px' }}/></a>
         </Container>
 
