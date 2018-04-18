@@ -43,6 +43,7 @@ class Dashboard extends React.Component {
       addWorkoutVisible: false,
       selectedDay: moment(),
       selectedWorkout: this.props.workout.workouts[0],
+      hasWorkout: this.props.workout.workouts.length === 0,
       loaded: false
     };
 
@@ -110,21 +111,24 @@ class Dashboard extends React.Component {
       workout =>
         moment(workout.date).format('YYYY-MM-DD') === date.format('YYYY-MM-DD')
     );
-    this.setState({
-      selectedWorkout: tempArray[0]
-    });
+
+    const selectedWorkout = tempArray[0];
+    if (selectedWorkout) {
+      this.setState({
+        selectedWorkout: tempArray[0],
+        hasWorkout: true
+      });
+    } else {
+      this.setState({
+        selectedWorkout: null,
+        hasWorkout: false
+      });
+    }
   }
 
   renderWorkoutcard() {
-    if (!this.state.loaded) {
-      return (
-        <WorkoutCard
-          workout={this.props.workout.workouts[0]}
-          navigation={this.props.navigation}
-          parent="Dashboard"
-        />
-      );
-    } else if (this.state.selectedWorkout) {
+    console.log(this.state.selectedWorkout);
+    if (this.state.selectedWorkout) {
       return (
         <WorkoutCard
           workout={this.state.selectedWorkout}
@@ -132,8 +136,20 @@ class Dashboard extends React.Component {
           parent="Dashboard"
         />
       );
+    } else if (this.state.hasWorkout) {
+      return (
+        <WorkoutCard
+          workout={this.props.workout.workouts[0]}
+          navigation={this.props.navigation}
+          parent="Dashboard"
+        />
+      );
     }
-    return <View />;
+    return (
+      <View>
+        <Text>No workouts for this day...</Text>
+      </View>
+    );
   }
 
   renderToday() {
@@ -236,11 +252,12 @@ class Dashboard extends React.Component {
               globalStyles.contentContainer)
             }
           >
-            <WorkoutCard
+            {this.renderWorkoutcard()}
+            {/* <WorkoutCard
               workout={this.state.selectedWorkout}
               navigation={this.props.navigation}
               parent="Dashboard"
-            />
+            /> */}
           </View>
         </ScrollView>
         <View style={globalStyles.bigAbsoluteButton}>

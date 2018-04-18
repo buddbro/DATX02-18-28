@@ -286,6 +286,7 @@ class ViewWorkout extends React.Component {
           <BackArrow
             color="white"
             callback={() => {
+              console.log(this.props.parent);
               this.saveWorkout();
               this.setState({
                 initiated: false,
