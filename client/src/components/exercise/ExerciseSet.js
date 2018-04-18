@@ -32,7 +32,7 @@ class ExerciseSet extends React.Component {
   }
 
   render() {
-    const backgroundColor = this.props.index % 2 === 0 ? '#AEEEE1' : '#98e0d2';
+    const backgroundColor = this.props.index % 2 === 0 ? '#aeeee1' : '#98e0d2';
     return (
       <View style={[styles.container, { backgroundColor }]}>
         <View style={{ width: '20%' }}>
@@ -54,7 +54,6 @@ class ExerciseSet extends React.Component {
               onChangeText={reps => this.props.setReps(String(reps))}
               style={styles.textbox}
               value={this.props.reps}
-              editable={this.props.id === -1}
               keyboardType="numeric"
             />
             <TextInput
@@ -64,7 +63,6 @@ class ExerciseSet extends React.Component {
               onChangeText={weight => this.props.setWeight(String(weight))}
               style={styles.textbox}
               value={this.props.weight}
-              editable={this.props.id === -1}
               keyboardType="numeric"
             />
           </View>

@@ -6,6 +6,7 @@ import {
   CHOOSE_WORKOUT,
   CLEAR_EXERCISE,
   CLEAR_WORKOUT,
+  COPY_SET,
   DELETE_EXERCISE_FROM_WORKOUT,
   DELETE_SET,
   DELETE_WORKOUT,
@@ -55,12 +56,24 @@ export default function workoutReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         sets: [
-          ...state.sets,
           {
             id: action.payload.id,
             reps: action.payload.reps,
             weight: action.payload.weight
-          }
+          },
+          ...state.sets
+        ]
+      };
+    case COPY_SET:
+      return {
+        ...state,
+        sets: [
+          {
+            id: action.payload.id,
+            reps: action.payload.reps,
+            weight: action.payload.weight
+          },
+          ...state.sets
         ]
       };
     case ADD_EXERCISE_TO_WORKOUT:

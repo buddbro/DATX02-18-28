@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     fontSize: 20,
-    color: '#d33'
+    color: '#fd3a3e'
   },
   addExerciseTitle: {
     color: '#fff',

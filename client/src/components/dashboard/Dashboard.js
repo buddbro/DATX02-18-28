@@ -1,15 +1,16 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Modal,
-  Button,
-  Image,
   Animated,
-  Easing
+  Button,
+  Easing,
+  Image,
+  Keyboard,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import NavigationActions from 'react-navigation';
@@ -48,6 +49,10 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     this.props.getQuote();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    Keyboard.dismiss;
   }
 
   componentDidUpdate() {
