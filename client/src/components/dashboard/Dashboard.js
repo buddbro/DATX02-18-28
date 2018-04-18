@@ -51,10 +51,6 @@ class Dashboard extends React.Component {
     this.props.getQuote();
   }
 
-  componentWillReceiveProps(nextProps) {
-    Keyboard.dismiss;
-  }
-
   componentDidUpdate() {
     if (this.state.addWorkoutVisible) {
       this.animate();

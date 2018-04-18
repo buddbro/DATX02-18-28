@@ -64,7 +64,6 @@ class ViewExercise extends React.Component {
   }
 
   setReps(reps) {
-    console.log(reps);
     this.setState({ reps });
   }
 
@@ -235,7 +234,10 @@ class ViewExercise extends React.Component {
             />
           </TouchableOpacity>
         </Header>
-        <ScrollView style={styles.setsContainer}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          style={styles.setsContainer}
+        >
           <View
             style={{
               justifyContent: 'center',
@@ -245,7 +247,10 @@ class ViewExercise extends React.Component {
             }}
           >
             <TouchableOpacity
-              onPress={() => this.addSetToExercise()}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.addSetToExercise();
+              }}
               style={[
                 styles.addButton,
                 {

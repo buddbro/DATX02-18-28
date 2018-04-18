@@ -137,7 +137,6 @@ export function deleteSet(set) {
           headers: { Authorization: `Bearer ${jwt}` }
         })
         .then(() => {
-          console.log(set);
           dispatch({
             type: DELETE_SET,
             payload: set

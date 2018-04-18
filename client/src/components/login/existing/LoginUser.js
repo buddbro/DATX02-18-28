@@ -1,14 +1,15 @@
 import React from 'react';
 import {
+  Animated,
+  AsyncStorage,
+  Easing,
+  Image,
+  Keyboard,
   StyleSheet,
   Text,
-  View,
   TextInput,
   TouchableOpacity,
-  AsyncStorage,
-  Image,
-  Animated,
-  Easing
+  View
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -27,6 +28,7 @@ class LoginUser extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading && nextProps.email) {
+      Keyboard.dismiss();
       this.props.fetchWorkouts();
       this.props.fetchSchedules();
       this.props.navigation.dispatch(
