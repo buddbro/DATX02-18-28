@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Keyboard,
   Button,
   List,
   FlatList,
@@ -40,6 +41,8 @@ class CreateAccount extends React.Component {
     //     error: 'Please enter a valid email'
     //   });
     //   return;
+
+    Keyboard.dismiss();
 
     if (this.state.passwordOne.length < 6) {
       this.setState({
@@ -108,6 +111,7 @@ class CreateAccount extends React.Component {
         style={{ backgroundColor: '#fff' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
         scrollEnabled={false}
       >
         <View style={styles.head}>

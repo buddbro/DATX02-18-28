@@ -1,17 +1,18 @@
 import React from 'react';
 import {
-  View,
-  TouchableOpacity,
-  TextInput,
-  Text,
-  StyleSheet,
+  Image,
   Keyboard,
   ScrollView,
-  Image
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import NavigationActions from 'react-navigation';
 import { connect } from 'react-redux';
 import { retrievePassword } from '../../../actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class ForgotPassword extends React.Component {
     if (!this.props.sent) {
       return null;
     }
+
     return this.props.resetStatus ? (
       <Text style={styles.accept}>
         A link for resetting your password was sent, please check your email.
@@ -38,7 +40,11 @@ class ForgotPassword extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container} scrollEnabled={false}>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        keyboardShouldPersistTaps="handled"
+        scrollEnabled={false}
+      >
         <TouchableOpacity
           style={{
             alignSelf: 'flex-start',
@@ -76,7 +82,6 @@ class ForgotPassword extends React.Component {
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })
             }
-            // value={this.state.email}
             keyboardType="email-address"
             autoCapitalize="none"
             returnKeyType="send"
@@ -85,6 +90,7 @@ class ForgotPassword extends React.Component {
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
+              Keyboard.dismiss();
               this.props.retrievePassword(this.state.email);
             }}
           >
@@ -92,7 +98,7 @@ class ForgotPassword extends React.Component {
           </TouchableOpacity>
           {this.renderResponse()}
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

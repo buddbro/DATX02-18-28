@@ -219,20 +219,28 @@ class Dashboard extends React.Component {
                 type: 'border',
                 duration: 200,
                 borderWidth: 1,
-                borderHighlightColor: 'white'
+                borderHighlightColor: '#fff'
               }}
-              style={{ height: 100, paddingTop: 10, paddingBottom: 10, marginLeft: 10, marginRight: 10 }}
-              calendarHeaderStyle={{ color: 'white' }}
+              style={{
+                height: 100,
+                paddingTop: 10,
+                paddingBottom: 10,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+              calendarHeaderStyle={{ color: '#fff' }}
               calendarColor={'#51C1AB'}
-              dateNumberStyle={{ color: 'white' }}
-              dateNameStyle={{ color: 'white' }}
+              dateNumberStyle={{ color: '#fff' }}
+              dateNameStyle={{ color: '#fff' }}
+              weekendDateNameStyle={{ color: '#fff' }}
+              weekendDateNumberStyle={{ color: '#fff' }}
               highlightDateNumberStyle={{ color: 'white' }}
               highlightDateNameStyle={{ color: 'white' }}
               disabledDateNameStyle={{ color: '#AEEEE1' }}
               disabledDateNumberStyle={{ color: '#AEEEE1' }}
               iconLeft={require('../../../assets/back_white.png')}
               iconRight={require('../../../assets/forward_right.png')}
-              iconContainer={{ flex: 0.1 }}
+              iconContainer={{ flex: 0.15 }}
               onDateSelected={date => {
                 this.calculatePrecisionTimingDetailsAccordingToDateEtc(date);
               }}

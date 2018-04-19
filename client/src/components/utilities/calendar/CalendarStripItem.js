@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  View,
+  Animated,
+  Dimensions,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Dimensions,
-  Animated
+  View
 } from 'react-native';
 
 export default class CalendarStripItem extends React.Component {

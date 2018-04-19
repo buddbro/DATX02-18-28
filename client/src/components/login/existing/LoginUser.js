@@ -66,6 +66,7 @@ class LoginUser extends React.Component {
         style={{ backgroundColor: '#fff' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled"
         scrollEnabled={false}
       >
         <View style={styles.head}>
