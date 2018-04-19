@@ -127,7 +127,6 @@ class Dashboard extends React.Component {
   }
 
   renderWorkoutcard() {
-    console.log(this.state.selectedWorkout);
     if (this.state.selectedWorkout) {
       return (
         <WorkoutCard
