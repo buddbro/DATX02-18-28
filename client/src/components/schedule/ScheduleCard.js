@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     padding: 3,
     textAlign: 'center',
     flex: 9,
-    color: '#505050'
+    color: '#7B7B7B'
   },
   deleteButton: {
     width: 20,

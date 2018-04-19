@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   text: {
-    fontSize: 24
+    fontSize: 24,
+    color: '#7B7B7B'
   }
 });

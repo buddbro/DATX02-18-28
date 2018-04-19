@@ -129,12 +129,17 @@ export default (globalStyles = StyleSheet.create({
   traitText: {},
   quoteText: {
     fontSize: 14,
-    color: '#444',
+    color: '#7B7B7B',
     fontWeight: '200',
     marginLeft: '10%',
     marginRight: '10%'
   },
-  authorText: { fontStyle: 'italic', fontWeight: '200', opacity: 0.8 },
+  authorText: {
+    fontStyle: 'italic', 
+    fontWeight: '200',
+    opacity: 0.8,
+    color: '#7B7B7B'
+  },
 
   //TextInput
   numberInput: {
