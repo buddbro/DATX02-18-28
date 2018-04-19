@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import moment from 'moment';
 import NavigationActions from 'react-navigation';
 import Rating from 'react-native-rating';
 import { connect } from 'react-redux';
@@ -64,10 +65,19 @@ class ViewWorkout extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.state.initiated) {
+      // console.log('nextProps.workout.start', nextProps.workout.start);
+      // console.log('nextProps.workout.stop', nextProps.workout.stop);
+      // const start = moment(nextProps.workout.date);
+      //
+      // start.set('hour', nextProps.workout.start.substring(0, 2));
+      // start.set('minutes', nextProps.workout.start.substring(3, 5));
+      // start.subtract(1, 'hours');
+
       this.setState({
         initiated: true,
         title: nextProps.workout.title,
         notes: nextProps.workout.notes,
+        // start: nextProps.workout.start ? start.format('HH:MM') : '--:--',
         start: nextProps.workout.start || '--:--',
         stop: nextProps.workout.stop || '--:--'
       });
@@ -108,24 +118,44 @@ class ViewWorkout extends React.Component {
 
   saveWorkout() {
     const { title } = this.state;
-    const start = new Date(
-      `${this.props.workout.date.substring(0, 10)}T${this.state.start}:00`
-    );
+    // const start = new Date(
+    //   `${this.props.workout.date.substring(0, 10)}T${this.state.start}:00`
+    // );
+    // const start = moment(this.props.workout.date);
 
-    start.setTime(start.getTime() + 60 * 60 * 1000);
+    // start.setTime(start.getTime() + 60 * 60 * 1000);
+
+    const start = moment(this.props.workout.date);
+    start.set('hour', this.state.start.substring(0, 2));
+    start.set('minute', this.state.start.substring(3, 5));
+
+    // const stop =
+    //   this.state.stop !== '--:--'
+    //     ? new Date(
+    //         `${this.props.workout.date.substring(0, 10)}T${this.state.stop}:00`
+    //       )
+    //     : null;
 
     const stop =
-      this.state.stop !== '--:--'
-        ? new Date(
-            `${this.props.workout.date.substring(0, 10)}T${this.state.stop}:00`
-          )
-        : null;
+      this.state.stop === '--:--' ? null : moment(this.props.workout.date);
 
     if (stop) {
-      stop.setTime(stop.getTime() + 60 * 60 * 1000);
+      stop.set('hour', this.state.stop.substring(0, 2));
+      stop.set('minute', this.state.stop.substring(3, 5));
     }
 
-    this.props.editWorkout(this.props.id, { title, start, stop });
+    // const stop = this.state.stop !== '--:--' ? moment(this.state.stop) : null;
+
+    // if (stop) {
+    //   stop.setTime(stop.getTime() + 60 * 60 * 1000);
+    // }
+
+    this.props.editWorkout(this.props.id, {
+      title,
+      start: start.format('YYYY-MM-DD HH:mm:00'),
+      stop:
+        this.state.stop === '--:--' ? null : stop.format('YYYY-MM-DD HH:mm:00')
+    });
   }
 
   setStartTime(time) {
@@ -133,6 +163,7 @@ class ViewWorkout extends React.Component {
   }
 
   setStopTime(time) {
+    console.log(time);
     this.setState({ stop: time.toString().substring(16, 21) });
   }
 
@@ -194,12 +225,12 @@ class ViewWorkout extends React.Component {
             <Text style={styles.saveDateButtonText}>OK</Text>
           </TouchableOpacity>
           <DatePickerIOS
-            minimumDate={
-              timePicker === 'stop' ? this.createDate(this.state.start) : null
-            }
-            maximumDate={
-              timePicker === 'start' ? this.createDate(this.state.stop) : null
-            }
+            // minimumDate={
+            //   timePicker === 'stop' ? this.createDate(this.state.start) : null
+            // }
+            // maximumDate={
+            //   timePicker === 'start' ? this.createDate(this.state.stop) : null
+            // }
             mode="time"
             date={this.createDate(currentTime)}
             onDateChange={callback.bind(this)}
@@ -456,7 +487,6 @@ class ViewWorkout extends React.Component {
           <View style={globalStyles.traitSubContainer}>
             <Text style={globalStyles.traitTitle}>Notes</Text>
             <KeyboardAwareScrollView
-
               contentContainerStyle={{ flexGrow: 1 }}
               scrollEnabled={true}
               enableOnAndroid={true}
