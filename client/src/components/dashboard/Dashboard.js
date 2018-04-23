@@ -195,7 +195,7 @@ class Dashboard extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Dashboard</Text>
+          <Text style={globalStyles.headerTitle}>Dashboard </Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <ScrollView>
