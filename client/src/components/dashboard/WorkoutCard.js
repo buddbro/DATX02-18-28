@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   timeStamp: {
     color: 'gray',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '200',
     marginLeft: 5,
     marginRight: 5
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   workoutTitle: {
     fontWeight: 'bold',
-    fontSize: 36,
+    fontSize: 24,
     textAlign: 'center',
     color: 'white'
   },
