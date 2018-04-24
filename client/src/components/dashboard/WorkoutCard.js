@@ -39,10 +39,10 @@ class WorkoutCard extends React.Component {
     const start = new Date(`2000-01-01T${this.props.workout.start}:00`);
     const stop = new Date(`2000-01-01T${this.props.workout.stop}:00`);
 
-    const timeElapsed =
-      stop.getTime() - start.getTime() > 0
-        ? stop.getTime() - start.getTime()
-        : start.getTime() - stop.getTime();
+    let timeElapsed = stop.getTime() - start.getTime();
+    if (timeElapsed < 0) {
+      timeElapsed += 3600 * 1000 * 24;
+    }
 
     return timeElapsed / 1000 / 60;
   }
