@@ -44,7 +44,7 @@ const DrawerStack = DrawerNavigator(
     drawerBackgroundColor: '#E2FBF6',
     contentOptions: {
       activeTintColor: '#7ED1C1',
-      labelStyle: { fontSize: 26, fontWeight: '200' }
+      labelStyle: { fontSize: 26, fontWeight: '200', color: '#7B7B7B' }
     },
     navigationOptions: {
       tabBarVisible: false

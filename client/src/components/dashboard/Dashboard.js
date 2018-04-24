@@ -195,7 +195,7 @@ class Dashboard extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Dashboard</Text>
+          <Text style={globalStyles.headerTitle}>Dashboard </Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <ScrollView>
@@ -276,7 +276,7 @@ class Dashboard extends React.Component {
             }}
             style={styles.addWorkoutClean}
           >
-            <Text style={styles.menuItemClean}>Lift weights!</Text>
+            <Text style={styles.menuItemClean}>Start workout</Text>
           </TouchableOpacity>
         </View>
         {this.renderPopup()}
@@ -330,6 +330,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch'
   },
   welcomeContainer: { height: 300, justifyContent: 'center' },
-  welcomeHeader: { fontSize: 28, textAlign: 'center' },
-  welcomeText: { fontSize: 16, textAlign: 'center', padding: 60 }
+  welcomeHeader: { fontSize: 28, textAlign: 'center', color: '#7B7B7B' },
+  welcomeText: { fontSize: 16, textAlign: 'center', padding: 60, color: '#7B7B7B' }
 });
