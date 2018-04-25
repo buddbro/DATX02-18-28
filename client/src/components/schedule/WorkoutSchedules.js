@@ -101,7 +101,7 @@ class WorkoutSchedules extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Schedules</Text>
+          <Text style={globalStyles.headerTitle}>Schedules </Text>
           <TouchableOpacity
             onPress={() => {
               this.props.addSchedule();

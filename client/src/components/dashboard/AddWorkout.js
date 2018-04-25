@@ -68,7 +68,7 @@ class AddWorkout extends React.Component {
               Start a workout
             </Text>
             <View style={styles.bodySpecial}>
-              <Text style={styles.textSpecial}>Quick Start</Text>
+              <Text style={styles.textSpecial}>Quick Start </Text>
             </View>
           </TouchableOpacity>
           {this.renderSchedules()}

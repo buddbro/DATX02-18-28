@@ -84,7 +84,7 @@ const DrawerNavigation = TabNavigator(
       headerStyle: { backgroundColor: 'green' },
       tabBarVisible: false,
       headerLeft: (
-        <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
+        <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu </Text>
       )
     })
   }

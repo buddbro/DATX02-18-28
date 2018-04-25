@@ -41,12 +41,12 @@ class ScheduleCard extends React.Component {
       "This can't be undone",
       [
         {
-          text: 'Cancel',
+          text: 'Cancel ',
           onPress: () => {},
           style: 'cancel'
         },
         {
-          text: 'Delete',
+          text: 'Delete ',
           onPress: () => {
             this.props.deleteSchedule(this.props.id);
           }
@@ -70,7 +70,7 @@ class ScheduleCard extends React.Component {
             underlineColorAndroid="transparent"
             clearButtonMode="while-editing"
             spellCheck={false}
-            value={this.state.title}
+            value={this.state.title }
             autoCorrect={false}
           />
           <TouchableOpacity
@@ -97,7 +97,7 @@ class ScheduleCard extends React.Component {
           renderItem={({ item }) => {
             const button = [
               {
-                text: 'Delete',
+                text: 'Delete ',
                 backgroundColor: '#FD6A6E',
                 onPress: () => {
                   this.props.deleteExerciseFromSchedule(item.id);
@@ -128,7 +128,7 @@ class ScheduleCard extends React.Component {
             return (
               <Swipeout right={button} backgroundColor="#caf4ec">
                 <View style={styles.listItemContainer}>
-                  <Text style={styles.nameText}>{item.name}</Text>
+                  <Text style={styles.nameText}>{item.name} </Text>
                   {/* <TouchableOpacity
                     onPress={() => {
                       this.props.deleteExerciseFromSchedule(item.id);

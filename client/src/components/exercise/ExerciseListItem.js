@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 export default (ExerciseListItem = ({ name, callback }) =>
   <TouchableOpacity style={styles.container} onPress={callback}>
     <Text style={styles.text}>
-      {name}
+      {name} 
     </Text>
   </TouchableOpacity>);
 

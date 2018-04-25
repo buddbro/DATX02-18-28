@@ -143,7 +143,7 @@ class Settings extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Settings</Text>
+          <Text style={globalStyles.headerTitle}>Settings </Text>
           <TouchableOpacity
             onPress={() => {
               this.props.logout();
@@ -174,15 +174,15 @@ class Settings extends React.Component {
               globalStyles.traitContainer)
             }
           >
-            <Text style={globalStyles.pageTitle}>Profile</Text>
+            <Text style={globalStyles.pageTitle}>Profile </Text>
 
             <View style={styles.outerTextContainer}>
-              <Text style={globalStyles.traitTitle}>Name</Text>
+              <Text style={globalStyles.traitTitle}>Name </Text>
               <TextInput
                 ref="name"
                 onFocus={() => this.focus('name')}
                 onChangeText={nameText => this.setState({ nameText })}
-                value={this.state.nameText}
+                value={this.state.nameText }
                 autoCorrect={false}
                 style={this.state.fieldStyles.name}
               />
@@ -193,22 +193,22 @@ class Settings extends React.Component {
                 globalStyles.columnContentContainer)
               }
             >
-              <Text style={globalStyles.pageTitle}>Account</Text>
+              <Text style={globalStyles.pageTitle}>Account </Text>
             </View>
             <View style={styles.outerTextContainer}>
-              <Text style={globalStyles.traitTitle}>Email</Text>
+              <Text style={globalStyles.traitTitle}>Email </Text>
               <TextInput
                 ref="email"
                 onFocus={() => this.focus('email')}
                 keyboardType="email-address"
                 style={styles.standardText}
                 onChangeText={emailText => this.setState({ emailText })}
-                value={this.state.emailText}
+                value={this.state.emailText }
                 autoCapitalize="none"
                 autoCorrect={false}
                 style={this.state.fieldStyles.email}
               />
-              <Text style={globalStyles.traitTitle}>New password</Text>
+              <Text style={globalStyles.traitTitle}>New password </Text>
               <TextInput
                 ref="passwordOne"
                 onFocus={() => this.focus('passwordOne')}
@@ -217,10 +217,10 @@ class Settings extends React.Component {
                 onChangeText={newPasswordText =>
                   this.setState({ newPasswordText })
                 }
-                value={this.state.newPasswordText}
+                value={this.state.newPasswordText }
                 style={this.state.fieldStyles.newPassword}
               />
-              <Text style={globalStyles.traitTitle}>Confirm password</Text>
+              <Text style={globalStyles.traitTitle}>Confirm password </Text>
               <TextInput
                 ref="passwordTwo"
                 onFocus={() => this.focus('passwordTwo')}
@@ -229,7 +229,7 @@ class Settings extends React.Component {
                 onChangeText={confirmPasswordText =>
                   this.setState({ confirmPasswordText })
                 }
-                value={this.state.confirmPasswordText}
+                value={this.state.confirmPasswordText }
                 style={this.state.fieldStyles.confPassword}
               />
 
@@ -264,7 +264,7 @@ class Settings extends React.Component {
               style={globalStyles.saveButton}
               onPress={this.save.bind(this)}
             >
-              <Text style={styles.buttontext}>SAVE</Text>
+              <Text style={styles.buttontext}>SAVE </Text>
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>

@@ -56,8 +56,8 @@ class WorkoutLog extends React.Component {
         style={styles.workoutItem}
       >
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{this.props.workout.title}</Text>
-          <Text style={styles.date}>{this.renderDate()}</Text>
+          <Text style={styles.title}>{this.props.workout.title} </Text>
+          <Text style={styles.date}>{this.renderDate()} </Text>
         </View>
         <Image
           style={styles.arrow}

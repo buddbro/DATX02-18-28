@@ -6,7 +6,7 @@ export default class ExerciseListHeader extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.headerText}>
-          {this.props.title}
+          {this.props.title} 
         </Text>
       </View>
     );

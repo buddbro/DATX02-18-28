@@ -115,12 +115,12 @@ class CreateAccount extends React.Component {
         scrollEnabled={false}
       >
         <View style={styles.head}>
-          <Text style={styles.headline}>Create Account</Text>
+          <Text style={styles.headline}>Create Account </Text>
         </View>
         <View style={styles.body}>
           <TextInput
             style={styles.textInput}
-            placeholder="Name"
+            placeholder="Name "
             onChangeText={name => this.setState({ name })}
             secureTextEntry={false}
             underlineColorAndroid="transparent"
@@ -129,7 +129,7 @@ class CreateAccount extends React.Component {
           />
           <TextInput
             style={styles.textInput}
-            placeholder="Email"
+            placeholder="Email "
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })
             }
@@ -140,7 +140,7 @@ class CreateAccount extends React.Component {
           />
           <TextInput
             style={styles.textInput}
-            placeholder="Password"
+            placeholder="Password "
             onChangeText={password => this.setState({ passwordOne: password })}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
@@ -149,7 +149,7 @@ class CreateAccount extends React.Component {
           />
           <TextInput
             style={styles.textInput}
-            placeholder="Password, again"
+            placeholder="Password, again "
             onChangeText={password => this.setState({ passwordTwo: password })}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
@@ -163,7 +163,7 @@ class CreateAccount extends React.Component {
             onPress={() => this.registerUser()}
             style={styles.createAccountButton}
           >
-            <Text style={styles.buttonText}>CREATE ACCOUNT</Text>
+            <Text style={styles.buttonText}>CREATE ACCOUNT </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>

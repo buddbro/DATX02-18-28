@@ -172,7 +172,7 @@ class CalendarStripNew extends React.Component {
                 style={styles.stripItem}
                 faded={fade}
                 dateNumber={item.format('DD')}
-                dateText={weekdays[item.day()]}
+                dateText={weekdays[item.day()] }
                 key={item.format('x')}
               />
             );

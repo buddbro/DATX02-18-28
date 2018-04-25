@@ -80,7 +80,7 @@ class WorkoutCalendar extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Calendar</Text>
+          <Text style={globalStyles.headerTitle}>Calendar </Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <PopupDialog

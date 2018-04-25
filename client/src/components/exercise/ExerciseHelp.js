@@ -41,7 +41,7 @@ class ExerciseHelp extends React.Component {
         </View>
         <View style={styles.body}>
           <View style={styles.menu}>
-            <Text style={styles.chosenTabTitle}>INSTRUCTIONS</Text>
+            <Text style={styles.chosenTabTitle}>INSTRUCTIONS </Text>
           </View>
           <ScrollView>
             <View>

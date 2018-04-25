@@ -90,16 +90,16 @@ class ViewExercise extends React.Component {
 
   deleteExercise() {
     Alert.alert(
-      'Are you sure?',
-      "This can't be undone",
+      'Are you sure? ',
+      "This can't be undone ",
       [
         {
-          text: 'Cancel',
+          text: 'Cancel ',
           onPress: () => {},
           style: 'cancel'
         },
         {
-          text: 'Delete',
+          text: 'Delete ',
           onPress: () => {
             this.props.deleteExerciseFromWorkout(this.props.visibleSet);
             this.props.clearExercise();
@@ -121,7 +121,7 @@ class ViewExercise extends React.Component {
       const key = `${this.props.id}${item.id}`;
       const cloneButton = [
         {
-          text: 'Delete',
+          text: 'Delete ',
           backgroundColor: '#6A6EFD',
           onPress: () => {
             this.setState({ swipeOpen: -1 });
@@ -145,7 +145,7 @@ class ViewExercise extends React.Component {
 
       const deleteButton = [
         {
-          text: 'Delete',
+          text: 'Delete ',
           backgroundColor: '#fd6a6e',
           onPress: () => {
             this.props.deleteSet(item.id);
@@ -274,15 +274,15 @@ class ViewExercise extends React.Component {
 
           <View style={styles.singleSetContainer}>
             <View style={{ width: '20%' }}>
-              <Text style={styles.setNumber}>#</Text>
+              <Text style={styles.setNumber}># </Text>
             </View>
 
             <View style={styles.sets}>
-              <Text style={styles.setNumber}>Reps</Text>
+              <Text style={styles.setNumber}>Reps </Text>
             </View>
 
             <View style={styles.reps}>
-              <Text style={styles.setNumber}>Weight</Text>
+              <Text style={styles.setNumber}>Weight </Text>
             </View>
           </View>
 

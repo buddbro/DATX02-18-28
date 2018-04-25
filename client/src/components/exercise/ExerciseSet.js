@@ -42,8 +42,8 @@ class ExerciseSet extends React.Component {
         </View>
         {this.props.id !== -1 ? (
           <View style={styles.inputContainer}>
-            <Text style={styles.textbox}>{this.props.reps}</Text>
-            <Text style={styles.textbox}>{this.props.weight}</Text>
+            <Text style={styles.textbox}>{this.props.reps} </Text>
+            <Text style={styles.textbox}>{this.props.weight} </Text>
           </View>
         ) : (
           <View style={styles.inputContainer}>
@@ -53,7 +53,7 @@ class ExerciseSet extends React.Component {
               placeholder="Reps"
               onChangeText={reps => this.props.setReps(String(reps))}
               style={styles.textbox}
-              value={this.props.reps}
+              value={this.props.reps }
               keyboardType="numeric"
             />
             <TextInput
@@ -62,7 +62,7 @@ class ExerciseSet extends React.Component {
               placeholder="Weight"
               onChangeText={weight => this.props.setWeight(String(weight))}
               style={styles.textbox}
-              value={this.props.weight}
+              value={this.props.weight }
               keyboardType="numeric"
             />
           </View>
