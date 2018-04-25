@@ -96,12 +96,12 @@ class ViewWorkout extends React.Component {
       "This can't be undone",
       [
         {
-          text: 'Cancel',
+          text: 'Cancel ',
           onPress: () => {},
           style: 'cancel'
         },
         {
-          text: 'Delete',
+          text: 'Delete ',
           onPress: () => {
             this.props.deleteWorkout(this.props.id);
             this.props.navigation.dispatch(
@@ -190,7 +190,7 @@ class ViewWorkout extends React.Component {
             }}
             style={styles.addExerciseItem}
           >
-            <Text style={styles.addExerciseTitle}>Add exercise</Text>
+            <Text style={styles.addExerciseTitle}>Add exercise </Text>
           </TouchableOpacity>
         </View>
       );
@@ -222,7 +222,7 @@ class ViewWorkout extends React.Component {
             }}
             style={styles.saveDateButton}
           >
-            <Text style={styles.saveDateButtonText}>OK</Text>
+            <Text style={styles.saveDateButtonText}>OK </Text>
           </TouchableOpacity>
           <DatePickerIOS
             // minimumDate={
@@ -339,7 +339,7 @@ class ViewWorkout extends React.Component {
               this.deleteWorkout();
             }}
           >
-            <Text style={styles.delete}>Delete</Text>
+            <Text style={styles.delete}>Delete </Text>
           </TouchableOpacity>
         </Header>
         <ScrollView>
@@ -371,7 +371,7 @@ class ViewWorkout extends React.Component {
                 underlineColorAndroid="transparent"
                 returnKeyLabel="Save"
                 autoCorrect={false}
-                value={this.state.title}
+                value={this.state.title }
               />
               <Image
                 source={require('../../../assets/edit.png')}
@@ -392,8 +392,8 @@ class ViewWorkout extends React.Component {
                     })
                   }
                 >
-                  <Text style={styles.workoutTimeTitle}>Start Time</Text>
-                  <Text style={styles.workoutTime}>{this.state.start}</Text>
+                  <Text style={styles.workoutTimeTitle}>Start Time </Text>
+                  <Text style={styles.workoutTime}>{this.state.start} </Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -404,21 +404,21 @@ class ViewWorkout extends React.Component {
                     })
                   }
                 >
-                  <Text style={styles.workoutTimeTitle}>End Time</Text>
-                  <Text style={styles.workoutTime}>{this.state.stop}</Text>
+                  <Text style={styles.workoutTimeTitle}>End Time </Text>
+                  <Text style={styles.workoutTime}>{this.state.stop} </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
           <View style={styles.exercisesContainer}>
-            <Text style={styles.exercisesTitle}>Exercises</Text>
+            <Text style={styles.exercisesTitle}>Exercises </Text>
             <FlatList
               data={this.props.exercises}
               keyExtractor={(item, index) => `exercise${item.id}`}
               renderItem={({ item }) => {
                 const button = [
                   {
-                    text: 'Delete',
+                    text: 'Delete ',
                     backgroundColor: '#fd6a6e',
                     onPress: () => {
                       this.props.deleteExerciseFromWorkout(item.id);
@@ -460,11 +460,11 @@ class ViewWorkout extends React.Component {
             />
           </View>
           <View style={globalStyles.traitSubContainer}>
-            <Text style={globalStyles.traitTitle}>Color tag</Text>
+            <Text style={globalStyles.traitTitle}>Color tag </Text>
             <View style={styles.tagWrapper}>{this.renderColors()}</View>
           </View>
           <View style={globalStyles.traitSubContainer}>
-            <Text style={globalStyles.traitTitle}>Difficulty</Text>
+            <Text style={globalStyles.traitTitle}>Difficulty </Text>
             <View>
               <RatingWrapper
                 rating={this.props.workout.difficulty}
@@ -478,14 +478,14 @@ class ViewWorkout extends React.Component {
                   justifyContent: 'space-between'
                 }}
               >
-                <Text style={styles.difficultyText}>No Sweat</Text>
-                <Text style={styles.difficultyText}>Hellish</Text>
+                <Text style={styles.difficultyText}>No Sweat </Text>
+                <Text style={styles.difficultyText}>Hellish </Text>
               </View>
             </View>
           </View>
 
           <View style={globalStyles.traitSubContainer}>
-            <Text style={globalStyles.traitTitle}>Notes</Text>
+            <Text style={globalStyles.traitTitle}>Notes </Text>
             <KeyboardAwareScrollView
               contentContainerStyle={{ flexGrow: 1 }}
               scrollEnabled={true}
@@ -493,14 +493,14 @@ class ViewWorkout extends React.Component {
             >
               <TextInput
                 ref="notes"
-                placeholder="Short description of workout..."
+                placeholder="Short description of workout... "
                 onFocus={() => this.focus('notes')}
                 style={globalStyles.notes}
                 onChangeText={notes => this.setState({ notes })}
                 onEndEditing={() =>
                   this.props.saveNotes(this.props.id, this.state.notes)
                 }
-                value={this.state.notes}
+                value={this.state.notes }
                 multiline={true}
                 underlineColorAndroid="transparent"
               />

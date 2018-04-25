@@ -58,15 +58,15 @@ class WorkoutCard extends React.Component {
             style={styles.icons}
           />
           <View style={styles.innerRectangle}>
-            <Text style={styles.timeStamp}>{duration}</Text>
-            <Text style={styles.smallText}>minutes</Text>
+            <Text style={styles.timeStamp}>{duration} </Text>
+            <Text style={styles.smallText}>minutes </Text>
           </View>
         </View>
       );
     }
     return (
       <View style={styles.rectangle}>
-        <Text style={styles.timeStamp}>In progress...</Text>
+        <Text style={styles.timeStamp}>In progress... </Text>
       </View>
     );
   }

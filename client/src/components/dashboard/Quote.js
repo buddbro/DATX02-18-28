@@ -6,7 +6,7 @@ class Quote extends React.Component {
   render() {
     return (
       <View>
-        <Text>Quote :D</Text>
+        <Text>Quote :D </Text>
       </View>
     );
   }

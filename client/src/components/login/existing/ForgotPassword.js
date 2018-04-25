@@ -34,7 +34,7 @@ class ForgotPassword extends React.Component {
         A link for resetting your password was sent, please check your email.
       </Text>
     ) : (
-      <Text style={styles.denied}>Email not registered.</Text>
+      <Text style={styles.denied}>Email not registered. </Text>
     );
   }
 
@@ -65,7 +65,7 @@ class ForgotPassword extends React.Component {
           />
         </TouchableOpacity>
         <View style={styles.head}>
-          <Text style={styles.headline}>Reset your password</Text>
+          <Text style={styles.headline}>Reset your password </Text>
           <Text style={styles.breadtext}>
             A message will be sent to your email with a link to choose a new
             password.
@@ -78,7 +78,7 @@ class ForgotPassword extends React.Component {
             ref="email"
             onFocus={() => this.focus('email')}
             style={styles.textInput}
-            placeholder="Email"
+            placeholder="Email "
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })
             }
@@ -94,7 +94,7 @@ class ForgotPassword extends React.Component {
               this.props.retrievePassword(this.state.email);
             }}
           >
-            <Text style={styles.buttonText}>Send</Text>
+            <Text style={styles.buttonText}>Send </Text>
           </TouchableOpacity>
           {this.renderResponse()}
         </View>

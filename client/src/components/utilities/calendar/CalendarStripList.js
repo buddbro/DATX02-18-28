@@ -156,7 +156,7 @@ export default class CalendarStrip extends React.Component {
                 style={styles.stripItem}
                 highlighted={highlight}
                 dateNumber={item.format('DD')}
-                dateText={weekdays[item.day()]}
+                dateText={weekdays[item.day()] }
               />
             );
           }}

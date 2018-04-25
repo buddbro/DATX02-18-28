@@ -31,7 +31,7 @@ class WorkoutHistory extends React.Component {
       <View style={styles.container}>
         <Header backgroundColor="#b9baf1">
           <View />
-          <Text style={styles.headerTitle}>History</Text>
+          <Text style={styles.headerTitle}>History </Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('DrawerOpen')}
           >

@@ -124,7 +124,7 @@ class Achievements extends React.Component {
               style={globalStyles.iconSmall}
             />
           </TouchableOpacity>
-          <Text style={globalStyles.headerTitle}>Achievements</Text>
+          <Text style={globalStyles.headerTitle}>Achievements </Text>
           <View style={globalStyles.headerFillerItem} />
         </Header>
         <ScrollView>

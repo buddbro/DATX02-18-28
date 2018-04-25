@@ -70,7 +70,7 @@ class LoginUser extends React.Component {
         scrollEnabled={false}
       >
         <View style={styles.head}>
-          <Text style={styles.headline}>PushApp</Text>
+          <Text style={styles.headline}>PushApp </Text>
         </View>
 
         <View style={styles.body}>
@@ -78,7 +78,7 @@ class LoginUser extends React.Component {
             ref="email"
             onFocus={() => this.focus('email')}
             style={styles.textInput}
-            placeholder="Email"
+            placeholder="Email "
             onChangeText={email =>
               this.setState({ email: email.toLowerCase() })
             }
@@ -92,7 +92,7 @@ class LoginUser extends React.Component {
             ref="password"
             onFocus={() => this.focus('password')}
             style={styles.textInput}
-            placeholder="Password"
+            placeholder="Password "
             onChangeText={password =>
               this.setState({ password: password.toLowerCase() })
             }
@@ -114,7 +114,7 @@ class LoginUser extends React.Component {
             }
             style={styles.loginButton}
           >
-            <Text style={styles.buttonText}>LOG IN</Text>
+            <Text style={styles.buttonText}>LOG IN </Text>
           </TouchableOpacity>
 
           <TouchableOpacity

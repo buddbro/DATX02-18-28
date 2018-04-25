@@ -146,7 +146,7 @@ class Dashboard extends React.Component {
     }
     return (
       <View>
-        <Text>No workouts for this day...</Text>
+        <Text>No workouts for this day... </Text>
       </View>
     );
   }
@@ -247,7 +247,7 @@ class Dashboard extends React.Component {
           </View>
           {this.props.workout.workouts.length === 0 ? (
             <View style={styles.welcomeContainer}>
-              <Text style={styles.welcomeHeader}>Welcome!</Text>
+              <Text style={styles.welcomeHeader}>Welcome! </Text>
               <Text style={styles.welcomeText}>
                 Start your first workout by tapping the button below.
               </Text>
@@ -276,7 +276,7 @@ class Dashboard extends React.Component {
             }}
             style={styles.addWorkoutClean}
           >
-            <Text style={styles.menuItemClean}>Start workout</Text>
+            <Text style={styles.menuItemClean}>Start workout </Text>
           </TouchableOpacity>
         </View>
         {this.renderPopup()}

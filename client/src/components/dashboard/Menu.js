@@ -16,7 +16,7 @@ class Menu extends React.Component {
             )
           }
         >
-          <Text style={styles.buttonText}>Previous workouts</Text>
+          <Text style={styles.buttonText}>Previous workouts </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -27,7 +27,7 @@ class Menu extends React.Component {
             );
           }}
         >
-          <Text style={styles.buttonText}>Schedules</Text>
+          <Text style={styles.buttonText}>Schedules </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
@@ -38,7 +38,7 @@ class Menu extends React.Component {
             )
           }
         >
-          <Text style={styles.buttonText}>Achievements</Text>
+          <Text style={styles.buttonText}>Achievements </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -49,7 +49,7 @@ class Menu extends React.Component {
             );
           }}
         >
-          <Text style={styles.buttonText}>Settings</Text>
+          <Text style={styles.buttonText}>Settings </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -62,7 +62,7 @@ class Menu extends React.Component {
             );
           }}
         >
-          <Text style={styles.buttonText}>Logout</Text>
+          <Text style={styles.buttonText}>Logout </Text>
         </TouchableOpacity>
       </View>
     );

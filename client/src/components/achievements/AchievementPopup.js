@@ -112,7 +112,7 @@ class AchievementPopup extends React.Component {
 
     return (
       <View style={styles.achievementDetails}>
-        <Text style={styles.header}>{name}</Text>
+        <Text style={styles.header}>{name} </Text>
         <Animated.View
           style={{
             transform: [{rotateY}],
@@ -122,7 +122,7 @@ class AchievementPopup extends React.Component {
         <Text style={styles.date}>
           {obtained_date ? obtained_date.substring(0, 10) : ''}
         </Text>
-        <Text style={styles.date}>Obtained: {obtained_times} times</Text>
+        <Text style={styles.date}>Obtained: {obtained_times} times </Text>
       </View>
     );
   }
