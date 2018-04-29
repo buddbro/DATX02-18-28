@@ -33,6 +33,15 @@ class CreateAccount extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('got props :D');
+    console.log(nextProps);
+    if (nextProps.navigation.state.params) {
+      console.log(nextProps.navigation.state.params);
+      this.setState({ email: nextProps.navigation.state.params.email });
+    }
+  }
+
   registerUser() {
     // const emailRegex = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
 
@@ -135,6 +144,7 @@ class CreateAccount extends React.Component {
             }
             keyboardType="email-address"
             underlineColorAndroid="transparent"
+            value={this.state.email}
             autoCapitalize="none"
             autoCorrect={false}
           />

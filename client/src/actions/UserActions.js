@@ -41,7 +41,7 @@ export function loginWithPassword(email, password) {
         if (data.error) {
           dispatch({
             type: LOGIN_ERROR,
-            payload: { error: data.error }
+            payload: { error: data.error, errorCode: data.errorCode }
           });
         } else {
           AsyncStorage.setItem('jwt', data.token).then(() => {

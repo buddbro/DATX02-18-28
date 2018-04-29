@@ -11,7 +11,7 @@
     },
     "android": {
       "package": "com.getpushapp.v1",
-      "versionCode": 4
+      "versionCode": 6
     },
     "androidStatusBar": {
       "backgroundColor": "#000000"

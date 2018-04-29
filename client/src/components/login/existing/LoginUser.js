@@ -54,6 +54,29 @@ class LoginUser extends React.Component {
     );
   }
 
+  renderCreateUser() {
+    if (this.props.errorCode !== 1) {
+      return;
+    }
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.dispatch(
+            NavigationActions.NavigationActions.navigate({
+              routeName: 'CreateAccount',
+              params: {
+                email: this.state.email
+              }
+            })
+          )
+        }
+        style={styles.createAccountButton}
+      >
+        <Text style={styles.buttonText}>CREATE ACCOUNT?</Text>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -102,8 +125,8 @@ class LoginUser extends React.Component {
             returnKeyType="go"
             autoCorrect={false}
           />
-
           {this.renderError()}
+          {this.renderCreateUser()}
 
           <TouchableOpacity
             onPress={() =>
@@ -151,8 +174,8 @@ class LoginUser extends React.Component {
 }
 
 const mapStateToProps = ({ user }) => {
-  const { loading, id, email, token, error } = user;
-  return { loading, id, email, token, error };
+  const { loading, id, email, token, error, errorCode } = user;
+  return { loading, id, email, token, error, errorCode };
 };
 
 export default connect(mapStateToProps, {
@@ -203,6 +226,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 3,
     backgroundColor: '#8B8DDF'
+  },
+  createAccountButton: {
+    margin: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    width: 250,
+    borderRadius: 5,
+    padding: 3,
+    backgroundColor: '#7AD9C6'
   },
   buttonText: {
     color: '#fff',

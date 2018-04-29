@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   weight: 0,
   notifications: false,
   error: '',
+  errorCode: 0,
   resetStatus: '',
   sent: false,
   achievements: []
@@ -33,8 +34,8 @@ export default function userReducer(state = INITIAL_STATE, action) {
     case LOADING_FALSE:
       return { ...state, loading: false };
     case LOGIN_ERROR:
-      const { error } = action.payload;
-      return { ...state, error };
+      const { error, errorCode } = action.payload;
+      return { ...state, error, errorCode };
     case LOGIN_SUCCESS:
       const {
         email,
@@ -53,6 +54,7 @@ export default function userReducer(state = INITIAL_STATE, action) {
         weight,
         notifications,
         error: '',
+        errorCode: 0,
         loading: false
       };
     case LOGOUT:
